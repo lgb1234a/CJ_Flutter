@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'Session/Session.dart';
 import 'Contacts/Contacts.dart';
 import 'Mine/Mine.dart';
-
+import 'package:wechat/wechat.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
@@ -32,11 +32,17 @@ class _CajianState extends State<CajianWidget> {
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // 调用SDK示例
+  Future<String> version = Wechat.platformVersion;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+    
+    version.then((v)=>
+      print(v)
+    );
   }
 
   @override
