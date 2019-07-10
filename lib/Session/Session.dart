@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'SessionChat.dart';
+import 'package:cajian/Base/CJUtils.dart';
 
 class SessionWidget extends StatefulWidget {
 
@@ -50,8 +51,8 @@ class _sessionState extends State<SessionWidget> {
         title: const Text(
           '擦肩'
         ),
-        backgroundColor: Color((0xf9f9f9)),
-        elevation: 1,
+        backgroundColor: MainBgColor,
+        elevation: 0.01,
       ),
       body: sessionList,
     );
