@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'Session/Session.dart';
 import 'Contacts/Contacts.dart';
 import 'Mine/Mine.dart';
+import 'Login/Login.dart';
 import 'package:wechat/wechat.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
@@ -46,36 +47,43 @@ class _CajianState extends State<CajianWidget> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return new MaterialApp(
-        home: new DefaultTabController(
-          length: 3,
-          child: new Scaffold(
-            body: Center(
-              child: _rootWidgets.elementAt(_selectedIndex),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.message),
-                  title: Text('擦肩'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.people),
-                  title: Text('通讯录'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text('我'),
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              onTap: _onItemTapped,
-            ),
-          ),
-        ),
+      home: new LoginWidget()
     );
   }
+
+  // Widget build(BuildContext context) {
+  //   return new MaterialApp(
+  //       home: new DefaultTabController(
+  //         length: 3,
+  //         child: new Scaffold(
+  //           body: Center(
+  //             child: _rootWidgets.elementAt(_selectedIndex),
+  //           ),
+  //           bottomNavigationBar: BottomNavigationBar(
+  //             items: const <BottomNavigationBarItem>[
+  //               BottomNavigationBarItem(
+  //                 icon: Icon(Icons.message),
+  //                 title: Text('擦肩'),
+  //               ),
+  //               BottomNavigationBarItem(
+  //                 icon: Icon(Icons.people),
+  //                 title: Text('通讯录'),
+  //               ),
+  //               BottomNavigationBarItem(
+  //                 icon: Icon(Icons.home),
+  //                 title: Text('我'),
+  //               ),
+  //             ],
+  //             currentIndex: _selectedIndex,
+  //             onTap: _onItemTapped,
+  //           ),
+  //         ),
+  //       ),
+  //   );
+  // }
 }
 
 
