@@ -156,5 +156,12 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.8"
+  wechat:
+    dependency: "direct main"
+    description:
+      name: wechat
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.5"
 sdks:
   dart: ">=2.2.2 <3.0.0"

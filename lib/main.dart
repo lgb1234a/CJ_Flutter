@@ -9,6 +9,8 @@ import 'Session/Session.dart';
 import 'Contacts/Contacts.dart';
 import 'Mine/Mine.dart';
 import 'Login/Login.dart';
+import 'Base/CJUtils.dart';
+import 'Login/LoginManager.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
@@ -37,6 +39,13 @@ class _CajianState extends State<CajianWidget> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    registerWeChat('wx0f56e7c5e6daa01a');
   }
 
   @override

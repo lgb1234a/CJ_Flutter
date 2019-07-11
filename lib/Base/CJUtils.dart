@@ -11,6 +11,8 @@ Size getSize(BuildContext context) {
   return Screen_Size;
 }
 
+
+
 final Color MainBgColor = Color(0xFFECECEC);
 final Color WhiteColor  = Color(0xFFFCFCFC);
 final Color BlackColor  = Color(0xFF141414);

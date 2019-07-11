@@ -3,6 +3,7 @@
  *  登录状态管理类
  */
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:wechat/wechat.dart';
 
 class LoginManager {
   // 单例公开访问点
@@ -24,9 +25,16 @@ class LoginManager {
 
 // 注册微信
 registerWeChat(appid) {
+  Wechat.register(appid).then((value){
+    print(value);
+  }).catchError((error){
+    print(error);
+  });
 }
 
 // 获取登录token
 getAccessWeChatToken() {
+  Map<String, String> arguments = {'scope':'snsapi_userinfo', 'state': 'get_access_token_bind'};
+  Wechat.login(arguments);
 }
 

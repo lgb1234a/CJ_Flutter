@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'LoginManager.dart';
 
 class LoginWidget extends StatefulWidget {
 
@@ -45,6 +46,7 @@ class _loginState extends State<LoginWidget> {
                   child: new Image.asset('images/login_with_wechat@2x.png'),
                   onPressed: () {
                     // 微信登录
+                    getAccessWeChatToken();
                   },
                 ),
                 new Padding(
