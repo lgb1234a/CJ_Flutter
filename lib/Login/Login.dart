@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'LoginManager.dart';
+import 'PhoneLogin.dart';
+import 'PwdLogin.dart';
 
 class LoginWidget extends StatefulWidget {
 
@@ -46,7 +48,7 @@ class _loginState extends State<LoginWidget> {
                   child: new Image.asset('images/login_with_wechat@2x.png'),
                   onPressed: () {
                     // 微信登录
-                    getAccessWeChatToken();
+                    LoginManager().getAccessWeChatToken();
                   },
                 ),
                 new Padding(
@@ -63,6 +65,13 @@ class _loginState extends State<LoginWidget> {
                           new Text('手机登录', style: new TextStyle(color: Colors.white, fontSize: 12)),
                         ],
                       ),
+                      onTap: (){
+                        Navigator.push(context, new MaterialPageRoute(builder:
+                          (BuildContext context) {
+                            return PhoneLoginWidget();
+                          }
+                        ));
+                      },
                     ),
                     new Padding(
                       padding: EdgeInsets.symmetric(horizontal: 64),
@@ -74,6 +83,13 @@ class _loginState extends State<LoginWidget> {
                           new Text('密码登录', style: new TextStyle(color: Colors.white, fontSize: 12)),
                         ],
                       ),
+                      onTap: (){
+                        Navigator.push(context, new MaterialPageRoute(builder:
+                          (BuildContext context) {
+                            return PwdLoginWidget();
+                          }
+                        ));
+                      },
                     )
                   ],
                 ),

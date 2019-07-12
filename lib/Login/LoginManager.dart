@@ -4,6 +4,7 @@
  */
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:wechat/wechat.dart';
+import 'package:cajian/Base/Hybrid.dart';
 
 class LoginManager {
   // 单例公开访问点
@@ -21,20 +22,14 @@ class LoginManager {
   static LoginManager _sharedInstance() {
     return _instance;
   }
-}
 
-// 注册微信
-registerWeChat(appid) {
-  Wechat.register(appid).then((value){
-    print(value);
-  }).catchError((error){
-    print(error);
-  });
-}
+  // 注册微信
+  registerWeChat(appid) {
+  }
 
-// 获取登录token
-getAccessWeChatToken() {
-  Map<String, String> arguments = {'scope':'snsapi_userinfo', 'state': 'get_access_token_bind'};
-  Wechat.login(arguments);
+  // 获取登录token
+  getAccessWeChatToken() {
+    Map<String, String> arguments = {'scope':'snsapi_userinfo', 'state': 'get_access_token_bind'};
+  }
 }
 

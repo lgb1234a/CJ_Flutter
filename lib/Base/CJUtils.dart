@@ -16,6 +16,7 @@ Size getSize(BuildContext context) {
 final Color MainBgColor = Color(0xFFECECEC);
 final Color WhiteColor  = Color(0xFFFCFCFC);
 final Color BlackColor  = Color(0xFF141414);
+final Color BlueColor   = Color(0xFF3092EE);
 
 class CJUtils {
 
