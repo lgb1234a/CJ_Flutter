@@ -6,12 +6,41 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
-class NetUtil {
+// md5 加密
+String generateMd5(String data) {
+  // 这里其实就是 digest.toString()
+  return md5.convert(utf8.encode(data)).toString();
+}
+
+class QueryStringPair {
+  String key;
+  var value;
+
+  QueryStringPair(this.key, this.value);
+
+  String URLEncodedStringValue() {
+    if(value == null || value.length == 0) {
+      return '';
+    }else if(value is List){
+      return '$key='+value.toString();
+    }else if(value is Map) {
+      QueryStringPair newPair = QueryStringPair(key, value);
+      return newPair.URLEncodedStringValue();
+    }
+    else {
+      return '$key=$value';
+    }
+  }
+}
+
+class CJRequestEngine {
   static final debug = true;
   static BuildContext context = null;
-  static final host = 'https://www.';
-  static final baseUrl = host + '/api/';
+  static final host = 'https://api.youxi2018.cn';
+  static final baseUrl = host;
 
   // ignore: argument_type_not_assignable
   static final Dio _dio = new Dio(new BaseOptions(
@@ -34,7 +63,7 @@ class NetUtil {
 //    };
 //  }
 
-  static String token;
+  static String accid;
 
   static final LogicError unknowError = LogicError(-1, "未知异常");
 
@@ -83,17 +112,36 @@ class NetUtil {
           contentType: ContentType.parse("image/$suffix"))
     });
 
-    var enToken = token == null ? "" : Uri.encodeFull(token);
+    var enToken = accid == null ? "" : Uri.encodeFull(accid);
     return _dio
         .put<Map<String, dynamic>>("$uri?token=$enToken", data: formData)
         .then(logicalErrorTransform);
   }
 
+  // 签名
+  static String soltForUrlString(String url) {
+    if(url == '/g1/share/app/get') {
+      return 'e72557eeab0e2ae82eabaf91ecef8315';
+    }else {
+      return '74d6de00551d4db6a2a3e4484ba101ae';
+    }
+  }
+
+  static String signForParams(String solt, Map<String, dynamic>params) {
+    String query = 'solt='+solt+'&';
+    var pairStrings = [];
+    for (var key in params.keys) {
+      QueryStringPair pair = QueryStringPair(key, params[key]);
+      pairStrings.add(pair.URLEncodedStringValue());
+    }
+
+    return query + pairStrings.join('&');
+  }
 
   static Future<Response<Map<String, dynamic>>> _httpJson(
       String method, String uri,
       {Map<String, dynamic> data, bool dataIsJson = true}) {
-    var enToken = token == null ? "" : Uri.encodeFull(token);
+    var enToken = accid == null ? "" : Uri.encodeFull(accid);
 
     /// 如果为 get方法，则进行参数拼接
     if (method == "get") {
@@ -101,10 +149,14 @@ class NetUtil {
       if (data == null) {
         data = new Map<String, dynamic>();
       }
-      data["token"] = token;
+      data["accid"] = accid;
     }
 
+    String sign = signForParams(soltForUrlString(uri), data);
+    String signMd5 = generateMd5(sign);
+
     if (debug) {
+      print('sign: ------ $sign  Md5: -------- $signMd5');
       print('<net url>------$uri');
       print('<net params>------$data');
     }
@@ -118,15 +170,16 @@ class NetUtil {
       op = new Options(
           contentType: ContentType.parse("application/x-www-form-urlencoded"));
     }
-
+    op.headers = {'sign': signMd5};
     op.method = method;
+    // 开启网络请求日志
+    _dio.interceptors.add(LogInterceptor(responseBody: false));
 
-    /// 统一带上token
     return _dio.request<Map<String, dynamic>>(
-        method == "get" ? uri : "$uri?token=$enToken",
+        uri,
         data: data,
+        queryParameters: data,
         options: op);
-
   }
 
   /// 对请求返回的数据进行统一的处理
@@ -169,11 +222,8 @@ class NetUtil {
     return Future.error(error);
   }
 
-  ///  获取token
-  ///获取授权token
-  static getToken() async {
-//    String token = await LocalStorage.get(LocalStorage.TOKEN_KEY);
-    return token;
+  static getToken() {
+    return accid;
   }
 }
 
