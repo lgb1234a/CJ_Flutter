@@ -19,16 +19,19 @@ class PhoneLoginWidget extends StatefulWidget {
 
 class _phoneLoginState extends State<PhoneLoginWidget> {
   TextEditingController _phoneController = new TextEditingController();
-  TextEditingController _pwdController = new TextEditingController();
+  TextEditingController _codeController = new TextEditingController();
   GlobalKey _formKey= new GlobalKey<FormState>();
 
-
-
+  // 登录
+  login() async {
+    Map<String, dynamic> response = await loginByCode(_phoneController.text, _codeController.text);
+    // todo: 处理登录逻辑
+    print(response);
+  }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = getSize(context);
-    // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('手机登录', style: new TextStyle(color: Colors.black),),
@@ -74,7 +77,7 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                     width: screenSize.width - 150,
                     height: 40,
                     child: new TextFormField(
-                      controller: _pwdController,
+                      controller: _codeController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                         border: InputBorder.none,
@@ -124,9 +127,7 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                 highlightColor: Colors.blue[700],
                 splashColor: Colors.grey,
                 onPressed: (){
-                  print(_pwdController.text);
-                  print(_phoneController.text);
-                  
+                  login();
                 },
               ),
             ],

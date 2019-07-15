@@ -186,7 +186,7 @@ class CJRequestEngine {
   /// 如果成功则将我们需要的数据返回出去，否则进异常处理方法，返回异常信息
   static Future<T> logicalErrorTransform<T>(Response<Map<String, dynamic>> resp) {
     if (resp.data != null) {
-      if (resp.data["code"] == 0) {
+      if (resp.data["errno"] == 0) {
         T realData = resp.data["data"];
         return Future.value(realData);
       }
@@ -197,15 +197,15 @@ class CJRequestEngine {
       print('resp.data--------${resp.data}');
     }
     LogicError error;
-    if (resp.data != null && resp.data["code"] != 0) {
+    if (resp.data != null && resp.data["errno"] != 0) {
       if (resp.data['data'] != null) {
         /// 失败时  错误提示在 data中时
         /// 收到token过期时  直接进入登录页面
         Map<String, dynamic> realData = resp.data["data"];
-        error = new LogicError(resp.data["code"], realData['codeMessage']);
+        error = new LogicError(resp.data["errno"], realData['errmsg']);
       } else {
         /// 失败时  错误提示在 message中时
-        error = new LogicError(resp.data["code"], resp.data["message"]);
+        error = new LogicError(resp.data["errno"], resp.data["errmsg"]);
       }
 
       /// token失效 重新登录  后端定义的code码
@@ -228,7 +228,7 @@ class CJRequestEngine {
 }
 
 class LogicError {
-  int errorCode;
+  String errorCode;
   String msg;
 
   LogicError(errorCode, msg) {
