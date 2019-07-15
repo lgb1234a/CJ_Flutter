@@ -100,7 +100,7 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                     onPressed: (){
                       if(_phoneController.text.trim().length > 0) {
                         String phone = _phoneController.text.trim();
-                        sendAuthCode('15651007929');
+                        sendAuthCode(phone);
                       }
                     },
                   ),

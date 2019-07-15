@@ -128,14 +128,14 @@ class CJRequestEngine {
   }
 
   static String signForParams(String solt, Map<String, dynamic>params) {
-    String query = 'solt='+solt+'&';
+    String query = 'solt='+solt;
     var pairStrings = [];
     for (var key in params.keys) {
       QueryStringPair pair = QueryStringPair(key, params[key]);
       pairStrings.add(pair.URLEncodedStringValue());
     }
 
-    return query + pairStrings.join('&');
+    return pairStrings.join('&')+'&'+query;
   }
 
   static Future<Response<Map<String, dynamic>>> _httpJson(
