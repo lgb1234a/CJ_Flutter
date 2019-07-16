@@ -20,6 +20,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		EF24545F22DD63B8004E54E9 /* CJNIMSDKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24545E22DD63B8004E54E9 /* CJNIMSDKBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,8 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF24545D22DD63B8004E54E9 /* CJNIMSDKBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJNIMSDKBridge.h; sourceTree = "<group>"; };
+		EF24545E22DD63B8004E54E9 /* CJNIMSDKBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJNIMSDKBridge.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 		EF24545622D86F8D004E54E9 /* Hybrid */ = {
 			isa = PBXGroup;
 			children = (
+				EF24545D22DD63B8004E54E9 /* CJNIMSDKBridge.h */,
+				EF24545E22DD63B8004E54E9 /* CJNIMSDKBridge.m */,
 			);
 			name = Hybrid;
 			sourceTree = "<group>";
@@ -305,6 +310,7 @@
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				EF24545F22DD63B8004E54E9 /* CJNIMSDKBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
