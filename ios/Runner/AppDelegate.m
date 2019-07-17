@@ -26,7 +26,7 @@ const NSMutableArray <NSString *>*channels() {
                                             binaryMessenger:controller.engine.binaryMessenger];
     
     [nimChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
-        [CJNIMSDKBridge bridgeWithCall:call result:result];
+        [CJNIMSDKBridge bridgeCall:call result:result];
     }];
   // Override point for customization after application launch.
   return [super application:application didFinishLaunchingWithOptions:launchOptions];

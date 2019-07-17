@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CJNIMSDKBridge : NSObject
 
-+ (void)bridgeWithCall:(FlutterMethodCall *)call
-                result:(FlutterResult)result;
++ (void)bridgeCall:(FlutterMethodCall *)call
+            result:(FlutterResult)result;
 
 @end
 
