@@ -97,6 +97,7 @@ class _CajianState extends State<CajianWidget> {
             // 接收通知
              _loginedSuccess();
           }
+          return true;
         },
         child: home,
       )

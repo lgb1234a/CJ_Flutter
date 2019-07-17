@@ -30,31 +30,22 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
   }
 
   // 云信sdk登录
-  Future<void> sdkLogin(Map<String, dynamic> response) async {
+  Future<bool> sdkLogin(Map<String, dynamic> response) async {
     print('登录OK, response $response');
-    if(response != null) {
-      NIMSDKBridge.doSDKLogin(
-        response['accid'], 
-        response['token'], 
-        response['name'])
-        .then((success)
-        {
-          print('去发通知');
-          // 通知main.dart去刷新root widget
-          
-        }).catchError((error){
-          print(error);
-      });
-    }
+    return await NIMSDKBridge.doSDKLogin(
+      response['accid'], 
+      response['token'], 
+      response['name']);
   }
 
   // 登录
-  login() async {
+  Future<bool> login() async {
     Result response = await loginByCode(_phoneController.text, _codeController.text);
     if(response.success) {
-       await sdkLogin(response.data);
+      return await sdkLogin(response.data);
     }else {
       print(response.error.msg);
+      return false;
     }
   }
 
@@ -147,19 +138,27 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
               new Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
               ),
-              new FlatButton(
-                padding: EdgeInsets.symmetric(horizontal: (screenSize.width - 100)*0.5, vertical: 10),
-                child: new Text('登录', style: new TextStyle(fontSize: 16),),
-                textColor: Colors.white,
-                color: BlueColor,
-                shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                highlightColor: Colors.blue[700],
-                splashColor: Colors.grey,
-                onPressed: (){
-                  login();
-                  new CJNotification('loginSuccess').dispatch(context);
+              Builder(
+                builder: (ctx){
+                    return FlatButton(
+                      padding: EdgeInsets.symmetric(horizontal: (screenSize.width - 100)*0.5, vertical: 10),
+                      child: new Text('登录', style: new TextStyle(fontSize: 16),),
+                      textColor: Colors.white,
+                      color: BlueColor,
+                      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                      highlightColor: Colors.blue[700],
+                      splashColor: Colors.grey,
+                      onPressed: (){
+                        login().then((success){
+                          if(success) {
+                            new CJNotification('loginSuccess').dispatch(ctx);
+                          }
+                        });
+                      },
+                    );
                 },
               ),
+              
             ],
           )
       )
