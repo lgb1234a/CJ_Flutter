@@ -1,8 +1,3 @@
-import 'dart:convert';
-
-import 'package:cajian/Base/CJRequestEngine.dart';
-import 'package:cajian/Login/Server.dart';
-import 'package:flutter/cupertino.dart';
 /**
  *  Created by chenyn on 2019-07-12
  *  验证码登录
@@ -10,6 +5,10 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:cajian/Base/CJRequestEngine.dart';
+import 'package:cajian/Login/Server.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:cajian/Base/NIMSDKBridge.dart';
 
 class PhoneLoginWidget extends StatefulWidget {
   _phoneLoginState createState() {
@@ -21,12 +20,42 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _codeController = new TextEditingController();
   GlobalKey _formKey= new GlobalKey<FormState>();
+  bool _loading = false;
+
+
+  loading(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
+  }
+
+  // 云信sdk登录
+  Future<void> sdkLogin(Map<String, dynamic> response) async {
+    print('登录OK, response $response');
+    if(response != null) {
+      NIMSDKBridge.doSDKLogin(
+        response['accid'], 
+        response['token'], 
+        response['name'])
+        .then((success)
+        {
+          print('去发通知');
+          // 通知main.dart去刷新root widget
+          
+        }).catchError((error){
+          print(error);
+      });
+    }
+  }
 
   // 登录
   login() async {
-    Map<String, dynamic> response = await loginByCode(_phoneController.text, _codeController.text);
-    // todo: 处理登录逻辑
-    print(response);
+    Result response = await loginByCode(_phoneController.text, _codeController.text);
+    if(response.success) {
+       await sdkLogin(response.data);
+    }else {
+      print(response.error.msg);
+    }
   }
 
   @override
@@ -128,6 +157,7 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                 splashColor: Colors.grey,
                 onPressed: (){
                   login();
+                  new CJNotification('loginSuccess').dispatch(context);
                 },
               ),
             ],

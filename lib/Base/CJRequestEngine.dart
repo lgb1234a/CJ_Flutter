@@ -65,45 +65,45 @@ class CJRequestEngine {
 
   static String accid;
 
-  static final LogicError unknowError = LogicError(-1, "未知异常");
+  static final LogicError unknowError = LogicError('-1', "未知异常");
 
-  static Future<Map<String, dynamic>> getJson<T>(
+  static Future<Result> getJson<T>(
       String uri, Map<String, dynamic> paras) =>
-      _httpJson("get", uri, data: paras).then(logicalErrorTransform);
+      _httpJson("get", uri, data: paras).then(responseHandle);
 
-  static Future<Map<String, dynamic>> getForm<T>(
+  static Future<Result> getForm<T>(
       String uri, Map<String, dynamic> paras) =>
       _httpJson("get", uri, data: paras, dataIsJson: false)
-          .then(logicalErrorTransform);
+          .then(responseHandle);
 
   /// 表单方式的post
-  static Future<Map<String, dynamic>> postForm<T>(
+  static Future<Result> postForm<T>(
       String uri, Map<String, dynamic> paras) =>
       _httpJson("post", uri, data: paras, dataIsJson: false)
-          .then(logicalErrorTransform);
+          .then(responseHandle);
 
   /// requestBody (json格式参数) 方式的 post
-  static Future<Map<String, dynamic>> postJson(
+  static Future<Result> postJson(
       String uri, Map<String, dynamic> body) =>
-      _httpJson("post", uri, data: body).then(logicalErrorTransform);
+      _httpJson("post", uri, data: body).then(responseHandle);
 
-  static Future<Map<String, dynamic>> deleteJson<T>(
+  static Future<Result> deleteJson<T>(
       String uri, Map<String, dynamic> body) =>
-      _httpJson("delete", uri, data: body).then(logicalErrorTransform);
+      _httpJson("delete", uri, data: body).then(responseHandle);
 
   /// requestBody (json格式参数) 方式的 put
-  static Future<Map<String, dynamic>> putJson<T>(
+  static Future<Result> putJson<T>(
       String uri, Map<String, dynamic> body) =>
-      _httpJson("put", uri, data: body).then(logicalErrorTransform);
+      _httpJson("put", uri, data: body).then(responseHandle);
 
   /// 表单方式的 put
-  static Future<Map<String, dynamic>> putForm<T>(
+  static Future<Result> putForm<T>(
       String uri, Map<String, dynamic> body) =>
       _httpJson("put", uri, data: body, dataIsJson: false)
-          .then(logicalErrorTransform);
+          .then(responseHandle);
 
   /// 文件上传  返回json数据为字符串
-  static Future<T> putFile<T>(String uri, String filePath) {
+  static Future<Result> putFile<T>(String uri, String filePath) {
     var name =
     filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length);
     var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
@@ -115,7 +115,7 @@ class CJRequestEngine {
     var enToken = accid == null ? "" : Uri.encodeFull(accid);
     return _dio
         .put<Map<String, dynamic>>("$uri?token=$enToken", data: formData)
-        .then(logicalErrorTransform);
+        .then(responseHandle);
   }
 
   // 签名
@@ -138,6 +138,7 @@ class CJRequestEngine {
     return pairStrings.join('&')+'&'+query;
   }
 
+  // 核心请求封装
   static Future<Response<Map<String, dynamic>>> _httpJson(
       String method, String uri,
       {Map<String, dynamic> data, bool dataIsJson = true}) {
@@ -184,11 +185,14 @@ class CJRequestEngine {
 
   /// 对请求返回的数据进行统一的处理
   /// 如果成功则将我们需要的数据返回出去，否则进异常处理方法，返回异常信息
-  static Future<T> logicalErrorTransform<T>(Response<Map<String, dynamic>> resp) {
+  static Future<Result> responseHandle<T>(Response<Map<String, dynamic>> resp) {
+    Result _result = Result();
     if (resp.data != null) {
       if (resp.data["errno"] == '0') {
         T realData = resp.data["data"];
-        return Future.value(realData);
+        _result.success = true;
+        _result.data = realData;
+        return Future.value(_result);
       }
     }
 
@@ -209,32 +213,38 @@ class CJRequestEngine {
       }
 
       /// token失效 重新登录  后端定义的code码
-      if (resp.data["code"] == 10000000) {
-//        NavigatorUtils.goPwdLogin(context);
+      if (resp.data["errno"] == 10000000) {
 
       }
-      if(resp.data["code"] == 80000000){
+      if(resp.data["errno"] == 80000000){
         //操作逻辑
       }
     } else {
       error = unknowError;
     }
-    return Future.error(error);
+    _result.error = error;
+    _result.success = false;
+    return Future.value(_result);
   }
 
-  static getToken() {
+  static getAccid() {
     return accid;
   }
 }
-
+// 异常
 class LogicError {
   String errorCode;
   String msg;
 
-  LogicError(errorCode, msg) {
-    this.errorCode = errorCode;
-    this.msg = msg;
-  }
+  LogicError(this.errorCode, this.msg);
+}
+// 回调结果
+class Result <T>{
+  bool success;
+  T data;
+  LogicError error;
+
+  Result();
 }
 
 enum PostType { json, form, file }

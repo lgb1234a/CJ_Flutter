@@ -11,6 +11,7 @@ import 'Mine/Mine.dart';
 import 'Login/Login.dart';
 import 'Base/CJUtils.dart';
 import 'Login/LoginManager.dart';
+import 'Base/NIMSDKBridge.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
@@ -24,15 +25,16 @@ final List<Widget> _rootWidgets = <Widget>[
 
 
 class CajianWidget extends StatefulWidget {
-
+  
   _CajianState createState() {
     return new _CajianState();
   }
 }
 
 class _CajianState extends State<CajianWidget> {
-
+  
   int _selectedIndex = 0;
+  bool _logined = false;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   void _onItemTapped(int index) {
@@ -41,54 +43,70 @@ class _CajianState extends State<CajianWidget> {
     });
   }
 
+  void _loginedSuccess() {
+    setState() {
+      _logined = true;
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
   }
 
   @override
 
   Widget build(BuildContext context) {
+
+    var home = _logined? DefaultTabController(
+          length: 3,
+          child: new Scaffold(
+            body: Center(
+              child: _rootWidgets.elementAt(_selectedIndex),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.message),
+                  title: Text('擦肩'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.people),
+                  title: Text('通讯录'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text('我'),
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+            ),
+          ),
+        ) : LoginWidget();
+
     return new MaterialApp(
-      home: new LoginWidget()
+      home: NotificationListener <CJNotification>(
+        onNotification: (notification){
+          print(notification.nName);
+          if( notification.nName == 'loginSuccess') 
+          {
+            // 接收通知
+             _loginedSuccess();
+          }
+        },
+        child: home,
+      )
     );
   }
-
-  // Widget build(BuildContext context) {
-  //   return new MaterialApp(
-  //       home: new DefaultTabController(
-  //         length: 3,
-  //         child: new Scaffold(
-  //           body: Center(
-  //             child: _rootWidgets.elementAt(_selectedIndex),
-  //           ),
-  //           bottomNavigationBar: BottomNavigationBar(
-  //             items: const <BottomNavigationBarItem>[
-  //               BottomNavigationBarItem(
-  //                 icon: Icon(Icons.message),
-  //                 title: Text('擦肩'),
-  //               ),
-  //               BottomNavigationBarItem(
-  //                 icon: Icon(Icons.people),
-  //                 title: Text('通讯录'),
-  //               ),
-  //               BottomNavigationBarItem(
-  //                 icon: Icon(Icons.home),
-  //                 title: Text('我'),
-  //               ),
-  //             ],
-  //             currentIndex: _selectedIndex,
-  //             onTap: _onItemTapped,
-  //           ),
-  //         ),
-  //       ),
-  //   );
-  // }
 }
 
 
 void main() {
+  // 注册云信sdk
+  NIMSDKBridge.doRegisterSDK();
   runApp(new CajianWidget());
 }

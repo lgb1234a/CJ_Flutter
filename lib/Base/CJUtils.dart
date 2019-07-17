@@ -19,3 +19,8 @@ final Color BlueColor   = Color(0xFF3092EE);
 class CJUtils {
 
 }
+
+class CJNotification extends Notification {
+  CJNotification(this.nName);
+  final String nName;
+}
