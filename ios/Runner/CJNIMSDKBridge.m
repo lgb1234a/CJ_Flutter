@@ -48,8 +48,8 @@ static FlutterResult _result = nil;
 + (void)bridgeCall:(FlutterMethodCall *)call
             result:(FlutterResult)result
 {
-    _call = call;
-    _result = result;
+    CJNIMSDKBridge.call = call;
+    CJNIMSDKBridge.result = result;
     
     // flutter 调用
     NSLog(@"flutter call :%@", call.method);
