@@ -13,22 +13,44 @@ import 'dart:async';
 import 'package:cajian/Base/NotificationCenter.dart';
 
 class PhoneLoginWidget extends StatefulWidget {
-  _phoneLoginState createState() {
-    return new _phoneLoginState();
+  PhoneLoginState createState() {
+    return new PhoneLoginState();
   }
 }
 
-class _phoneLoginState extends State<PhoneLoginWidget> {
+class PhoneLoginState extends State<PhoneLoginWidget> {
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _codeController = new TextEditingController();
   GlobalKey _formKey= new GlobalKey<FormState>();
   bool _loading = false;
   String loginSuccessNotiName = 'loginSuccess';
+  Timer _timer;
+  int _countdownTime = 0;
+  bool _confirmAvailabe = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _phoneController.addListener((){
+      debugPrint(_phoneController.text);
+      _textChange();
+    });
+    _codeController.addListener((){
+      debugPrint(_codeController.text);
+      _textChange();
+    });
+  }
 
   @override
   void dispose() {
-    super.dispose();
+    _phoneController.dispose();
+    _codeController.dispose();
     NotificationCenter.shared.removeObserver(loginSuccessNotiName);
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    super.dispose();
   }
 
   loading(bool loading) {
@@ -37,9 +59,40 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
     });
   }
 
+  // 文本变化监听
+  _textChange() {
+    _confirmBtnStatus(_phoneController.text.trim().length > 0 && 
+      _codeController.text.trim().length > 0);           
+  }
+
+  // 刷新登录按钮状态
+  _confirmBtnStatus(bool valid) {
+    if(valid != _confirmAvailabe) {
+      setState((){
+        _confirmAvailabe = valid;
+      });
+    }
+  }
+
+  void startCountdownTimer() {
+    const oneSec = const Duration(seconds: 1);
+
+    var callback = (timer) => {
+      setState(() {
+        if (_countdownTime < 1) {
+          _timer.cancel();
+        } else {
+          _countdownTime = _countdownTime - 1;
+        }
+      })
+    };
+
+    _timer = Timer.periodic(oneSec, callback);
+  }
+
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    print('登录OK, response $response');
+    debugPrint('登录OK, response $response');
     return await NIMSDKBridge.doSDKLogin(
       response['accid'], 
       response['token'], 
@@ -85,12 +138,6 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                       hintText: "手机号（仅支持大陆手机）",
                       border: InputBorder.none
                   ),
-                  // 校验用户名
-                  validator: (v) {
-                    return v
-                        .trim()
-                        .length > 0 ? null : "手机号不能为空";
-                  }
                 ),
               ),
               new Divider(
@@ -100,9 +147,10 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                 color: Colors.black12,
               ),
               new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   new SizedBox(
-                    width: screenSize.width - 150,
+                    width: 200,
                     height: 40,
                     child: new TextFormField(
                       controller: _codeController,
@@ -111,12 +159,6 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                         border: InputBorder.none,
                         hintText: '输入验证码'
                       ),
-                      // 验证验证码
-                      validator: (v) {
-                        return v
-                            .trim()
-                            .length > 0 ? null : "请输入正确的验证码";
-                      }
                     )
                   ),
                   new Padding(
@@ -127,13 +169,23 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                     color: Colors.black,
                   ),
                   new FlatButton(
-                    child: new Text('获取验证码', style: new TextStyle(fontSize: 16, color: BlueColor),),
-                    onPressed: (){
+                    child: new Text(
+                      _countdownTime == 0 ?'获取验证码' : '$_countdownTime'+'s后重新获取', 
+                      style: new TextStyle(fontSize: 16, color: BlueColor),
+                    ),
+                    onPressed: _countdownTime == 0 ?(){
+                      if (_countdownTime == 0) {
+                        setState(() {
+                          _countdownTime = 60;
+                        });
+                        //开始倒计时
+                        startCountdownTimer();
+                      }
                       if(_phoneController.text.trim().length > 0) {
                         String phone = _phoneController.text.trim();
                         sendAuthCode(phone);
                       }
-                    },
+                    } : null,
                   ),
                 ],
               ),
@@ -153,15 +205,16 @@ class _phoneLoginState extends State<PhoneLoginWidget> {
                   color: BlueColor,
                   shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                   highlightColor: Colors.blue[700],
+                  disabledColor: Colors.blueGrey,
                   splashColor: Colors.grey,
-                  onPressed: (){
+                  onPressed: _confirmAvailabe?(){
                     login().then((success){
                       if(success) {
                         Navigator.pop(context);
                         NotificationCenter.shared.postNotification(loginSuccessNotiName, context);
                       }
                     });
-                  },
+                  }: null,
               ),
             ],
           )
