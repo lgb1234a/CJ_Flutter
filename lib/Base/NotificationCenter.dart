@@ -47,6 +47,7 @@ class NotificationCenter {
 
   // 移除监听
   removeObserver(String postName) {
+    print('remove notification: $postName');
     postNameMap.remove(postName);
   }
 }

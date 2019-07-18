@@ -5,7 +5,6 @@
 
 import 'package:flutter/material.dart';
 import 'SessionChat.dart';
-import 'package:cajian/Base/CJUtils.dart';
 
 class SessionWidget extends StatefulWidget {
 
@@ -45,13 +44,13 @@ class _sessionState extends State<SessionWidget> {
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
 
-    // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
         title: const Text(
-          '擦肩'
+          '擦肩', 
+          style: const TextStyle(color: Color(0xFF141414)),
         ),
-        backgroundColor: MainBgColor,
+        backgroundColor: Color(0xFFECECEC),
         elevation: 0.01,
       ),
       body: sessionList,
