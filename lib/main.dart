@@ -54,6 +54,7 @@ class _CajianState extends State<CajianWidget> {
   @override
   dispose() {
     super.dispose();
+    NotificationCenter.shared.removeObserver('loginSuccess');
   }
 
   void _onItemTapped(int index) {
@@ -63,9 +64,9 @@ class _CajianState extends State<CajianWidget> {
   }
 
   void _loginedSuccess() {
-    setState() {
+    setState(() {
       _logined = true;
-    }
+    });
   }
 
   @override
