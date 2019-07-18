@@ -2,6 +2,7 @@
  *  Created by chenyn on 2019-07-18
  *  通知中心
  */
+import 'package:flutter/material.dart';
 
 typedef GetObject = Function(dynamic object);
 
@@ -47,7 +48,7 @@ class NotificationCenter {
 
   // 移除监听
   removeObserver(String postName) {
-    print('remove notification: $postName');
+    debugPrint('remove notification: $postName');
     postNameMap.remove(postName);
   }
 }

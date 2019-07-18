@@ -105,7 +105,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
     if(response.success) {
       return await sdkLogin(response.data);
     }else {
-      print(response.error.msg);
+      debugPrint(response.error.msg);
       return false;
     }
   }

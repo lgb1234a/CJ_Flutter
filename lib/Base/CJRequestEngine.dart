@@ -157,9 +157,9 @@ class CJRequestEngine {
     String signMd5 = generateMd5(sign);
 
     if (debug) {
-      print('sign: ------ $sign  Md5: -------- $signMd5');
-      print('<net url>------$uri');
-      print('<net params>------$data');
+      debugPrint('sign: ------ $sign  Md5: -------- $signMd5');
+      debugPrint('<net url>------$uri');
+      debugPrint('<net params>------$data');
     }
 
     /// 根据当前 请求的类型来设置 如果是请求体形式则使用json格式
@@ -197,8 +197,8 @@ class CJRequestEngine {
     }
 
     if (debug) {
-      print('resp--------$resp');
-      print('resp.data--------${resp.data}');
+      debugPrint('resp--------$resp');
+      debugPrint('resp.data--------${resp.data}');
     }
     LogicError error;
     if (resp.data != null && resp.data["errno"] != '0') {
