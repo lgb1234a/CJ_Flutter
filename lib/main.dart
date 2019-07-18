@@ -9,9 +9,9 @@ import 'Session/Session.dart';
 import 'Contacts/Contacts.dart';
 import 'Mine/Mine.dart';
 import 'Login/Login.dart';
-import 'Base/CJUtils.dart';
 import 'Login/LoginManager.dart';
 import 'Base/NIMSDKBridge.dart';
+import 'package:cajian/Base/NotificationCenter.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
@@ -25,17 +25,36 @@ final List<Widget> _rootWidgets = <Widget>[
 
 
 class CajianWidget extends StatefulWidget {
-  
   _CajianState createState() {
     return new _CajianState();
   }
 }
 
 class _CajianState extends State<CajianWidget> {
-  
   int _selectedIndex = 0;
   bool _logined = false;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
+    NotificationCenter.shared.addObserver('loginSuccess', (object){
+      _loginedSuccess();
+    });
+  }
+
+  @override
+  didUpdateWidget(CajianWidget old) {
+    super.didUpdateWidget(old);
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,15 +69,6 @@ class _CajianState extends State<CajianWidget> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
-  }
-
-  @override
-
   Widget build(BuildContext context) {
 
     var home = _logined? DefaultTabController(
@@ -89,18 +99,7 @@ class _CajianState extends State<CajianWidget> {
         ) : LoginWidget();
 
     return new MaterialApp(
-      home: NotificationListener <CJNotification>(
-        onNotification: (notification){
-          print(notification.nName);
-          if( notification.nName == 'loginSuccess') 
-          {
-            // 接收通知
-             _loginedSuccess();
-          }
-          return true;
-        },
-        child: home,
-      )
+      home: home,
     );
   }
 }

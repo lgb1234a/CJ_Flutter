@@ -101,7 +101,8 @@ class _loginState extends State<LoginWidget> {
                   child: Text(
                     '《用户使用协议》', 
                     style: new TextStyle(color: Colors.blueGrey, fontSize: 12)
-                  )
+                  ),
+                  onPressed: (){},
                 )
               ],
             )
