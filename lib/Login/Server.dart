@@ -13,7 +13,6 @@ Future<Result> sendAuthCode(String phone) async {
 
 // 验证码登录
 Future<Result> loginByCode(String phone, String code) async {
-
   Result response = await CJRequestEngine.postJson('/g2/login/vecode', {'phone': phone,'vecode': code});
   return response;
 }

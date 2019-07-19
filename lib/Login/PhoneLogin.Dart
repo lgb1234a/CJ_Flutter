@@ -92,7 +92,6 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    debugPrint('登录OK, response $response');
     return await NIMSDKBridge.doSDKLogin(
       response['accid'], 
       response['token'], 
@@ -100,12 +99,23 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   }
 
   // 登录
-  Future<bool> login() async {
+  Future<bool> login(BuildContext context) async {
+    if(_phoneController.text.trim().length != 11) {
+      showTip(context, '参数错误', '请输入正确的手机号', 2);
+      return false;
+    }
+
+    if(_codeController.text.trim().length != 6) {
+      showTip(context, '参数错误', '请输入正确的验证码', 2);
+      return false;
+    }
+
+    loading(true);
     Result response = await loginByCode(_phoneController.text, _codeController.text);
     if(response.success) {
       return await sdkLogin(response.data);
     }else {
-      debugPrint(response.error.msg);
+      showTip(context, '请求失败', response.error.msg, 2);
       return false;
     }
   }
@@ -113,6 +123,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = getSize(context);
+    
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('手机登录', style: new TextStyle(color: Colors.black),),
@@ -174,6 +185,11 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                       style: new TextStyle(fontSize: 16, color: BlueColor),
                     ),
                     onPressed: _countdownTime == 0 ?(){
+                      if(_phoneController.text.trim().length != 11) {
+                        showTip(context, '参数错误', '请输入正确的手机号', 2);
+                        return;
+                      }
+
                       if (_countdownTime == 0) {
                         setState(() {
                           _countdownTime = 60;
@@ -183,7 +199,15 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                       }
                       if(_phoneController.text.trim().length > 0) {
                         String phone = _phoneController.text.trim();
-                        sendAuthCode(phone);
+                        sendAuthCode(phone).then((data){
+                          if(data.success) {
+                            showTip(context, '验证码', '发送成功', 2);
+                          }else {
+                            showTip(context, '发送失败', data.error.msg, 2);
+                          }
+                        }).catchError((){
+                          showTip(context, '网络异常', '网络开小差了～', 2);
+                        });
                       }
                     } : null,
                   ),
@@ -198,23 +222,41 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
               new Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
               ),
-              new FlatButton(
-                  padding: EdgeInsets.symmetric(horizontal: (screenSize.width - 100)*0.5, vertical: 10),
-                  child: new Text('登录', style: new TextStyle(fontSize: 16),),
-                  textColor: Colors.white,
-                  color: BlueColor,
-                  shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                  highlightColor: Colors.blue[700],
-                  disabledColor: Colors.blueGrey,
-                  splashColor: Colors.grey,
-                  onPressed: _confirmAvailabe?(){
-                    login().then((success){
-                      if(success) {
-                        Navigator.pop(context);
-                        NotificationCenter.shared.postNotification(loginSuccessNotiName, context);
-                      }
-                    });
-                  }: null,
+              new SizedBox(
+                width: screenSize.width - 40,
+                height: 40,
+                child: new FlatButton(
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Text('登录', style: new TextStyle(fontSize: 16),),
+                        new Padding(padding: EdgeInsets.symmetric(horizontal: _loading? 5:0),),
+                        _loading? new CupertinoActivityIndicator(
+                          animating: _loading,
+                          radius: 10,
+                        ): SizedBox()
+                      ],
+                    ),
+                    textColor: Colors.white,
+                    color: BlueColor,
+                    shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                    highlightColor: Colors.blue[700],
+                    disabledColor: Colors.blueGrey,
+                    splashColor: Colors.grey,
+                    onPressed: _confirmAvailabe&&!_loading?(){
+                      login(context).then((success){
+                        loading(false);
+                        if(success) {
+                          Navigator.pop(context);
+                          NotificationCenter.shared.postNotification(loginSuccessNotiName, context);
+                        }
+                      }).catchError((){
+                        loading(false);
+                        showTip(context, '网络异常', '网络开小差了～', 2);
+                      }).whenComplete(()=> loading(false));
+                    }: null,
+                ),
               ),
             ],
           )
