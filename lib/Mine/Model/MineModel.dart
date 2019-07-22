@@ -66,6 +66,7 @@ final List<MineModel> entries = [
   MineModel.init(MineCellType.MineCellTypeSeparator, null, null, null),
 
   MineModel.init(MineCellType.MineCellTypeOthers, '设置', '', ()=>{
-
+    // 跳转设置页面
+    
   }),
 ];

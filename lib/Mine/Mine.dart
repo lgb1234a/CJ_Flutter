@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'Model/MineModel.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:cajian/Mine/View/MineListCell.dart';
 
 class MineWidget extends StatefulWidget {
 
@@ -22,7 +23,14 @@ class _mineState extends State<MineWidget> {
     ListView mineTable = ListView.separated(
       padding: const EdgeInsets.all(8.0),
       itemCount: entries.length,
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (BuildContext context, int index) 
+      {
+        MineModel model = entries[index];
+        if(model.type == MineCellType.MineCellTypeOthers) {
+          return new MineListCellOthers(model);
+        }else if(model.type == MineCellType.MineCellTypeSeparator) {
+          return new MineListCellSeparator();
+        }
         return new GestureDetector(
           child: new Padding(
               padding: new EdgeInsets.all(10.0),
