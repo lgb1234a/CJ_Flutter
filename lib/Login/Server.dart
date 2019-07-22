@@ -17,3 +17,9 @@ Future<Result> loginByCode(String phone, String code) async {
   return response;
 }
 
+// 密码登录
+Future<Result> loginByPwd(String phone, String pwd) async {
+  Result response = await CJRequestEngine.postJson('/g2/login/passwd', {'passwd': pwd, 'phone': phone});
+  return response;
+}
+

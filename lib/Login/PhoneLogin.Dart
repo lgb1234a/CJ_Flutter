@@ -33,11 +33,9 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
     // TODO: implement initState
     super.initState();
     _phoneController.addListener((){
-      debugPrint(_phoneController.text);
       _textChange();
     });
     _codeController.addListener((){
-      debugPrint(_codeController.text);
       _textChange();
     });
   }
