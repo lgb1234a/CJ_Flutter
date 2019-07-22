@@ -26,6 +26,7 @@ dependencies:
   dio: ^2.1.2
   wechat: ^0.0.5
   crypto: ^2.0.6
+  shared_preferences: ^0.5.3
 
 dev_dependencies:
   flutter_test:

@@ -22,11 +22,6 @@ class CJUtils {
 
 }
 
-class CJNotification extends Notification {
-  CJNotification(this.nName);
-  final String nName;
-}
-
 // 弹窗
 dialog(
     BuildContext context, 

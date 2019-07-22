@@ -4,7 +4,17 @@
  */
 import 'package:flutter/material.dart';
 
-typedef GetObject = Function(dynamic object);
+class NotificationPair {
+  String notificationName;
+  Function notificationHandler;
+  
+  NotificationPair(this.notificationName, this.notificationHandler);
+
+
+  post(dynamic context) {
+    notificationHandler(context);
+  }
+}
 
 class NotificationCenter {
   // 工厂模式
@@ -25,15 +35,16 @@ class NotificationCenter {
   }
 
   //创建Map来记录名称
-  Map<String, dynamic> postNameMap = Map<String, dynamic>();
+  Map<String, NotificationPair> postNameMap = Map<String, NotificationPair>();
 
-  GetObject getObject;
+
+  Map<String, Function> functionMap = Map<String, Function>();
 
   //添加监听者方法
   addObserver(String postName, object(dynamic object)) {
-
-    postNameMap[postName] = null;
-    getObject = object;
+    // 初始化一个notificationPair
+    NotificationPair pair = NotificationPair(postName, object);
+    postNameMap[postName] = pair;
   }
 
   //发送通知传值
@@ -41,8 +52,8 @@ class NotificationCenter {
     //检索Map是否含有postName
     if (postNameMap.containsKey(postName)) 
     {
-      postNameMap[postName] = object;
-      getObject(postNameMap[postName]);
+      debugPrint('did post notification: $postName');
+      postNameMap[postName].post(object);
     }
   }
 

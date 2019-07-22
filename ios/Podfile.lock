@@ -1,6 +1,8 @@
 PODS:
   - Flutter (1.0.0)
   - NIMSDK_LITE (6.5.5)
+  - shared_preferences (0.0.1):
+    - Flutter
   - wechat (0.0.5):
     - Flutter
     - WechatOpenSDK
@@ -9,6 +11,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - NIMSDK_LITE
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - wechat (from `.symlinks/plugins/wechat/ios`)
   - WechatOpenSDK
 
@@ -20,12 +23,15 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
   wechat:
     :path: ".symlinks/plugins/wechat/ios"
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   NIMSDK_LITE: 8af68f798030906861a61459f93dba2d4fd2631d
+  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   wechat: 2297896f15d800c7da9ea3716ffe069bea511919
   WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
 

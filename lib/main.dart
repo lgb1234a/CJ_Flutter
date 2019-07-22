@@ -32,7 +32,7 @@ class CajianWidget extends StatefulWidget {
 
 class _CajianState extends State<CajianWidget> {
   int _selectedIndex = 0;
-  bool _logined = false;
+  bool _logined = LoginManager().accid != null && LoginManager().token != null;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
@@ -40,10 +40,24 @@ class _CajianState extends State<CajianWidget> {
     // TODO: implement initState
     super.initState();
 
-    LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
+    // LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
     NotificationCenter.shared.addObserver('loginSuccess', (object){
+      debugPrint('did observe notification loginSuccess');
       _loginedSuccess();
     });
+
+    NotificationCenter.shared.addObserver('didLogout', (object){
+      debugPrint('did observe notification didLogout');
+      _logout();
+    });
+
+    if(_logined) {
+      LoginManager().login().then((success){
+        if(!success) {
+          LoginManager().logout();
+        }
+      });
+    }
   }
 
   @override
@@ -54,6 +68,7 @@ class _CajianState extends State<CajianWidget> {
   @override
   dispose() {
     NotificationCenter.shared.removeObserver('loginSuccess');
+    NotificationCenter.shared.removeObserver('didLogout');
     super.dispose();
   }
 
@@ -66,6 +81,12 @@ class _CajianState extends State<CajianWidget> {
   void _loginedSuccess() {
     setState(() {
       _logined = true;
+    });
+  }
+
+  void _logout() {
+    setState(() {
+      _logined = false;
     });
   }
 

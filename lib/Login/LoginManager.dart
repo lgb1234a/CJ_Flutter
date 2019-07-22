@@ -3,10 +3,61 @@
  *  登录状态管理类
  */
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:wechat/wechat.dart';
 import 'package:cajian/Base/Hybrid.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cajian/Base/NIMSDKBridge.dart';
+
+bindAccidAndToken(String accid, String token) {
+  LoginManager().accid = accid;
+  LoginManager().token = token;
+}
 
 class LoginManager {
+
+  String _accid;
+  String _token;
+
+  String get accid {
+    return _accid;
+  }
+
+  set accid(String a) {
+    _accid = a;
+    SharedPreferences.getInstance().then((sp){
+      sp.setString('accid', a);
+    });
+  }
+
+  String get token {
+    return _token;
+  }
+
+  set token(String t) {
+    _token = t;
+    SharedPreferences.getInstance().then((sp){
+      sp.setString('token', t);
+    });
+  }
+
+  // 用本地accid和token登录云信
+  Future<bool> login() async {
+    if(token == null || accid == null) {
+      return false;
+    }
+    return NIMSDKBridge.doSDKLogin(accid, token, '');
+  }
+
+  // 登出
+  logout() {
+    _accid = null;
+    _token = null;
+    accid  = null;
+    token  = null;
+    NotificationCenter().postNotification('didLogout', '');
+  }
+
   // 单例公开访问点
   factory LoginManager() =>_sharedInstance();
   

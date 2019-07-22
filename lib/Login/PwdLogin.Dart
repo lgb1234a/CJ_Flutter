@@ -1,3 +1,4 @@
+import 'package:cajian/Login/LoginManager.dart';
 /**
  *  Created by chenyn on 2019-07-12
  *  密码登录
@@ -24,7 +25,6 @@ class _pwdLoginState extends State<PwdLoginWidget> {
   TextEditingController _pwdController = new TextEditingController();
   GlobalKey _formKey= new GlobalKey<FormState>();
   bool _loading = false;
-  String loginSuccessNotiName = 'loginSuccess';
   Timer _timer;
   int _countdownTime = 0;
   bool _confirmAvailabe = false;
@@ -45,7 +45,6 @@ class _pwdLoginState extends State<PwdLoginWidget> {
   void dispose() {
     _phoneController.dispose();
     _pwdController.dispose();
-    NotificationCenter.shared.removeObserver(loginSuccessNotiName);
     if (_timer != null) {
       _timer.cancel();
     }
@@ -112,6 +111,7 @@ class _pwdLoginState extends State<PwdLoginWidget> {
     loading(true);
     Result response = await loginByPwd(_phoneController.text, _pwdController.text);
     if(response.success) {
+      bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
     }else {
       showTip(context, '请求失败', response.error.msg, 2);
@@ -204,7 +204,7 @@ class _pwdLoginState extends State<PwdLoginWidget> {
                         loading(false);
                         if(success) {
                           Navigator.pop(context);
-                          NotificationCenter.shared.postNotification(loginSuccessNotiName, context);
+                          NotificationCenter.shared.postNotification('loginSuccess', context);
                         }
                       }).catchError((e){
                         loading(false);

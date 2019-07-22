@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/NIMSDKBridge.dart';
 import 'dart:async';
 import 'package:cajian/Base/NotificationCenter.dart';
+import 'LoginManager.dart';
 
 class PhoneLoginWidget extends StatefulWidget {
   PhoneLoginState createState() {
@@ -23,7 +24,6 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   TextEditingController _codeController = new TextEditingController();
   GlobalKey _formKey= new GlobalKey<FormState>();
   bool _loading = false;
-  String loginSuccessNotiName = 'loginSuccess';
   Timer _timer;
   int _countdownTime = 0;
   bool _confirmAvailabe = false;
@@ -44,7 +44,6 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   void dispose() {
     _phoneController.dispose();
     _codeController.dispose();
-    NotificationCenter.shared.removeObserver(loginSuccessNotiName);
     if (_timer != null) {
       _timer.cancel();
     }
@@ -111,6 +110,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
     loading(true);
     Result response = await loginByCode(_phoneController.text, _codeController.text);
     if(response.success) {
+      bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
     }else {
       showTip(context, '请求失败', response.error.msg, 2);
@@ -247,7 +247,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                         loading(false);
                         if(success) {
                           Navigator.pop(context);
-                          NotificationCenter.shared.postNotification(loginSuccessNotiName, context);
+                          NotificationCenter.shared.postNotification('loginSuccess', context);
                         }
                       }).catchError((){
                         loading(false);
