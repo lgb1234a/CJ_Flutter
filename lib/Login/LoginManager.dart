@@ -42,7 +42,7 @@ class LoginManager {
   }
 
   // 用本地accid和token登录云信
-  Future<bool> login() async {
+  Future<bool> login(String accid, String token) async {
     if(token == null || accid == null) {
       return false;
     }
@@ -67,6 +67,10 @@ class LoginManager {
   // 私有构造函数
   LoginManager._() {
     // 具体初始化代码
+    SharedPreferences.getInstance().then((sp){
+      _accid = sp.getString('accid');
+      _token = sp.getString('token');
+    });
   }
 
   // 静态、同步、私有访问点

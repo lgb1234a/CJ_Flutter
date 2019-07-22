@@ -12,6 +12,7 @@ import 'Login/Login.dart';
 import 'Login/LoginManager.dart';
 import 'Base/NIMSDKBridge.dart';
 import 'package:cajian/Base/NotificationCenter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
@@ -32,7 +33,7 @@ class CajianWidget extends StatefulWidget {
 
 class _CajianState extends State<CajianWidget> {
   int _selectedIndex = 0;
-  bool _logined = LoginManager().accid != null && LoginManager().token != null;
+  bool _logined = false;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
@@ -51,13 +52,20 @@ class _CajianState extends State<CajianWidget> {
       _logout();
     });
 
-    if(_logined) {
-      LoginManager().login().then((success){
-        if(!success) {
-          LoginManager().logout();
-        }
-      });
-    }
+    // 加载登录状态
+    SharedPreferences.getInstance().then((sp){
+      String accid = sp.getString('accid');
+      String token = sp.getString('token');
+      if(accid != null && token != null) 
+      {
+        _loginedSuccess();
+        LoginManager().login(accid, token).then((success){
+          if(!success) {
+            LoginManager().logout();
+          }
+        });
+      }
+    });
   }
 
   @override
