@@ -23,7 +23,8 @@ class SettingModel {
   TapCallback onTap;
   bool needSeparatorLine;
 
-  SettingModel(this.cellType, 
+  SettingModel(
+    this.cellType, 
     this.title, 
     this.subTitle, 
     this.titleColor, 

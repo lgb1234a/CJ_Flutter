@@ -17,7 +17,7 @@ class SettingFuncitonCell extends StatelessWidget
       child: Container(
         height: 48,
         width: screenSize.width,
-        color: Color(0x00000000),
+        color: Colors.white,
         child: Center(
           child: Text(model.title, style: TextStyle(color: model.titleColor),),
         ),
@@ -49,6 +49,7 @@ class SettingAccessoryCell extends StatelessWidget {
       child: Container(
         height: 48,
         width: screenSize.width,
+        color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

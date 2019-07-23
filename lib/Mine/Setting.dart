@@ -35,7 +35,10 @@ class SettingState extends State<SettingWidget> {
     separatorBuilder: (BuildContext context, int index) {
       SettingModel model = settingCellModels[index];
       if(model.needSeparatorLine) {
-        return const Divider(indent: 16.0);
+        return Container(
+          color: Colors.white,
+          child: Divider(indent: 16.0),
+        );
       }
       return const Divider(height: 0);
     },
@@ -50,7 +53,10 @@ class SettingState extends State<SettingWidget> {
         elevation: 0.01,
         iconTheme: IconThemeData.fallback(),
       ),
-      body: settingTable,
+      body: Container(
+        color: MainBgColor,
+        child: settingTable,
+      ),
     );
   }
 }

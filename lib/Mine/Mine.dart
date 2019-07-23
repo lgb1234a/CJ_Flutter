@@ -43,7 +43,10 @@ class MineState extends State<MineWidget> {
       separatorBuilder: (BuildContext context, int index) {
         MineModel model = mineCellModels[index];
         if(model.needSeparatorLine) {
-          return const Divider(indent: 16.0);
+          return Container(
+            color: Colors.white,
+            child: Divider(indent: 16.0),
+          );
         }
         return const Divider(height: 0);
       },
@@ -58,7 +61,10 @@ class MineState extends State<MineWidget> {
         backgroundColor: WhiteColor,
         elevation: 0.01,
       ),
-      body: mineTable,
+      body: Container(
+        color: MainBgColor,
+        child: mineTable,
+      ),
     );
   }
 }

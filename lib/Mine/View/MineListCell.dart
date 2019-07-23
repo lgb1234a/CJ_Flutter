@@ -18,7 +18,7 @@ class MineListCellOthers extends StatelessWidget {
         child: Container(
           height: 48,
           width: screenSize.width,
-          color: Color(0x00FFFFFF),
+          color: Colors.white,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,6 +50,7 @@ class MineListCellSeparator extends StatelessWidget {
   }
 }
 
+// 用户信息
 class MineListProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class MineListProfileHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          
+
         ],
       )
     );

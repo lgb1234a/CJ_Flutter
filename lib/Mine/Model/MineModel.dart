@@ -18,7 +18,13 @@ class MineModel {
   String icon;
   bool   needSeparatorLine;
   
-  MineModel(this.type, this.title, this.icon, this.onTap, {this.needSeparatorLine = false});
+  MineModel(
+    this.type, 
+    this.title, 
+    this.icon, 
+    this.onTap, 
+    {this.needSeparatorLine = false}
+  );
 }
 
 final List<MineModel> mineCellModels = [
