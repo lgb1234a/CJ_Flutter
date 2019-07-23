@@ -52,10 +52,13 @@ class SettingAccessoryCell extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
             Text(model.title),
             Expanded(flex: 1, child: SizedBox(),),
             Text(model.subTitle??''),
-            Icon(Icons.arrow_forward_ios, size: 16,)
+            Padding(padding: EdgeInsets.symmetric(horizontal: 4),),
+            Icon(Icons.arrow_forward_ios, size: 16,),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 6),),
           ],
         ),
       ),

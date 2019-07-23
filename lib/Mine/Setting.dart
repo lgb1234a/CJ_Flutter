@@ -19,7 +19,6 @@ class SettingState extends State<SettingWidget> {
 
   ListView settingTable = ListView.separated(
     itemCount: settingCellModels.length,
-    padding: const EdgeInsets.all(8.0),
     itemBuilder: (BuildContext ctx, int index){
       SettingModel model = settingCellModels[index];
       if(model.cellType == SettingCellType.Function) {

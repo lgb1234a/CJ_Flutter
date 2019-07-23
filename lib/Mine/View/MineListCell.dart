@@ -23,10 +23,12 @@ class MineListCellOthers extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Icon(Icons.settings, size: 20),
+              new Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
+              new Image.asset(model.icon),
+              new Padding(padding: EdgeInsets.symmetric(horizontal: 12),),
               new Text(model.title, ),
               Expanded(flex: 1, child: SizedBox(),),
-              new Icon(Icons.arrow_forward_ios, size: 16,)
+              new Icon(Icons.arrow_forward_ios, size: 16,),
             ],
           ),
         ),

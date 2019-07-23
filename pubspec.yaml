@@ -51,6 +51,17 @@ flutter:
    - images/login_with_wechat@2x.png
    - images/login_with_phone@2x.png
    - images/login_with_pwd@2x.png
+   - images/icon_setting_collect@2x.png
+   - images/icon_setting_MFWallet_recommend@2x.png
+   - images/icon_setting_MFWallet@2x.png
+   - images/icon_setting_wx@2x.png
+   - images/icon_settings_about@2x.png
+   - images/icon_settings_alipay@2x.png
+   - images/icon_settings_general@2x.png
+   - images/icon_settings_scan@2x.png
+   - images/icon_settings_paycode@2x.png
+   - images/icon_setting_service@2x.png
+   - images/icon_setting_copy_contacts@2x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

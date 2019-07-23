@@ -27,37 +27,49 @@ final List<MineModel> mineCellModels = [
 
   MineModel(MineCellType.Separator, null, null, null),
 
-  MineModel(MineCellType.Others, '扫一扫', '', (BuildContext ctx)=>{
+  MineModel(MineCellType.Others, '扫一扫', 'images/icon_settings_scan@2x.png', (BuildContext ctx)=>{
 
   }),
 
   MineModel(MineCellType.Separator, null, null, null),
 
-  MineModel(MineCellType.Others, '我的钱包', '', (BuildContext ctx)=>{
+  MineModel(MineCellType.Others, '我的钱包', 'images/icon_settings_alipay@2x.png', (BuildContext ctx)=>{
 
   }),
 
-  MineModel(MineCellType.Others, '支付宝钱包', '', (BuildContext ctx)=>{
+  MineModel(MineCellType.Others, '云钱包', 'images/icon_setting_MFWallet@2x.png', (BuildContext ctx)=>{
 
   }),
 
-  MineModel(MineCellType.Separator, null, null, null),
-
-  MineModel(MineCellType.Others, '收藏', '', (BuildContext ctx)=>{
-
-  }),
-
-  MineModel(MineCellType.Others, '分享到微信', '', (BuildContext ctx)=>{
-
-  }),
-
-  MineModel(MineCellType.Others, '帮助', '', (BuildContext ctx)=>{
+  MineModel(MineCellType.Others, '我的收款码', 'images/icon_settings_paycode@2x.png', (BuildContext ctx)=>{
 
   }),
 
   MineModel(MineCellType.Separator, null, null, null),
 
-  MineModel(MineCellType.Others, '设置', '', (BuildContext ctx){
+  MineModel(MineCellType.Others, '收藏', 'images/icon_setting_collect@2x.png', (BuildContext ctx)=>{
+
+  }),
+
+  MineModel(MineCellType.Others, '分享到微信', 'images/icon_setting_wx@2x.png', (BuildContext ctx)=>{
+
+  }),
+
+  MineModel(MineCellType.Others, '帮助', 'images/icon_settings_about@2x.png', (BuildContext ctx)=>{
+
+  }),
+
+  MineModel(MineCellType.Others, '联系客服', 'images/icon_setting_service@2x.png', (BuildContext ctx)=>{
+
+  }),
+
+  MineModel(MineCellType.Others, '一键复制通讯录', 'images/icon_setting_copy_contacts@2x.png', (BuildContext ctx)=>{
+
+  }),
+
+  MineModel(MineCellType.Separator, null, null, null),
+
+  MineModel(MineCellType.Others, '设置', 'images/icon_settings_general@2x.png', (BuildContext ctx){
     print('setting!');
     // 跳转设置页面
     Navigator.push(ctx, new MaterialPageRoute(builder: (BuildContext context){
