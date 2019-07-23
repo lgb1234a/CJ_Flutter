@@ -26,9 +26,9 @@ class MineState extends State<MineWidget> {
       itemBuilder: (BuildContext context, int index) 
       {
         MineModel model = mineCellModels[index];
-        if(model.type == MineCellType.MineCellTypeOthers) {
+        if(model.type == MineCellType.Others) {
           return new MineListCellOthers(model);
-        }else if(model.type == MineCellType.MineCellTypeSeparator) {
+        }else if(model.type == MineCellType.Separator) {
           return new MineListCellSeparator();
         }
         return new GestureDetector(

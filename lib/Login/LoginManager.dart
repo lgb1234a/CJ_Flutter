@@ -55,7 +55,7 @@ class LoginManager {
     _token = null;
     accid  = null;
     token  = null;
-    NotificationCenter().postNotification('didLogout', '');
+    NotificationCenter.shared.postNotification('didLogout', '');
   }
 
   // 单例公开访问点

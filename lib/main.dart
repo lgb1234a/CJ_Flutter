@@ -94,6 +94,7 @@ class _CajianState extends State<CajianWidget> {
 
   void _logout() {
     setState(() {
+      _selectedIndex = 0;
       _logined = false;
     });
   }

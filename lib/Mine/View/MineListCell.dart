@@ -26,6 +26,7 @@ class MineListCellOthers extends StatelessWidget {
             children: <Widget>[
               new Icon(Icons.settings, size: 20),
               new Text(model.title, ),
+              Expanded(flex: 1, child: SizedBox(),),
               new Icon(Icons.arrow_forward_ios, size: 16,)
             ],
           ),
@@ -42,7 +43,7 @@ class MineListCellSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SizedBox(
-      height: 12,
+      height: 8,
     );
   }
 }
