@@ -1,6 +1,3 @@
-
-import 'dart:async';
-
 /**
  *  Created by chenyn on 2019-06-28
  *  工具类
@@ -48,7 +45,7 @@ dialog(
                 },
               );
     showDialog(
-      barrierDismissible: true,
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
             title: Text(title),
@@ -57,32 +54,6 @@ dialog(
               cancelWidget,
               commitWidget
             ],
-        )
-    );
-  }
-
-
-// 临时弹窗
-showTip(
-    BuildContext context, 
-    String title, 
-    String msg, 
-    int seconds)
-  {
-    const oneSec = const Duration(seconds: 1);
-
-    Timer.periodic(oneSec, (timer){
-      if(timer.tick == seconds) {
-        Navigator.of(context).pop();
-        timer.cancel();
-      }
-    });
-    showDialog(
-      barrierDismissible: true,
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(title),
-            content: Text((msg)),
         )
     );
   }

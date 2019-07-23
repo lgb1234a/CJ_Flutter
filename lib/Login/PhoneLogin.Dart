@@ -12,6 +12,7 @@ import 'package:cajian/Base/NIMSDKBridge.dart';
 import 'dart:async';
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'LoginManager.dart';
+import 'package:cajian/Base/Hybrid.dart';
 
 class PhoneLoginWidget extends StatefulWidget {
   PhoneLoginState createState() {
@@ -97,12 +98,12 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   // 登录
   Future<bool> login(BuildContext context) async {
     if(_phoneController.text.trim().length != 11) {
-      showTip(context, '参数错误', '请输入正确的手机号', 2);
+      Hybird.showTip('请输入正确的手机号');
       return false;
     }
 
     if(_codeController.text.trim().length != 6) {
-      showTip(context, '参数错误', '请输入正确的验证码', 2);
+      Hybird.showTip('请输入正确的验证码');
       return false;
     }
 
@@ -112,7 +113,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
       bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
     }else {
-      showTip(context, '请求失败', response.error.msg, 2);
+      Hybird.showTip(response.error.msg);
       return false;
     }
   }
@@ -183,7 +184,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                     ),
                     onPressed: _countdownTime == 0 ?(){
                       if(_phoneController.text.trim().length != 11) {
-                        showTip(context, '参数错误', '请输入正确的手机号', 2);
+                        Hybird.showTip('请输入正确的手机号');
                         return;
                       }
 
@@ -198,12 +199,12 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                         String phone = _phoneController.text.trim();
                         sendAuthCode(phone).then((data){
                           if(data.success) {
-                            showTip(context, '验证码', '发送成功', 2);
+                            Hybird.showTip('验证码发送成功');
                           }else {
-                            showTip(context, '发送失败', data.error.msg, 2);
+                            Hybird.showTip('发送失败:'+data.error.msg);
                           }
                         }).catchError((){
-                          showTip(context, '网络异常', '网络开小差了～', 2);
+                          Hybird.showTip('网络开小差了～');
                         });
                       }
                     } : null,
@@ -250,7 +251,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                         }
                       }).catchError((){
                         loading(false);
-                        showTip(context, '网络异常', '网络开小差了～', 2);
+                        Hybird.showTip('网络开小差了～');
                       }).whenComplete(()=> loading(false));
                     }: null,
                 ),

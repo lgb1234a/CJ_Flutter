@@ -1,9 +1,9 @@
-import 'package:cajian/Login/LoginManager.dart';
 /**
  *  Created by chenyn on 2019-07-12
  *  密码登录
  */
 
+import 'package:cajian/Login/LoginManager.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Base/CJRequestEngine.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/NIMSDKBridge.dart';
 import 'dart:async';
 import 'package:cajian/Base/NotificationCenter.dart';
+import 'package:cajian/Base/Hybrid.dart';
 
 class PwdLoginWidget extends StatefulWidget {
   PwdLoginState createState() {
@@ -98,12 +99,12 @@ class PwdLoginState extends State<PwdLoginWidget> {
   // 登录
   Future<bool> login(BuildContext context) async {
     if(_phoneController.text.trim().length != 11) {
-      showTip(context, '参数错误', '请输入正确的手机号', 2);
+      Hybird.showTip('请输入正确的手机号');
       return false;
     }
 
     if(_pwdController.text.trim().length == 0) {
-      showTip(context, '参数错误', '密码不能为空', 2);
+      Hybird.showTip('密码不能为空');
       return false;
     }
 
@@ -113,7 +114,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
       bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
     }else {
-      showTip(context, '请求失败', response.error.msg, 2);
+      Hybird.showTip(response.error.msg);
       return false;
     }
   }
@@ -207,7 +208,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
                         }
                       }).catchError((e){
                         loading(false);
-                        showTip(context, '网络异常', '网络开小差了～', 2);
+                        Hybird.showTip('网络开小差了～');
                       }).whenComplete(()=> loading(false));
                     }: null,
                 ),
