@@ -32,7 +32,13 @@ class SettingState extends State<SettingWidget> {
       return null;
     },
 
-    separatorBuilder: (BuildContext context, int index) => const Divider(indent: 16.0),
+    separatorBuilder: (BuildContext context, int index) {
+      SettingModel model = settingCellModels[index];
+      if(model.needSeparatorLine) {
+        return const Divider(indent: 16.0);
+      }
+      return const Divider(height: 0);
+    },
   );
 
   @override

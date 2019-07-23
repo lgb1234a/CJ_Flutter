@@ -29,6 +29,7 @@ class MineListCellOthers extends StatelessWidget {
               new Text(model.title, ),
               Expanded(flex: 1, child: SizedBox(),),
               new Icon(Icons.arrow_forward_ios, size: 16,),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 6),),
             ],
           ),
         ),
@@ -42,8 +43,24 @@ class MineListCellOthers extends StatelessWidget {
 class MineListCellSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 8,
+      color: MainBgColor,
+    );
+  }
+}
+
+class MineListProfileHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 103,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          
+        ],
+      )
     );
   }
 }

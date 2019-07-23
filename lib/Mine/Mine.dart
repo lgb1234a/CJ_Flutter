@@ -21,7 +21,6 @@ class MineState extends State<MineWidget> {
   Widget build(BuildContext context) {
 
     ListView mineTable = ListView.separated(
-      padding: const EdgeInsets.all(8.0),
       itemCount: mineCellModels.length,
       itemBuilder: (BuildContext context, int index) 
       {
@@ -41,7 +40,13 @@ class MineState extends State<MineWidget> {
           },
         );
       },
-      separatorBuilder: (BuildContext context, int index) => const Divider(indent: 16.0),
+      separatorBuilder: (BuildContext context, int index) {
+        MineModel model = mineCellModels[index];
+        if(model.needSeparatorLine) {
+          return const Divider(indent: 16.0);
+        }
+        return const Divider(height: 0);
+      },
     );
 
     return new Scaffold(

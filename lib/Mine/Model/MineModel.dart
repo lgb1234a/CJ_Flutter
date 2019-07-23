@@ -16,8 +16,9 @@ class MineModel {
   TapCallback onTap;
   String title;
   String icon;
+  bool   needSeparatorLine;
   
-  MineModel(this.type, this.title, this.icon, this.onTap);
+  MineModel(this.type, this.title, this.icon, this.onTap, {this.needSeparatorLine = false});
 }
 
 final List<MineModel> mineCellModels = [
@@ -35,11 +36,11 @@ final List<MineModel> mineCellModels = [
 
   MineModel(MineCellType.Others, '我的钱包', 'images/icon_settings_alipay@2x.png', (BuildContext ctx)=>{
 
-  }),
+  }, needSeparatorLine: true),
 
   MineModel(MineCellType.Others, '云钱包', 'images/icon_setting_MFWallet@2x.png', (BuildContext ctx)=>{
 
-  }),
+  }, needSeparatorLine: true),
 
   MineModel(MineCellType.Others, '我的收款码', 'images/icon_settings_paycode@2x.png', (BuildContext ctx)=>{
 
@@ -49,19 +50,19 @@ final List<MineModel> mineCellModels = [
 
   MineModel(MineCellType.Others, '收藏', 'images/icon_setting_collect@2x.png', (BuildContext ctx)=>{
 
-  }),
+  }, needSeparatorLine: true),
 
   MineModel(MineCellType.Others, '分享到微信', 'images/icon_setting_wx@2x.png', (BuildContext ctx)=>{
 
-  }),
+  }, needSeparatorLine: true),
 
   MineModel(MineCellType.Others, '帮助', 'images/icon_settings_about@2x.png', (BuildContext ctx)=>{
 
-  }),
+  }, needSeparatorLine: true),
 
   MineModel(MineCellType.Others, '联系客服', 'images/icon_setting_service@2x.png', (BuildContext ctx)=>{
 
-  }),
+  }, needSeparatorLine: true),
 
   MineModel(MineCellType.Others, '一键复制通讯录', 'images/icon_setting_copy_contacts@2x.png', (BuildContext ctx)=>{
 

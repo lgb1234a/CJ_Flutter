@@ -33,7 +33,8 @@ class SettingSeparatorCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 8
+      height: 8,
+      color: MainBgColor,
     );
   }
 }
