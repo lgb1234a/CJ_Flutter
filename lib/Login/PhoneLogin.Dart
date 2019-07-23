@@ -30,7 +30,6 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _phoneController.addListener((){
       _textChange();
@@ -74,14 +73,14 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   void startCountdownTimer() {
     const oneSec = const Duration(seconds: 1);
 
-    var callback = (timer) => {
+    var callback = (timer){
       setState(() {
         if (_countdownTime < 1) {
           _timer.cancel();
         } else {
           _countdownTime = _countdownTime - 1;
         }
-      })
+      });
     };
 
     _timer = Timer.periodic(oneSec, callback);

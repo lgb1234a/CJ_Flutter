@@ -8,12 +8,12 @@ import 'SessionChat.dart';
 
 class SessionWidget extends StatefulWidget {
 
-  _sessionState createState() {
-    return new _sessionState();
+  SessionState createState() {
+    return new SessionState();
   }
 }
 
-class _sessionState extends State<SessionWidget> {
+class SessionState extends State<SessionWidget> {
 
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   @override

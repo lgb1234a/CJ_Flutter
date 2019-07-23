@@ -8,13 +8,12 @@ import 'package:cajian/Mine/Model/MineModel.dart';
 
 class MineListCellOthers extends StatelessWidget {
 
-  MineModel model;
+  final MineModel model;
   MineListCellOthers(this.model);
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = getSize(context);
-    // TODO: implement build
     return GestureDetector(
         child: Container(
           height: 48,
@@ -41,7 +40,6 @@ class MineListCellOthers extends StatelessWidget {
 class MineListCellSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SizedBox(
       height: 8,
     );

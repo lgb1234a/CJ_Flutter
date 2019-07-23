@@ -6,19 +6,18 @@ import 'package:flutter/material.dart';
 
 class SessionChatWidget extends StatefulWidget {
 
-  _sessionChatState createState() {
-    return new _sessionChatState();
+  SessionChatState createState() {
+    return new SessionChatState();
   }
 
 }
 
-class _sessionChatState extends State<SessionChatWidget> {
+class SessionChatState extends State<SessionChatWidget> {
 
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
         title: const Text(

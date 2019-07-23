@@ -38,7 +38,6 @@ class _CajianState extends State<CajianWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     // LoginManager().registerWeChat('wx0f56e7c5e6daa01a');

@@ -38,7 +38,6 @@ class SettingState extends State<SettingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: new AppBar(
         title: Text('设置', style: TextStyle(color: BlackColor),),

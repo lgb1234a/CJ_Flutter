@@ -5,8 +5,6 @@
 
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
-
 
 class NIMSDKBridge {
   static const _platform = const MethodChannel('com.zqtd.cajian/NIMSDK');

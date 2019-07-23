@@ -14,12 +14,12 @@ import 'dart:async';
 import 'package:cajian/Base/NotificationCenter.dart';
 
 class PwdLoginWidget extends StatefulWidget {
-  _pwdLoginState createState() {
-    return new _pwdLoginState();
+  PwdLoginState createState() {
+    return new PwdLoginState();
   }
 }
 
-class _pwdLoginState extends State<PwdLoginWidget> {
+class PwdLoginState extends State<PwdLoginWidget> {
 
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _pwdController = new TextEditingController();
@@ -31,7 +31,6 @@ class _pwdLoginState extends State<PwdLoginWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _phoneController.addListener((){
       _textChange();
@@ -75,14 +74,14 @@ class _pwdLoginState extends State<PwdLoginWidget> {
   void startCountdownTimer() {
     const oneSec = const Duration(seconds: 1);
 
-    var callback = (timer) => {
+    var callback = (timer){
       setState(() {
         if (_countdownTime < 1) {
           _timer.cancel();
         } else {
           _countdownTime = _countdownTime - 1;
         }
-      })
+      });
     };
 
     _timer = Timer.periodic(oneSec, callback);

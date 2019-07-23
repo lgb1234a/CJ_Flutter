@@ -7,13 +7,12 @@ import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/Model/SettingModel.dart';
 class SettingFuncitonCell extends StatelessWidget
 {
-  SettingModel model;
+  final SettingModel model;
 
   SettingFuncitonCell(this.model);
   @override
   Widget build(BuildContext context) {
     Size screenSize = getSize(context);
-    // TODO: implement build
     return GestureDetector(
       child: Container(
         height: 48,
@@ -33,7 +32,6 @@ class SettingFuncitonCell extends StatelessWidget
 class SettingSeparatorCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       height: 8
     );
@@ -41,12 +39,11 @@ class SettingSeparatorCell extends StatelessWidget {
 }
 
 class SettingAccessoryCell extends StatelessWidget {
-  SettingModel model;
+  final SettingModel model;
   SettingAccessoryCell(this.model);
   @override
   Widget build(BuildContext context) {
     Size screenSize = getSize(context);
-    // TODO: implement build
     return GestureDetector(
       child: Container(
         height: 48,

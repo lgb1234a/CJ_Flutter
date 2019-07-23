@@ -21,14 +21,14 @@ class QueryStringPair {
 
   QueryStringPair(this.key, this.value);
 
-  String URLEncodedStringValue() {
+  String uRLEncodedStringValue() {
     if(value == null || value.length == 0) {
       return '';
     }else if(value is List){
       return '$key='+value.toString();
     }else if(value is Map) {
       QueryStringPair newPair = QueryStringPair(key, value);
-      return newPair.URLEncodedStringValue();
+      return newPair.uRLEncodedStringValue();
     }
     else {
       return '$key=$value';
@@ -38,7 +38,6 @@ class QueryStringPair {
 
 class CJRequestEngine {
   static final debug = true;
-  static BuildContext context = null;
   static final host = 'https://api.youxi2018.cn';
   static final baseUrl = host;
 
@@ -132,7 +131,7 @@ class CJRequestEngine {
     var pairStrings = [];
     for (var key in params.keys) {
       QueryStringPair pair = QueryStringPair(key, params[key]);
-      pairStrings.add(pair.URLEncodedStringValue());
+      pairStrings.add(pair.uRLEncodedStringValue());
     }
 
     return pairStrings.join('&')+'&'+query;
@@ -142,7 +141,7 @@ class CJRequestEngine {
   static Future<Response<Map<String, dynamic>>> _httpJson(
       String method, String uri,
       {Map<String, dynamic> data, bool dataIsJson = true}) {
-    var enToken = accid == null ? "" : Uri.encodeFull(accid);
+    // var enToken = accid == null ? "" : Uri.encodeFull(accid);
 
     /// 如果为 get方法，则进行参数拼接
     if (method == "get") {

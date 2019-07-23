@@ -9,8 +9,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 Size getSize(BuildContext context) {
-  final Size Screen_Size = MediaQuery.of(context).size;
-  return Screen_Size;
+  final Size screenSize = MediaQuery.of(context).size;
+  return screenSize;
 }
 
 final Color MainBgColor = Color(0xFFECECEC);

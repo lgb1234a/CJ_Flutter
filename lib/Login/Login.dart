@@ -4,24 +4,22 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:cajian/Base/CJUtils.dart';
 import 'LoginManager.dart';
 import 'PhoneLogin.dart';
 import 'PwdLogin.dart';
 
 class LoginWidget extends StatefulWidget {
 
-  _loginState createState() {
-      return new _loginState();
+  LoginState createState() {
+      return new LoginState();
   }
 }
 
-class _loginState extends State<LoginWidget> {
+class LoginState extends State<LoginWidget> {
 
   @override 
   Widget build(BuildContext context) {
 
-      Size screenSize = getSize(context);
       return new Scaffold(
         body: new Stack(
           fit: StackFit.expand,

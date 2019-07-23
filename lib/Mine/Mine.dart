@@ -44,7 +44,6 @@ class MineState extends State<MineWidget> {
       separatorBuilder: (BuildContext context, int index) => const Divider(indent: 16.0),
     );
 
-    // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
         title: const Text(

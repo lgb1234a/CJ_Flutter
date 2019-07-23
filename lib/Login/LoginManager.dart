@@ -2,10 +2,7 @@
  *  Created by chenyn on 2019-07-11
  *  登录状态管理类
  */
-import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Base/NotificationCenter.dart';
-import 'package:wechat/wechat.dart';
-import 'package:cajian/Base/Hybrid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cajian/Base/NIMSDKBridge.dart';
 
@@ -84,7 +81,7 @@ class LoginManager {
 
   // 获取登录token
   getAccessWeChatToken() {
-    Map<String, String> arguments = {'scope':'snsapi_userinfo', 'state': 'get_access_token_bind'};
+    // Map<String, String> arguments = {'scope':'snsapi_userinfo', 'state': 'get_access_token_bind'};
   }
 }
 
