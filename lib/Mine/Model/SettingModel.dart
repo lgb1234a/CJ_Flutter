@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cajian/Login/LoginManager.dart';
+import 'package:cajian/Base/CJUtils.dart';
 
 enum SettingCellType {
   Function,    // 功能按钮
@@ -56,9 +57,13 @@ final List<SettingModel> settingCellModels = [
   SettingModel(SettingCellType.Separator, null, null, null, null),
 
   SettingModel(SettingCellType.Function, '退出登录', null, Color(0xFFFA5151), (BuildContext ctx){
-
-    Navigator.pop(ctx);
-    LoginManager().logout();
+    dialog(ctx, '提示', '确定要退出登录吗？', '确定', '取消', (){
+      Navigator.pop(ctx);
+      LoginManager().logout();
+    }, (){
+      
+    });
+    
   }),
 ];
 
