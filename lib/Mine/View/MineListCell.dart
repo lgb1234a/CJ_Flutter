@@ -13,21 +13,26 @@ class MineListCellOthers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = getSize(context);
     // TODO: implement build
-    return SizedBox(
-      height: 40,
-      child: GestureDetector(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            new Icon(Icons.settings, size: 22),
-            new Text(model.title, ),
-            new Icon(Icons.arrow_forward_ios, size: 20,)
-          ],
+    return GestureDetector(
+        child: Container(
+          height: 48,
+          width: screenSize.width,
+          color: Color(0x00FFFFFF),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Icon(Icons.settings, size: 20),
+              new Text(model.title, ),
+              new Icon(Icons.arrow_forward_ios, size: 16,)
+            ],
+          ),
         ),
-        onTap: model.onTap,
-      )
+        onTap: (){
+          model.onTap(context);
+        },
     );
   }
 }

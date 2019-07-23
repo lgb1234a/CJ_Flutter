@@ -10,22 +10,22 @@ import 'package:cajian/Mine/View/MineListCell.dart';
 
 class MineWidget extends StatefulWidget {
 
-  _mineState createState() {
-    return new _mineState();
+  MineState createState() {
+    return new MineState();
   }
 }
 
-class _mineState extends State<MineWidget> {
+class MineState extends State<MineWidget> {
 
   @override
   Widget build(BuildContext context) {
 
     ListView mineTable = ListView.separated(
       padding: const EdgeInsets.all(8.0),
-      itemCount: entries.length,
+      itemCount: mineCellModels.length,
       itemBuilder: (BuildContext context, int index) 
       {
-        MineModel model = entries[index];
+        MineModel model = mineCellModels[index];
         if(model.type == MineCellType.MineCellTypeOthers) {
           return new MineListCellOthers(model);
         }else if(model.type == MineCellType.MineCellTypeSeparator) {
@@ -36,8 +36,8 @@ class _mineState extends State<MineWidget> {
               padding: new EdgeInsets.all(10.0),
               child: new Text("Row $index")),
           onTap: () {
-            MineModel model = entries[index];
-            model.onTap();
+            MineModel model = mineCellModels[index];
+            model.onTap(context);
           },
         );
       },
