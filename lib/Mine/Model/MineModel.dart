@@ -27,8 +27,9 @@ class MineModel {
     {this.needSeparatorLine = false}
   );
 
-  Future<Map<String, dynamic>> MineInfo() async {
-    return await NIMSDKBridge.currentUserInfo();
+  Future<Map<String, dynamic>> mineInfo() async {
+    Map info = await NIMSDKBridge.currentUserInfo();
+    return info;
   }
 }
 

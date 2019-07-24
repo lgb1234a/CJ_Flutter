@@ -67,11 +67,16 @@ class MineListProfileState extends State<MineListProfileHeader>
   String _avatarUrl;
   String _showName;
   String _cajian_no;
-  
-  @override
-  Widget build(BuildContext context) {
 
-    widget.model.MineInfo().then((value){
+  @override
+  initState() {
+    super.initState();
+
+    fetchInfo();
+  }
+
+  fetchInfo() {
+    widget.model.mineInfo().then((value){
       setState(() {
         _avatarUrl = value['avatarUrl'];
         _showName  = value['name'];
@@ -80,6 +85,10 @@ class MineListProfileState extends State<MineListProfileHeader>
     }).catchError((error){
       debugPrint(error.message);
     });
+  }
+  
+  @override
+  Widget build(BuildContext context) {
 
     return Container(
       height: 103,
