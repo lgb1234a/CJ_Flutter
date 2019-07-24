@@ -9,7 +9,6 @@ import 'Session/Session.dart';
 import 'Contacts/Contacts.dart';
 import 'Mine/Mine.dart';
 import 'Login/Login.dart';
-import 'Login/LoginManager.dart';
 import 'Base/NIMSDKBridge.dart';
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';

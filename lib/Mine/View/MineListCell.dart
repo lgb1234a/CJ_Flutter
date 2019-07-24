@@ -66,7 +66,7 @@ class MineListProfileState extends State<MineListProfileHeader>
 
   String _avatarUrl;
   String _showName;
-  String _cajian_no;
+  String _cajianNo;
 
   @override
   initState() {
@@ -80,7 +80,7 @@ class MineListProfileState extends State<MineListProfileHeader>
       setState(() {
         _avatarUrl = value['avatarUrl'];
         _showName  = value['name'];
-        _cajian_no = value['cajian_no'];
+        _cajianNo = value['cajian_no'];
       });
     }).catchError((error){
       debugPrint(error.message);
@@ -108,7 +108,7 @@ class MineListProfileState extends State<MineListProfileHeader>
                 style: TextStyle(fontSize: 17, color: BlackColor),
               ),
               Text(
-                '擦肩号：$_cajian_no', 
+                '擦肩号：$_cajianNo', 
                 style: TextStyle(fontSize: 14, color: Color(0xFF9B9B9B)),
               )
             ],
