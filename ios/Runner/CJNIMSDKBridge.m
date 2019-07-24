@@ -8,6 +8,7 @@
 
 #import "CJNIMSDKBridge.h"
 #import <NIMSDK/NIMSDK.h>
+#import <NIMKit.h>
 
 static FlutterMethodCall *_call = nil;
 static FlutterResult _result = nil;
@@ -84,6 +85,26 @@ static FlutterResult _result = nil;
             CJNIMSDKBridge.result(@(NO));
         }
     }];
+}
+
+// 自动登录
++ (void)autoLogin:(NSArray *)params
+{
+    [[NIMSDK sharedSDK].loginManager autoLogin:params.firstObject token:params[1]];
+}
+
+// 返回用户信息
++ (void)currentUserInfo
+{
+    NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
+    NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:accid option:nil];
+    NIMUser *me = [[NIMSDK sharedSDK].userManager userInfo:accid];
+    NSDictionary *cjExt = [NSDictionary cj_dictionary:me.userInfo.ext];
+    CJNIMSDKBridge.result(@{
+                            @"name": info.showName,
+                            @"avatarUrl": info.avatarUrlString,
+                            @"cajian_no": cjExt[@"cajian_id"]
+                            });
 }
 
 @end

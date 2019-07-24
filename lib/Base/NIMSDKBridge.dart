@@ -23,4 +23,18 @@ class NIMSDKBridge {
     bool success = await _platform.invokeMethod('doLogin:', [accid, token, name]);
     return success;
   }
+
+  // 自动登录
+  static void autoLogin(
+    String accid, 
+    String token, 
+    String name){
+    _platform.invokeMethod('autoLogin:', [accid, token, name]);
+  }
+
+  // 当前用户信息
+  static Future<Map<String, dynamic>>currentUserInfo() async {
+    Map<String, dynamic> info = await _platform.invokeMethod('currentUserInfo');
+    return info;
+  }
 }

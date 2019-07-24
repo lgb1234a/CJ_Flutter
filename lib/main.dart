@@ -13,6 +13,7 @@ import 'Login/LoginManager.dart';
 import 'Base/NIMSDKBridge.dart';
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cajian/Base/NIMSDKBridge.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
@@ -58,11 +59,7 @@ class _CajianState extends State<CajianWidget> {
       if(accid != null && token != null) 
       {
         _loginedSuccess();
-        LoginManager().login(accid, token).then((success){
-          if(!success) {
-            LoginManager().logout();
-          }
-        });
+        NIMSDKBridge.autoLogin(accid, token, '');
       }
     });
   }

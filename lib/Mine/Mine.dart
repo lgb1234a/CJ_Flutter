@@ -29,16 +29,10 @@ class MineState extends State<MineWidget> {
           return new MineListCellOthers(model);
         }else if(model.type == MineCellType.Separator) {
           return new MineListCellSeparator();
+        }else if(model.type == MineCellType.Profile) {
+          return MineListProfileHeader(model);
         }
-        return new GestureDetector(
-          child: new Padding(
-              padding: new EdgeInsets.all(10.0),
-              child: new Text("Row $index")),
-          onTap: () {
-            MineModel model = mineCellModels[index];
-            model.onTap(context);
-          },
-        );
+        return null;
       },
       separatorBuilder: (BuildContext context, int index) {
         MineModel model = mineCellModels[index];

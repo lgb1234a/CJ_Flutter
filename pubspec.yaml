@@ -62,6 +62,7 @@ flutter:
    - images/icon_settings_paycode@2x.png
    - images/icon_setting_service@2x.png
    - images/icon_setting_copy_contacts@2x.png
+   - images/icon_settings_gray_qr@2x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

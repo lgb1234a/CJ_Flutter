@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cajian/Mine/Setting.dart';
+import 'package:cajian/Base/NIMSDKBridge.dart';
 
 enum MineCellType {
   Profile,    // 用户信息
@@ -25,6 +26,10 @@ class MineModel {
     this.onTap, 
     {this.needSeparatorLine = false}
   );
+
+  Future<Map<String, dynamic>> MineInfo() async {
+    return await NIMSDKBridge.currentUserInfo();
+  }
 }
 
 final List<MineModel> mineCellModels = [

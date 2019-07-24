@@ -1,9 +1,25 @@
 PODS:
   - Flutter (1.0.0)
+  - M80AttributedLabel (1.6.3)
   - MBProgressHUD (1.1.0)
+  - NIMKit (2.11.11):
+    - NIMKit/Lite (= 2.11.11)
+  - NIMKit/Core (2.11.11):
+    - M80AttributedLabel (~> 1.6.3)
+    - SDWebImage (~> 4.4.6)
+    - Toast (~> 3.0)
+    - TZImagePickerController (~> 3.0.7)
+  - NIMKit/Lite (2.11.11):
+    - NIMKit/Core
+    - NIMSDK_LITE (~> 6.5.5)
   - NIMSDK_LITE (6.5.5)
+  - SDWebImage (4.4.7):
+    - SDWebImage/Core (= 4.4.7)
+  - SDWebImage/Core (4.4.7)
   - shared_preferences (0.0.1):
     - Flutter
+  - Toast (3.1.0)
+  - TZImagePickerController (3.0.9)
   - wechat (0.0.5):
     - Flutter
     - WechatOpenSDK
@@ -12,6 +28,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - MBProgressHUD
+  - NIMKit
   - NIMSDK_LITE
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - wechat (from `.symlinks/plugins/wechat/ios`)
@@ -19,8 +36,13 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - M80AttributedLabel
     - MBProgressHUD
+    - NIMKit
     - NIMSDK_LITE
+    - SDWebImage
+    - Toast
+    - TZImagePickerController
     - WechatOpenSDK
 
 EXTERNAL SOURCES:
@@ -33,12 +55,17 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  NIMKit: 6c1d0d9d811fdf1c3280a033a194506dcdfd45ce
   NIMSDK_LITE: 8af68f798030906861a61459f93dba2d4fd2631d
+  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
+  Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
+  TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
   wechat: 2297896f15d800c7da9ea3716ffe069bea511919
   WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
 
-PODFILE CHECKSUM: 35a59eacdc58b6be2513f62e7bb0f312185e7f46
+PODFILE CHECKSUM: 328000f93ec11c5dd64490b19b55167937d2383c
 
 COCOAPODS: 1.7.2
