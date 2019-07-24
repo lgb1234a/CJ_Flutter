@@ -75,15 +75,12 @@ class MineListProfileState extends State<MineListProfileHeader>
     fetchInfo();
   }
 
-  fetchInfo() {
-    widget.model.mineInfo().then((value){
-      setState(() {
-        _avatarUrl = value['avatarUrl'];
-        _showName  = value['name'];
-        _cajianNo = value['cajian_no'];
-      });
-    }).catchError((error){
-      debugPrint(error.message);
+  fetchInfo() async {
+    dynamic info = await widget.model.mineInfo();
+    setState(() {
+        _avatarUrl = info['avatarUrl'];
+        _showName  = info['name'];
+        _cajianNo = info['cajian_no'];
     });
   }
   
@@ -92,6 +89,7 @@ class MineListProfileState extends State<MineListProfileHeader>
 
     return Container(
       height: 103,
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -102,6 +100,7 @@ class MineListProfileState extends State<MineListProfileHeader>
           Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 _showName??'',

@@ -35,9 +35,8 @@ class NIMSDKBridge {
   }
 
   // 当前用户信息
-  static Future<Map<String, dynamic>>currentUserInfo() async {
-    Map<String, dynamic> info = await _platform.invokeMethod('currentUserInfo');
-    debugPrint(info['name']);
+  static Future<dynamic>currentUserInfo() async {
+    dynamic info = await _platform.invokeMethod('currentUserInfo');
     return info;
   }
 }
