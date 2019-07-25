@@ -17,6 +17,7 @@ class MineModel {
   TapCallback onTap;
   String title;
   String icon;
+  String tipIcon;
   bool   needSeparatorLine;
   
   MineModel(
@@ -24,7 +25,7 @@ class MineModel {
     this.title, 
     this.icon, 
     this.onTap, 
-    {this.needSeparatorLine = false}
+    {this.tipIcon, this.needSeparatorLine = false}
   );
 
   Future<dynamic> mineInfo() async {
@@ -52,7 +53,7 @@ final List<MineModel> mineCellModels = [
 
   MineModel(MineCellType.Others, '云钱包', 'images/icon_setting_MFWallet@2x.png', (BuildContext ctx)=>{
 
-  }, needSeparatorLine: true),
+  }, needSeparatorLine: true, tipIcon: 'images/icon_setting_MFWallet_recommend@2x.png'),
 
   MineModel(MineCellType.Others, '我的收款码', 'images/icon_settings_paycode@2x.png', (BuildContext ctx)=>{
 

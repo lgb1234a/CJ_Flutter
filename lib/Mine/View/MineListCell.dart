@@ -27,6 +27,8 @@ class MineListCellOthers extends StatelessWidget {
               new Image.asset(model.icon),
               new Padding(padding: EdgeInsets.symmetric(horizontal: 12),),
               new Text(model.title, ),
+              new Padding(padding: EdgeInsets.symmetric(horizontal: 5),),
+              model.tipIcon != null ? new Image.asset(model.tipIcon) : Divider(height: 0),
               Expanded(flex: 1, child: SizedBox(),),
               new Icon(Icons.arrow_forward_ios, size: 16,),
               Padding(padding: EdgeInsets.symmetric(horizontal: 6),),
