@@ -20,9 +20,6 @@ PODS:
     - Flutter
   - Toast (3.1.0)
   - TZImagePickerController (3.0.9)
-  - wechat (0.0.5):
-    - Flutter
-    - WechatOpenSDK
   - WechatOpenSDK (1.8.4)
 
 DEPENDENCIES:
@@ -31,7 +28,6 @@ DEPENDENCIES:
   - NIMKit
   - NIMSDK_LITE
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
-  - wechat (from `.symlinks/plugins/wechat/ios`)
   - WechatOpenSDK
 
 SPEC REPOS:
@@ -50,8 +46,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/flutter/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
-  wechat:
-    :path: ".symlinks/plugins/wechat/ios"
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
@@ -63,7 +57,6 @@ SPEC CHECKSUMS:
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
-  wechat: 2297896f15d800c7da9ea3716ffe069bea511919
   WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
 
 PODFILE CHECKSUM: 328000f93ec11c5dd64490b19b55167937d2383c
