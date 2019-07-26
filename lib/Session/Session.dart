@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'SessionChat.dart';
+import 'package:session_list_view_controller/session_list_view_controller.dart';
 
 class SessionWidget extends StatefulWidget {
 
@@ -19,31 +20,6 @@ class SessionState extends State<SessionWidget> {
   @override
   Widget build(BuildContext context) {
 
-    final List<String> entries = <String>['A', 'B', 'C'];
-
-    ListView sessionList = ListView.separated(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: entries.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new GestureDetector(
-          child: new Padding(
-              padding: new EdgeInsets.all(10.0),
-              child: new Text("Row $index")),
-          onTap: () {
-            setState(() {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (BuildContext context) {
-                    return new SessionChatWidget();
-                  })
-              );
-            });
-          },
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
-    );
-
     return new Scaffold(
       appBar: new AppBar(
         title: const Text(
@@ -53,7 +29,7 @@ class SessionState extends State<SessionWidget> {
         backgroundColor: Color(0xFFECECEC),
         elevation: 0.01,
       ),
-      body: sessionList,
+      body: SessionList(),
     );
   }
 }
