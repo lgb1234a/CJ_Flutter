@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'SessionChat.dart';
 import 'package:session_list_view_controller/session_list_view_controller.dart';
 
-class SessionWidget extends StatefulWidget {
+class SessionListWidget extends StatefulWidget {
 
-  SessionState createState() {
-    return new SessionState();
+  SessionListState createState() {
+    return new SessionListState();
   }
 }
 
-class SessionState extends State<SessionWidget> {
+class SessionListState extends State<SessionListWidget> {
 
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   @override
@@ -29,8 +29,12 @@ class SessionState extends State<SessionWidget> {
         backgroundColor: Color(0xFFECECEC),
         elevation: 0.01,
       ),
-      body: SessionList(),
+      body: SessionList(onSessionListViewControllerCreated: onSessionListViewCreated,),
     );
+  }
+
+  onSessionListViewCreated(SessionListViewController controller) {
+    
   }
 }
 

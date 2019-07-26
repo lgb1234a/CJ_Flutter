@@ -10,6 +10,11 @@
 #import "NIMAvatarImageView.h"
 #import "NIMKitUtil.h"
 #import "NIMKit.h"
+#import <Flutter/Flutter.h>
+
+@interface CJSessionListViewController()
+
+@end
 
 @implementation CJSessionListViewController
 
@@ -195,8 +200,11 @@
              atIndexPath:(NSIndexPath *)indexPath{};
 
 - (void)onSelectedRecent:(NIMRecentSession *)recentSession atIndexPath:(NSIndexPath *)indexPath{
-    NIMSessionViewController *vc = [[NIMSessionViewController alloc] initWithSession:recentSession.session];
-    [self.navigationController pushViewController:vc animated:YES];
+//    NIMSessionViewController *vc = [[NIMSessionViewController alloc] initWithSession:recentSession.session];
+//    [self.navigationController pushViewController:vc animated:YES];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectedCell:)]) {
+        [self.delegate didSelectedCell:recentSession.session];
+    }
 }
 
 

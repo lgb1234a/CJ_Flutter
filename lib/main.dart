@@ -5,7 +5,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'Session/Session.dart';
+import 'Session/SessionList.dart';
 import 'Contacts/Contacts.dart';
 import 'Mine/Mine.dart';
 import 'Login/Login.dart';
@@ -16,7 +16,7 @@ import 'package:cajian/Base/NIMSDKBridge.dart';
 
 final List<Widget> _rootWidgets = <Widget>[
   // 会话列表
-  new SessionWidget(),
+  new SessionListWidget(),
   // 通讯录
   new ContactsWidget(),
   // 我的

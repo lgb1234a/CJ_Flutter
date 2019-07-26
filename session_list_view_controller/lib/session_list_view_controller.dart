@@ -6,10 +6,15 @@ import 'package:flutter/foundation.dart';
 
 typedef void SessionListViewControllerCreatedCallback(SessionListViewController controller);
 class SessionListViewController {
-  SessionListViewController._(int id)
-      : _channel = MethodChannel('plugins/session_list_$id');
 
-  final MethodChannel _channel;
+  SessionListViewController(int id, BuildContext context) {
+    _channel = MethodChannel('plugins/session_list_$id');
+    _channel.setMethodCallHandler(handler);
+    _context = context;
+  }
+
+  MethodChannel _channel;
+  BuildContext _context;
 
   Future<void> start() async {
     return _channel.invokeMethod('start');
@@ -18,12 +23,19 @@ class SessionListViewController {
   Future<void> stop() async {
     return _channel.invokeMethod('stop');
   }
+
+  Future<dynamic> handler(MethodCall call) async {
+    debugPrint(call.method);
+    if(call.method == 'push_session') {
+      // Navigator.push(_context, )
+    }
+  }
 }
 
 
 class SessionList extends StatefulWidget {
-  SessionState createState() {
-    return SessionState();
+  SessionListState createState() {
+    return SessionListState();
   }
 
   const SessionList({
@@ -35,13 +47,15 @@ class SessionList extends StatefulWidget {
 }
 
 
-class SessionState extends State<SessionList> {
+class SessionListState extends State<SessionList> {
 
-  Widget sessionListWidget() {
+  Widget sessionListWidget(BuildContext context) {
     if(defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
         viewType: 'plugins/session_list',
-        onPlatformViewCreated: _onPlatformViewCreated,
+        onPlatformViewCreated: (int id){
+          _onPlatformViewCreated(id, context);
+        },
         creationParams: <String,dynamic>{
           // 传递初始化参数
         },
@@ -51,15 +65,16 @@ class SessionState extends State<SessionList> {
     return Text('activity_indicator插件尚不支持$defaultTargetPlatform ');
   }
 
-  void _onPlatformViewCreated(int id){
+  void _onPlatformViewCreated(int id, BuildContext context){
     if(widget.onSessionListViewControllerCreated == null){
       return;
     }
-    widget.onSessionListViewControllerCreated(new SessionListViewController._(id));
+    SessionListViewController vc = SessionListViewController(id, context);
+    widget.onSessionListViewControllerCreated(vc);
   }
 
   @override
   Widget build(BuildContext context) {
-    return sessionListWidget();
+    return sessionListWidget(context);
   }
 }

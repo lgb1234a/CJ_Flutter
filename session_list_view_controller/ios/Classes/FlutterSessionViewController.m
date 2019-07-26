@@ -1,20 +1,17 @@
 /**
  *  Created by chenyn on 2019-07-26
- *  会话列表页flutter封装
+ *  会话页flutter封装
  */
 
-#import "FlutterSessionListViewController.h"
-#import "CJSessionListViewController.h"
 
-@interface FlutterSessionListViewController () <CJSessionListDelegate>
+#import "FlutterSessionViewController.h"
+#import "CJSessionViewController.h"
 
-@end
-
-@implementation FlutterSessionListViewController
+@implementation FlutterSessionViewController
 {
     int64_t _viewId;
     FlutterMethodChannel *_channel;
-    CJSessionListViewController *_viewController;
+    CJSessionViewController *_viewController;
 }
 
 - (instancetype)initWithWithFrame:(CGRect)frame
@@ -23,13 +20,14 @@
                   binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger
 {
     if([super init]) {
-        NSDictionary *dic = args;
         // 获取参数
-        _viewController = [[CJSessionListViewController alloc] init];
-        _viewController.delegate = self;
+        NSDictionary *dic = args;
+        NIMSession *session = [NIMSession session:dic[@"session_id"]
+                                              type:[dic[@"session_type"] integerValue]] ;
+        _viewController = [[CJSessionViewController alloc] initWithSession:session];
         
         _viewId = viewId;
-        NSString* channelName = [NSString stringWithFormat:@"plugins/session_list_%lld", viewId];
+        NSString* channelName = [NSString stringWithFormat:@"plugins/session_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
         __weak __typeof__(self) weakSelf = self;
         [_channel setMethodCallHandler:^(FlutterMethodCall *  call, FlutterResult  result) {
@@ -57,24 +55,11 @@
         }
 }
 
-- (void)didSelectedCell:(NIMSession *)session
-{
-    NSDictionary *params = @{@"session_id": session.sessionId,
-                             @"session_type": @(session.sessionType)
-                             };
-    
-    [_channel invokeMethod:@"push_session" arguments:params];
-}
-
 
 @end
 
-@interface FlutterSessionListViewControllerFactory ()
+@implementation FlutterSessionViewControllerFactory
 
-@end
-
-
-@implementation FlutterSessionListViewControllerFactory
 {
     NSObject<FlutterBinaryMessenger>*_messenger;
 }
@@ -96,7 +81,7 @@
                                          arguments:(id)args
 {
     
-    FlutterSessionListViewController *v = [[FlutterSessionListViewController
+    FlutterSessionViewController *v = [[FlutterSessionViewController
                                             alloc]
                                            initWithWithFrame:frame
                                            viewIdentifier:viewId
@@ -106,6 +91,5 @@
     return v;
     
 }
-
 
 @end
