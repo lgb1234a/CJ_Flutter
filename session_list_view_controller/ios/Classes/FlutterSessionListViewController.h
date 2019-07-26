@@ -1,6 +1,6 @@
 /**
  *  Created by chenyn on 2019-07-26
- *  会话列表页
+ *  会话列表页flutter封装
  */
 
 

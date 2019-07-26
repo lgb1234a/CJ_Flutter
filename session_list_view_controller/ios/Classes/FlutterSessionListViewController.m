@@ -1,10 +1,10 @@
 /**
  *  Created by chenyn on 2019-07-26
- *  会话列表页
+ *  会话列表页flutter封装
  */
 
 #import "FlutterSessionListViewController.h"
-#import <NIMSessionListViewController.h>
+#import "CJSessionListViewController.h"
 
 @interface FlutterSessionListViewController ()
 
@@ -14,7 +14,7 @@
 {
     int64_t _viewId;
     FlutterMethodChannel *_channel;
-    NIMSessionListViewController *_viewController;
+    CJSessionListViewController *_viewController;
 }
 
 - (instancetype)initWithWithFrame:(CGRect)frame
@@ -25,7 +25,7 @@
     if([super init]) {
         NSDictionary *dic = args;
         // 获取参数
-        _viewController = [[NIMSessionListViewController alloc] init];
+        _viewController = [[CJSessionListViewController alloc] init];
         
         
         _viewId = viewId;
