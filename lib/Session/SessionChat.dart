@@ -63,6 +63,7 @@ class SessionChatState extends State<SessionChatWidget> {
     controller.channel.setMethodCallHandler(handler);
   }
 
+  // 处理事件
   Future<dynamic> handler(MethodCall call) async {
     debugPrint('Native call: '+ call.method + call.arguments.toString());
     

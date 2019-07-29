@@ -23,7 +23,6 @@
                   binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger
 {
     if([super init]) {
-        NSDictionary *dic = args;
         // 获取参数
         _viewController = [[CJSessionListViewController alloc] init];
         _viewController.delegate = self;
@@ -57,6 +56,7 @@
         }
 }
 
+#pragma mark --- CJSessionListDelegate
 - (void)didSelectedCell:(NIMSession *)session
 {
     NSDictionary *params = @{@"session_id": session.sessionId,

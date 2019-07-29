@@ -7,6 +7,10 @@
 #import "FlutterSessionViewController.h"
 #import "CJSessionViewController.h"
 
+@interface FlutterSessionViewController ()<CJSessionDelegate>
+
+@end
+
 @implementation FlutterSessionViewController
 {
     int64_t _viewId;
@@ -25,9 +29,10 @@
         NIMSession *session = [NIMSession session:dic[@"session_id"]
                                               type:[dic[@"session_type"] integerValue]] ;
         _viewController = [[CJSessionViewController alloc] initWithSession:session];
+        _viewController.delegate = self;
         
         _viewId = viewId;
-        NSString* channelName = [NSString stringWithFormat:@"plugins/session_%lld", viewId];
+        NSString *channelName = [NSString stringWithFormat:@"plugins/session_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
         __weak __typeof__(self) weakSelf = self;
         [_channel setMethodCallHandler:^(FlutterMethodCall *  call, FlutterResult  result) {
@@ -54,6 +59,9 @@
             result(FlutterMethodNotImplemented);
         }
 }
+
+
+#pragma mark --- CJSessionDelegate
 
 
 @end

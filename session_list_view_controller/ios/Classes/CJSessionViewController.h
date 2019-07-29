@@ -5,6 +5,14 @@
 
 #import <NIMSessionViewController.h>
 
+@protocol CJSessionDelegate <NSObject>
+
+
+
+@end
+
 @interface CJSessionViewController : NIMSessionViewController
+
+@property (nonatomic, assign) id <CJSessionDelegate>delegate;
 
 @end
