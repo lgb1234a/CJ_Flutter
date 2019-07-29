@@ -39,8 +39,14 @@ class NIMSDKBridge {
   }
 
   // 获取群信息
-  static Future<String>teamInfoById(String teamId) async {
-    String teamName = await _platform.invokeMethod('teamInfo:', [teamId]);
-    return teamName;
+  static Future<dynamic>teamInfoById(String teamId) async {
+    dynamic teamInfo = await _platform.invokeMethod('teamInfo:', [teamId]);
+    return teamInfo;
+  }
+
+  // 获取用户信息
+  static Future<dynamic>userInfoById(String sessionId) async {
+    dynamic userInfo = await _platform.invokeMethod('userInfo:', [sessionId]);
+    return userInfo;
   }
 }

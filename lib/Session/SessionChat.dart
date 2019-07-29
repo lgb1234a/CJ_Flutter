@@ -21,19 +21,25 @@ class SessionChatWidget extends StatefulWidget {
 class SessionChatState extends State<SessionChatWidget> {
 
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  String teamName = '';
+  String showName = '';
   @override
   void initState() {
     super.initState();
 
-    // 获取群信息
-    fetctTeamInfo();
+    widget.sessionType == 0?fetchUserInfo() : fetctTeamInfo();
   }
 
   fetctTeamInfo() async{
-    String _teamName = await NIMSDKBridge.teamInfoById(widget.sessionId);
+    dynamic _teamInfo = await NIMSDKBridge.teamInfoById(widget.sessionId);
     setState(() {
-      teamName = _teamName;
+      showName = _teamInfo['show_name'];
+    });
+  }
+
+  fetchUserInfo() async {
+    dynamic _userInfo = await NIMSDKBridge.userInfoById(widget.sessionId);
+    setState(() {
+      showName = _userInfo['show_name'];
     });
   }
 
@@ -42,8 +48,8 @@ class SessionChatState extends State<SessionChatWidget> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
-            teamName,
-            style: const TextStyle(color: Color(0xFF141414)),
+            showName,
+            style: TextStyle(color: BlackColor),
         ),
         backgroundColor: MainBgColor,
         iconTheme: IconThemeData.fallback(),

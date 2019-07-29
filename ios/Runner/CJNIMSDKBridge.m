@@ -93,7 +93,7 @@ static FlutterResult _result = nil;
     [[NIMSDK sharedSDK].loginManager autoLogin:params.firstObject token:params[1]];
 }
 
-// 返回用户信息
+// 返回当前登录用户信息
 + (void)currentUserInfo
 {
     NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
@@ -112,7 +112,23 @@ static FlutterResult _result = nil;
 {
     NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:params.firstObject
                                                option:nil];
-    CJNIMSDKBridge.result(info.showName);
+    CJNIMSDKBridge.result(@{
+                            @"show_name": info.showName,
+                            @"avatar_url_string": info.avatarUrlString?: [NSNull new],
+//                            @"avatar_image": info.avatarImage?: [NSNull new]
+                            });
+}
+
+// 返回当前聊天用户信息
++ (void)userInfo:(NSArray *)params
+{
+    NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:params.firstObject
+                                               option:nil];
+    CJNIMSDKBridge.result(@{
+                            @"show_name": info.showName,
+                            @"avatar_url_string": info.avatarUrlString?: [NSNull new],
+//                            @"avatar_image": info.avatarImage?: [NSNull new]
+                            });
 }
 
 @end
