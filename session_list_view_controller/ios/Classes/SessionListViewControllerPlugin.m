@@ -7,7 +7,7 @@
 {
     // 注册flutter platform view
     [registrar registerViewFactory:[[FlutterSessionListViewControllerFactory alloc] initWithMessenger:registrar.messenger] withId:@"plugins/session_list"];
-    [registrar registerViewFactory:[[FlutterSessionListViewControllerFactory alloc] initWithMessenger:registrar.messenger] withId:@"plugins/session"];
+    [registrar registerViewFactory:[[FlutterSessionViewControllerFactory alloc] initWithMessenger:registrar.messenger] withId:@"plugins/session"];
     
     FlutterMethodChannel *channel_1 = [FlutterMethodChannel
       methodChannelWithName:@"session_list_view_controller"

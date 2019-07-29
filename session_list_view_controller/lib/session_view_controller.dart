@@ -7,28 +7,26 @@ import 'package:flutter/foundation.dart';
 typedef void SessionViewControllerCreatedCallback(SessionViewController controller);
 class SessionViewController {
   SessionViewController._(int id)
-      : _channel = MethodChannel('plugins/session_$id');
+      : channel = MethodChannel('plugins/session_$id');
 
-  final MethodChannel _channel;
-
-  Future<void> start() async {
-    return _channel.invokeMethod('start');
-  }
-
-  Future<void> stop() async {
-    return _channel.invokeMethod('stop');
-  }
+  final MethodChannel channel;
 }
 
 
 class Session extends StatefulWidget {
+  final String sessionId;
+  final int sessionType;
+
   SessionState createState() {
     return SessionState();
   }
 
-  const Session({
+  const Session(
+    this.sessionId, 
+    this.sessionType, 
+  {
     Key key,
-    this.onSessionViewControllerCreated,
+    this.onSessionViewControllerCreated
   }):super(key: key);
 
   final SessionViewControllerCreatedCallback onSessionViewControllerCreated;
@@ -44,13 +42,13 @@ class SessionState extends State<Session> {
         onPlatformViewCreated: _onPlatformViewCreated,
         creationParams: <String,dynamic>{
           // 传递初始化参数
-          'session_id': '',
-          'session_type': 1
+          'session_id': widget.sessionId,
+          'session_type': widget.sessionType
         },
         creationParamsCodec: new StandardMessageCodec(),
       );
     }
-    return Text('activity_indicator插件尚不支持$defaultTargetPlatform ');
+    return Text('session插件尚不支持$defaultTargetPlatform ');
   }
 
   void _onPlatformViewCreated(int id){

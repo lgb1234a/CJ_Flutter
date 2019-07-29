@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -7,29 +6,12 @@ import 'package:flutter/foundation.dart';
 typedef void SessionListViewControllerCreatedCallback(SessionListViewController controller);
 class SessionListViewController {
 
-  SessionListViewController(int id, BuildContext context) {
-    _channel = MethodChannel('plugins/session_list_$id');
-    _channel.setMethodCallHandler(handler);
-    _context = context;
+  SessionListViewController(int id) {
+    channel = MethodChannel('plugins/session_list_$id');
+    // channel.setMethodCallHandler(handler);
   }
 
-  MethodChannel _channel;
-  BuildContext _context;
-
-  Future<void> start() async {
-    return _channel.invokeMethod('start');
-  }
-
-  Future<void> stop() async {
-    return _channel.invokeMethod('stop');
-  }
-
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
-    if(call.method == 'push_session') {
-      // Navigator.push(_context, )
-    }
-  }
+  MethodChannel channel;
 }
 
 
@@ -62,14 +44,14 @@ class SessionListState extends State<SessionList> {
         creationParamsCodec: new StandardMessageCodec(),
       );
     }
-    return Text('activity_indicator插件尚不支持$defaultTargetPlatform ');
+    return Text('session_list插件尚不支持$defaultTargetPlatform ');
   }
 
   void _onPlatformViewCreated(int id, BuildContext context){
     if(widget.onSessionListViewControllerCreated == null){
       return;
     }
-    SessionListViewController vc = SessionListViewController(id, context);
+    SessionListViewController vc = SessionListViewController(id);
     widget.onSessionListViewControllerCreated(vc);
   }
 
