@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:session_list_view_controller/session_list_view_controller.dart';
 
 void main() => runApp(MyApp());

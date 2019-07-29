@@ -107,4 +107,12 @@ static FlutterResult _result = nil;
                             });
 }
 
+// 返回群信息
++ (void)teamInfo:(NSArray *)params
+{
+    NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:params.firstObject
+                                               option:nil];
+    CJNIMSDKBridge.result(info.showName);
+}
+
 @end

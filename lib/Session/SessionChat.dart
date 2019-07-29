@@ -5,6 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:session_list_view_controller/session_view_controller.dart';
+import 'package:cajian/Base/CJUtils.dart';
+import 'package:cajian/Base/NIMSDKBridge.dart';
 
 class SessionChatWidget extends StatefulWidget {
   final String sessionId;
@@ -19,16 +21,33 @@ class SessionChatWidget extends StatefulWidget {
 class SessionChatState extends State<SessionChatWidget> {
 
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  String teamName = '';
+  @override
+  void initState() {
+    super.initState();
+
+    // 获取群信息
+    fetctTeamInfo();
+  }
+
+  fetctTeamInfo() async{
+    String _teamName = await NIMSDKBridge.teamInfoById(widget.sessionId);
+    setState(() {
+      teamName = _teamName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: const Text(
-            'session'
+        title: new Text(
+            teamName,
+            style: const TextStyle(color: Color(0xFF141414)),
         ),
-        backgroundColor: Colors.red,
-        elevation: 1,
+        backgroundColor: MainBgColor,
+        iconTheme: IconThemeData.fallback(),
+        elevation: 0.01,
       ),
       body: Session(widget.sessionId, widget.sessionType, onSessionViewControllerCreated: onSessionListViewCreated)
     );

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'SessionChat.dart';
 import 'package:session_list_view_controller/session_list_view_controller.dart';
+import 'package:cajian/Base/CJUtils.dart';
 
 class SessionListWidget extends StatefulWidget {
 
@@ -28,7 +29,7 @@ class SessionListState extends State<SessionListWidget> {
           '擦肩', 
           style: const TextStyle(color: Color(0xFF141414)),
         ),
-        backgroundColor: Color(0xFFECECEC),
+        backgroundColor: MainBgColor,
         elevation: 0.01,
       ),
       body: SessionList(onSessionListViewControllerCreated: onSessionListViewCreated,),
