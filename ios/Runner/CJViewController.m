@@ -29,8 +29,9 @@
             ZZLog(@"%@", call.method);
         }];
         
+        // 渲染完成
         [self setFlutterViewDidRenderCallback:^{
-            [mc invokeMethod:@"初始化Flutter vc完成" arguments:nil];
+//            [mc invokeMethod:@"初始化Flutter vc完成" arguments:nil];
         }];
         
     }
@@ -40,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    ZZLog(@"view did load");
 }
 
 @end

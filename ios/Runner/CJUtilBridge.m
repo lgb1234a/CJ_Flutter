@@ -83,5 +83,13 @@ static inline UIWindow *getkeyWindow()
     [HUD hideAnimated:YES afterDelay:2];
 }
 
++ (void)postNotification:(NSArray *)params
+{
+    NSString *name = params.firstObject;
+    id object = params.lastObject;
+    [[NSNotificationCenter defaultCenter] postNotificationName:name
+                                                        object:object];
+}
+
 
 @end

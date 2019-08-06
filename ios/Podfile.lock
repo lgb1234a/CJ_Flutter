@@ -16,9 +16,6 @@ PODS:
   - SDWebImage (4.4.7):
     - SDWebImage/Core (= 4.4.7)
   - SDWebImage/Core (4.4.7)
-  - session_list_view_controller (0.0.1):
-    - Flutter
-    - NIMKit
   - shared_preferences (0.0.1):
     - Flutter
   - Toast (3.1.0)
@@ -29,7 +26,6 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - MBProgressHUD
   - NIMKit
-  - session_list_view_controller (from `.symlinks/plugins/session_list_view_controller/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - WechatOpenSDK
 
@@ -47,8 +43,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
-  session_list_view_controller:
-    :path: ".symlinks/plugins/session_list_view_controller/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
 
@@ -59,7 +53,6 @@ SPEC CHECKSUMS:
   NIMKit: 6c1d0d9d811fdf1c3280a033a194506dcdfd45ce
   NIMSDK_LITE: 8af68f798030906861a61459f93dba2d4fd2631d
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
-  session_list_view_controller: 18f48695955b169927f5a49400ad028ba1a79ac8
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc

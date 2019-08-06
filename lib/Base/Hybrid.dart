@@ -6,9 +6,20 @@
 import 'package:flutter/services.dart';
 
 class Hybird {
-  static const _platform = const MethodChannel("com.zqtd.cajian/util");
+  static final _platform = new MethodChannel("com.zqtd.cajian/util")
+                                ..setMethodCallHandler(handler);
 
   static showTip(String msg) {
     _platform.invokeMethod('showTip:', [msg]);
+  }
+
+  static postNotification(String notificationName, dynamic notification) {
+    _platform.invokeMethod('postNotification', [notificationName, notification]);
+  }
+
+  static Future<dynamic> handler(MethodCall call) async {
+    if(call.method == '') {
+
+    }
   }
 }

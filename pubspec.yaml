@@ -19,8 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  session_list_view_controller:
-     path: ./session_list_view_controller
+  # session_list_view_controller:
+  #    path: ./session_list_view_controller
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

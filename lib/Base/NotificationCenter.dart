@@ -3,6 +3,7 @@
  *  通知中心
  */
 import 'package:flutter/material.dart';
+import 'package:cajian/Base/Hybrid.dart';
 
 class NotificationPair {
   String notificationName;
@@ -55,6 +56,8 @@ class NotificationCenter {
       debugPrint('did post notification: $postName');
       postNameMap[postName].post(object);
     }
+    // 通知native
+    Hybird.postNotification(postName, object);
   }
 
   // 移除监听

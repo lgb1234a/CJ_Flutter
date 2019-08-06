@@ -4,23 +4,11 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:cajian/Session/SessionList.dart';
-import 'package:cajian/Contacts/Contacts.dart';
-import 'package:cajian/Mine/Mine.dart';
 import 'package:flutter/services.dart';
 import 'Login.dart';
 import 'package:cajian/Base/NIMSDKBridge.dart';
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-final List<Widget> _rootWidgets = <Widget>[
-  // 会话列表
-  new SessionListWidget(),
-  // 通讯录
-  new ContactsWidget(),
-  // 我的
-  new MineWidget(),
-];
 
 class LoginEntrance extends StatefulWidget {
   final String channelName;
@@ -33,7 +21,6 @@ class LoginEntrance extends StatefulWidget {
 }
 
 class LoginEntranceState extends State<LoginEntrance> {
-  int _selectedIndex = 0;
   bool _logined = false;
   MethodChannel _platform;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -87,12 +74,6 @@ class LoginEntranceState extends State<LoginEntrance> {
     super.dispose();
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   // 登录成功
   void _loginedSuccess() {
     setState(() {
@@ -103,7 +84,6 @@ class LoginEntranceState extends State<LoginEntrance> {
   // 登出
   void _logout() {
     setState(() {
-      _selectedIndex = 0;
       _logined = false;
     });
   }
@@ -111,32 +91,7 @@ class LoginEntranceState extends State<LoginEntrance> {
   @override
   Widget build(BuildContext context) {
     _platform.invokeListMethod('页面开始渲染');
-    var home = _logined? DefaultTabController(
-          length: 3,
-          child: new Scaffold(
-            body: Center(
-              child: _rootWidgets.elementAt(_selectedIndex),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.message),
-                  title: Text('擦肩'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.people),
-                  title: Text('通讯录'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text('我'),
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              onTap: _onItemTapped,
-            ),
-          ),
-        ) : LoginWidget();
+    var home = _logined? Text('') : LoginWidget();
 
     return new MaterialApp(
       home: home,
