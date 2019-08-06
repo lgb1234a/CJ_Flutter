@@ -2,6 +2,7 @@
 #include "GeneratedPluginRegistrant.h"
 #import "CJNIMSDKBridge.h"
 #import "CJUtilBridge.h"
+#import "CJViewController.h"
 
 @implementation AppDelegate
 
@@ -10,6 +11,12 @@
   [GeneratedPluginRegistrant registerWithRegistry:self];
     
     FlutterViewController *controller = (FlutterViewController*)self.window.rootViewController;
+    
+    
+    /*初始化root vc*/
+    NSString *openUrl = @"{\"route\":\"login_entrance\",\"channel_name\":\"com.zqtd.cajian/login_entrance\"}";
+    CJViewController *rootVC = [[CJViewController alloc] initWithInitialOpenUrl:openUrl];
+    self.window.rootViewController = rootVC;
     
     FlutterMethodChannel *nimChannel = [FlutterMethodChannel
                                             methodChannelWithName:@"com.zqtd.cajian/NIMSDK"

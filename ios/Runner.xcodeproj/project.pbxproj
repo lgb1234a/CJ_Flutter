@@ -23,6 +23,7 @@
 		EF0DBA2D22E6F36A0048897B /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0DBA2C22E6F36A0048897B /* CJUtilBridge.m */; };
 		EF0DBA3522E84FE20048897B /* NSDictionary+Cajian.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0DBA3422E84FE20048897B /* NSDictionary+Cajian.m */; };
 		EF24545F22DD63B8004E54E9 /* CJNIMSDKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24545E22DD63B8004E54E9 /* CJNIMSDKBridge.m */; };
+		EFB51F1C22F95095009A6D26 /* CJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB51F1B22F95095009A6D26 /* CJViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +69,8 @@
 		EF0DBA3422E84FE20048897B /* NSDictionary+Cajian.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Cajian.m"; sourceTree = "<group>"; };
 		EF24545D22DD63B8004E54E9 /* CJNIMSDKBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJNIMSDKBridge.h; sourceTree = "<group>"; };
 		EF24545E22DD63B8004E54E9 /* CJNIMSDKBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJNIMSDKBridge.m; sourceTree = "<group>"; };
+		EFB51F1A22F95095009A6D26 /* CJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJViewController.h; sourceTree = "<group>"; };
+		EFB51F1B22F95095009A6D26 /* CJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +169,8 @@
 				EF0DBA2F22E84E710048897B /* PrefixHeader.pch */,
 				EF0DBA3322E84FE20048897B /* NSDictionary+Cajian.h */,
 				EF0DBA3422E84FE20048897B /* NSDictionary+Cajian.m */,
+				EFB51F1A22F95095009A6D26 /* CJViewController.h */,
+				EFB51F1B22F95095009A6D26 /* CJViewController.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 				EF0DBA2D22E6F36A0048897B /* CJUtilBridge.m in Sources */,
 				EF0DBA3522E84FE20048897B /* NSDictionary+Cajian.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
+				EFB51F1C22F95095009A6D26 /* CJViewController.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				EF24545F22DD63B8004E54E9 /* CJNIMSDKBridge.m in Sources */,
 			);
