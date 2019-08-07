@@ -52,7 +52,12 @@ static FlutterResult _result = nil;
     NSLog(@"flutter call :%@", call.method);
     NSArray *params = call.arguments;
     SEL callMethod = NSSelectorFromString(call.method);
-    [self performSelector:callMethod withObject:params afterDelay:0];
+    if([self respondsToSelector:callMethod]) {
+        [self performSelector:callMethod withObject:params afterDelay:0];
+    }else {
+        NSString *errorInfo = [NSString stringWithFormat:@"CJUtilBridge未实现%@", call.method];
+        NSAssert(NO, errorInfo);
+    }
 }
 
 static inline UIWindow *getkeyWindow()

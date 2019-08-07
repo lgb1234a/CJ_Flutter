@@ -90,8 +90,7 @@ class LoginEntranceState extends State<LoginEntrance> {
 
   @override
   Widget build(BuildContext context) {
-    _platform.invokeListMethod('页面开始渲染');
-    var home = _logined? Text('') : LoginWidget();
+    var home = _logined? Text('') : LoginWidget(_platform);
 
     return new MaterialApp(
       home: home,

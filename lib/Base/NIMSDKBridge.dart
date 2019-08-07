@@ -21,6 +21,9 @@ class NIMSDKBridge {
     String name) async 
   {
     bool success = await _platform.invokeMethod('doLogin:', [accid, token, name]);
+    if(success) {
+      _platform.invokeMethod('loginSuccess');
+    }
     return success;
   }
 

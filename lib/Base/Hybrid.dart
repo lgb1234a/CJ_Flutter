@@ -19,7 +19,7 @@ class Hybird {
 
   static Future<dynamic> handler(MethodCall call) async {
     if(call.method == '') {
-
+      
     }
   }
 }

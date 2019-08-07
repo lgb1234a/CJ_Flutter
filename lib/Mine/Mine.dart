@@ -46,19 +46,21 @@ class MineState extends State<MineWidget> {
       },
     );
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: const Text(
-            '我',
-            style: TextStyle(color: Color(0xFF141414)),
+    return new MaterialApp(
+      home: new Scaffold(
+        appBar: new AppBar(
+            title: const Text(
+                '我',
+                style: TextStyle(color: Color(0xFF141414)),
+            ),
+            backgroundColor: WhiteColor,
+            elevation: 0.01,
+          ),
+          body: Container(
+            color: MainBgColor,
+            child: mineTable,
+          ),
         ),
-        backgroundColor: WhiteColor,
-        elevation: 0.01,
-      ),
-      body: Container(
-        color: MainBgColor,
-        child: mineTable,
-      ),
     );
   }
 }

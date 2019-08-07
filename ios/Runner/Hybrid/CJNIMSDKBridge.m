@@ -56,7 +56,12 @@ static FlutterResult _result = nil;
     NSLog(@"flutter call :%@", call.method);
     NSArray *params = call.arguments;
     SEL callMethod = NSSelectorFromString(call.method);
-    [self performSelector:callMethod withObject:params afterDelay:0];
+    if([self respondsToSelector:callMethod]) {
+        [self performSelector:callMethod withObject:params afterDelay:0];
+    }else {
+        NSString *errorInfo = [NSString stringWithFormat:@"CJNIMSDKBridge未实现%@", call.method];
+        NSAssert(NO, errorInfo);
+    }
 }
 
 + (void)registerSDK
@@ -76,7 +81,15 @@ static FlutterResult _result = nil;
 // 登录云信sdk
 + (void)doLogin:(NSArray *)params
 {
-    [[NIMSDK sharedSDK].loginManager login:params.firstObject token:params[1] completion:^(NSError * _Nullable error) {
+    [self login:params.firstObject token:params[1]];
+}
+
++ (void)login:(NSString *)accid token:(NSString *)token
+{
+    [[NIMSDK sharedSDK].loginManager login:accid
+                                     token:token
+                                completion:^(NSError * _Nullable error)
+    {
         if(!error) {
             NSLog(@"云信登录成功");
             CJNIMSDKBridge.result(@(YES));
@@ -90,7 +103,14 @@ static FlutterResult _result = nil;
 // 自动登录
 + (void)autoLogin:(NSArray *)params
 {
-    [[NIMSDK sharedSDK].loginManager autoLogin:params.firstObject token:params[1]];
+    [[NIMSDK sharedSDK].loginManager autoLogin:params.firstObject
+                                         token:params[1]];
+}
+
++ (void)autoLogin:(NSString *)accid token:(NSString *)token
+{
+    [[NIMSDK sharedSDK].loginManager autoLogin:accid
+                                         token:token];
 }
 
 // 返回当前登录用户信息

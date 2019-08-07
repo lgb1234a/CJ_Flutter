@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cajian/Base/NIMSDKBridge.dart';
 
 bindAccidAndToken(String accid, String token) {
-  LoginManager().accid = accid;
-  LoginManager().token = token;
+  // LoginManager().accid = accid;
+  // LoginManager().token = token;
 }
 
 class LoginManager {

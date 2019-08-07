@@ -1,3 +1,4 @@
+import 'package:cajian/Mine/Mine.dart';
 /**
  *  Created by chenyn on 2019-06-28
  *  入口
@@ -18,6 +19,8 @@ Widget _widgetForRoute(String openUrl)
   switch (route) {
     case 'login_entrance':
       return new LoginEntrance(channelName: cn);
+    case 'mine':
+      return new MineWidget();
     default:
       return Center(child: Text('未找到route为: $route 的页面'));
   }
@@ -25,7 +28,5 @@ Widget _widgetForRoute(String openUrl)
 
 
 void main() {
-  // 注册云信sdk
-  // NIMSDKBridge.doRegisterSDK();
   runApp(_widgetForRoute(ui.window.defaultRouteName));
 }

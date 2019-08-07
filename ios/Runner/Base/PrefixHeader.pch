@@ -23,5 +23,14 @@
 #endif
 
 #import "NSDictionary+Cajian.h"
+#import "NSString+Cajian.h"
+#import "XTSafeCollection.h"
+#import "HttpHelper.h"
+#import "HttpConstant.h"
+#import "BaseModel.h"
+#import "UIViewController+HUD.h"
+#import <YYModel.h>
+#import <NIMSDK/NIMSDK.h>
+#import <NIMKit.h>
 
 #endif /* PrefixHeader_pch */

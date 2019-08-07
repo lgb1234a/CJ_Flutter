@@ -62,6 +62,9 @@ target 'Runner' do
   pod 'WechatOpenSDK'
   pod 'NIMKit'
   pod 'MBProgressHUD'
+  pod 'AFNetworking'
+  pod 'Reachability', '~> 3.2'
+  pod 'YYModel'
 end
 
 # Prevent Cocoapods from embedding a second Flutter framework and causing an error with the new Xcode build system.

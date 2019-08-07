@@ -4,18 +4,25 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'LoginManager.dart';
 import 'PhoneLogin.dart';
 import 'PwdLogin.dart';
 
 class LoginWidget extends StatefulWidget {
+  final MethodChannel platform;
 
+  LoginWidget(this.platform);
   LoginState createState() {
       return new LoginState();
   }
 }
 
 class LoginState extends State<LoginWidget> {
+
+  wxlogin() {
+    widget.platform.invokeMethod('wxlogin');
+  }
 
   @override 
   Widget build(BuildContext context) {
@@ -46,7 +53,8 @@ class LoginState extends State<LoginWidget> {
                   child: new Image.asset('images/login_with_wechat@2x.png'),
                   onPressed: () {
                     // 微信登录
-                    LoginManager().getAccessWeChatToken();
+                    wxlogin();
+                    // LoginManager().getAccessWeChatToken();
                   },
                 ),
                 new Padding(

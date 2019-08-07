@@ -16,6 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)bridgeCall:(FlutterMethodCall *)call
             result:(FlutterResult)result;
 
++ (void)registerSDK;
+
++ (void)login:(NSString *)accid token:(NSString *)token;
+
++ (void)autoLogin:(NSString *)accid token:(NSString *)token;
+
 @end
 
 NS_ASSUME_NONNULL_END
