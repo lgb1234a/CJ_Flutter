@@ -35,15 +35,15 @@ class LoginEntranceState extends State<LoginEntrance> {
     
     
     // LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
-    NotificationCenter.shared.addObserver('loginSuccess', (object){
-      debugPrint('did observe notification loginSuccess');
-      _loginedSuccess();
-    });
+    // NotificationCenter.shared.addObserver('loginSuccess', (object){
+    //   debugPrint('did observe notification loginSuccess');
+    //   _loginedSuccess();
+    // });
 
-    NotificationCenter.shared.addObserver('didLogout', (object){
-      debugPrint('did observe notification didLogout');
-      _logout();
-    });
+    // NotificationCenter.shared.addObserver('didLogout', (object){
+    //   debugPrint('did observe notification didLogout');
+    //   _logout();
+    // });
 
     // 加载登录状态
     SharedPreferences.getInstance().then((sp){
@@ -90,7 +90,7 @@ class LoginEntranceState extends State<LoginEntrance> {
 
   @override
   Widget build(BuildContext context) {
-    var home = _logined? Text('') : LoginWidget(_platform);
+    var home = LoginWidget(_platform);
 
     return new MaterialApp(
       home: home,

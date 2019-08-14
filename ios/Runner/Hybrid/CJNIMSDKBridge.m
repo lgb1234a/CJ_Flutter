@@ -123,7 +123,7 @@ static FlutterResult _result = nil;
     CJNIMSDKBridge.result(@{
                             @"name": info.showName,
                             @"avatarUrl": info.avatarUrlString,
-                            @"cajian_no": cjExt[@"cajian_id"]
+                            @"cajian_no": cjExt[@"cajian_id"]?:@""
                             });
 }
 

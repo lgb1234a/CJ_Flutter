@@ -205,21 +205,21 @@
 			isa = PBXGroup;
 			children = (
 				EF11BE5522FABBD600CAD319 /* NSDictionary+Cajian.m */,
-				EF11BE5622FABBD600CAD319 /* UIViewController+HUD.m */,
-				EF11BE5722FABBD600CAD319 /* HttpHelper.m */,
-				EF11BE5822FABBD600CAD319 /* XTSafeCollection.h */,
-				EF11BE5922FABBD600CAD319 /* CJViewController.h */,
-				EF11BE5A22FABBD600CAD319 /* BaseModel.m */,
-				EF11BE5B22FABBD600CAD319 /* NSString+Cajian.m */,
-				EF11BE5C22FABBD600CAD319 /* HttpHelper.h */,
-				EF11BE5D22FABBD600CAD319 /* UIViewController+HUD.h */,
 				EF11BE5E22FABBD600CAD319 /* NSDictionary+Cajian.h */,
+				EF11BE5C22FABBD600CAD319 /* HttpHelper.h */,
+				EF11BE5722FABBD600CAD319 /* HttpHelper.m */,
+				EF11BE5922FABBD600CAD319 /* CJViewController.h */,
+				EF11BE6222FABBD600CAD319 /* CJViewController.m */,
+				EF11BE6122FABBD600CAD319 /* BaseModel.h */,
+				EF11BE5A22FABBD600CAD319 /* BaseModel.m */,
+				EF11BE5D22FABBD600CAD319 /* UIViewController+HUD.h */,
+				EF11BE5622FABBD600CAD319 /* UIViewController+HUD.m */,
+				EF11BE5822FABBD600CAD319 /* XTSafeCollection.h */,
 				EF11BE5F22FABBD600CAD319 /* XTSafeCollection.m */,
 				EF11BE6022FABBD600CAD319 /* HttpConstant.h */,
-				EF11BE6122FABBD600CAD319 /* BaseModel.h */,
-				EF11BE6222FABBD600CAD319 /* CJViewController.m */,
 				EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */,
 				EF11BE6422FABBD600CAD319 /* NSString+Cajian.h */,
+				EF11BE5B22FABBD600CAD319 /* NSString+Cajian.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -228,9 +228,9 @@
 			isa = PBXGroup;
 			children = (
 				EF11BE6D22FABBFC00CAD319 /* CJUtilBridge.h */,
-				EF11BE6E22FABBFC00CAD319 /* CJNIMSDKBridge.m */,
 				EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */,
 				EF11BE7022FABBFC00CAD319 /* CJNIMSDKBridge.h */,
+				EF11BE6E22FABBFC00CAD319 /* CJNIMSDKBridge.m */,
 			);
 			path = Hybrid;
 			sourceTree = "<group>";

@@ -48,10 +48,10 @@ class LoginManager {
 
   // 登出
   logout() {
-    _accid = null;
-    _token = null;
-    accid  = null;
-    token  = null;
+    // _accid = null;
+    // _token = null;
+    // accid  = null;
+    // token  = null;
     NotificationCenter.shared.postNotification('didLogout', '');
   }
 

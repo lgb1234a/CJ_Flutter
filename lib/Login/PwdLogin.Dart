@@ -204,7 +204,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
                         loading(false);
                         if(success) {
                           Navigator.pop(context);
-                          NotificationCenter.shared.postNotification('loginSuccess', context);
+                          NotificationCenter.shared.postNotification('loginSuccess', null);
                         }
                       }).catchError((e){
                         loading(false);

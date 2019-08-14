@@ -21,45 +21,19 @@
     // 初始化flutter
   [GeneratedPluginRegistrant registerWithRegistry:self];
     
-    FlutterViewController *controller = (FlutterViewController*)self.window.rootViewController;
+    /*初始化登录页面 vc*/
+    [self showDidLoginSuccessRootVC];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showDidLoginSuccessRootVC)
+                                                 name:@"loginSuccess"
+                                               object:nil];
     
-    /*初始化root vc*/
-    NSString *openUrl = @"{\"route\":\"login_entrance\",\"channel_name\":\"com.zqtd.cajian/login_entrance\"}";
-    CJViewController *rootVC = [[CJViewController alloc] initWithInitialOpenUrl:openUrl];
-    self.window.rootViewController = rootVC;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showDidLogoutRootVC)
+                                                 name:@"didLogout"
+                                               object:nil];
     
-    FlutterMethodChannel *nimChannel = [FlutterMethodChannel
-                                            methodChannelWithName:@"com.zqtd.cajian/NIMSDK"
-                                            binaryMessenger:controller.engine.binaryMessenger];
-    
-    [nimChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
-        SEL callMethod = NSSelectorFromString(call.method);
-        if([self respondsToSelector:callMethod])
-        {
-            [self performSelector:callMethod
-                       withObject:call.arguments
-                       afterDelay:0];
-        }else {
-            [CJNIMSDKBridge bridgeCall:call result:result];
-        }
-    }];
-    
-    FlutterMethodChannel *utilChannel = [FlutterMethodChannel
-                                        methodChannelWithName:@"com.zqtd.cajian/util"
-                                        binaryMessenger:controller.engine.binaryMessenger];
-    
-    [utilChannel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
-        SEL callMethod = NSSelectorFromString(call.method);
-        if([self respondsToSelector:callMethod])
-        {
-            [self performSelector:callMethod
-                       withObject:call.arguments
-                       afterDelay:0];
-        }else {
-            [CJUtilBridge bridgeCall:call result:result];
-        }
-    }];
   // Override point for customization after application launch.
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -122,10 +96,7 @@
         {
             if(!error) {
                 [UIViewController showSuccess:@"登录成功"];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NIMLoginSuccess"
-                                                                    object:nil];
-                [self loginSuccess];
+                [self showDidLoginSuccessRootVC];
             }
         }];
     }else if ([model.error isEqualToString:@"1"]){
@@ -156,7 +127,8 @@
     }
 }
 
-- (void)loginSuccess
+// 展示登录成功的页面根视图
+- (void)showDidLoginSuccessRootVC
 {
     UITabBarController *tabbar = [[UITabBarController alloc] init];
     
@@ -173,6 +145,53 @@
     tabbar.viewControllers = @[listNav, contactsNav, mineNav];
     
     self.window.rootViewController = tabbar;
+    
+    [self registerChannel:mine];
+}
+
+// 展示登出成功的页面根视图
+- (void)showDidLogoutRootVC
+{
+    NSString *openUrl = @"{\"route\":\"login_entrance\",\"channel_name\":\"com.zqtd.cajian/login_entrance\"}";
+    CJViewController *rootVC = [[CJViewController alloc] initWithInitialOpenUrl:openUrl];
+    self.window.rootViewController = rootVC;
+    
+    [self registerChannel:rootVC];
+}
+
+- (void)registerChannel:(CJViewController *)rootVC
+{
+    FlutterMethodChannel *nimChannel = [FlutterMethodChannel
+                                        methodChannelWithName:@"com.zqtd.cajian/NIMSDK"
+                                        binaryMessenger:rootVC.engine.binaryMessenger];
+    
+    [nimChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
+        SEL callMethod = NSSelectorFromString(call.method);
+        if([self respondsToSelector:callMethod])
+        {
+            [self performSelector:callMethod
+                       withObject:call.arguments
+                       afterDelay:0];
+        }else {
+            [CJNIMSDKBridge bridgeCall:call result:result];
+        }
+    }];
+    
+    FlutterMethodChannel *utilChannel = [FlutterMethodChannel
+                                         methodChannelWithName:@"com.zqtd.cajian/util"
+                                         binaryMessenger:rootVC.engine.binaryMessenger];
+    
+    [utilChannel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
+        SEL callMethod = NSSelectorFromString(call.method);
+        if([self respondsToSelector:callMethod])
+        {
+            [self performSelector:callMethod
+                       withObject:call.arguments
+                       afterDelay:0];
+        }else {
+            [CJUtilBridge bridgeCall:call result:result];
+        }
+    }];
 }
 
 @end

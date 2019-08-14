@@ -14,7 +14,7 @@ class Hybird {
   }
 
   static postNotification(String notificationName, dynamic notification) {
-    _platform.invokeMethod('postNotification', [notificationName, notification]);
+    _platform.invokeMethod('postNotification:', [notificationName, notification]);
   }
 
   static Future<dynamic> handler(MethodCall call) async {

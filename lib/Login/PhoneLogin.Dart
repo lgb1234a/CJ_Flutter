@@ -247,7 +247,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                         loading(false);
                         if(success) {
                           Navigator.pop(context);
-                          NotificationCenter.shared.postNotification('loginSuccess', context);
+                          NotificationCenter.shared.postNotification('loginSuccess', null);
                         }
                       }).catchError((){
                         loading(false);
