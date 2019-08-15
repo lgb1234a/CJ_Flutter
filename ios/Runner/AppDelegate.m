@@ -8,6 +8,7 @@
 #import "CJSessionListViewController.h"
 #import "CJContactsViewController.h"
 #import "CJViewController.h"
+#import "CJMineViewController.h"
 
 @implementation AppDelegate
 
@@ -22,7 +23,7 @@
   [GeneratedPluginRegistrant registerWithRegistry:self];
     
     /*初始化登录页面 vc*/
-    [self showDidLoginSuccessRootVC];
+    [self showDidLogoutRootVC];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showDidLoginSuccessRootVC)
@@ -138,8 +139,7 @@
     CJContactsViewController *contactsVC = [[CJContactsViewController alloc] init];
     UINavigationController *contactsNav = [[UINavigationController alloc] initWithRootViewController:contactsVC];
     
-    NSString *mineOpenUrl = @"{\"route\":\"mine\",\"channel_name\":\"com.zqtd.cajian/mine\"}";
-    CJViewController *mine = [[CJViewController alloc] initWithInitialOpenUrl:mineOpenUrl];
+    CJMineViewController *mine = [CJMineViewController new];
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mine];
     
     tabbar.viewControllers = @[listNav, contactsNav, mineNav];

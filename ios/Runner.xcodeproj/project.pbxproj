@@ -32,6 +32,7 @@
 		EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */; };
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
+		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -96,6 +97,8 @@
 		EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionListViewController.m; sourceTree = "<group>"; };
 		EF11BE7A22FAC74300CAD319 /* CJContactsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactsViewController.h; sourceTree = "<group>"; };
 		EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactsViewController.m; sourceTree = "<group>"; };
+		EF1422ED23055BF500AEAA55 /* CJMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMineViewController.h; sourceTree = "<group>"; };
+		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +259,8 @@
 		EF11BE7622FAC61D00CAD319 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				EF1422ED23055BF500AEAA55 /* CJMineViewController.h */,
+				EF1422EE23055BF500AEAA55 /* CJMineViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				EF11BE6722FABBD600CAD319 /* HttpHelper.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */,
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,

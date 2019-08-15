@@ -10,13 +10,6 @@
 
 @implementation BaseModel
 
-+ (NSDictionary *)mj_replacedKeyFromPropertyName
-{
-    return @{@"error":@"errno",
-             @"switch_1": @"switch"
-             };
-}
-
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"error":@"errno",
              @"switch_1": @"switch"

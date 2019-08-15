@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    ZZLog(@"view did load --- 会在widget build开始之前调用");
+    // (@"view did load --- 会在widget build开始之前调用");
 }
 
 #pragma mark --- wx login
