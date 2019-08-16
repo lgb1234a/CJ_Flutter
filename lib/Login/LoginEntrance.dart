@@ -21,7 +21,6 @@ class LoginEntrance extends StatefulWidget {
 }
 
 class LoginEntranceState extends State<LoginEntrance> {
-  bool _logined = false;
   MethodChannel _platform;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
@@ -32,18 +31,6 @@ class LoginEntranceState extends State<LoginEntrance> {
     
     _platform = MethodChannel(widget.channelName);
     _platform.setMethodCallHandler(handler);
-    
-    
-    // LoginManager().registerWeChat('wx0f56e7c5e6daa01a');
-    // NotificationCenter.shared.addObserver('loginSuccess', (object){
-    //   debugPrint('did observe notification loginSuccess');
-    //   _loginedSuccess();
-    // });
-
-    // NotificationCenter.shared.addObserver('didLogout', (object){
-    //   debugPrint('did observe notification didLogout');
-    //   _logout();
-    // });
 
     // 加载登录状态
     SharedPreferences.getInstance().then((sp){
@@ -51,8 +38,8 @@ class LoginEntranceState extends State<LoginEntrance> {
       String token = sp.getString('token');
       if(accid != null && token != null) 
       {
-        _loginedSuccess();
         NIMSDKBridge.autoLogin(accid, token, '');
+        NotificationCenter.shared.postNotification('loginSuccess', null);
       }
     });
   }
@@ -72,20 +59,6 @@ class LoginEntranceState extends State<LoginEntrance> {
     NotificationCenter.shared.removeObserver('loginSuccess');
     NotificationCenter.shared.removeObserver('didLogout');
     super.dispose();
-  }
-
-  // 登录成功
-  void _loginedSuccess() {
-    setState(() {
-      _logined = true;
-    });
-  }
-
-  // 登出
-  void _logout() {
-    setState(() {
-      _logined = false;
-    });
   }
 
   @override

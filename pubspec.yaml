@@ -27,7 +27,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   dio: ^2.1.2
   crypto: ^2.0.6
-  shared_preferences: ^0.5.3
+  shared_preferences: ^0.5.3+4
   # firebase_storage: ^3.0.4
 
 dev_dependencies:

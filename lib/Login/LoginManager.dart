@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cajian/Base/NIMSDKBridge.dart';
 
 bindAccidAndToken(String accid, String token) {
-  // LoginManager().accid = accid;
-  // LoginManager().token = token;
+  LoginManager().accid = accid;
+  LoginManager().token = token;
 }
 
 class LoginManager {
@@ -48,10 +48,10 @@ class LoginManager {
 
   // 登出
   logout() {
-    // _accid = null;
-    // _token = null;
-    // accid  = null;
-    // token  = null;
+    _accid = null;
+    _token = null;
+    accid  = null;
+    token  = null;
     NotificationCenter.shared.postNotification('didLogout', '');
   }
 

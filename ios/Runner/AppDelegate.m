@@ -14,15 +14,13 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    // 初始化flutter
+    [GeneratedPluginRegistrant registerWithRegistry:self];
     // 注册云信SDK
     [CJNIMSDKBridge registerSDK];
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
     
-    // 初始化flutter
-  [GeneratedPluginRegistrant registerWithRegistry:self];
-    
-    /*初始化登录页面 vc*/
+    /*根据登录状态初始化登录页面 vc*/
     [self showDidLogoutRootVC];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -127,6 +125,20 @@
         [UIViewController showError:model.errmsg];
     }
 }
+
+//- (void)autoLoginVerify
+//{
+//    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+//    NSString *accid = [ud stringForKey:@"accid"];
+//    NSString *token = [ud stringForKey:@"token"];
+//    if(accid && token)
+//    {
+//        [[NIMSDK sharedSDK].loginManager autoLogin:accid token:token];
+//        [self showDidLoginSuccessRootVC];
+//    }else {
+//        [self showDidLogoutRootVC];
+//    }
+//}
 
 // 展示登录成功的页面根视图
 - (void)showDidLoginSuccessRootVC

@@ -8,6 +8,7 @@
 
 #import "CJViewController.h"
 #import <WXApi.h>
+#include "GeneratedPluginRegistrant.h"
 
 @interface CJViewController ()
 <WXApiDelegate>
@@ -51,6 +52,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     // (@"view did load --- 会在widget build开始之前调用");
+    [GeneratedPluginRegistrant registerWithRegistry:self];
 }
 
 #pragma mark --- wx login
