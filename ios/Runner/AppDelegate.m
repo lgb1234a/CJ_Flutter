@@ -32,6 +32,8 @@
                                              selector:@selector(showDidLogoutRootVC)
                                                  name:@"didLogout"
                                                object:nil];
+    /* 登录回调代理 */
+    [[NIMSDK sharedSDK].loginManager addDelegate:self];
     
   // Override point for customization after application launch.
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
@@ -126,20 +128,6 @@
     }
 }
 
-//- (void)autoLoginVerify
-//{
-//    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-//    NSString *accid = [ud stringForKey:@"accid"];
-//    NSString *token = [ud stringForKey:@"token"];
-//    if(accid && token)
-//    {
-//        [[NIMSDK sharedSDK].loginManager autoLogin:accid token:token];
-//        [self showDidLoginSuccessRootVC];
-//    }else {
-//        [self showDidLogoutRootVC];
-//    }
-//}
-
 // 展示登录成功的页面根视图
 - (void)showDidLoginSuccessRootVC
 {
@@ -185,37 +173,70 @@
 
 - (void)registerChannel:(CJViewController *)rootVC
 {
-    FlutterMethodChannel *nimChannel = [FlutterMethodChannel
-                                        methodChannelWithName:@"com.zqtd.cajian/NIMSDK"
-                                        binaryMessenger:rootVC.engine.binaryMessenger];
+    _nimChannel = [FlutterMethodChannel
+                        methodChannelWithName:@"com.zqtd.cajian/NIMSDK"
+                        binaryMessenger:rootVC.engine.binaryMessenger];
     
-    [nimChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
+    __weak typeof(self) weakSelf = self;
+    [_nimChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
         SEL callMethod = NSSelectorFromString(call.method);
-        if([self respondsToSelector:callMethod])
+        if([weakSelf respondsToSelector:callMethod])
         {
-            [self performSelector:callMethod
-                       withObject:call.arguments
-                       afterDelay:0];
+            [weakSelf performSelector:callMethod
+                           withObject:call.arguments
+                           afterDelay:0];
         }else {
             [CJNIMSDKBridge bridgeCall:call result:result];
         }
     }];
     
-    FlutterMethodChannel *utilChannel = [FlutterMethodChannel
-                                         methodChannelWithName:@"com.zqtd.cajian/util"
-                                         binaryMessenger:rootVC.engine.binaryMessenger];
+    _utilChannel = [FlutterMethodChannel
+                         methodChannelWithName:@"com.zqtd.cajian/util"
+                         binaryMessenger:rootVC.engine.binaryMessenger];
     
-    [utilChannel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
+    [_utilChannel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
         SEL callMethod = NSSelectorFromString(call.method);
-        if([self respondsToSelector:callMethod])
+        if([weakSelf respondsToSelector:callMethod])
         {
-            [self performSelector:callMethod
-                       withObject:call.arguments
-                       afterDelay:0];
+            [weakSelf performSelector:callMethod
+                           withObject:call.arguments
+                           afterDelay:0];
         }else {
             [CJUtilBridge bridgeCall:call result:result];
         }
     }];
+}
+
+#pragma mark - NIMLoginManagerDelegate
+
+- (void)onKick:(NIMKickReason)code
+    clientType:(NIMLoginClientType)clientType
+{
+    NSString *reason = @"你被踢下线";
+    switch (code) {
+        case NIMKickReasonByClient:
+        case NIMKickReasonByClientManually:{
+            reason = @"你的帐号被踢出下线，请注意帐号信息安全";
+            break;
+        }
+        case NIMKickReasonByServer:
+            reason = @"你已被服务器踢下线";
+            break;
+        default:
+            break;
+    }
+    // 登出
+    [_utilChannel invokeMethod:@"logout" arguments:nil];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"⚠️"
+                                                                   message:reason
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定"
+                                              style:UIAlertActionStyleDefault
+                                            handler:nil]];
+    [self.window.rootViewController presentViewController:alert
+                                                 animated:YES
+                                               completion:nil];
 }
 
 @end

@@ -4,6 +4,7 @@
  */
 
 import 'package:flutter/services.dart';
+import 'package:cajian/Login/LoginManager.dart';
 
 class Hybird {
   static final _platform = new MethodChannel("com.zqtd.cajian/util")
@@ -18,8 +19,8 @@ class Hybird {
   }
 
   static Future<dynamic> handler(MethodCall call) async {
-    if(call.method == '') {
-      
+    if(call.method == 'logout') {
+      LoginManager().logout();
     }
   }
 }

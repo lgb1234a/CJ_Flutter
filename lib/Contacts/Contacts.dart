@@ -19,9 +19,13 @@ class ContactsState extends State<ContactsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Index 1: 通讯录',
-      style: optionStyle,
+    return MaterialApp(
+      home: Center(
+        child: Text(
+          'Index 1: 通讯录',
+          style: optionStyle,
+        ),
+      ),
     );
   }
 }

@@ -32,6 +32,11 @@ class NIMSDKBridge {
     _platform.invokeMethod('autoLogin:', [accid, token, name]);
   }
 
+  // 登出
+  static void logout() {
+    _platform.invokeMethod('logout');
+  }
+
   // 当前用户信息
   static Future<dynamic>currentUserInfo() async {
     dynamic info = await _platform.invokeMethod('currentUserInfo');

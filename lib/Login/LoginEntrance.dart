@@ -39,7 +39,7 @@ class LoginEntranceState extends State<LoginEntrance> {
       if(accid != null && token != null) 
       {
         NIMSDKBridge.autoLogin(accid, token, '');
-        NotificationCenter.shared.postNotification('loginSuccess', null);
+        NotificationCenter.shared.postNotification('loginSuccess', {});
       }
     });
   }

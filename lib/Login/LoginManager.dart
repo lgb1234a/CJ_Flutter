@@ -46,13 +46,21 @@ class LoginManager {
     return NIMSDKBridge.doSDKLogin(accid, token, '');
   }
 
-  // 登出
-  logout() {
+  clearTokenAndAccid() {
     _accid = null;
     _token = null;
-    accid  = null;
-    token  = null;
-    NotificationCenter.shared.postNotification('didLogout', '');
+    SharedPreferences.getInstance().then((sp){
+      sp.setString('token', null);
+      sp.setString('accid', null);
+    }).whenComplete((){
+      NIMSDKBridge.logout();
+      NotificationCenter.shared.postNotification('didLogout', {});
+    });
+  }
+
+  // 登出
+  logout() {
+    clearTokenAndAccid();
   }
 
   // 单例公开访问点

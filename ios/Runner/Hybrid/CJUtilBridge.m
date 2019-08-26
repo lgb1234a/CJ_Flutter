@@ -91,9 +91,10 @@ static inline UIWindow *getkeyWindow()
 + (void)postNotification:(NSArray *)params
 {
     NSString *name = params.firstObject;
-    id object = params.lastObject;
+    id userInfo = params.lastObject;
     [[NSNotificationCenter defaultCenter] postNotificationName:name
-                                                        object:object];
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 

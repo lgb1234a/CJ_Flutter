@@ -1,4 +1,3 @@
-import 'package:cajian/Mine/Mine.dart';
 /**
  *  Created by chenyn on 2019-06-28
  *  入口
@@ -8,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'dart:convert';
 import 'Login/LoginEntrance.dart';
+import 'package:cajian/Mine/Mine.dart';
+import 'package:cajian/Contacts/Contacts.dart';
 
 Widget _widgetForRoute(String openUrl) 
 {
@@ -21,6 +22,8 @@ Widget _widgetForRoute(String openUrl)
       return new LoginEntrance(channelName: cn);
     case 'mine':
       return new MineWidget();
+    case 'contacts':
+      return new ContactsWidget();
     default:
       return Center(child: Text('未找到route为: $route 的页面'));
   }

@@ -4,7 +4,7 @@
 //
 //  Created by chenyn on 2019/8/7.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
-//
+//  通讯录
 
 #import "CJContactsViewController.h"
 
@@ -17,17 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"通讯录";
+    NSString *contactsOpenUrl = @"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\"}";
+    [self setInitialRoute:contactsOpenUrl];
+    
+    
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

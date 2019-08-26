@@ -151,4 +151,12 @@ static FlutterResult _result = nil;
                             });
 }
 
+// 登出
++ (void)logout
+{
+    [[NIMSDK sharedSDK].loginManager logout:^(NSError * _Nullable error) {
+        
+    }];
+}
+
 @end
