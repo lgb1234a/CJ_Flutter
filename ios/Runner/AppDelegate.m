@@ -147,12 +147,24 @@
     
     CJSessionListViewController *listVC = [[CJSessionListViewController alloc] init];
     UINavigationController *listNav = [[UINavigationController alloc] initWithRootViewController:listVC];
+    listNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"擦肩"
+                                                       image:[UIImage imageNamed:@"icon_message_normal"]
+                                               selectedImage:[UIImage imageNamed:@"icon_message_pressed"]];
+    listNav.tabBarItem.tag = 0;
     
     CJContactsViewController *contactsVC = [[CJContactsViewController alloc] init];
     UINavigationController *contactsNav = [[UINavigationController alloc] initWithRootViewController:contactsVC];
+    contactsNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"通讯录"
+                                                       image:[UIImage imageNamed:@"icon_contact_normal"]
+                                               selectedImage:[UIImage imageNamed:@"icon_contact_pressed"]];
+    contactsNav.tabBarItem.tag = 1;
     
     CJMineViewController *mine = [CJMineViewController new];
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mine];
+    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
+                                                       image:[UIImage imageNamed:@"icon_setting_normal"]
+                                               selectedImage:[UIImage imageNamed:@"icon_setting_pressed"]];
+    mineNav.tabBarItem.tag = 2;
     
     tabbar.viewControllers = @[listNav, contactsNav, mineNav];
     

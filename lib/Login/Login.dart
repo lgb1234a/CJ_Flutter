@@ -53,7 +53,6 @@ class LoginState extends State<LoginWidget> {
                   onPressed: () {
                     // 微信登录
                     wxlogin();
-                    // LoginManager().getAccessWeChatToken();
                   },
                 ),
                 new Padding(
