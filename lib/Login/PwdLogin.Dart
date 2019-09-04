@@ -9,7 +9,7 @@ import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Base/CJRequestEngine.dart';
 import 'package:cajian/Login/Server.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:cajian/Base/NIMSDKBridge.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:cajian/Base/Hybrid.dart';
@@ -90,7 +90,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
 
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    return await NIMSDKBridge.doSDKLogin(
+    return await NimSdkUtil.doSDKLogin(
       response['accid'], 
       response['token'], 
       response['name']);

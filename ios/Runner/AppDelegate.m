@@ -1,14 +1,13 @@
 #include "AppDelegate.h"
 #include "GeneratedPluginRegistrant.h"
-#import "CJNIMSDKBridge.h"
 #import "CJUtilBridge.h"
 #import "CJViewController.h"
-#import "CJNIMSDKBridge.h"
 #import "WeChatManager.h"
 #import "CJSessionListViewController.h"
 #import "CJContactsViewController.h"
 #import "CJViewController.h"
 #import "CJMineViewController.h"
+#import <nim_sdk_util/NimSdkUtilPlugin.h>
 
 @implementation AppDelegate
 
@@ -16,10 +15,8 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // 初始化flutter
     [GeneratedPluginRegistrant registerWithRegistry:self];
-    // 注册云信SDK
-    [CJNIMSDKBridge registerSDK];
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
-    
+    [NimSdkUtilPlugin registerSDK];
     /*根据登录状态初始化登录页面 vc*/
     [self showDidLogoutRootVC];
     
@@ -173,22 +170,7 @@
 
 - (void)registerChannel:(CJViewController *)rootVC
 {
-    _nimChannel = [FlutterMethodChannel
-                        methodChannelWithName:@"com.zqtd.cajian/NIMSDK"
-                        binaryMessenger:rootVC.engine.binaryMessenger];
-    
     __weak typeof(self) weakSelf = self;
-    [_nimChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
-        SEL callMethod = NSSelectorFromString(call.method);
-        if([weakSelf respondsToSelector:callMethod])
-        {
-            [weakSelf performSelector:callMethod
-                           withObject:call.arguments
-                           afterDelay:0];
-        }else {
-            [CJNIMSDKBridge bridgeCall:call result:result];
-        }
-    }];
     
     _utilChannel = [FlutterMethodChannel
                          methodChannelWithName:@"com.zqtd.cajian/util"

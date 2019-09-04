@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cajian/Mine/Setting.dart';
-import 'package:cajian/Base/NIMSDKBridge.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 
 enum MineCellType {
   Profile,    // 用户信息
@@ -29,7 +29,7 @@ class MineModel {
   );
 
   Future<dynamic> mineInfo() async {
-    dynamic info = await NIMSDKBridge.currentUserInfo();
+    dynamic info = await NimSdkUtil.currentUserInfo();
     return info;
   }
 }

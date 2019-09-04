@@ -7,6 +7,4 @@
 
 @property (nonatomic, strong) FlutterMethodChannel *utilChannel;
 
-@property (nonatomic, strong) FlutterMethodChannel *nimChannel;
-
 @end

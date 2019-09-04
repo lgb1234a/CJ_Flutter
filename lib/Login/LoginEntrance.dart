@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Login.dart';
-import 'package:cajian/Base/NIMSDKBridge.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +38,7 @@ class LoginEntranceState extends State<LoginEntrance> {
       String token = sp.getString('token');
       if(accid != null && token != null) 
       {
-        NIMSDKBridge.autoLogin(accid, token, '');
+        NimSdkUtil.autoLogin(accid, token, '');
         NotificationCenter.shared.postNotification('loginSuccess', {});
       }
     });

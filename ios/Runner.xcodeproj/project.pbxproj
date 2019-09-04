@@ -28,7 +28,6 @@
 		EF11BE6922FABBD600CAD319 /* NSString+Cajian.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5B22FABBD600CAD319 /* NSString+Cajian.m */; };
 		EF11BE6A22FABBD600CAD319 /* XTSafeCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5F22FABBD600CAD319 /* XTSafeCollection.m */; };
 		EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6222FABBD600CAD319 /* CJViewController.m */; };
-		EF11BE7122FABBFC00CAD319 /* CJNIMSDKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6E22FABBFC00CAD319 /* CJNIMSDKBridge.m */; };
 		EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */; };
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
@@ -90,9 +89,7 @@
 		EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		EF11BE6422FABBD600CAD319 /* NSString+Cajian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Cajian.h"; sourceTree = "<group>"; };
 		EF11BE6D22FABBFC00CAD319 /* CJUtilBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJUtilBridge.h; sourceTree = "<group>"; };
-		EF11BE6E22FABBFC00CAD319 /* CJNIMSDKBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJNIMSDKBridge.m; sourceTree = "<group>"; };
 		EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJUtilBridge.m; sourceTree = "<group>"; };
-		EF11BE7022FABBFC00CAD319 /* CJNIMSDKBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJNIMSDKBridge.h; sourceTree = "<group>"; };
 		EF11BE7722FAC65300CAD319 /* CJSessionListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionListViewController.h; sourceTree = "<group>"; };
 		EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionListViewController.m; sourceTree = "<group>"; };
 		EF11BE7A22FAC74300CAD319 /* CJContactsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactsViewController.h; sourceTree = "<group>"; };
@@ -232,8 +229,6 @@
 			children = (
 				EF11BE6D22FABBFC00CAD319 /* CJUtilBridge.h */,
 				EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */,
-				EF11BE7022FABBFC00CAD319 /* CJNIMSDKBridge.h */,
-				EF11BE6E22FABBFC00CAD319 /* CJNIMSDKBridge.m */,
 			);
 			path = Hybrid;
 			sourceTree = "<group>";
@@ -438,7 +433,6 @@
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF11BE5122FABAE400CAD319 /* WeChatManager.m in Sources */,
-				EF11BE7122FABBFC00CAD319 /* CJNIMSDKBridge.m in Sources */,
 				EF11BE6922FABBD600CAD319 /* NSString+Cajian.m in Sources */,
 				EF11BE6A22FABBD600CAD319 /* XTSafeCollection.m in Sources */,
 				EF11BE6522FABBD600CAD319 /* NSDictionary+Cajian.m in Sources */,

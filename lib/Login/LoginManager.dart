@@ -4,7 +4,7 @@
  */
 import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cajian/Base/NIMSDKBridge.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 
 bindAccidAndToken(String accid, String token) {
   LoginManager().accid = accid;
@@ -43,7 +43,7 @@ class LoginManager {
     if(token == null || accid == null) {
       return false;
     }
-    return NIMSDKBridge.doSDKLogin(accid, token, '');
+    return NimSdkUtil.doSDKLogin(accid, token, '');
   }
 
   clearTokenAndAccid() {
@@ -53,7 +53,7 @@ class LoginManager {
       sp.setString('token', null);
       sp.setString('accid', null);
     }).whenComplete((){
-      NIMSDKBridge.logout();
+      NimSdkUtil.logout();
       NotificationCenter.shared.postNotification('didLogout', {});
     });
   }
