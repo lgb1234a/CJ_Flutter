@@ -1,4 +1,5 @@
 #import "WxSdkPlugin.h"
+//#import <CJBase/CJBase.h>
 
 @implementation WxSdkPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {

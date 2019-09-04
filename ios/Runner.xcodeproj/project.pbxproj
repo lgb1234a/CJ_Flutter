@@ -21,12 +21,6 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		EF11BE5122FABAE400CAD319 /* WeChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5022FABAE400CAD319 /* WeChatManager.m */; };
-		EF11BE6522FABBD600CAD319 /* NSDictionary+Cajian.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5522FABBD600CAD319 /* NSDictionary+Cajian.m */; };
-		EF11BE6622FABBD600CAD319 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5622FABBD600CAD319 /* UIViewController+HUD.m */; };
-		EF11BE6722FABBD600CAD319 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5722FABBD600CAD319 /* HttpHelper.m */; };
-		EF11BE6822FABBD600CAD319 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5A22FABBD600CAD319 /* BaseModel.m */; };
-		EF11BE6922FABBD600CAD319 /* NSString+Cajian.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5B22FABBD600CAD319 /* NSString+Cajian.m */; };
-		EF11BE6A22FABBD600CAD319 /* XTSafeCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5F22FABBD600CAD319 /* XTSafeCollection.m */; };
 		EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6222FABBD600CAD319 /* CJViewController.m */; };
 		EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */; };
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
@@ -72,22 +66,9 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF11BE4F22FABAE400CAD319 /* WeChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatManager.h; sourceTree = "<group>"; };
 		EF11BE5022FABAE400CAD319 /* WeChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatManager.m; sourceTree = "<group>"; };
-		EF11BE5522FABBD600CAD319 /* NSDictionary+Cajian.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Cajian.m"; sourceTree = "<group>"; };
-		EF11BE5622FABBD600CAD319 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
-		EF11BE5722FABBD600CAD319 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
-		EF11BE5822FABBD600CAD319 /* XTSafeCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSafeCollection.h; sourceTree = "<group>"; };
 		EF11BE5922FABBD600CAD319 /* CJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJViewController.h; sourceTree = "<group>"; };
-		EF11BE5A22FABBD600CAD319 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
-		EF11BE5B22FABBD600CAD319 /* NSString+Cajian.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Cajian.m"; sourceTree = "<group>"; };
-		EF11BE5C22FABBD600CAD319 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
-		EF11BE5D22FABBD600CAD319 /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HUD.h"; sourceTree = "<group>"; };
-		EF11BE5E22FABBD600CAD319 /* NSDictionary+Cajian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Cajian.h"; sourceTree = "<group>"; };
-		EF11BE5F22FABBD600CAD319 /* XTSafeCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSafeCollection.m; sourceTree = "<group>"; };
-		EF11BE6022FABBD600CAD319 /* HttpConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpConstant.h; sourceTree = "<group>"; };
-		EF11BE6122FABBD600CAD319 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		EF11BE6222FABBD600CAD319 /* CJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJViewController.m; sourceTree = "<group>"; };
 		EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		EF11BE6422FABBD600CAD319 /* NSString+Cajian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Cajian.h"; sourceTree = "<group>"; };
 		EF11BE6D22FABBFC00CAD319 /* CJUtilBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJUtilBridge.h; sourceTree = "<group>"; };
 		EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJUtilBridge.m; sourceTree = "<group>"; };
 		EF11BE7722FAC65300CAD319 /* CJSessionListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionListViewController.h; sourceTree = "<group>"; };
@@ -204,22 +185,9 @@
 		EF11BE5422FABBD600CAD319 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				EF11BE5522FABBD600CAD319 /* NSDictionary+Cajian.m */,
-				EF11BE5E22FABBD600CAD319 /* NSDictionary+Cajian.h */,
-				EF11BE5C22FABBD600CAD319 /* HttpHelper.h */,
-				EF11BE5722FABBD600CAD319 /* HttpHelper.m */,
 				EF11BE5922FABBD600CAD319 /* CJViewController.h */,
 				EF11BE6222FABBD600CAD319 /* CJViewController.m */,
-				EF11BE6122FABBD600CAD319 /* BaseModel.h */,
-				EF11BE5A22FABBD600CAD319 /* BaseModel.m */,
-				EF11BE5D22FABBD600CAD319 /* UIViewController+HUD.h */,
-				EF11BE5622FABBD600CAD319 /* UIViewController+HUD.m */,
-				EF11BE5822FABBD600CAD319 /* XTSafeCollection.h */,
-				EF11BE5F22FABBD600CAD319 /* XTSafeCollection.m */,
-				EF11BE6022FABBD600CAD319 /* HttpConstant.h */,
 				EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */,
-				EF11BE6422FABBD600CAD319 /* NSString+Cajian.h */,
-				EF11BE5B22FABBD600CAD319 /* NSString+Cajian.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -424,19 +392,13 @@
 			files = (
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
-				EF11BE6622FABBD600CAD319 /* UIViewController+HUD.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
-				EF11BE6722FABBD600CAD319 /* HttpHelper.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */,
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF11BE5122FABAE400CAD319 /* WeChatManager.m in Sources */,
-				EF11BE6922FABBD600CAD319 /* NSString+Cajian.m in Sources */,
-				EF11BE6A22FABBD600CAD319 /* XTSafeCollection.m in Sources */,
-				EF11BE6522FABBD600CAD319 /* NSDictionary+Cajian.m in Sources */,
-				EF11BE6822FABBD600CAD319 /* BaseModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

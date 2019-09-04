@@ -32,6 +32,8 @@ def parse_KV_file(file, separator='=')
   return pods_ary
 end
 
+source 'https://git.xq5.com/cajian/CJBase_flutter_iOS.git'
+
 target 'Runner' do
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
   # referring to absolute paths on developers' machines.
@@ -65,6 +67,7 @@ target 'Runner' do
   pod 'AFNetworking'
   pod 'Reachability', '~> 3.2'
   pod 'YYModel'
+  pod 'CJBase', '~> 0.10'
 end
 
 # Prevent Cocoapods from embedding a second Flutter framework and causing an error with the new Xcode build system.
