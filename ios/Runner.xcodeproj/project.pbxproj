@@ -20,7 +20,6 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		EF11BE5122FABAE400CAD319 /* WeChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE5022FABAE400CAD319 /* WeChatManager.m */; };
 		EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6222FABBD600CAD319 /* CJViewController.m */; };
 		EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */; };
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
@@ -64,8 +63,6 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF11BE4F22FABAE400CAD319 /* WeChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatManager.h; sourceTree = "<group>"; };
-		EF11BE5022FABAE400CAD319 /* WeChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatManager.m; sourceTree = "<group>"; };
 		EF11BE5922FABBD600CAD319 /* CJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJViewController.h; sourceTree = "<group>"; };
 		EF11BE6222FABBD600CAD319 /* CJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJViewController.m; sourceTree = "<group>"; };
 		EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -176,8 +173,6 @@
 		EF11BE4E22FABACE00CAD319 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				EF11BE4F22FABAE400CAD319 /* WeChatManager.h */,
-				EF11BE5022FABAE400CAD319 /* WeChatManager.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -398,7 +393,6 @@
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
-				EF11BE5122FABAE400CAD319 /* WeChatManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
