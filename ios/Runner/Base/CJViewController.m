@@ -55,21 +55,4 @@
     [GeneratedPluginRegistrant registerWithRegistry:self];
 }
 
-#pragma mark --- wx login
-- (void)wxlogin
-{
-    if ([WXApi isWXAppInstalled]) {
-        SendAuthReq* req = [[SendAuthReq alloc] init];
-        req.scope = @"snsapi_userinfo";
-        req.state = @"get_access_token";
-        [WXApi sendReq:req];
-    }else{
-        SendAuthReq* req = [[SendAuthReq alloc] init];
-        req.scope = @"snsapi_userinfo";
-        req.state = @"get_access_token";
-        req.openID = @"wx0f56e7c5e6daa01a";
-        [WXApi sendAuthReq:req viewController:self delegate:self];
-    }
-}
-
 @end

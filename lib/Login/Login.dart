@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'PhoneLogin.dart';
 import 'PwdLogin.dart';
+import 'package:wx_sdk/wx_sdk.dart';
 
 class LoginWidget extends StatefulWidget {
   final MethodChannel platform;
@@ -20,7 +21,7 @@ class LoginWidget extends StatefulWidget {
 class LoginState extends State<LoginWidget> {
 
   wxlogin() {
-    widget.platform.invokeMethod('wxlogin');
+    WxSdk.wxLogin();
   }
 
   @override 
