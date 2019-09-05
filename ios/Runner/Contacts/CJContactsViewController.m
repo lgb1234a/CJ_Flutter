@@ -20,7 +20,7 @@
     NSString *contactsOpenUrl = @"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\"}";
     [self setInitialRoute:contactsOpenUrl];
     
-    
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 

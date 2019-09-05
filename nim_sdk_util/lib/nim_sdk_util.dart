@@ -56,4 +56,10 @@ class NimSdkUtil {
     dynamic userInfo = await _channel.invokeMethod('userInfo:', [sessionId]);
     return userInfo;
   }
+
+  // 获取好友列表
+  static Future<List>friends() async {
+    List friends = await _channel.invokeMethod('friends:');
+    return friends;
+  }
 }

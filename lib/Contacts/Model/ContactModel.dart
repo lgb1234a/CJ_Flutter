@@ -3,17 +3,16 @@
  *  通讯录成员model
  */
 
-// import 'package:azlistview/azlistview.dart';
+import 'package:azlistview/azlistview.dart';
+/// 通讯录成员model
+class ContactInfo extends ISuspensionBean{
+  String showName;
+  String infoId;
+  String avatarUrlString;
+  String tagIndex;
 
-// /// 通讯录成员model
-// class ContactInfo extends ISuspensionBean{
-//   String showName;
-//   String infoId;
-//   String avatarUrlString;
-//   String tagIndex;
+  ContactInfo(this.showName, this.avatarUrlString, {this.infoId, this.tagIndex});
 
-//   ContactInfo(this.showName, this.avatarUrlString, {this.infoId, this.tagIndex});
-
-//   @override
-//   String getSuspensionTag() => tagIndex;
-// }
+  @override
+  String getSuspensionTag() => tagIndex;
+}

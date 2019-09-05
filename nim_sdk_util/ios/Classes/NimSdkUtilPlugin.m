@@ -144,4 +144,21 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+// 获取好友列表
++ (void)friends:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSMutableArray *contacts = [NSMutableArray array];
+    for (NIMUser *user in [NIMSDK sharedSDK].userManager.myFriends) {
+        NIMKitInfo *info           = [[NIMKit sharedKit] infoByUser:user.userId option:nil];
+        NSDictionary *contact = @{
+                                  @"infoId": info.infoId,
+                                  @"showName": info.showName,
+                                  @"avatarUrlString": info.avatarUrlString ?:[NSNull null]
+                                  };
+        [contacts addObject:contact];
+    }
+    result(contacts);
+}
+
 @end

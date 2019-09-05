@@ -36,7 +36,6 @@ class LoginEntranceState extends State<LoginEntrance> {
     SharedPreferences.getInstance().then((sp){
       String accid = sp.getString('accid');
       String token = sp.getString('token');
-      debugPrint('login info: $accid $token');
       if(accid != null && token != null) 
       {
         NimSdkUtil.autoLogin(accid, token, '');
