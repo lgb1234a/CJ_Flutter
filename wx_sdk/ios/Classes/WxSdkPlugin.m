@@ -88,6 +88,9 @@
                  [UIViewController showSuccess:@"登录成功"];
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccess"
                                                                      object:self];
+                 
+                 // 持久化accid和token
+                 [self stashLoginInfo:account token:token];
              }
          }];
     }else if ([model.error isEqualToString:@"1"]){
@@ -118,6 +121,13 @@
     }
 }
 
+
+- (void)stashLoginInfo:(NSString *)accid token:(NSString *)token
+{
+    // 加上前缀flutter. 和flutter插件sp保持一致，可以被flutter端读取
+    [[NSUserDefaults standardUserDefaults] setValue:accid forKey:@"flutter.accid"];
+    [[NSUserDefaults standardUserDefaults] setValue:token forKey:@"flutter.token"];
+}
 
 + (void)wxBindCode:(NSString *)code
 {
