@@ -22,6 +22,7 @@ class ContactsWidget extends StatefulWidget {
 class ContactsState extends State<ContactsWidget> {
 
   List<ContactInfo> _contacts = List();
+  List<ContactInfo> _contactFunctions = List();
   int _suspensionHeight = 40;
   int _itemHeight = 50;
   String _suspensionTag = "";
@@ -38,7 +39,6 @@ class ContactsState extends State<ContactsWidget> {
     friends.forEach((f){
       _contacts.add(ContactInfo(f['showName'], f['avatarUrlString'], infoId: f['infoId']));
     });
-
     _handleList(_contacts);
   }
 
@@ -47,7 +47,7 @@ class ContactsState extends State<ContactsWidget> {
       for (int i = 0, length = list.length; i < length; i++) {
         String pinyin = PinyinHelper.getPinyinE(list[i].showName);
         String tag = pinyin.substring(0, 1).toUpperCase();
-        // list[i].namePinyin = pinyin;
+        list[i].namePinyin = pinyin;
         if (RegExp("[A-Z]").hasMatch(tag)) {
           list[i].tagIndex = tag;
         } else {
@@ -56,6 +56,15 @@ class ContactsState extends State<ContactsWidget> {
       }
       //根据A-Z排序
       SuspensionUtil.sortListBySuspensionTag(_contacts);
+
+      _contactFunctions.addAll([
+        ContactInfo('新的朋友', ''),
+        ContactInfo('群聊', ''),
+        ContactInfo('手机通讯录好友', '')
+      ]);
+
+      setState(() {
+      });
   }
 
   void _onSusTagChanged(String tag) {
@@ -121,6 +130,7 @@ class ContactsState extends State<ContactsWidget> {
               flex: 1,
               child: AzListView(
                 data: _contacts,
+                // topData: _contactFunctions,
                 itemBuilder: (context, model) => _buildListItem(model),
                 suspensionWidget: _buildSusWidget(_suspensionTag),
                 isUseRealIndex: true,

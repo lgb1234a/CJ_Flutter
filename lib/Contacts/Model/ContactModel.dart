@@ -10,6 +10,7 @@ class ContactInfo extends ISuspensionBean{
   String infoId;
   String avatarUrlString;
   String tagIndex;
+  String namePinyin;
 
   ContactInfo(this.showName, this.avatarUrlString, {this.infoId, this.tagIndex});
 
