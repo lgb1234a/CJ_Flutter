@@ -141,10 +141,17 @@
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction * _Nonnull action) {
                                                 [self showDidLogoutRootVC];
+                                                [self clearLoginInfoStash];
                                             }]];
     [self.window.rootViewController presentViewController:alert
                                                  animated:YES
                                                completion:nil];
+}
+
+- (void)clearLoginInfoStash
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
 }
 
 @end

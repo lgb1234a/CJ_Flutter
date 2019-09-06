@@ -17,7 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSString *contactsOpenUrl = @"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\"}";
+    int bottomPadding = BOTTOM_BAR_HEIGHT + (ISPROFILEDSCREEN?UNSAFE_BOTTOM_HEIGHT:0);
+    NSString *contactsOpenUrl = [NSString stringWithFormat:@"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\",\"params\":{\"bottom_padding\":\"%d\"}}", bottomPadding];
     [self setInitialRoute:contactsOpenUrl];
     
     self.navigationController.navigationBar.hidden = YES;

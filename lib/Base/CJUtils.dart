@@ -10,6 +10,16 @@ Size getSize(BuildContext context) {
   return screenSize;
 }
 
+double topPadding(BuildContext context) {
+  final double topPadding = MediaQuery.of(context).padding.top;
+  return topPadding;
+}
+
+double bottomPadding(BuildContext context) {
+  final double bottomPadding = MediaQuery.of(context).padding.bottom;
+  return bottomPadding;
+}
+
 final Color MainBgColor = Color(0xFFECECEC);
 final Color WhiteColor  = Color(0xFFFCFCFC);
 final Color BlackColor  = Color(0xFF141414);

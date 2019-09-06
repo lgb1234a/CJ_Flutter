@@ -17,13 +17,14 @@ Widget _widgetForRoute(String openUrl)
 
   String route = initParams['route'];
   String cn = initParams['channel_name'];
+  Map params = initParams['params'];
   switch (route) {
     case 'login_entrance':
       return new LoginEntrance(channelName: cn);
     case 'mine':
       return new MineWidget();
     case 'contacts':
-      return new ContactsWidget();
+      return new ContactsWidget(params);
     default:
       return Center(child: Text('未找到route为: $route 的页面'));
   }
