@@ -34,7 +34,10 @@ dialog(BuildContext context, String title, String msg, String commitText,
   var commitWidget = commitHandler == null
       ? SizedBox()
       : new FlatButton(
-          child: new Text(commitText != null ? commitText : '确定'),
+          child: new Text(
+            commitText != null ? commitText : '确定',
+            style: TextStyle(color: Colors.blue),
+          ),
           onPressed: () {
             commitHandler();
             Navigator.of(context).pop();
@@ -44,13 +47,16 @@ dialog(BuildContext context, String title, String msg, String commitText,
   var cancelWidget = cancelHandler == null
       ? SizedBox()
       : new FlatButton(
-          child: new Text(cancelText != null ? cancelText : '取消'),
+          child: new Text(
+            cancelText != null ? cancelText : '取消',
+            style: TextStyle(color: Colors.red),
+          ),
           onPressed: () {
             cancelHandler();
             Navigator.of(context).pop();
           },
         );
-        
+
   showDialog(
       barrierDismissible: false,
       context: context,

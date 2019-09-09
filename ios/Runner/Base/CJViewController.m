@@ -99,4 +99,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)dealloc
+{
+    ZZLog(@"%@ - dealloced!", NSStringFromClass(self.class));
+}
+
 @end

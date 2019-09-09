@@ -11,9 +11,8 @@ import 'package:cajian/Mine/Mine.dart';
 import 'package:cajian/Contacts/Contacts.dart';
 import 'package:cajian/Mine/Setting.dart';
 
-Widget _widgetForRoute(String openUrl) 
-{
-  debugPrint('FlutterViewController openUrl:'+openUrl);
+Widget _widgetForRoute(String openUrl) {
+  debugPrint('FlutterViewController openUrl:' + openUrl);
   dynamic initParams = json.decode(openUrl);
 
   String route = initParams['route'];
@@ -29,10 +28,13 @@ Widget _widgetForRoute(String openUrl)
     case 'setting':
       return new SettingWidget(cn);
     default:
-      return Center(child: Text('未找到route为: $route 的页面'));
+      return MaterialApp(
+        home: Scaffold(
+          body: Center(child: Text('未找到route为: $route 的页面')),
+        ),
+      );
   }
 }
-
 
 void main() {
   runApp(_widgetForRoute(ui.window.defaultRouteName));

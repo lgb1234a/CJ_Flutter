@@ -38,7 +38,6 @@ class LoginEntranceState extends State<LoginEntrance> {
       if(accid != null && token != null) 
       {
         NimSdkUtil.autoLogin(accid, token, '');
-        NotificationCenter.shared.postNotification('loginSuccess', {});
       }
     });
   }

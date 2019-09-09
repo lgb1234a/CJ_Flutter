@@ -49,7 +49,7 @@ static FlutterResult _result = nil;
     CJUtilBridge.result = result;
     
     // flutter 调用
-    NSLog(@"flutter call :%@", call.method);
+    ZZLog(@"flutter call :%@", call.method);
     NSArray *params = call.arguments;
     SEL callMethod = NSSelectorFromString(call.method);
     if([self respondsToSelector:callMethod]) {

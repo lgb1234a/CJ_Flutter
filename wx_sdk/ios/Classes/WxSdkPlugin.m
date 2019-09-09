@@ -53,7 +53,7 @@
         if (resp.errCode == 0) {
             SendAuthResp *_resp = (SendAuthResp*)resp;
             NSString* accessToekn =  _resp.code;
-            NSLog(@"WetChat AccessToken %@", accessToekn);
+            ZZLog(@"WetChat AccessToken %@", accessToekn);
             // 拿到TOKEN后去服务端认证下
             if ([_resp.state isEqualToString:@"get_access_token_bind"]) {
                 [WxSdkPlugin wxBindCode:accessToekn];

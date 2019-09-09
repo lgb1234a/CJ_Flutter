@@ -1,0 +1,59 @@
+PODS:
+  - FLAnimatedImage (1.0.12)
+  - Flutter (1.0.0)
+  - M80AttributedLabel (1.6.3)
+  - nim_sdk_util (0.0.1):
+    - Flutter
+    - NIMKit
+  - NIMKit (2.12.3):
+    - NIMKit/Lite (= 2.12.3)
+  - NIMKit/Core (2.12.3):
+    - FLAnimatedImage (~> 1.0.12)
+    - M80AttributedLabel (~> 1.6.3)
+    - SDWebImage (~> 5.0.6)
+    - Toast (~> 3.0)
+    - TZImagePickerController (~> 3.0.7)
+  - NIMKit/Lite (2.12.3):
+    - NIMKit/Core
+    - NIMSDK_LITE (~> 6.8.2)
+  - NIMSDK_LITE (6.8.2)
+  - SDWebImage (5.0.6):
+    - SDWebImage/Core (= 5.0.6)
+  - SDWebImage/Core (5.0.6)
+  - Toast (3.1.0)
+  - TZImagePickerController (3.0.9)
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - nim_sdk_util (from `.symlinks/plugins/nim_sdk_util/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FLAnimatedImage
+    - M80AttributedLabel
+    - NIMKit
+    - NIMSDK_LITE
+    - SDWebImage
+    - Toast
+    - TZImagePickerController
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  nim_sdk_util:
+    :path: ".symlinks/plugins/nim_sdk_util/ios"
+
+SPEC CHECKSUMS:
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
+  nim_sdk_util: 98a3316d5fbab472afc31a2cea4061b4a8f6bdd8
+  NIMKit: 7b31db8f4fd0ad6c38647725f30c3758896ce98d
+  NIMSDK_LITE: 8d525f9a71ec8d48cd69123393d19450513e10aa
+  SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
+  Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
+  TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
+
+PODFILE CHECKSUM: 7fb83752f59ead6285236625b82473f90b1cb932
+
+COCOAPODS: 1.7.2
