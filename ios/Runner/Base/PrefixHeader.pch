@@ -16,6 +16,7 @@
 #import <NIMSDK/NIMSDK.h>
 #import <NIMKit.h>
 #import <CJBase/CJBase.h>
+#import "CJNavigationViewController.h"
 
 //状态栏高度
 #define STATUS_BAR_HEIGHT ([[UIApplication sharedApplication] statusBarFrame].size.height)

@@ -14,12 +14,18 @@
 
 @implementation CJMineViewController
 
+- (instancetype)init
+{
+    NSString *mineOpenUrl = @"{\"route\":\"mine\",\"channel_name\":\"com.zqtd.cajian/mine\"}";
+    self = [super initWithFlutterOpenUrl:mineOpenUrl];
+    if (self) {
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSString *mineOpenUrl = @"{\"route\":\"mine\",\"channel_name\":\"com.zqtd.cajian/mine\"}";
-    [self setInitialRoute:mineOpenUrl];
-    
     self.navigationController.navigationBar.hidden = YES;
 }
 

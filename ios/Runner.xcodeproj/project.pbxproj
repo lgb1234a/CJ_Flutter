@@ -20,6 +20,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */; };
 		EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6222FABBD600CAD319 /* CJViewController.m */; };
 		EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */; };
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
@@ -63,6 +64,8 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF071BFE232634F8007E5D9B /* CJNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJNavigationViewController.h; sourceTree = "<group>"; };
+		EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJNavigationViewController.m; sourceTree = "<group>"; };
 		EF11BE5922FABBD600CAD319 /* CJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJViewController.h; sourceTree = "<group>"; };
 		EF11BE6222FABBD600CAD319 /* CJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJViewController.m; sourceTree = "<group>"; };
 		EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 				EF11BE5922FABBD600CAD319 /* CJViewController.h */,
 				EF11BE6222FABBD600CAD319 /* CJViewController.m */,
 				EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */,
+				EF071BFE232634F8007E5D9B /* CJNavigationViewController.h */,
+				EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
+				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,

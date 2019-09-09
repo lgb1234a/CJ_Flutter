@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'Login/LoginEntrance.dart';
 import 'package:cajian/Mine/Mine.dart';
 import 'package:cajian/Contacts/Contacts.dart';
+import 'package:cajian/Mine/Setting.dart';
 
 Widget _widgetForRoute(String openUrl) 
 {
@@ -22,9 +23,11 @@ Widget _widgetForRoute(String openUrl)
     case 'login_entrance':
       return new LoginEntrance(channelName: cn);
     case 'mine':
-      return new MineWidget();
+      return new MineWidget(cn);
     case 'contacts':
       return new ContactsWidget(params);
+    case 'setting':
+      return new SettingWidget(cn);
     default:
       return Center(child: Text('未找到route为: $route 的页面'));
   }

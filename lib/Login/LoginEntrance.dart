@@ -22,7 +22,6 @@ class LoginEntrance extends StatefulWidget {
 
 class LoginEntranceState extends State<LoginEntrance> {
   MethodChannel _platform;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   void initState() {

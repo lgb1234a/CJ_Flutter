@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return 返回VC
  */
-- (instancetype)initWithInitialOpenUrl:(NSString *)openUrl;
+- (instancetype)initWithFlutterOpenUrl:(NSString *)openUrl;
 
 @end
 

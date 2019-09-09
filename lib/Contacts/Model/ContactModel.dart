@@ -4,15 +4,17 @@
  */
 
 import 'package:azlistview/azlistview.dart';
+
 /// 通讯录成员model
-class ContactInfo extends ISuspensionBean{
+class ContactInfo extends ISuspensionBean {
   String showName;
   String avatarUrlString;
   String infoId;
   String tagIndex;
   String namePinyin;
 
-  ContactInfo(this.showName, this.avatarUrlString, {this.infoId, this.tagIndex, this.namePinyin});
+  ContactInfo(this.showName, this.avatarUrlString,
+      {this.infoId, this.tagIndex, this.namePinyin});
 
   @override
   String getSuspensionTag() => tagIndex;

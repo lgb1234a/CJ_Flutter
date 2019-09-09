@@ -53,7 +53,7 @@ class MineListCellOthers extends StatelessWidget {
         ),
       ),
       onTap: () {
-        model.onTap(context);
+        model.onTap(this.model);
       },
     );
   }
