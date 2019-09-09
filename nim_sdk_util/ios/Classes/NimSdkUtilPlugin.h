@@ -7,4 +7,10 @@
  */
 + (void)registerSDK;
 
+
+/**
+ 云信登出
+ */
++ (void)logout;
+
 @end

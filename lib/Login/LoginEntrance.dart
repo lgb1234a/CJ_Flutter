@@ -55,8 +55,6 @@ class LoginEntranceState extends State<LoginEntrance> {
 
   @override
   dispose() {
-    NotificationCenter.shared.removeObserver('loginSuccess');
-    NotificationCenter.shared.removeObserver('didLogout');
     super.dispose();
   }
 

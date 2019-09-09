@@ -7,17 +7,13 @@
 //
 
 #import "CJViewController.h"
-#import <WXApi.h>
 #include "GeneratedPluginRegistrant.h"
-
-@interface CJViewController ()
-<WXApiDelegate>
-
-@end
+#import "CJUtilBridge.h"
 
 @interface CJViewController ()
 
 @property (nonatomic, strong) FlutterMethodChannel *mc;
+@property (nonatomic, strong) FlutterMethodChannel *utilChannel;
 
 @end
 
@@ -30,8 +26,10 @@
                            bundle:nil];
     if(self) {
         [self setInitialRoute:openUrl];
+        [self registerChannel];
         
         NSDictionary *params = [NSDictionary cj_dictionary:openUrl];
+        
         // 设置回调
         _mc = [FlutterMethodChannel methodChannelWithName:params[@"channel_name"] binaryMessenger:self.engine.binaryMessenger];
         
@@ -55,6 +53,28 @@
         
     }
     return self;
+}
+
+/// util 
+- (void)registerChannel
+{
+    __weak typeof(self) weakSelf = self;
+    
+    _utilChannel = [FlutterMethodChannel
+                    methodChannelWithName:@"com.zqtd.cajian/util"
+                    binaryMessenger:self.engine.binaryMessenger];
+    
+    [_utilChannel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
+        SEL callMethod = NSSelectorFromString(call.method);
+        if([weakSelf respondsToSelector:callMethod])
+        {
+            [weakSelf performSelector:callMethod
+                           withObject:call.arguments
+                           afterDelay:0];
+        }else {
+            [CJUtilBridge bridgeCall:call result:result];
+        }
+    }];
 }
 
 - (void)viewDidLoad {

@@ -54,7 +54,6 @@ class LoginManager {
       sp.setString('accid', null);
     }).whenComplete((){
       NimSdkUtil.logout();
-      NotificationCenter.shared.postNotification('didLogout', {});
     });
   }
 

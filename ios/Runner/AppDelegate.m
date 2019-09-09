@@ -1,6 +1,5 @@
 #include "AppDelegate.h"
 #include "GeneratedPluginRegistrant.h"
-#import "CJUtilBridge.h"
 #import "CJViewController.h"
 #import "CJSessionListViewController.h"
 #import "CJContactsViewController.h"
@@ -78,8 +77,6 @@
     tabbar.viewControllers = @[listNav, contactsNav, mineNav];
     
     self.window.rootViewController = tabbar;
-    
-    [self registerChannel:mine];
 }
 
 // 展示登出成功的页面根视图
@@ -88,29 +85,6 @@
     NSString *openUrl = @"{\"route\":\"login_entrance\",\"channel_name\":\"com.zqtd.cajian/login_entrance\"}";
     CJViewController *rootVC = [[CJViewController alloc] initWithFlutterOpenUrl:openUrl];
     self.window.rootViewController = rootVC;
-    
-    [self registerChannel:rootVC];
-}
-
-- (void)registerChannel:(CJViewController *)rootVC
-{
-    __weak typeof(self) weakSelf = self;
-    
-    _utilChannel = [FlutterMethodChannel
-                         methodChannelWithName:@"com.zqtd.cajian/util"
-                         binaryMessenger:rootVC.engine.binaryMessenger];
-    
-    [_utilChannel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
-        SEL callMethod = NSSelectorFromString(call.method);
-        if([weakSelf respondsToSelector:callMethod])
-        {
-            [weakSelf performSelector:callMethod
-                           withObject:call.arguments
-                           afterDelay:0];
-        }else {
-            [CJUtilBridge bridgeCall:call result:result];
-        }
-    }];
 }
 
 #pragma mark - NIMLoginManagerDelegate
@@ -131,8 +105,6 @@
         default:
             break;
     }
-    // 登出
-    [_utilChannel invokeMethod:@"logout" arguments:nil];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"⚠️"
                                                                    message:reason
@@ -140,18 +112,11 @@
     [alert addAction:[UIAlertAction actionWithTitle:@"确定"
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction * _Nonnull action) {
-                                                [self showDidLogoutRootVC];
-                                                [self clearLoginInfoStash];
+                                                [NimSdkUtilPlugin logout];
                                             }]];
     [self.window.rootViewController presentViewController:alert
                                                  animated:YES
                                                completion:nil];
-}
-
-- (void)clearLoginInfoStash
-{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
 }
 
 @end

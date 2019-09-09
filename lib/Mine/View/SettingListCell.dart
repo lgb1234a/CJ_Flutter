@@ -23,7 +23,7 @@ class SettingFuncitonCell extends StatelessWidget
         ),
       ),
       onTap: (){
-        model.onTap(context);
+        model.onTap(model);
       },
     );
   }
@@ -65,7 +65,7 @@ class SettingAccessoryCell extends StatelessWidget {
         ),
       ),
       onTap: (){
-        model.onTap(context);
+        model.onTap(model);
       },
     );
   }

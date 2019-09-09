@@ -14,7 +14,7 @@ enum SettingCellType {
   Separator,   // 分割
 } 
 
-typedef TapCallback = void Function(BuildContext ctx);
+typedef TapCallback = void Function(SettingModel model);
 class SettingModel {
   @required SettingCellType cellType;
   String title;
@@ -22,6 +22,7 @@ class SettingModel {
   Color  titleColor;
   TapCallback onTap;
   bool needSeparatorLine;
+  BuildContext ctx;
 
   SettingModel(
     this.cellType, 
@@ -35,38 +36,37 @@ class SettingModel {
 
 
 final List<SettingModel> settingCellModels = [
-  SettingModel(SettingCellType.Accessory, '安全', null, null, (BuildContext ctx){
+  SettingModel(SettingCellType.Accessory, '安全', null, null, (SettingModel model){
 
   }),
-  SettingModel(SettingCellType.Accessory, '绑定微信', '未绑定', null, (BuildContext ctx){
+  SettingModel(SettingCellType.Accessory, '绑定微信', '未绑定', null, (SettingModel model){
 
   }, needSeparatorLine: false),
 
   SettingModel(SettingCellType.Separator, null, null, null, null, needSeparatorLine: false),
 
-  SettingModel(SettingCellType.Accessory, '新消息通知', null, null, (BuildContext ctx){
+  SettingModel(SettingCellType.Accessory, '新消息通知', null, null, (SettingModel model){
 
   }),
 
-  SettingModel(SettingCellType.Accessory, '黑名单', null, null, (BuildContext ctx){
+  SettingModel(SettingCellType.Accessory, '黑名单', null, null, (SettingModel model){
 
   }),
 
-  SettingModel(SettingCellType.Accessory, '清理缓存', null, null, (BuildContext ctx){
+  SettingModel(SettingCellType.Accessory, '清理缓存', null, null, (SettingModel model){
 
   }, needSeparatorLine: false),
 
   SettingModel(SettingCellType.Separator, null, null, null, null, needSeparatorLine: false),
 
-  SettingModel(SettingCellType.Accessory, '关于', null, null, (BuildContext ctx){
+  SettingModel(SettingCellType.Accessory, '关于', null, null, (SettingModel model){
 
   }, needSeparatorLine: false),
 
   SettingModel(SettingCellType.Separator, null, null, null, null, needSeparatorLine: false),
 
-  SettingModel(SettingCellType.Function, '退出登录', null, Color(0xFFFA5151), (BuildContext ctx){
-    dialog(ctx, '提示', '确定要退出登录吗？', '确定', '取消', (){
-      Navigator.pop(ctx);
+  SettingModel(SettingCellType.Function, '退出登录', null, Color(0xFFFA5151), (SettingModel model){
+    dialog(model.ctx, '提示', '确定要退出登录吗？', '确定', '取消', (){
       LoginManager().logout();
     }, (){
       

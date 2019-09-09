@@ -1,5 +1,6 @@
 #import "NimSdkUtilPlugin.h"
 #import <NIMKit.h>
+#import <CJBase/CJBase.h>
 
 NSDictionary *JsonStringDecode(NSString *jsonString)
 {
@@ -141,6 +142,14 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)logout
 {
     [[NIMSDK sharedSDK].loginManager logout:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"登出失败！"];
+        }else {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didLogout"
+                                                                object:self];
+        }
     }];
 }
 

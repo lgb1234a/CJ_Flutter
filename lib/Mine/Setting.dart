@@ -40,6 +40,7 @@ class SettingState extends State<SettingWidget> {
     itemCount: settingCellModels.length,
     itemBuilder: (BuildContext ctx, int index) {
       SettingModel model = settingCellModels[index];
+      model.ctx = ctx;
       if (model.cellType == SettingCellType.Function) {
         return SettingFuncitonCell(model);
       } else if (model.cellType == SettingCellType.Separator) {
