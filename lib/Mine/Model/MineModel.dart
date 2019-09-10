@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cajian/Mine/Setting.dart';
 import 'dart:convert' as convert;
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 

@@ -11,7 +11,6 @@ import 'package:cajian/Login/Server.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
-import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:cajian/Base/Hybrid.dart';
 
 class PwdLoginWidget extends StatefulWidget {

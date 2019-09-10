@@ -9,7 +9,6 @@ import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:cajian/Contacts/Model/ContactModel.dart';
-import 'package:azlistview/src/az_common.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
@@ -75,7 +74,12 @@ class ContactsState extends State<ContactsWidget> {
     });
   }
 
-  Widget _buildSusWidget(String susTag) {
+  Widget _buildSusWidget(String susTag) 
+  {
+    if(susTag == null || susTag == '') {
+      return Container();
+    }
+
     return Container(
       height: _suspensionHeight.toDouble(),
       padding: const EdgeInsets.only(left: 15.0),

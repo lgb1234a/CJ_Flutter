@@ -2,7 +2,6 @@
  *  Created by chenyn on 2019-07-11
  *  登录状态管理类
  */
-import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 

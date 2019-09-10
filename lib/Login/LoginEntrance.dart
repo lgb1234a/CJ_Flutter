@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Login.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
-import 'package:cajian/Base/NotificationCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginEntrance extends StatefulWidget {
