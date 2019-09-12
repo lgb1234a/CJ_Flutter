@@ -14,10 +14,6 @@ class Hybird {
     _platform.invokeMethod('showTip:', [msg]);
   }
 
-  static postNotification(String notificationName, dynamic notification) {
-    _platform.invokeMethod('postNotification:', [notificationName, notification]);
-  }
-
   static Future<dynamic> handler(MethodCall call) async {
     if(call.method == 'logout') {
       LoginManager().logout();
