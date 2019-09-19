@@ -16,30 +16,6 @@ PODS:
     - AFNetworking/NSURLSession
   - CJBase (0.11):
     - AFNetworking
-    - CJBase/Base (= 0.11)
-    - CJBase/Category (= 0.11)
-    - CJBase/Network (= 0.11)
-    - MBProgressHUD
-    - NIMKit
-    - NIMSDK_LITE
-    - Reachability
-    - YYModel
-  - CJBase/Base (0.11):
-    - AFNetworking
-    - MBProgressHUD
-    - NIMKit
-    - NIMSDK_LITE
-    - Reachability
-    - YYModel
-  - CJBase/Category (0.11):
-    - AFNetworking
-    - MBProgressHUD
-    - NIMKit
-    - NIMSDK_LITE
-    - Reachability
-    - YYModel
-  - CJBase/Network (0.11):
-    - AFNetworking
     - MBProgressHUD
     - NIMKit
     - NIMSDK_LITE
@@ -119,7 +95,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  CJBase: 3630cdd5edae660ffecd9b8550a1f0eb08ce0764
+  CJBase: 8a93c4a59eac2827ee280312a227f060957dbba5
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
