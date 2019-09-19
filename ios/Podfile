@@ -32,7 +32,9 @@ def parse_KV_file(file, separator='=')
   return pods_ary
 end
 
-source 'https://git.xq5.com/cajian/CJBase_flutter_iOS.git'
+source 'https://git.xq5.com/cajian/CJBase.git'
+source 'https://github.com/CocoaPods/Specs.git'
+#source 'git@git.internal.weyao.com:gaoshilei/CocoapodsPrivate.git'
 
 target 'Runner' do
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
