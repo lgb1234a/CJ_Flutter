@@ -14,8 +14,11 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // 初始化flutter
     [GeneratedPluginRegistrant registerWithRegistry:self];
+    // 注册微信sdk
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
+    // 注册云信sdk
     [NimSdkUtilPlugin registerSDK];
+    
     /*根据登录状态初始化登录页面 vc*/
     [self showDidLogoutRootVC];
     

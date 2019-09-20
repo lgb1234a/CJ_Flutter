@@ -26,6 +26,8 @@
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
+		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
+		EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -77,6 +79,10 @@
 		EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactsViewController.m; sourceTree = "<group>"; };
 		EF1422ED23055BF500AEAA55 /* CJMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMineViewController.h; sourceTree = "<group>"; };
 		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
+		EF8A41072334AF7D00AF697E /* CJSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionViewController.h; sourceTree = "<group>"; };
+		EF8A41082334AF7D00AF697E /* CJSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionViewController.m; sourceTree = "<group>"; };
+		EF8A410E2334BEC100AF697E /* CJMoreContainerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMoreContainerConfig.h; sourceTree = "<group>"; };
+		EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMoreContainerConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +210,7 @@
 		EF11BE7422FAC60800CAD319 /* Session */ = {
 			isa = PBXGroup;
 			children = (
+				EF8A40FB2334A44000AF697E /* SessionViewController */,
 				EF11BE7722FAC65300CAD319 /* CJSessionListViewController.h */,
 				EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */,
 			);
@@ -226,6 +233,113 @@
 				EF1422EE23055BF500AEAA55 /* CJMineViewController.m */,
 			);
 			path = Mine;
+			sourceTree = "<group>";
+		};
+		EF8A40FB2334A44000AF697E /* SessionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A410A2334BAF100AF697E /* Config */,
+				EF8A40FC2334A44000AF697E /* Manager */,
+				EF8A40FD2334A44000AF697E /* BubbleCell */,
+				EF8A41072334AF7D00AF697E /* CJSessionViewController.h */,
+				EF8A41082334AF7D00AF697E /* CJSessionViewController.m */,
+			);
+			path = SessionViewController;
+			sourceTree = "<group>";
+		};
+		EF8A40FC2334A44000AF697E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		EF8A40FD2334A44000AF697E /* BubbleCell */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A40FE2334A44000AF697E /* CloudPay */,
+				EF8A40FF2334A44000AF697E /* YeePay */,
+				EF8A41002334A44000AF697E /* CajianPay */,
+			);
+			path = BubbleCell;
+			sourceTree = "<group>";
+		};
+		EF8A40FE2334A44000AF697E /* CloudPay */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A41042334A4AB00AF697E /* Model */,
+				EF8A41032334A4AB00AF697E /* View */,
+			);
+			path = CloudPay;
+			sourceTree = "<group>";
+		};
+		EF8A40FF2334A44000AF697E /* YeePay */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A41022334A47300AF697E /* Model */,
+				EF8A41012334A47300AF697E /* View */,
+			);
+			path = YeePay;
+			sourceTree = "<group>";
+		};
+		EF8A41002334A44000AF697E /* CajianPay */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A41062334A4B600AF697E /* Model */,
+				EF8A41052334A4B600AF697E /* View */,
+			);
+			path = CajianPay;
+			sourceTree = "<group>";
+		};
+		EF8A41012334A47300AF697E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EF8A41022334A47300AF697E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF8A41032334A4AB00AF697E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EF8A41042334A4AB00AF697E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF8A41052334A4B600AF697E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EF8A41062334A4B600AF697E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF8A410A2334BAF100AF697E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A410E2334BEC100AF697E /* CJMoreContainerConfig.h */,
+				EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,11 +505,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
+				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
 				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */,
+				EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */,
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
