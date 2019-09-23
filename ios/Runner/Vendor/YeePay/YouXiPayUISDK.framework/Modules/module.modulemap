@@ -1,0 +1,6 @@
+framework module YouXiPayUISDK {
+  umbrella header "YouXiPayUISDK.h"
+
+  export *
+  module * { export * }
+}

@@ -55,23 +55,23 @@
 #pragma mark - NIMMeidaButton
 - (void)onTapMediaItemCajianRP:(NIMMediaItem *)item
 {
-    // TODO: 擦肩红包
+    // TODO: 擦肩红包  CJPayManager
     
 }
 
 - (void)onTapMediaItemCloudRedPacket:(NIMMediaItem *)item
 {
-    // TODO:云红包
+    // TODO:云红包  CJPayManager
 }
 
 - (void)onTapMediaItemYeePacket:(NIMMediaItem *)item
 {
-    // TODO:易红包
+    // TODO:易红包  CJPayManager
 }
 
 - (void)onTapMediaItemYXTransfer:(NIMMediaItem *)item
 {
-    // TODO:易转账
+    // TODO:易转账  CJPayManager
 }
 
 - (void)onTapMediaItemProfileCard:(NIMMediaItem *)item

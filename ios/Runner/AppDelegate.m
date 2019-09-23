@@ -7,6 +7,8 @@
 #import "CJMineViewController.h"
 #import <nim_sdk_util/NimSdkUtilPlugin.h>
 #import <WxSdkPlugin.h>
+#import "CJCustomAttachmentDecoder.h"
+#import "CJCellLayoutConfig.h"
 
 @implementation AppDelegate
 
@@ -18,6 +20,10 @@
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
     // 注册云信sdk
     [NimSdkUtilPlugin registerSDK];
+    //注册自定义消息的解析器
+    [NIMCustomObject registerCustomDecoder:[CJCustomAttachmentDecoder new]];
+    //注入 NIMKit 自定义排版配置
+    [[NIMKit sharedKit] registerLayoutConfig:[CJCellLayoutConfig new]];
     
     /*根据登录状态初始化登录页面 vc*/
     [self showDidLogoutRootVC];
