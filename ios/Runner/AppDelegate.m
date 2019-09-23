@@ -9,6 +9,8 @@
 #import <WxSdkPlugin.h>
 #import "CJCustomAttachmentDecoder.h"
 #import "CJCellLayoutConfig.h"
+#import <YouXiPayUISDK/ZZPayUI.h>
+#import "CJNotificationCenter.h"
 
 @implementation AppDelegate
 
@@ -18,23 +20,19 @@
     [GeneratedPluginRegistrant registerWithRegistry:self];
     // 注册微信sdk
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
-    // 注册云信sdk
-    [NimSdkUtilPlugin registerSDK];
-    //注册自定义消息的解析器
-    [NIMCustomObject registerCustomDecoder:[CJCustomAttachmentDecoder new]];
-    //注入 NIMKit 自定义排版配置
-    [[NIMKit sharedKit] registerLayoutConfig:[CJCellLayoutConfig new]];
+    // 配置云信服务
+    [self configNIMServices];
     
     /*根据登录状态初始化登录页面 vc*/
     [self showDidLogoutRootVC];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showDidLoginSuccessRootVC)
+                                             selector:@selector(didLogin)
                                                  name:@"loginSuccess"
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showDidLogoutRootVC)
+                                             selector:@selector(didLogout)
                                                  name:@"didLogout"
                                                object:nil];
     /* 登录回调代理 */
@@ -42,6 +40,18 @@
     
   // Override point for customization after application launch.
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+- (void)configNIMServices
+{
+    // 注册云信sdk
+    [NimSdkUtilPlugin registerSDK];
+    //注册自定义消息的解析器
+    [NIMCustomObject registerCustomDecoder:[CJCustomAttachmentDecoder new]];
+    //注入 NIMKit 自定义排版配置
+    [[NIMKit sharedKit] registerLayoutConfig:[CJCellLayoutConfig new]];
+    //启动消息通知
+    [[CJNotificationCenter sharedCenter] start];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
@@ -55,6 +65,24 @@
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
     return [WXApi handleOpenURL:url delegate:[WxSdkPlugin new]];
+}
+
+#pragma mark - 登录，这里只做UI和第三方库处理
+- (void)didLogin
+{
+    // 初始化易红包服务
+    NSString *key = [[[NIMSDK sharedSDK] loginManager] currentAccount];
+    [ZZPayUI initializePaySDKWithMerchantNo:@"yxcajian" userNo:key];
+    
+    [self showDidLoginSuccessRootVC];
+}
+
+- (void)didLogout
+{
+    // 易红包注销
+    [ZZPayUI didLogout];
+    
+    [self showDidLogoutRootVC];
 }
 
 // 展示登录成功的页面根视图
@@ -86,6 +114,7 @@
     tabbar.viewControllers = @[listNav, contactsNav, mineNav];
     
     self.window.rootViewController = tabbar;
+    self.tabbar = tabbar;
 }
 
 // 展示登出成功的页面根视图

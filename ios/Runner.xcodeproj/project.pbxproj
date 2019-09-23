@@ -37,6 +37,18 @@
 		EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A412D2338754900AF697E /* CJCellLayoutConfig.m */; };
 		EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A413023389A9100AF697E /* CJYeePayRedPacketAtachment.m */; };
 		EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A413323389DAC00AF697E /* CJYeeRedPacketContentView.m */; };
+		EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41372338B01500AF697E /* CJNotificationCenter.m */; };
+		EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A413C2338B23400AF697E /* NTESAVNotifier.m */; };
+		EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A413F2338B4F200AF697E /* NTESSessionUtil.m */; };
+		EF8A41442338B88F00AF697E /* NTESDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41432338B88F00AF697E /* NTESDevice.m */; };
+		EF8A414F2338C03000AF697E /* video_connect_chat_tip_sender.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A41472338C03000AF697E /* video_connect_chat_tip_sender.aac */; };
+		EF8A41502338C03000AF697E /* video_chat_tip_OnCall.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A41482338C03000AF697E /* video_chat_tip_OnCall.aac */; };
+		EF8A41512338C03000AF697E /* video_chat_tip_sender.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A41492338C03000AF697E /* video_chat_tip_sender.aac */; };
+		EF8A41522338C03000AF697E /* video_chat_tip_HangUp.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414A2338C03000AF697E /* video_chat_tip_HangUp.aac */; };
+		EF8A41532338C03000AF697E /* message.wav in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414B2338C03000AF697E /* message.wav */; };
+		EF8A41542338C03000AF697E /* video_chat_tip_receiver.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414C2338C03000AF697E /* video_chat_tip_receiver.aac */; };
+		EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */; };
+		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -109,6 +121,23 @@
 		EF8A413023389A9100AF697E /* CJYeePayRedPacketAtachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketAtachment.m; sourceTree = "<group>"; };
 		EF8A413223389DAC00AF697E /* CJYeeRedPacketContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeeRedPacketContentView.h; sourceTree = "<group>"; };
 		EF8A413323389DAC00AF697E /* CJYeeRedPacketContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeeRedPacketContentView.m; sourceTree = "<group>"; };
+		EF8A41362338B01500AF697E /* CJNotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJNotificationCenter.h; sourceTree = "<group>"; };
+		EF8A41372338B01500AF697E /* CJNotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJNotificationCenter.m; sourceTree = "<group>"; };
+		EF8A413C2338B23400AF697E /* NTESAVNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTESAVNotifier.m; sourceTree = "<group>"; };
+		EF8A413D2338B23400AF697E /* NTESAVNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESAVNotifier.h; sourceTree = "<group>"; };
+		EF8A413F2338B4F200AF697E /* NTESSessionUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTESSessionUtil.m; sourceTree = "<group>"; };
+		EF8A41402338B4F200AF697E /* NTESSessionUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESSessionUtil.h; sourceTree = "<group>"; };
+		EF8A41422338B88F00AF697E /* NTESDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESDevice.h; sourceTree = "<group>"; };
+		EF8A41432338B88F00AF697E /* NTESDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTESDevice.m; sourceTree = "<group>"; };
+		EF8A41452338BFB900AF697E /* NTESGlobalMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESGlobalMacro.h; sourceTree = "<group>"; };
+		EF8A41472338C03000AF697E /* video_connect_chat_tip_sender.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_connect_chat_tip_sender.aac; sourceTree = "<group>"; };
+		EF8A41482338C03000AF697E /* video_chat_tip_OnCall.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_OnCall.aac; sourceTree = "<group>"; };
+		EF8A41492338C03000AF697E /* video_chat_tip_sender.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_sender.aac; sourceTree = "<group>"; };
+		EF8A414A2338C03000AF697E /* video_chat_tip_HangUp.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_HangUp.aac; sourceTree = "<group>"; };
+		EF8A414B2338C03000AF697E /* message.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = message.wav; sourceTree = "<group>"; };
+		EF8A414C2338C03000AF697E /* video_chat_tip_receiver.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_receiver.aac; sourceTree = "<group>"; };
+		EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_onTimer.aac; sourceTree = "<group>"; };
+		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +231,7 @@
 		97C146F11CF9000F007C117D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF8A41462338C03000AF697E /* Sounds */,
 				97C146F21CF9000F007C117D /* main.m */,
 			);
 			name = "Supporting Files";
@@ -238,6 +268,8 @@
 		EF11BE7422FAC60800CAD319 /* Session */ = {
 			isa = PBXGroup;
 			children = (
+				EF8A413A2338B23400AF697E /* NTES */,
+				EF8A41352338AFFA00AF697E /* Util */,
 				EF8A40FB2334A44000AF697E /* SessionViewController */,
 				EF11BE7722FAC65300CAD319 /* CJSessionListViewController.h */,
 				EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */,
@@ -410,6 +442,44 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		EF8A41352338AFFA00AF697E /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A41362338B01500AF697E /* CJNotificationCenter.h */,
+				EF8A41372338B01500AF697E /* CJNotificationCenter.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		EF8A413A2338B23400AF697E /* NTES */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A41452338BFB900AF697E /* NTESGlobalMacro.h */,
+				EF8A41422338B88F00AF697E /* NTESDevice.h */,
+				EF8A41432338B88F00AF697E /* NTESDevice.m */,
+				EF8A41402338B4F200AF697E /* NTESSessionUtil.h */,
+				EF8A413F2338B4F200AF697E /* NTESSessionUtil.m */,
+				EF8A413C2338B23400AF697E /* NTESAVNotifier.m */,
+				EF8A413D2338B23400AF697E /* NTESAVNotifier.h */,
+			);
+			path = NTES;
+			sourceTree = "<group>";
+		};
+		EF8A41462338C03000AF697E /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				EF8A41472338C03000AF697E /* video_connect_chat_tip_sender.aac */,
+				EF8A41482338C03000AF697E /* video_chat_tip_OnCall.aac */,
+				EF8A41492338C03000AF697E /* video_chat_tip_sender.aac */,
+				EF8A414A2338C03000AF697E /* video_chat_tip_HangUp.aac */,
+				EF8A414B2338C03000AF697E /* message.wav */,
+				EF8A414C2338C03000AF697E /* video_chat_tip_receiver.aac */,
+				EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */,
+				EF8A414E2338C03000AF697E /* video_chat_push.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -478,7 +548,15 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				9740EEB41CF90195004384FC /* Debug.xcconfig in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
+				EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */,
+				EF8A41512338C03000AF697E /* video_chat_tip_sender.aac in Resources */,
+				EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */,
 				EF8A412123386E7100AF697E /* Res.bundle in Resources */,
+				EF8A41522338C03000AF697E /* video_chat_tip_HangUp.aac in Resources */,
+				EF8A41532338C03000AF697E /* message.wav in Resources */,
+				EF8A41542338C03000AF697E /* video_chat_tip_receiver.aac in Resources */,
+				EF8A414F2338C03000AF697E /* video_connect_chat_tip_sender.aac in Resources */,
+				EF8A41502338C03000AF697E /* video_chat_tip_OnCall.aac in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,8 +654,10 @@
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,
+				EF8A41442338B88F00AF697E /* NTESDevice.m in Sources */,
 				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
+				EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */,
 				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
@@ -589,7 +669,9 @@
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
+				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
+				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

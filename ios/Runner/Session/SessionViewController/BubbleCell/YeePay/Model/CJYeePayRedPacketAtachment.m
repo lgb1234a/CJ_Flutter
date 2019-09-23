@@ -95,4 +95,9 @@
     return YES;
 }
 
+- (NSString *)newMsgAcronym
+{
+    return @"[易红包]";
+}
+
 @end

@@ -4,4 +4,6 @@
 
 @interface AppDelegate : FlutterAppDelegate <NIMLoginManagerDelegate>
 
+@property (nonatomic, strong) UITabBarController *tabbar;
+
 @end

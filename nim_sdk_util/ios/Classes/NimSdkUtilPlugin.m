@@ -101,6 +101,21 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                                          token:token];
 }
 
+// 登出
++ (void)logout
+{
+    [[NIMSDK sharedSDK].loginManager logout:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"登出失败！"];
+        }else {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didLogout"
+                                                                object:self];
+        }
+    }];
+}
+
 // 返回当前登录用户信息
 + (void)currentUserInfo:(NSArray *)params
 {
@@ -140,21 +155,6 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
             @"avatar_url_string": info.avatarUrlString?: [NSNull new],
             // @"avatar_image": info.avatarImage?: [NSNull new]
             });
-}
-
-// 登出
-+ (void)logout
-{
-    [[NIMSDK sharedSDK].loginManager logout:^(NSError * _Nullable error) {
-        if(error) {
-            [UIViewController showError:@"登出失败！"];
-        }else {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"didLogout"
-                                                                object:self];
-        }
-    }];
 }
 
 // 获取好友列表

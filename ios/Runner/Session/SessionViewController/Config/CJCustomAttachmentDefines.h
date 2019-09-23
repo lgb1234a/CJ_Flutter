@@ -97,6 +97,14 @@ static NSString *mappingAttachmentForKey(CJCustomMessageType key)
  */
 + (NIMMessage *)msgFromAttachment;
 
+
+/**
+ 新消息缩略语
+
+ @return string
+ */
+- (NSString *)newMsgAcronym;
+
 @end
 
 

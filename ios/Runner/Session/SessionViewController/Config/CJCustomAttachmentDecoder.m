@@ -15,6 +15,9 @@
 {
     id<CJCustomAttachmentCoding> attachment = nil;
     NSData *data = [content dataUsingEncoding:NSUTF8StringEncoding];
+    if(!data) {
+        return nil;
+    }
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
                                                          options:0
                                                            error:nil];
@@ -24,7 +27,7 @@
         
         NSString *className = mappingAttachmentForKey(type);
         Class cls = NSClassFromString(className);
-        if([cls conformsToProtocol:@protocol(CJCustomAttachmentCoding)])
+        if([cls instancesRespondToSelector:@selector(initWithPrepareData:)])
         {
             attachment = [[cls alloc] initWithPrepareData:data];
         }
