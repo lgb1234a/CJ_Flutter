@@ -28,6 +28,7 @@
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
 		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
 		EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */; };
+		EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41142334D60E00AF697E /* CJPayManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,6 +84,8 @@
 		EF8A41082334AF7D00AF697E /* CJSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionViewController.m; sourceTree = "<group>"; };
 		EF8A410E2334BEC100AF697E /* CJMoreContainerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMoreContainerConfig.h; sourceTree = "<group>"; };
 		EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMoreContainerConfig.m; sourceTree = "<group>"; };
+		EF8A41132334D60E00AF697E /* CJPayManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJPayManager.h; sourceTree = "<group>"; };
+		EF8A41142334D60E00AF697E /* CJPayManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJPayManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +253,8 @@
 		EF8A40FC2334A44000AF697E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				EF8A41132334D60E00AF697E /* CJPayManager.h */,
+				EF8A41142334D60E00AF697E /* CJPayManager.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
+				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

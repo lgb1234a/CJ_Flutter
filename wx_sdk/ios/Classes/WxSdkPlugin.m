@@ -139,16 +139,18 @@
                              @"app_key":@"wx0f56e7c5e6daa01a"};
     [UIViewController showWaiting];
     
-    [HttpHelper postWithURL:url params:params success:^(BaseModel * _Nonnull model) {
+    co_launch(^{
+        BaseModel *model = await([HttpHelper post:url params:params]);
         
         [UIViewController hideHUD];
-        if (model.success) {
+        if(co_getError()) {
+            [UIViewController showError:CJ_net_err_msg];
+        }else if(model.success) {
             [UIViewController showSuccess:@"绑定成功"];
-        }else{
+        }else {
             [UIViewController showError:model.errmsg];
         }
-    } failure:^(NSError * _Nonnull error) {
-    }];
+    });
 }
 
 + (void)sendLoginAuth:(NSString*)accessToken
@@ -160,22 +162,17 @@
     [params setValue:accessToken forKey:@"code"];
     [params setValue:@"wx0f56e7c5e6daa01a" forKey:@"app_key"];
     [UIViewController showLoadingWithMessage:@"登录中..."];
-    [HttpHelper postWithURL:kWechatLoginUrl
-                     params:params
-                    success:^(BaseModel * _Nonnull model)
-     {
-         if (result) {
-             result(model);
-         }
-         else
-         {
-             [UIViewController hideHUD];
-             ZZLog(@"_loginDelegate is nil");
-         }
-     } failure:^(NSError * _Nonnull error) {
-         
-         //        [UIViewController hideHUD];
-     }];
+    
+    co_launch(^{
+        BaseModel *model = await([HttpHelper post:kWechatLoginUrl params:params]);
+        
+        [UIViewController hideHUD];
+        if(co_getError()) {
+            [UIViewController showError:CJ_net_err_msg];
+        }else if(result) {
+            result(model);
+        }
+    });
 }
 
 @end

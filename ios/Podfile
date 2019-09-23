@@ -72,6 +72,7 @@ target 'Runner' do
   pod 'YYModel'
 #  pod 'CJBase', '~> 0.11'
   pod 'CJBase', :path => 'CJBase'
+  pod 'coobjc'
 end
 
 # Prevent Cocoapods from embedding a second Flutter framework and causing an error with the new Xcode build system.
