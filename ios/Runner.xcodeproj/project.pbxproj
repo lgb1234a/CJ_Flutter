@@ -40,7 +40,6 @@
 		EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41372338B01500AF697E /* CJNotificationCenter.m */; };
 		EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A413C2338B23400AF697E /* NTESAVNotifier.m */; };
 		EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A413F2338B4F200AF697E /* NTESSessionUtil.m */; };
-		EF8A41442338B88F00AF697E /* NTESDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41432338B88F00AF697E /* NTESDevice.m */; };
 		EF8A414F2338C03000AF697E /* video_connect_chat_tip_sender.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A41472338C03000AF697E /* video_connect_chat_tip_sender.aac */; };
 		EF8A41502338C03000AF697E /* video_chat_tip_OnCall.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A41482338C03000AF697E /* video_chat_tip_OnCall.aac */; };
 		EF8A41512338C03000AF697E /* video_chat_tip_sender.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A41492338C03000AF697E /* video_chat_tip_sender.aac */; };
@@ -127,8 +126,6 @@
 		EF8A413D2338B23400AF697E /* NTESAVNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESAVNotifier.h; sourceTree = "<group>"; };
 		EF8A413F2338B4F200AF697E /* NTESSessionUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTESSessionUtil.m; sourceTree = "<group>"; };
 		EF8A41402338B4F200AF697E /* NTESSessionUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESSessionUtil.h; sourceTree = "<group>"; };
-		EF8A41422338B88F00AF697E /* NTESDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESDevice.h; sourceTree = "<group>"; };
-		EF8A41432338B88F00AF697E /* NTESDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTESDevice.m; sourceTree = "<group>"; };
 		EF8A41452338BFB900AF697E /* NTESGlobalMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTESGlobalMacro.h; sourceTree = "<group>"; };
 		EF8A41472338C03000AF697E /* video_connect_chat_tip_sender.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_connect_chat_tip_sender.aac; sourceTree = "<group>"; };
 		EF8A41482338C03000AF697E /* video_chat_tip_OnCall.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_OnCall.aac; sourceTree = "<group>"; };
@@ -455,8 +452,6 @@
 			isa = PBXGroup;
 			children = (
 				EF8A41452338BFB900AF697E /* NTESGlobalMacro.h */,
-				EF8A41422338B88F00AF697E /* NTESDevice.h */,
-				EF8A41432338B88F00AF697E /* NTESDevice.m */,
 				EF8A41402338B4F200AF697E /* NTESSessionUtil.h */,
 				EF8A413F2338B4F200AF697E /* NTESSessionUtil.m */,
 				EF8A413C2338B23400AF697E /* NTESAVNotifier.m */,
@@ -654,7 +649,6 @@
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,
-				EF8A41442338B88F00AF697E /* NTESDevice.m in Sources */,
 				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
 				EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */,

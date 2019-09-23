@@ -7,11 +7,8 @@
 //
 
 #import "NTESSessionUtil.h"
-//#import "UIImage+NTES.h"
 #import "NIMKitInfoFetchOption.h"
 #import "NIMExtensionHelper.h"
-//#import "NSDictionary+NTESJson.h"
-#import "NTESDevice.h"
 #import "CJCustomAttachmentDefines.h"
 
 double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
