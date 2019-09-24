@@ -25,7 +25,7 @@
         NSInteger type     = [[dict objectForKey:@"type"] integerValue];
         NSDictionary *data = [dict objectForKey:@"data"];
         
-        NSString *className = mappingAttachmentForKey(type);
+        NSString *className = attachmentNameForType(type);
         Class cls = NSClassFromString(className);
         if([cls instancesRespondToSelector:@selector(initWithPrepareData:)])
         {

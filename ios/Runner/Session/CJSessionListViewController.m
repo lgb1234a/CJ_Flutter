@@ -27,7 +27,7 @@
 - (void)onSelectedAvatar:(NSString *)userId
              atIndexPath:(NSIndexPath *)indexPath
 {
-    
+    // TODO:用户信息页
 };
 
 - (void)onSelectedRecent:(NIMRecentSession *)recentSession atIndexPath:(NSIndexPath *)indexPath
@@ -36,7 +36,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (NSAttributedString *)contentForRecentSession:(NIMRecentSession *)recent{
+- (NSAttributedString *)contentForRecentSession:(NIMRecentSession *)recent
+{
     NSAttributedString *content;
     if (recent.lastMessage.messageType == NIMMessageTypeCustom)
     {
@@ -65,7 +66,6 @@
     }
     NSMutableAttributedString *attContent = [[NSMutableAttributedString alloc] initWithAttributedString:content];
     [self checkNeedAtTip:recent content:attContent];
-//    [self checkOnlineState:recent content:attContent];
     return attContent;
 }
 
@@ -76,18 +76,5 @@
         [content insertAttributedString:atTip atIndex:0];
     }
 }
-
-//- (void)checkOnlineState:(NIMRecentSession *)recent content:(NSMutableAttributedString *)content
-//{
-//    if (recent.session.sessionType == NIMSessionTypeP2P) {
-//        NSString *state  = [NTESSessionUtil onlineState:recent.session.sessionId detail:NO];
-//        if (state.length) {
-//            NSString *format = [NSString stringWithFormat:@"[%@] ",state];
-//            NSAttributedString *atTip = [[NSAttributedString alloc] initWithString:format attributes:nil];
-//            [content insertAttributedString:atTip atIndex:0];
-//        }
-//    }
-//
-//}
 
 @end

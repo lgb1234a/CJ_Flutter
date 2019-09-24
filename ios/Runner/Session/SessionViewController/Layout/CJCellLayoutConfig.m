@@ -11,8 +11,6 @@
 #import "CJCustomAttachmentDefines.h"
 
 @interface CJCellLayoutConfig ()
-
-@property (nonatomic,strong) NSArray    *types;
 @property (nonatomic,strong) CJSessionCustomContentConfig  *sessionCustomconfig;
 
 @end
@@ -23,9 +21,6 @@
 {
     if (self = [super init])
     {
-        _types =  @[
-                    @"CJYeePayRedPacketAtachment"
-                    ];
         _sessionCustomconfig = [[CJSessionCustomContentConfig alloc] init];
     }
     return self;
@@ -121,8 +116,9 @@
 - (BOOL)isSupportedCustomMessage:(NIMMessage *)message
 {
     NIMCustomObject *object = (NIMCustomObject *)message.messageObject;
+    NSDictionary *attachmentMap = attachmentMapping();
     return [object isKindOfClass:[NIMCustomObject class]] &&
-    [_types indexOfObject:NSStringFromClass([object.attachment class])] != NSNotFound;
+    [attachmentMap.allValues indexOfObject:NSStringFromClass([object.attachment class])] != NSNotFound;
 }
 
 - (NSArray *)customViews:(NIMMessageModel *)model

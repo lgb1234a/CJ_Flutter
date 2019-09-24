@@ -48,6 +48,7 @@
 		EF8A41542338C03000AF697E /* video_chat_tip_receiver.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414C2338C03000AF697E /* video_chat_tip_receiver.aac */; };
 		EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */; };
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
+		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -135,6 +136,7 @@
 		EF8A414C2338C03000AF697E /* video_chat_tip_receiver.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_receiver.aac; sourceTree = "<group>"; };
 		EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_onTimer.aac; sourceTree = "<group>"; };
 		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
+		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,6 +407,7 @@
 				EF8A411823386D0300AF697E /* CJCustomAttachmentDecoder.h */,
 				EF8A411923386D0300AF697E /* CJCustomAttachmentDecoder.m */,
 				EF8A41242338713E00AF697E /* CJCustomAttachmentDefines.h */,
+				EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */,
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
+				EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,

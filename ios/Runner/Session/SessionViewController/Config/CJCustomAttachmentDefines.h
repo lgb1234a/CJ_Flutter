@@ -46,14 +46,10 @@ typedef NS_ENUM(NSInteger, CJCustomMessageType){
 };
 
 // type -> class name
-static NSString *mappingAttachmentForKey(CJCustomMessageType key)
-{
-    NSDictionary *d = @{
-                        @(CustomMessageTypeYeeRedPacket): @"CJYeePayRedPacketAtachment"
-                        };
-    
-    return [d objectForKey:@(key)];
-}
+NSDictionary *attachmentMapping(void);
+NSString *attachmentNameForType(CJCustomMessageType type);
+
+
 
 
 @protocol CJCustomAttachmentCoding <NIMCustomAttachment>
@@ -62,14 +58,14 @@ static NSString *mappingAttachmentForKey(CJCustomMessageType key)
 
 /**
  内容是否有效
-
+ 
  @return bool
  */
 - (BOOL)isValid;
 
 /**
  拼装attachment model
-
+ 
  @param data
  @param type
  */
@@ -77,14 +73,14 @@ static NSString *mappingAttachmentForKey(CJCustomMessageType key)
 
 /**
  是否显示头像
-
+ 
  @return bool
  */
 - (BOOL)shouldShowNickName;
 
 /**
  是否显示头像
-
+ 
  @return bool
  */
 - (BOOL)shouldShowAvatar;
@@ -92,7 +88,7 @@ static NSString *mappingAttachmentForKey(CJCustomMessageType key)
 
 /**
  从attachment model自定义消息
-
+ 
  @return 消息
  */
 + (NIMMessage *)msgFromAttachment;
@@ -100,7 +96,7 @@ static NSString *mappingAttachmentForKey(CJCustomMessageType key)
 
 /**
  新消息缩略语
-
+ 
  @return string
  */
 - (NSString *)newMsgAcronym;
@@ -131,3 +127,5 @@ static NSString *mappingAttachmentForKey(CJCustomMessageType key)
 - (BOOL)canBeForwarded;
 
 @end
+
+
