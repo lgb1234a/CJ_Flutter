@@ -87,19 +87,20 @@ NSString *attachmentNameForType(CJCustomMessageType type);
 
 
 /**
- 从attachment model自定义消息
- 
- @return 消息
- */
-+ (NIMMessage *)msgFromAttachment;
-
-
-/**
  新消息缩略语
  
  @return string
  */
 - (NSString *)newMsgAcronym;
+
+@optional
+
+/**
+ 从attachment model自定义消息
+ 
+ @return 消息
+ */
+- (NIMMessage *)msgFromAttachment;
 
 @end
 

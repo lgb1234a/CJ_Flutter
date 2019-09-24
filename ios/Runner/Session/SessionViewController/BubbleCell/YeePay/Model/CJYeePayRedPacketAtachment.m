@@ -100,4 +100,19 @@
     return @"[易红包]";
 }
 
+// MARK: 之前的NTESSessionMsgConverter拆分出来，由各自attachment model类维护
+// 这里只是写个例子，看需要去实现
+- (NIMMessage *)msgFromAttachment
+{
+    NIMMessage *message               = [[NIMMessage alloc] init];
+    NIMCustomObject *customObject     = [[NIMCustomObject alloc] init];
+    customObject.attachment           = self;
+    message.messageObject             = customObject;
+    message.apnsContent = @"发来了一个易红包";
+    NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
+    message.setting            = setting;
+    
+    return message;
+}
+
 @end
