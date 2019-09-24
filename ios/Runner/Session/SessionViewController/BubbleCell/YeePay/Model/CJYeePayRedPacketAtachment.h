@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, CJYeeRedPacketStatus){
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJYeePayRedPacketAtachment : NSObject <CJCustomAttachmentCoding, CJCustomAttachmentInfo>
+@interface CJYeePayRedPacketAtachment : NSObject <CJCustomAttachment, CJCustomAttachmentInfo>
 
 @property (nonatomic, copy) NSString *redPacketId;
 

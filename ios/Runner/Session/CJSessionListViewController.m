@@ -45,7 +45,7 @@
         NSString *text = @"";
         if([object.attachment respondsToSelector:@selector(newMsgAcronym)])
         {
-            id<CJCustomAttachmentCoding> attachment = (id<CJCustomAttachmentCoding>)object.attachment;
+            id<CJCustomAttachment> attachment = (id<CJCustomAttachment>)object.attachment;
             text = [attachment newMsgAcronym];
         }
         else

@@ -101,7 +101,7 @@
 }
 
 // MARK: 之前的NTESSessionMsgConverter拆分出来，由各自attachment model类维护
-// 这里只是写个例子，看需要去实现
+// 这里只是写个例子，按业务需要去实现
 - (NIMMessage *)msgFromAttachment
 {
     NIMMessage *message               = [[NIMMessage alloc] init];
@@ -113,6 +113,13 @@
     message.setting            = setting;
     
     return message;
+}
+
+// 点击红包气泡
+- (void)handleTapCellEvent:(NIMKitEvent *)event
+                 onSession:(NIMSessionViewController *)sessionVC
+{
+    
 }
 
 @end

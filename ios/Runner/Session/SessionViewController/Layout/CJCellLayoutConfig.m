@@ -85,7 +85,7 @@
 {
     if(model.message.messageType == NIMMessageTypeCustom) {
         NIMCustomObject *object = model.message.messageObject;
-        id<CJCustomAttachmentCoding> customAttachment = (id<CJCustomAttachmentCoding>)object.attachment;
+        id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
         return [customAttachment shouldShowAvatar];
     }
     return [super shouldShowAvatar:model];
@@ -100,7 +100,7 @@
 {
     if(model.message.messageType == NIMMessageTypeCustom) {
         NIMCustomObject *object = model.message.messageObject;
-        id<CJCustomAttachmentCoding> customAttachment = (id<CJCustomAttachmentCoding>)object.attachment;
+        id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
         return [customAttachment shouldShowNickName];
     }
     

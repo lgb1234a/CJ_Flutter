@@ -50,9 +50,7 @@ NSDictionary *attachmentMapping(void);
 NSString *attachmentNameForType(CJCustomMessageType type);
 
 
-
-
-@protocol CJCustomAttachmentCoding <NIMCustomAttachment>
+@protocol CJCustomAttachment <NIMCustomAttachment>
 
 @required
 
@@ -97,10 +95,20 @@ NSString *attachmentNameForType(CJCustomMessageType type);
 
 /**
  从attachment model自定义消息
+ 之前的NTESSessionMsgConverter拆分出来，由各自attachment model类维护
  
  @return 消息
  */
 - (NIMMessage *)msgFromAttachment;
+
+/**
+ 处理点击cell事件
+ 
+ @param event 事件内容
+ @param sessionVC session控制器
+ */
+- (void)handleTapCellEvent:(NIMKitEvent *)event
+                 onSession:(NIMSessionViewController *)sessionVC;
 
 @end
 

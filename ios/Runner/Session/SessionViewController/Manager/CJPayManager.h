@@ -12,7 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CJPayManager : NSObject
 
++ (instancetype)sharedManager;
 
+- (void)didLogout;
+
+- (void)didLogin;
 
 @end
 

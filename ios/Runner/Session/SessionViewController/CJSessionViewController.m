@@ -9,6 +9,8 @@
 #import "CJSessionViewController.h"
 #import "NIMInputMoreContainerView.h"
 #import "CJMoreContainerConfig.h"
+#import "CJPayManager.h"
+#import "CJCustomAttachmentDefines.h"
 
 @interface CJSessionViewController ()
 
@@ -45,10 +47,27 @@
     
     UIBarButtonItem *enterTeamCardItem = [[UIBarButtonItem alloc] initWithCustomView:enterTeamCard];
     
-    if (self.session.sessionType == NIMSessionTypeTeam)
+    self.navigationItem.rightBarButtonItems  = @[enterTeamCardItem];
+}
+
+#pragma mark - override
+- (BOOL)onTapCell:(NIMKitEvent *)event
+{
+    BOOL handle = NO;
+    if([event.messageModel.message.messageObject isKindOfClass:NIMCustomObject.class])
     {
-        self.navigationItem.rightBarButtonItems  = @[enterTeamCardItem];
+        // 自定义消息事件分发
+        NIMCustomObject *object = (NIMCustomObject *)event.messageModel.message.messageObject;
+        id<CJCustomAttachment> attachment = (id<CJCustomAttachment>)object.attachment;
+        if([attachment respondsToSelector:@selector(handleTapCellEvent:onSession:)])
+        {
+            [attachment handleTapCellEvent:event onSession:self];
+        }
+    }else {
+        handle = [super onTapCell:event];
     }
+    
+    return handle;
 }
 
 

@@ -424,9 +424,9 @@
 			isa = PBXGroup;
 			children = (
 				EF8A411D23386E7000AF697E /* YXInterface.h */,
+				EF8A412023386E7000AF697E /* YXInterface.m */,
 				EF8A411E23386E7000AF697E /* Res.bundle */,
 				EF8A411F23386E7000AF697E /* YouXiPayUISDK.framework */,
-				EF8A412023386E7000AF697E /* YXInterface.m */,
 			);
 			path = YeePay;
 			sourceTree = "<group>";

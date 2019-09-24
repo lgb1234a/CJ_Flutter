@@ -11,9 +11,9 @@
 
 @implementation CJCustomAttachmentDecoder
 
-- (id<CJCustomAttachmentCoding>)decodeAttachment:(NSString *)content
+- (id<CJCustomAttachment>)decodeAttachment:(NSString *)content
 {
-    id<CJCustomAttachmentCoding> attachment = nil;
+    id<CJCustomAttachment> attachment = nil;
     NSData *data = [content dataUsingEncoding:NSUTF8StringEncoding];
     if(!data) {
         return nil;

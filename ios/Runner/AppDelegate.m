@@ -9,8 +9,8 @@
 #import <WxSdkPlugin.h>
 #import "CJCustomAttachmentDecoder.h"
 #import "CJCellLayoutConfig.h"
-#import <YouXiPayUISDK/ZZPayUI.h>
 #import "CJNotificationCenter.h"
+#import "CJPayManager.h"
 
 @implementation AppDelegate
 
@@ -70,17 +70,14 @@
 #pragma mark - 登录，这里只做UI和第三方库处理
 - (void)didLogin
 {
-    // 初始化易红包服务
-    NSString *key = [[[NIMSDK sharedSDK] loginManager] currentAccount];
-    [ZZPayUI initializePaySDKWithMerchantNo:@"yxcajian" userNo:key];
+    [[CJPayManager sharedManager] didLogin];
     
     [self showDidLoginSuccessRootVC];
 }
 
 - (void)didLogout
 {
-    // 易红包注销
-    [ZZPayUI didLogout];
+    [[CJPayManager sharedManager] didLogout];
     
     [self showDidLogoutRootVC];
 }
