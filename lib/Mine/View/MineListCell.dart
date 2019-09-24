@@ -102,7 +102,8 @@ class MineListProfileState extends State<MineListProfileHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      child: Container(
         height: 103,
         color: Colors.white,
         child: Row(
@@ -157,6 +158,10 @@ class MineListProfileState extends State<MineListProfileHeader> {
               padding: EdgeInsets.symmetric(horizontal: 6),
             ),
           ],
-        ));
+        )),
+        onTap: (){
+          widget.model.onTap(widget.model);
+        },
+    );
   }
 }
