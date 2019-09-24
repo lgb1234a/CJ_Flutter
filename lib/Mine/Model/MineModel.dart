@@ -34,7 +34,11 @@ class MineModel {
 }
 
 final List<MineModel> mineCellModels = [
-  MineModel(MineCellType.Profile, null, null, (MineModel model) => {}),
+  MineModel(MineCellType.Profile, null, null, (MineModel model){
+    Map params = {'route':'mineInfo','channel_name':'com.zqtd.cajian/mineInfo'};
+    String pStr = convert.jsonEncode(params);
+    model.platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+  }),
   MineModel(MineCellType.Separator, null, null, null),
   MineModel(MineCellType.Others, '扫一扫', 'images/icon_settings_scan@2x.png',
       (MineModel model) => {}),

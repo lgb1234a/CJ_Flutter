@@ -1,3 +1,5 @@
+import 'package:cajian/Mine/MineInfo.dart';
+import 'package:cajian/Mine/Model/MineInfoModel.dart';
 /**
  *  Created by chenyn on 2019-06-28
  *  入口
@@ -27,6 +29,8 @@ Widget _widgetForRoute(String openUrl) {
       return new ContactsWidget(params);
     case 'setting':
       return new SettingWidget(cn);
+    case 'mineInfo':
+    return new MineInfoWiget(cn);
     default:
       return MaterialApp(
         home: Scaffold(
