@@ -7,6 +7,7 @@
 //
 
 #import "CJYeePayRedPacketAtachment.h"
+#import <YouXiPayUISDK/YouXiPayUISDK.h>
 
 @implementation CJYeePayRedPacketAtachment
 
@@ -119,7 +120,11 @@
 - (void)handleTapCellEvent:(NIMKitEvent *)event
                  onSession:(NIMSessionViewController *)sessionVC
 {
-    
+    [ZZPayUI popRedPacketFromVC:sessionVC redPacketId:self.redPacketId status:^(NSInteger status) {
+        
+    } openSuccess:^(NSString * _Nonnull sender, NSString * _Nonnull openerId, NSString * _Nonnull packetId, BOOL isGetDone) {
+        
+    }];
 }
 
 @end
