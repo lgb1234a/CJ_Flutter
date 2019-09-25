@@ -95,15 +95,18 @@ typedef void(^selectedIds)(NSArray <ZZAvatarModel *>*ids);
                       redPacketId:(NSString *)rp_id
                            status:(void (^)(NSInteger status))result;
 
-
 /**
  弹出红包待开启页
 
  @param fromVC 根页面
  @param rp_id 红包id
+ @param teamSession 是否是群聊天
+ @param result 状态回调
+ @param openSuccess 拆红包成功回调
  */
-+ (void)popRedPacketFromVC:(UIViewController <ZZPayProtocol>*)fromVC
++ (void)popRedPacketFromVC:(UIViewController *)fromVC
                redPacketId:(NSString *)rp_id
+             inTeamSession:(BOOL)teamSession
                     status:(void (^)(NSInteger status))result
                openSuccess:(void (^)(NSString *sender,NSString *openerId,NSString *packetId,BOOL isGetDone))openSuccess;
 

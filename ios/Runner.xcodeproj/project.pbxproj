@@ -31,7 +31,6 @@
 		EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41142334D60E00AF697E /* CJPayManager.m */; };
 		EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A411923386D0300AF697E /* CJCustomAttachmentDecoder.m */; };
 		EF8A412123386E7100AF697E /* Res.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EF8A411E23386E7000AF697E /* Res.bundle */; };
-		EF8A412223386E7100AF697E /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8A411F23386E7000AF697E /* YouXiPayUISDK.framework */; };
 		EF8A412323386E7100AF697E /* YXInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A412023386E7000AF697E /* YXInterface.m */; };
 		EF8A412A2338733700AF697E /* CJSessionCustomContentConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41292338733700AF697E /* CJSessionCustomContentConfig.m */; };
 		EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A412D2338754900AF697E /* CJCellLayoutConfig.m */; };
@@ -49,6 +48,7 @@
 		EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */; };
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
+		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,7 +110,6 @@
 		EF8A411923386D0300AF697E /* CJCustomAttachmentDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDecoder.m; sourceTree = "<group>"; };
 		EF8A411D23386E7000AF697E /* YXInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXInterface.h; sourceTree = "<group>"; };
 		EF8A411E23386E7000AF697E /* Res.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Res.bundle; sourceTree = "<group>"; };
-		EF8A411F23386E7000AF697E /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 		EF8A412023386E7000AF697E /* YXInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXInterface.m; sourceTree = "<group>"; };
 		EF8A41242338713E00AF697E /* CJCustomAttachmentDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJCustomAttachmentDefines.h; sourceTree = "<group>"; };
 		EF8A41282338733700AF697E /* CJSessionCustomContentConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionCustomContentConfig.h; sourceTree = "<group>"; };
@@ -137,6 +136,7 @@
 		EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_onTimer.aac; sourceTree = "<group>"; };
 		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
 		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
+		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +147,7 @@
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				61F3DCBE914A0DC334E3167B /* libPods-Runner.a in Frameworks */,
-				EF8A412223386E7100AF697E /* YouXiPayUISDK.framework in Frameworks */,
+				EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,10 +423,10 @@
 		EF8A411C23386E7000AF697E /* YeePay */ = {
 			isa = PBXGroup;
 			children = (
+				EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */,
 				EF8A411D23386E7000AF697E /* YXInterface.h */,
 				EF8A412023386E7000AF697E /* YXInterface.m */,
 				EF8A411E23386E7000AF697E /* Res.bundle */,
-				EF8A411F23386E7000AF697E /* YouXiPayUISDK.framework */,
 			);
 			path = YeePay;
 			sourceTree = "<group>";

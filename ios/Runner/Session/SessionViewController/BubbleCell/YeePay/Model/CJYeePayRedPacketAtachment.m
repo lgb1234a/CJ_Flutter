@@ -120,11 +120,16 @@
 - (void)handleTapCellEvent:(NIMKitEvent *)event
                  onSession:(NIMSessionViewController *)sessionVC
 {
-    [ZZPayUI popRedPacketFromVC:sessionVC redPacketId:self.redPacketId status:^(NSInteger status) {
-        
-    } openSuccess:^(NSString * _Nonnull sender, NSString * _Nonnull openerId, NSString * _Nonnull packetId, BOOL isGetDone) {
-        
-    }];
+    
+    [ZZPayUI popRedPacketFromVC:sessionVC
+                    redPacketId:self.redPacketId
+                  inTeamSession:sessionVC.session.sessionType != NIMSessionTypeP2P
+                         status:^(NSInteger status) {
+                             
+                         }
+                    openSuccess:^(NSString * _Nonnull sender, NSString * _Nonnull openerId, NSString * _Nonnull packetId, BOOL isGetDone) {
+                        
+                    }];
 }
 
 @end
