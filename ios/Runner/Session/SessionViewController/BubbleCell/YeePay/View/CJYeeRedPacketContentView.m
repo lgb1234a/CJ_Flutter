@@ -9,8 +9,6 @@
 #import "CJYeeRedPacketContentView.h"
 #import "CJYeePayRedPacketAtachment.h"
 
-NSString *const CJEventNameOpenYeeRedPacket = @"CJEventNameOpenYeeRedPacket";
-
 @interface CJYeeRedPacketContentView ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -48,7 +46,7 @@ NSString *const CJEventNameOpenYeeRedPacket = @"CJEventNameOpenYeeRedPacket";
 {
     if ([self.delegate respondsToSelector:@selector(onCatchEvent:)]) {
         NIMKitEvent *event = [[NIMKitEvent alloc] init];
-        event.eventName = CJEventNameOpenYeeRedPacket;
+//        event.eventName = CJEventNameOpenYeeRedPacket;
         event.messageModel = self.model;
         event.data = self;
         [self.delegate onCatchEvent:event];

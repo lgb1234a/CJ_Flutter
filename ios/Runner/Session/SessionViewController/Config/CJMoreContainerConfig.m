@@ -7,6 +7,7 @@
 //
 
 #import "CJMoreContainerConfig.h"
+#import <YouXiPayUISDK/YouXiPayUISDK.h>
 
 @implementation CJMoreContainerConfig
 
@@ -22,53 +23,53 @@
                                        selectedImage:[UIImage imageNamed:@"bk_media_shoot_pressed"]
                                                title:@"拍摄"]].mutableCopy;
     
-    NIMMediaItem *cajianRP  = [NIMMediaItem item:@"onTapMediaItemCajianRP:"
+    NIMMediaItem *cajianRP  = [NIMMediaItem item:@"onTapMediaItemCajianRP:onSessionVC:"
                                       normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
                                     selectedImage:[UIImage imageNamed:@"icon_redpacket_pressed"]
                                             title:@"红包"];
     
     
-    NIMMediaItem *cloudRP  = [NIMMediaItem item:@"onTapMediaItemCloudRedPacket:"
+    NIMMediaItem *cloudRP  = [NIMMediaItem item:@"onTapMediaItemCloudRedPacket:onSessionVC:"
                                      normalImage:[UIImage imageNamed:@"icon_MFRedpacket"]
                                    selectedImage:[UIImage imageNamed:@"icon_MFRedpacket_pressed"]
                                            title:@"云红包"];
     
-    NIMMediaItem *yeeRP  = [NIMMediaItem item:@"onTapMediaItemYeePacket:"
+    NIMMediaItem *yeeRP  = [NIMMediaItem item:@"onTapMediaItemYeePacket:onSessionVC:"
                                      normalImage:[UIImage imageNamed:@"icon_yee_normal"]
                                    selectedImage:[UIImage imageNamed:@"icon_yee_pressed"]
                                            title:@"易红包"];
     
-    NIMMediaItem *yeeTransfer  = [NIMMediaItem item:@"onTapMediaItemYXTransfer:"
+    NIMMediaItem *yeeTransfer  = [NIMMediaItem item:@"onTapMediaItemYXTransfer:onSessionVC:"
                                        normalImage:[UIImage imageNamed:@"icon_yee_transfer_normal"]
                                      selectedImage:[UIImage imageNamed:@"icon_yee_transfer_pressed"]
                                              title:@"易转账"];
     
-    NIMMediaItem *profileCard  = [NIMMediaItem item:@"onTapMediaItemProfileCard:"
+    NIMMediaItem *profileCard  = [NIMMediaItem item:@"onTapMediaItemProfileCard:onSessionVC:"
                                        normalImage:[UIImage imageNamed:@"bk_media_card_normal"]
                                      selectedImage:[UIImage imageNamed:@"bk_media_card_pressed"]
                                              title:@"名片"];
     
-    NIMMediaItem *aliPayCode  = [NIMMediaItem item:@"onTapMediaItemAliPayCode:"
+    NIMMediaItem *aliPayCode  = [NIMMediaItem item:@"onTapMediaItemAliPayCode:onSessionVC:"
                                          normalImage:[UIImage imageNamed:@"icon_team_paycode_normal"]
                                        selectedImage:[UIImage imageNamed:@"icon_team_paycode_pressed"]
                                                title:@"收款码"];
     
-    NIMMediaItem *personStamp  = [NIMMediaItem item:@"onTapMediaItemPersonalstamp:"
+    NIMMediaItem *personStamp  = [NIMMediaItem item:@"onTapMediaItemPersonalstamp:onSessionVC:"
                                         normalImage:[UIImage imageNamed:@"icon_team_stamp_normal"]
                                       selectedImage:[UIImage imageNamed:@"icon_team_stamp_pressed"]
                                               title:@"抖一抖"];
     
-    NIMMediaItem *teamNotice  = [NIMMediaItem item:@"onTapMediaItemTeamNotice:"
+    NIMMediaItem *teamNotice  = [NIMMediaItem item:@"onTapMediaItemTeamNotice:onSessionVC:"
                                        normalImage:[UIImage imageNamed:@"icon_team_notice_normal"]
                                      selectedImage:[UIImage imageNamed:@"icon_team_notice_pressed"]
                                              title:@"群通知"];
     
-    NIMMediaItem *collection = [NIMMediaItem item:@"onTapMediaItemCollection:"
+    NIMMediaItem *collection = [NIMMediaItem item:@"onTapMediaItemCollection:onSessionVC:"
                                             normalImage:[UIImage imageNamed:@"icon_team_collection_normal"]
                                           selectedImage:[UIImage imageNamed:@"icon_team_collection_pressed"]
                                                   title:@"收藏"];
     
-    NIMMediaItem *location = [NIMMediaItem item:@"onTapMediaItemLocation:"
+    NIMMediaItem *location = [NIMMediaItem item:@"onTapMediaItemLocation:onSessionVC:"
                                           normalImage:[UIImage imageNamed:@"bk_media_position_normal"]
                                         selectedImage:[UIImage imageNamed:@"bk_media_position_pressed"]
                                                 title:@"位置"];
@@ -76,6 +77,108 @@
     [mediaItems addObjectsFromArray:@[cajianRP, cloudRP, yeeRP, yeeTransfer, profileCard, aliPayCode, personStamp, teamNotice, collection, location]];
     
     return mediaItems;
+}
+
++ (void)onTapMediaItemCajianRP:(NIMMediaItem *)item
+                   onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO: 擦肩红包  CJPayManager
+    
+}
+
++ (void)onTapMediaItemCloudRedPacket:(NIMMediaItem *)item
+                         onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:云红包  CJPayManager
+}
+
++ (void)onTapMediaItemYeePacket:(NIMMediaItem *)item
+                    onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:易红包  CJPayManager
+    __weak typeof(self) weakSelf = self;
+    NSInteger num = 0;
+    if(vc.session.sessionType != NIMSessionTypeP2P)
+    {
+        num = [[NIMSDK sharedSDK].teamManager teamById:vc.session.sessionId].memberNumber;
+    }
+    
+    [ZZPayUI showSendRedPEditView:vc
+                        sessionId:vc.session.sessionId
+                        memberNum:num
+                           isTeam:vc.session.sessionType != NIMSessionTypeP2P
+         jumpToTeamMemberSelector:^(selectedIds  _Nonnull callBack, NSArray *crtIds)
+     {
+         // 指定人选择页
+         UIViewController *vc = [UIViewController new];
+         return vc;
+//         NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+//         config.maxSelectMemberCount = 5;
+//         config.needMutiSelected = YES;
+//         config.teamId = weakSelf.session.sessionId;
+//         config.alreadySelectedMemberId = crtIds;
+//         // 选择指定人领取红包
+//         NTESSelectMemberController *vc = [[NTESSelectMemberController alloc] initWithConfig:config];
+//         vc.title_str = @"选择指定领取人";
+//         vc.finshBlock = ^(NSArray *ids) {
+//             [[NIMSDK sharedSDK].userManager fetchUserInfos:ids completion:^(NSArray<NIMUser *> * _Nullable users, NSError * _Nullable error) {
+//
+//                 NSMutableArray *mutArr = @[].mutableCopy;
+//                 [users enumerateObjectsUsingBlock:^(NIMUser * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                     ZZAvatarModel *avatar = [ZZAvatarModel new];
+//                     avatar.u_id = obj.userId;
+//                     avatar.avatarUrl = obj.userInfo.avatarUrl;
+//                     avatar.gender = obj.userInfo.gender;
+//                     [mutArr addObject:avatar];
+//                 }];
+//                 callBack(mutArr);
+//             }];
+//         };
+//         return vc;
+     }];
+    
+}
+
++ (void)onTapMediaItemYXTransfer:(NIMMediaItem *)item
+                     onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:易转账  CJPayManager
+}
+
++ (void)onTapMediaItemProfileCard:(NIMMediaItem *)item
+                      onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:名片
+}
+
++ (void)onTapMediaItemAliPayCode:(NIMMediaItem *)item
+                     onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:收款码
+}
+
++ (void)onTapMediaItemPersonalstamp:(NIMMediaItem *)item
+                        onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:抖一抖
+}
+
++ (void)onTapMediaItemTeamNotice:(NIMMediaItem *)item
+                     onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:群通知
+}
+
++ (void)onTapMediaItemCollection:(NIMMediaItem *)item
+onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:发收藏
+}
+
++ (void)onTapMediaItemLocation:(NIMMediaItem *)item
+                   onSessionVC:(NIMSessionViewController *)vc
+{
+    // TODO:发定位
 }
 
 

@@ -49,6 +49,8 @@
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
+		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
+		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -137,6 +139,10 @@
 		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
 		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
 		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
+		EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeePayRedPacketTipAttachment.h; sourceTree = "<group>"; };
+		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
+		EFD2593A233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeeRedPacketTipContentView.h; sourceTree = "<group>"; };
+		EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeeRedPacketTipContentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +364,8 @@
 			children = (
 				EF8A413223389DAC00AF697E /* CJYeeRedPacketContentView.h */,
 				EF8A413323389DAC00AF697E /* CJYeeRedPacketContentView.m */,
+				EFD2593A233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.h */,
+				EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -367,6 +375,8 @@
 			children = (
 				EF8A412F23389A9100AF697E /* CJYeePayRedPacketAtachment.h */,
 				EF8A413023389A9100AF697E /* CJYeePayRedPacketAtachment.m */,
+				EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */,
+				EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -668,9 +678,11 @@
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
+				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
 				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
+				EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

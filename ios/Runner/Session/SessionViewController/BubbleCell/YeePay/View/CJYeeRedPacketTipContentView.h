@@ -1,8 +1,8 @@
 //
-//  CJYeeRedPacketContentView.h
+//  CJYeeRedPacketTipContentView.h
 //  Runner
 //
-//  Created by chenyn on 2019/9/23.
+//  Created by chenyn on 2019/9/26.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJYeeRedPacketContentView : NIMSessionMessageContentView
+@interface CJYeeRedPacketTipContentView : NIMSessionMessageContentView
 
 @end
 

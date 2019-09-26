@@ -4,7 +4,8 @@
 NSDictionary *attachmentMapping()
 {
     NSDictionary *d = @{
-                        @(CustomMessageTypeYeeRedPacket): @"CJYeePayRedPacketAtachment"
+                        @(CustomMessageTypeYeeRedPacket): @"CJYeePayRedPacketAtachment",
+                        @(CustomMessageTypeYeeRedPacketTip): @"CJYeePayRedPacketTipAttachment"
                         };
     
     return d;

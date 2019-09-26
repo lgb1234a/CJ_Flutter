@@ -20,11 +20,21 @@
 
 @implementation CJSessionViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     /* 配置导航条按钮 */
     [self setUpNavBarItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onCJUpdateMessageNotification:)
+                                                 name:CJUpdateMessageNotification
+                                               object:nil];
 }
 
 /* 重新修改session配置 */
@@ -72,55 +82,22 @@
 
 
 #pragma mark - NIMMeidaButton
-- (void)onTapMediaItemCajianRP:(NIMMediaItem *)item
+- (BOOL)onTapMediaItem:(NIMMediaItem *)item
 {
-    // TODO: 擦肩红包  CJPayManager
+    BOOL handled = NO;
+    SEL sel = item.selctor;
     
-}
-
-- (void)onTapMediaItemCloudRedPacket:(NIMMediaItem *)item
-{
-    // TODO:云红包  CJPayManager
-}
-
-- (void)onTapMediaItemYeePacket:(NIMMediaItem *)item
-{
-    // TODO:易红包  CJPayManager
-}
-
-- (void)onTapMediaItemYXTransfer:(NIMMediaItem *)item
-{
-    // TODO:易转账  CJPayManager
-}
-
-- (void)onTapMediaItemProfileCard:(NIMMediaItem *)item
-{
-    // TODO:名片
-}
-
-- (void)onTapMediaItemAliPayCode:(NIMMediaItem *)item
-{
-    // TODO:收款码
-}
-
-- (void)onTapMediaItemPersonalstamp:(NIMMediaItem *)item
-{
-    // TODO:抖一抖
-}
-
-- (void)onTapMediaItemTeamNotice:(NIMMediaItem *)item
-{
-    // TODO:群通知
-}
-
-- (void)onTapMediaItemCollection:(NIMMediaItem *)item
-{
-    // TODO:发收藏
-}
-
-- (void)onTapMediaItemLocation:(NIMMediaItem *)item
-{
-    // TODO:发定位
+    // 将代理方法抽离到CJMoreContainerConfig 配置类中
+    handled = sel && [CJMoreContainerConfig respondsToSelector:sel];
+    if (handled) {
+        [CJMoreContainerConfig performSelector:sel withObject:item withObject:self];
+        handled = YES;
+    }else if(sel && [super respondsToSelector:sel])
+    {
+        CJ_SuppressPerformSelectorLeakWarning([super performSelector:sel withObject:item]);
+        handled = YES;
+    }
+    return handled;
 }
 
 #pragma mark - private
@@ -129,5 +106,19 @@
     // TODO:跳转flutter 聊天信息页
     
 }
+
+// 刷新消息
+- (void)onCJUpdateMessageNotification:(NSNotification *)n
+{
+    id  object = n.object;
+    if (object != nil && [object isKindOfClass:[NIMMessage class]]) {
+        NIMMessage* message = (NIMMessage*)object;
+        if (message) {
+            // 更新消息内容
+            [self uiUpdateMessage:message];
+        }
+    }
+}
+
 
 @end
