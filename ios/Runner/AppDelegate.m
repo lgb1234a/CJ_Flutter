@@ -140,15 +140,14 @@
         default:
             break;
     }
-    
+    // 登出逻辑
+    [NimSdkUtilPlugin logout];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"⚠️"
                                                                    message:reason
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定"
                                               style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction * _Nonnull action) {
-                                                [NimSdkUtilPlugin logout];
-                                            }]];
+                                            handler:nil]];
     [self.window.rootViewController presentViewController:alert
                                                  animated:YES
                                                completion:nil];
