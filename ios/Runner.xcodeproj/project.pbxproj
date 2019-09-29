@@ -26,6 +26,8 @@
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
+		EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */; };
+		EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */; };
 		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
 		EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */; };
 		EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41142334D60E00AF697E /* CJPayManager.m */; };
@@ -51,6 +53,8 @@
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
 		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
+		EFD25940233DB5CF00E78DB6 /* CJContactSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593F233DB5CF00E78DB6 /* CJContactSelectViewController.m */; };
+		EFD25944233DB6F400E78DB6 /* CJContactSelectConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25943233DB6F400E78DB6 /* CJContactSelectConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -102,6 +106,9 @@
 		EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactsViewController.m; sourceTree = "<group>"; };
 		EF1422ED23055BF500AEAA55 /* CJMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMineViewController.h; sourceTree = "<group>"; };
 		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
+		EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserSelectTableViewCell.h; sourceTree = "<group>"; };
+		EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserSelectTableViewCell.m; sourceTree = "<group>"; };
+		EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CJUserSelectTableViewCell.xib; sourceTree = "<group>"; };
 		EF8A41072334AF7D00AF697E /* CJSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionViewController.h; sourceTree = "<group>"; };
 		EF8A41082334AF7D00AF697E /* CJSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionViewController.m; sourceTree = "<group>"; };
 		EF8A410E2334BEC100AF697E /* CJMoreContainerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMoreContainerConfig.h; sourceTree = "<group>"; };
@@ -143,6 +150,10 @@
 		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
 		EFD2593A233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeeRedPacketTipContentView.h; sourceTree = "<group>"; };
 		EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeeRedPacketTipContentView.m; sourceTree = "<group>"; };
+		EFD2593E233DB5CF00E78DB6 /* CJContactSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactSelectViewController.h; sourceTree = "<group>"; };
+		EFD2593F233DB5CF00E78DB6 /* CJContactSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactSelectViewController.m; sourceTree = "<group>"; };
+		EFD25942233DB6F400E78DB6 /* CJContactSelectConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactSelectConfig.h; sourceTree = "<group>"; };
+		EFD25943233DB6F400E78DB6 /* CJContactSelectConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactSelectConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +224,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				EFD25941233DB68300E78DB6 /* Config */,
+				EFD2593D233DB5A200E78DB6 /* Component */,
 				EF8A411B23386E7000AF697E /* Vendor */,
 				EF11BE7622FAC61D00CAD319 /* Mine */,
 				EF11BE7522FAC61600CAD319 /* Contacts */,
@@ -298,6 +311,16 @@
 				EF1422EE23055BF500AEAA55 /* CJMineViewController.m */,
 			);
 			path = Mine;
+			sourceTree = "<group>";
+		};
+		EF5BA6B423405500007F52B1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */,
+				EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */,
+				EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		EF8A40FB2334A44000AF697E /* SessionViewController */ = {
@@ -488,6 +511,25 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		EFD2593D233DB5A200E78DB6 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				EF5BA6B423405500007F52B1 /* View */,
+				EFD2593E233DB5CF00E78DB6 /* CJContactSelectViewController.h */,
+				EFD2593F233DB5CF00E78DB6 /* CJContactSelectViewController.m */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		EFD25941233DB68300E78DB6 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				EFD25942233DB6F400E78DB6 /* CJContactSelectConfig.h */,
+				EFD25943233DB6F400E78DB6 /* CJContactSelectConfig.m */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -553,6 +595,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				9740EEB41CF90195004384FC /* Debug.xcconfig in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
@@ -660,6 +703,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
+				EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,
 				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
@@ -678,9 +722,11 @@
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
+				EFD25940233DB5CF00E78DB6 /* CJContactSelectViewController.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
 				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
+				EFD25944233DB6F400E78DB6 /* CJContactSelectConfig.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
 				EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */,
 			);

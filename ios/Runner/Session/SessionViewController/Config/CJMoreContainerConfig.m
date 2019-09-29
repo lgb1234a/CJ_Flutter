@@ -7,7 +7,18 @@
 //
 
 #import "CJMoreContainerConfig.h"
+#import "CJContactSelectConfig.h"
 #import <YouXiPayUISDK/YouXiPayUISDK.h>
+#import "CJContactSelectViewController.h"
+
+ZZAvatarModel *cj_convertModel(NIMUser *obj)
+{
+    ZZAvatarModel *avatar = [ZZAvatarModel new];
+    avatar.u_id = obj.userId;
+    avatar.avatarUrl = obj.userInfo.avatarUrl;
+    avatar.gender = obj.userInfo.gender;
+    return avatar;
+}
 
 @implementation CJMoreContainerConfig
 
@@ -82,20 +93,20 @@
 + (void)onTapMediaItemCajianRP:(NIMMediaItem *)item
                    onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO: 擦肩红包  CJPayManager
+    // TODO: 擦肩红包
     
 }
 
 + (void)onTapMediaItemCloudRedPacket:(NIMMediaItem *)item
                          onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO:云红包  CJPayManager
+    // TODO:云红包
 }
 
 + (void)onTapMediaItemYeePacket:(NIMMediaItem *)item
                     onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO:易红包  CJPayManager
+    // TODO:易红包
     __weak typeof(self) weakSelf = self;
     NSInteger num = 0;
     if(vc.session.sessionType != NIMSessionTypeP2P)
@@ -109,8 +120,29 @@
                            isTeam:vc.session.sessionType != NIMSessionTypeP2P
          jumpToTeamMemberSelector:^(selectedIds  _Nonnull callBack, NSArray *crtIds)
      {
+         
+         CJContactTeamMemberSelectConfig *config = [CJContactTeamMemberSelectConfig new];
+         config.maxSelectMemberCount = 5;
+         config.needMutiSelected = YES;
+         config.teamId = vc.session.sessionId;
+         config.alreadySelectedMemberId = crtIds;
+         config.title = @"选择指定领取人";
+         CJContactSelectViewController *vc = [[CJContactSelectViewController alloc] initWithConfig:config];
+         
+         vc.finished = ^(NSArray * _Nonnull ids) {
+              [[NIMSDK sharedSDK].userManager fetchUserInfos:ids completion:^(NSArray<NIMUser *> * _Nullable users, NSError * _Nullable error)
+             {
+                 
+                  NSMutableArray *mutArr = @[].mutableCopy;
+                  [users enumerateObjectsUsingBlock:^(NIMUser * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+                 {
+                      [mutArr addObject:cj_convertModel(obj)];
+                  }];
+                  callBack(mutArr);
+              }];
+         };
+         
          // 指定人选择页
-         UIViewController *vc = [UIViewController new];
          return vc;
 //         NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
 //         config.maxSelectMemberCount = 5;

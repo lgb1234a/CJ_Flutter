@@ -39,20 +39,7 @@
 - (CGSize)contentSize:(NIMMessage *)message cellWidth:(CGFloat)width
 {
     self.message = message;
-    
-//    M80AttributedLabel *label = [[M80AttributedLabel alloc] initWithFrame:CGRectZero];
-//    label.font = [UIFont systemFontOfSize:Notification_Font_Size];
-//    
-//    CGFloat messageWidth  = width;
-//    
-//    [label appendImage:[UIImage imageNamed:@"icon_alipayredpacket_tip"]];
     NSString *formatedMessage = self.formatedMessage;
-//    [label appendText:formatedMessage];
-//    label.autoDetectLinks = NO;
-//    label.numberOfLines = 0;
-//
-//    CGFloat padding = [NIMKit sharedKit].config.maxNotificationTipPadding;
-//    CGSize size = [label sizeThatFits:CGSizeMake(width - 2 * padding, CGFLOAT_MAX)];
     CGFloat cellPadding = 11.f;
     CGSize contentSize = CGSizeMake(SCREEN_WIDTH, Notification_Font_Size + 2 * cellPadding);
     return formatedMessage.length == 0 ? CGSizeZero : contentSize;

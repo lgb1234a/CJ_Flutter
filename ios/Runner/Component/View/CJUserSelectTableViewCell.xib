@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CJUserSelectTableViewCell" id="KGk-i7-Jjw" customClass="CJUserSelectTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inF-7E-OIa">
+                        <rect key="frame" x="10" y="11" width="22" height="22"/>
+                        <state key="normal" image="icon_choose_normal"/>
+                        <state key="selected" image="icon_choose_selected"/>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zOB-Qh-bzM">
+                        <rect key="frame" x="42" y="2" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="L6S-kz-C3g"/>
+                            <constraint firstAttribute="height" constant="40" id="hNw-C0-CW9"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layerMasksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXW-U0-OcQ">
+                        <rect key="frame" x="92" y="12" width="182" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwp-w1-1iv">
+                        <rect key="frame" x="284" y="14.5" width="31" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.93725490199999995" green="0.20000000000000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Fwp-w1-1iv" firstAttribute="leading" secondItem="zXW-U0-OcQ" secondAttribute="trailing" constant="10" id="1rr-Xl-Ovy"/>
+                    <constraint firstItem="inF-7E-OIa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="518-Na-0o6"/>
+                    <constraint firstItem="zXW-U0-OcQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6WD-ug-xoV"/>
+                    <constraint firstItem="zOB-Qh-bzM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ndc-wz-AHN"/>
+                    <constraint firstItem="Fwp-w1-1iv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RaU-zt-de6"/>
+                    <constraint firstItem="zOB-Qh-bzM" firstAttribute="leading" secondItem="inF-7E-OIa" secondAttribute="trailing" constant="10" id="cS2-HJ-rLu"/>
+                    <constraint firstItem="inF-7E-OIa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hUj-FX-gd5"/>
+                    <constraint firstAttribute="trailing" secondItem="Fwp-w1-1iv" secondAttribute="trailing" constant="5" id="jUg-YK-l3b"/>
+                    <constraint firstItem="zXW-U0-OcQ" firstAttribute="leading" secondItem="zOB-Qh-bzM" secondAttribute="trailing" constant="10" id="lCd-o1-m5B"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarImgView" destination="zOB-Qh-bzM" id="bne-ul-9sd"/>
+                <outlet property="selectStatusBtn" destination="inF-7E-OIa" id="fz3-9K-Y7G"/>
+                <outlet property="showName" destination="zXW-U0-OcQ" id="LHx-3d-fxD"/>
+                <outlet property="userTip" destination="Fwp-w1-1iv" id="yfm-ww-kZd"/>
+            </connections>
+            <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_choose_normal" width="22" height="22"/>
+        <image name="icon_choose_selected" width="22" height="22"/>
+    </resources>
+</document>

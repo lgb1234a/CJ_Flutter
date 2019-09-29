@@ -9,7 +9,6 @@
 #import "CJSessionViewController.h"
 #import "NIMInputMoreContainerView.h"
 #import "CJMoreContainerConfig.h"
-#import "CJPayManager.h"
 #import "CJCustomAttachmentDefines.h"
 
 @interface CJSessionViewController ()
