@@ -107,7 +107,6 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
                     onSessionVC:(NIMSessionViewController *)vc
 {
     // TODO:易红包
-    __weak typeof(self) weakSelf = self;
     NSInteger num = 0;
     if(vc.session.sessionType != NIMSessionTypeP2P)
     {

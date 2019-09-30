@@ -48,14 +48,11 @@ CJSearchHeaderDelegate>
  */
 @property (nonatomic, strong) CJSearchTableHeaderView *header;
 
+@property (nonatomic, strong) UILabel *emptyTipLabel;
+
 @end
 
 @implementation CJContactSelectViewController
-
-- (void)dealloc
-{
-    
-}
 
 - (instancetype)initWithConfig:(id<NIMContactSelectConfig>)config
 {
@@ -84,6 +81,7 @@ CJSearchHeaderDelegate>
     _inSearching = inSearching;
     
     if(!_inSearching) {
+        self.emptyTipLabel.hidden = YES;
         [self.view endEditing:YES];
     }
     [self.mTableView reloadData];
@@ -169,10 +167,21 @@ CJSearchHeaderDelegate>
         _mTableView.sectionIndexBackgroundColor = [UIColor clearColor];
         _mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _mTableView.allowsMultipleSelection = YES;
+        [_mTableView addSubview:self.emptyTipLabel];
         
         [_mTableView registerNib:[UINib nibWithNibName:@"CJUserSelectTableViewCell" bundle:nil] forCellReuseIdentifier:@"CJUserSelectTableViewCell"];
     }
     return _mTableView;
+}
+
+- (UILabel *)emptyTipLabel
+{
+    if(!_emptyTipLabel) {
+        _emptyTipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, SCREEN_WIDTH, 20)];
+        _emptyTipLabel.textAlignment = NSTextAlignmentCenter;
+        _emptyTipLabel.hidden = YES;
+    }
+    return _emptyTipLabel;
 }
 
 - (CJSearchTableHeaderView *)header
@@ -321,6 +330,20 @@ CJSearchHeaderDelegate>
     NSPredicate *p = [NSPredicate predicateWithFormat:@"showName CONTAINS[c] %@", key];
     self.currentDataSource = [NSMutableArray arrayWithArray:[self.allUsers filteredArrayUsingPredicate:p]];
     [self.mTableView reloadData];
+    
+    self.emptyTipLabel.hidden = !cj_empty_array(self.currentDataSource) || key.length == 0;
+    // 搜索为空
+    if(!self.emptyTipLabel.hidden) {
+        NSMutableAttributedString *string =
+        [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"未找到“%@”相关结果", key]];
+        [string addAttribute:NSForegroundColorAttributeName
+                       value:[UIColor lightGrayColor] range:NSMakeRange(0, 4)];
+        [string addAttribute:NSForegroundColorAttributeName
+                       value:Main_redColor range:NSMakeRange(4, key.length)];
+        [string addAttribute:NSForegroundColorAttributeName
+                       value:[UIColor lightGrayColor] range:NSMakeRange(4+key.length, 5)];
+        self.emptyTipLabel.attributedText = string;
+    }
 }
 
 
@@ -351,7 +374,7 @@ CJSearchHeaderDelegate>
     }
     
     // 确定按钮的UI
-    if(_selectedUsers.count == 0) {
+    if(cj_empty_array(_selectedUsers)) {
         self.navigationItem.rightBarButtonItem.enabled = YES;
         [self.barRightBtn setBackgroundColor:[UIColor yy_colorWithHexString:@"#3092EE"]];
     }

@@ -77,7 +77,7 @@ CJTextFieldInput>
     CGFloat sectionInsetHorizontal = 10.f;
     CGFloat itemMargin = 10;
     
-    CGFloat contentWidth = self.dataSource.count == 0? 0:(sectionInsetHorizontal + itemWidth * self.dataSource.count + itemMargin * (self.dataSource.count - 1));
+    CGFloat contentWidth = cj_empty_array(self.dataSource)? 0:(sectionInsetHorizontal + itemWidth * self.dataSource.count + itemMargin * (self.dataSource.count - 1));
     CGFloat collectionViewWidth = MIN(contentWidth, self.frame.size.width - CJ_SearchViewMinWidth);
     self.mCollectionView.frame = CGRectMake(0, 0, collectionViewWidth, self.frame.size.height);
     
@@ -183,9 +183,9 @@ CJTextFieldInput>
 }
 
 // 删除
-- (void)deleteBackward
+- (void)deleteBackward:(BOOL)beforeHasText
 {
-    if(self.searchInput.text.length == 0 && self.dataSource.count > 0)
+    if(!beforeHasText && self.dataSource.count > 0)
     {
         id<NIMGroupMemberProtocol> item = self.dataSource.lastObject;
         if(self.delegate && [self.delegate respondsToSelector:@selector(searchHeaderDeselect:)])
@@ -193,7 +193,7 @@ CJTextFieldInput>
             [self.delegate searchHeaderDeselect:item];
             
             // 点击删除清空选中，需要取消搜索
-            if(self.dataSource.count == 0) {
+            if(cj_empty_array(self.dataSource)) {
                 [self.delegate searchStatusChanged:NO];
             }
         }
