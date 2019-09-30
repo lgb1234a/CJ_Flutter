@@ -144,29 +144,6 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
          
          // 指定人选择页
          return vc;
-//         NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
-//         config.maxSelectMemberCount = 5;
-//         config.needMutiSelected = YES;
-//         config.teamId = weakSelf.session.sessionId;
-//         config.alreadySelectedMemberId = crtIds;
-//         // 选择指定人领取红包
-//         NTESSelectMemberController *vc = [[NTESSelectMemberController alloc] initWithConfig:config];
-//         vc.title_str = @"选择指定领取人";
-//         vc.finshBlock = ^(NSArray *ids) {
-//             [[NIMSDK sharedSDK].userManager fetchUserInfos:ids completion:^(NSArray<NIMUser *> * _Nullable users, NSError * _Nullable error) {
-//
-//                 NSMutableArray *mutArr = @[].mutableCopy;
-//                 [users enumerateObjectsUsingBlock:^(NIMUser * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                     ZZAvatarModel *avatar = [ZZAvatarModel new];
-//                     avatar.u_id = obj.userId;
-//                     avatar.avatarUrl = obj.userInfo.avatarUrl;
-//                     avatar.gender = obj.userInfo.gender;
-//                     [mutArr addObject:avatar];
-//                 }];
-//                 callBack(mutArr);
-//             }];
-//         };
-//         return vc;
      }];
     
 }

@@ -10,12 +10,19 @@
 #import "CJContactSelectConfig.h"
 #import "NIMGroupedUsrInfo.h"
 #import "CJUserSelectTableViewCell.h"
+#import "CJSearchTableHeaderView.h"
 
-@interface CJContactSelectViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface CJContactSelectViewController ()
+<
+UITableViewDelegate,
+UITableViewDataSource,
+CJSearchHeaderDelegate>
 
 @property (nonatomic, strong) id<NIMContactSelectConfig> config;
 
-@property (nonatomic, strong) NSMutableArray <NIMGroupUser *>*selectedUsers;
+@property (nonatomic, strong) NSMutableArray <id <NIMGroupMemberProtocol>>*selectedUsers;
+
+@property (nonatomic, strong) NSMutableArray <id <NIMGroupMemberProtocol>>*allUsers;
 
 @property (nonatomic, strong) NSMutableArray *selectedIds;
 
@@ -28,13 +35,18 @@
 @property (nonatomic, strong) UIButton *barRightBtn;
 
 // 处于搜索状态时刷新列表以这个数据源为准
-@property (nonatomic, copy) NSArray *currentDataSource;
+@property (nonatomic, copy) NSArray <id <NIMGroupMemberProtocol>>*currentDataSource;
 
 // 是否处于搜索状态
 @property (nonatomic, assign) BOOL inSearching;
 
 // 当前点击的cell indexpath
 @property (nonatomic, strong) NSIndexPath *crntIdxPath;
+
+/**
+ 搜索栏
+ */
+@property (nonatomic, strong) CJSearchTableHeaderView *header;
 
 @end
 
@@ -62,8 +74,19 @@
     
     [self configNavgationBar];
     
+    [self.view addSubview:self.header];
     [self.view addSubview:self.mTableView];
     [self configMemebrData];
+}
+
+- (void)setInSearching:(BOOL)inSearching
+{
+    _inSearching = inSearching;
+    
+    if(!_inSearching) {
+        [self.view endEditing:YES];
+    }
+    [self.mTableView reloadData];
 }
 
 - (void)configMemebrData
@@ -73,10 +96,12 @@
         self.contentDic = contentDic.copy;
         self.selectedUsers = @[].mutableCopy;
         self.selectedIds = @[].mutableCopy;
+        self.allUsers = @[].mutableCopy;
         
         for (NSString *title in titles) {
-            NSArray <NIMGroupUser *>*arr = [contentDic objectForKey:title];
-            [arr enumerateObjectsUsingBlock:^(NIMGroupUser * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSArray <id <NIMGroupMemberProtocol>>*arr = [contentDic objectForKey:title];
+            [self.allUsers addObjectsFromArray:arr];
+            [arr enumerateObjectsUsingBlock:^(id <NIMGroupMemberProtocol> _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([self.config.alreadySelectedMemberId containsObject:obj.memberId]) {
                     [self selected:obj];
                 }
@@ -125,7 +150,7 @@
                                                   completion:nil];
     if (self.finished) {
         NSMutableArray *selectedIds = @[].mutableCopy;
-        [self.selectedUsers enumerateObjectsUsingBlock:^(NIMGroupUser *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.selectedUsers enumerateObjectsUsingBlock:^(id <NIMGroupMemberProtocol>_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [selectedIds addObject:obj.memberId];
         }];
         self.finished(selectedIds);
@@ -135,7 +160,8 @@
 - (UITableView *)mTableView
 {    
     if (!_mTableView) {
-        _mTableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStylePlain];
+        _mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.header.frame), SCREEN_WIDTH, SCREEN_HEIGHT - CGRectGetMaxY(self.header.frame))
+                                                   style:UITableViewStylePlain];
         _mTableView.delegate = self;
         _mTableView.dataSource = self;
         _mTableView.tableFooterView = [UIView new];
@@ -147,6 +173,15 @@
         [_mTableView registerNib:[UINib nibWithNibName:@"CJUserSelectTableViewCell" bundle:nil] forCellReuseIdentifier:@"CJUserSelectTableViewCell"];
     }
     return _mTableView;
+}
+
+- (CJSearchTableHeaderView *)header
+{
+    if(!_header) {
+        _header = [[CJSearchTableHeaderView alloc] initWithFrame:CGRectMake(0, TOP_TOOL_BAR_HEIGHT, SCREEN_WIDTH, 50)];
+        _header.delegate = self;
+    }
+    return _header;
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
@@ -173,7 +208,7 @@
 {
     CJUserSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CJUserSelectTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NIMGroupUser *user = nil;
+    id<NIMGroupMemberProtocol> user = nil;
     if(_inSearching) {
         user = [self.currentDataSource objectAtIndex:indexPath.row];
     }else {
@@ -226,12 +261,14 @@
 {
     self.crntIdxPath = indexPath;
     if(_inSearching) {
-        NIMGroupUser *user = [self.currentDataSource objectAtIndex:indexPath.row];
+        id<NIMGroupMemberProtocol> user = [self.currentDataSource objectAtIndex:indexPath.row];
         [self selected:user];
+        
+        self.inSearching = NO;
     }else {
         NSString *title = [self.sectionTitles tn_objectAtIndex:indexPath.section];
         NSArray *arr = [self.contentDic objectForKey:title];
-        NIMGroupUser *user = [arr tn_objectAtIndex:indexPath.row];
+        id<NIMGroupMemberProtocol> user = [arr tn_objectAtIndex:indexPath.row];
         [self selected:user];
     }
 }
@@ -240,19 +277,70 @@
 {
     self.crntIdxPath = indexPath;
     if(_inSearching) {
-        NIMGroupUser *user = [self.currentDataSource objectAtIndex:indexPath.row];
+        id<NIMGroupMemberProtocol> user = [self.currentDataSource objectAtIndex:indexPath.row];
         [self deselected:user];
+        
+        self.inSearching = NO;
     }else {
         NSString *title = [self.sectionTitles tn_objectAtIndex:indexPath.section];
         NSArray *arr = [self.contentDic objectForKey:title];
-        NIMGroupUser *user = [arr tn_objectAtIndex:indexPath.row];
+        id<NIMGroupMemberProtocol> user = [arr tn_objectAtIndex:indexPath.row];
         [self deselected:user];
     }
 }
 
+#pragma mark - CJSearchHeaderDelegate
+
+/**
+ 取消选中
+ 
+ @param item
+ */
+- (void)searchHeaderDeselect:(id<NIMGroupMemberProtocol>)item
+{
+    // 取消列表的UI选中状态
+    NSInteger section = [self.sectionTitles indexOfObject:[item groupTitle]];
+    NSArray *arr = [self.contentDic objectForKey:[item groupTitle]];
+    NSInteger row = [arr indexOfObject:item];
+    
+    NSIndexPath *idxPath = [NSIndexPath indexPathForRow:row inSection:section];
+    [self.mTableView deselectRowAtIndexPath:idxPath animated:NO];
+    
+    // 操作数据
+    [self deselected:item];
+}
+
+
+/**
+ 搜索文本变化
+ 
+ @param key 搜索关键词
+ */
+- (void)searchValueChanged:(NSString *)key
+{
+    NSPredicate *p = [NSPredicate predicateWithFormat:@"showName CONTAINS[c] %@", key];
+    self.currentDataSource = [NSMutableArray arrayWithArray:[self.allUsers filteredArrayUsingPredicate:p]];
+    [self.mTableView reloadData];
+}
+
+
+/**
+ 搜索状态变化
+ 
+ @param inSearching 是否正在搜索
+ */
+- (void)searchStatusChanged:(BOOL)inSearching
+{
+    // 重置数据源
+    self.currentDataSource = @[];
+    
+    self.inSearching = inSearching;
+}
+
 #pragma mark - private
 
-- (void)selected:(NIMGroupUser *)user
+// 选中
+- (void)selected:(id<NIMGroupMemberProtocol>)user
 {
     if(!_selectedUsers) {
         _selectedUsers = @[].mutableCopy;
@@ -268,32 +356,26 @@
         [self.barRightBtn setBackgroundColor:[UIColor yy_colorWithHexString:@"#3092EE"]];
     }
     
-    if(_selectedUsers.count == _config.maxSelectedNum) {
-        
-        NSString *title_str = [NSString stringWithFormat:@"最多只能选择%@人",@(self.config.maxSelectedNum)];
-        UIAlertController *alertVC =
-            [UIAlertController alertControllerWithTitle:title_str
-                                                message:@""
-                                         preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alertVC addAction:[UIAlertAction actionWithTitle:@"确定"
-                                                    style: UIAlertActionStyleCancel
-                                                  handler:nil]];
-        [self presentViewController:alertVC animated:YES completion:nil];
+    if(_selectedUsers.count == _config.maxSelectedNum)
+    {
+        [self alert];
         
         if(_selectedUsers.count == _config.maxSelectedNum)
         {
-            // 达到最大限制，取消选中
+            // 达到最大限制，取消当前选中
             [self.mTableView deselectRowAtIndexPath:self.crntIdxPath
                                            animated:NO];
         }
     }else {
         [_selectedUsers addObject:user];
         [_selectedIds addObject:user.memberId];
+        
+        [self.header refresh:_selectedUsers];
     }
 }
 
-- (void)deselected:(NIMGroupUser *)user
+// 取消选中
+- (void)deselected:(id <NIMGroupMemberProtocol>)user
 {
     // 确定按钮的UI
     if(_selectedUsers.count == 1) {
@@ -303,6 +385,22 @@
     
     [_selectedUsers removeObject:user];
     [_selectedIds removeObject:user.memberId];
+    
+    [self.header refresh:_selectedUsers];
+}
+
+- (void)alert
+{
+    NSString *title_str = [NSString stringWithFormat:@"最多只能选择%@人",@(self.config.maxSelectedNum)];
+    UIAlertController *alertVC =
+    [UIAlertController alertControllerWithTitle:title_str
+                                        message:@""
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertVC addAction:[UIAlertAction actionWithTitle:@"确定"
+                                                style: UIAlertActionStyleCancel
+                                              handler:nil]];
+    [self presentViewController:alertVC animated:YES completion:nil];
 }
 
 @end

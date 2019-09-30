@@ -28,6 +28,7 @@
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
 		EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */; };
 		EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */; };
+		EF72D5B22341913C008E95A5 /* CJSearchTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */; };
 		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
 		EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */; };
 		EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41142334D60E00AF697E /* CJPayManager.m */; };
@@ -109,6 +110,8 @@
 		EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserSelectTableViewCell.h; sourceTree = "<group>"; };
 		EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserSelectTableViewCell.m; sourceTree = "<group>"; };
 		EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CJUserSelectTableViewCell.xib; sourceTree = "<group>"; };
+		EF72D5B02341913C008E95A5 /* CJSearchTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSearchTableHeaderView.h; sourceTree = "<group>"; };
+		EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSearchTableHeaderView.m; sourceTree = "<group>"; };
 		EF8A41072334AF7D00AF697E /* CJSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionViewController.h; sourceTree = "<group>"; };
 		EF8A41082334AF7D00AF697E /* CJSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionViewController.m; sourceTree = "<group>"; };
 		EF8A410E2334BEC100AF697E /* CJMoreContainerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMoreContainerConfig.h; sourceTree = "<group>"; };
@@ -319,6 +322,8 @@
 				EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */,
 				EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */,
 				EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */,
+				EF72D5B02341913C008E95A5 /* CJSearchTableHeaderView.h */,
+				EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -721,6 +726,7 @@
 				EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
+				EF72D5B22341913C008E95A5 /* CJSearchTableHeaderView.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
 				EFD25940233DB5CF00E78DB6 /* CJContactSelectViewController.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
