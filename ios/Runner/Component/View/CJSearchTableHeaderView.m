@@ -8,6 +8,7 @@
 
 #import "CJSearchTableHeaderView.h"
 #import "NIMContactDefines.h"
+#import "cokit.h"
 
 CGFloat CJ_SearchViewMinWidth = 80;
 

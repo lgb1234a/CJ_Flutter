@@ -10,6 +10,7 @@
 #import <YouXiPayUISDK/YouXiPayUISDK.h>
 
 extern ZZUserInfoModel *userInfo(NSString * uid);
+extern ZZUserInfoModel *teamOwnerInfo(NSString *teamId);
 
 NS_ASSUME_NONNULL_BEGIN
 

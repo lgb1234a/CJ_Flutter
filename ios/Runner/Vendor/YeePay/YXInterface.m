@@ -19,6 +19,19 @@ ZZUserInfoModel *userInfo(NSString *uid)
     userInfo.avatarImage = info.avatarImage;
     return userInfo;
 }
+
+ZZUserInfoModel *teamOwnerInfo(NSString *teamId)
+{
+    NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:teamId];
+    NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:team.owner
+                                               option:nil];
+    ZZUserInfoModel *userInfo = [ZZUserInfoModel new];
+    userInfo.nickName = info.showName;
+    userInfo.avatarUrl = info.avatarUrlString;
+    userInfo.avatarImage = info.avatarImage;
+    return userInfo;
+}
+
 @implementation YXInterface
 
 @end

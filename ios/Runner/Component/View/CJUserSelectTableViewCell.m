@@ -8,6 +8,7 @@
 
 #import "CJUserSelectTableViewCell.h"
 #import "NIMGroupedUsrInfo.h"
+#import "cokit.h"
 
 @interface CJUserSelectTableViewCell ()
 
