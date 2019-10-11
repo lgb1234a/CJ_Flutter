@@ -2,13 +2,14 @@
  *  Created by chenyn on 2019-06-28
  *  通讯录
  */
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:cajian/Contacts/Model/ContactModel.dart';
+import 'ContactsSearching.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
@@ -17,16 +18,17 @@ class ContactsWidget extends StatefulWidget {
   ContactsState createState() {
     return new ContactsState();
   }
-
 }
 
 class ContactsState extends State<ContactsWidget> {
-
   List<ContactInfo> _contacts = List();
   List<ContactInfo> _contactFunctions = List();
   int _suspensionHeight = 40;
   int _itemHeight = 60;
+  int _searchBarHeight = 60;
   String _suspensionTag = "";
+  bool _inSeraching = false;
+  Color appBarColor = Color(0xffe5e5e5);
 
   @override
   void initState() {
@@ -35,37 +37,36 @@ class ContactsState extends State<ContactsWidget> {
   }
 
   void loadData() async {
-
     List friends = await NimSdkUtil.friends();
-    friends.forEach((f){
-      _contacts.add(ContactInfo(f['showName'], f['avatarUrlString'], infoId: f['infoId']));
+    friends.forEach((f) {
+      _contacts.add(ContactInfo(f['showName'], f['avatarUrlString'],
+          infoId: f['infoId']));
     });
     _handleList(_contacts);
   }
 
   void _handleList(List<ContactInfo> list) {
-      if (list == null || list.isEmpty) return;
-      for (int i = 0, length = list.length; i < length; i++) {
-        String pinyin = PinyinHelper.getPinyinE(list[i].showName);
-        String tag = pinyin.substring(0, 1).toUpperCase();
-        list[i].namePinyin = pinyin;
-        if (RegExp("[A-Z]").hasMatch(tag)) {
-          list[i].tagIndex = tag;
-        } else {
-          list[i].tagIndex = "#";
-        }
+    if (list == null || list.isEmpty) return;
+    for (int i = 0, length = list.length; i < length; i++) {
+      String pinyin = PinyinHelper.getPinyinE(list[i].showName);
+      String tag = pinyin.substring(0, 1).toUpperCase();
+      list[i].namePinyin = pinyin;
+      if (RegExp("[A-Z]").hasMatch(tag)) {
+        list[i].tagIndex = tag;
+      } else {
+        list[i].tagIndex = "#";
       }
-      //根据A-Z排序
-      SuspensionUtil.sortListBySuspensionTag(_contacts);
+    }
+    //根据A-Z排序
+    SuspensionUtil.sortListBySuspensionTag(_contacts);
 
-      _contactFunctions.addAll([
-        ContactInfo('新的朋友', 'images/icon_contact_newfriend@2x.png'),
-        ContactInfo('群聊', 'images/icon_contact_groupchat@2x.png'),
-        ContactInfo('手机通讯录好友', 'images/icon_contact_phone@2x.png')
-      ]);
+    _contactFunctions.addAll([
+      ContactInfo('新的朋友', 'images/icon_contact_newfriend@2x.png'),
+      ContactInfo('群聊', 'images/icon_contact_groupchat@2x.png'),
+      ContactInfo('手机通讯录好友', 'images/icon_contact_phone@2x.png')
+    ]);
 
-      setState(() {
-      });
+    setState(() {});
   }
 
   void _onSusTagChanged(String tag) {
@@ -74,9 +75,8 @@ class ContactsState extends State<ContactsWidget> {
     });
   }
 
-  Widget _buildSusWidget(String susTag) 
-  {
-    if(susTag == null || susTag == '') {
+  Widget _buildSusWidget(String susTag) {
+    if (susTag == null || susTag == '') {
       return Container();
     }
 
@@ -96,11 +96,49 @@ class ContactsState extends State<ContactsWidget> {
     );
   }
 
+  // search bar
+  Widget _buildSearchBar(BuildContext context) {
+    return Container(
+        height: _searchBarHeight.toDouble(),
+        color: appBarColor,
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: SizedBox(
+          height: 40,
+          child: CupertinoButton(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            color: WhiteColor,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('images/icon_contact_search@2x.png'),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 6),
+                ),
+                Text(
+                  '搜索',
+                  style: TextStyle(color: Color(0xe5e5e5ff)),
+                )
+              ],
+            ),
+            onPressed: () {
+              // 切换搜索状态
+              setState(() {
+                _inSeraching = true;
+              });
+            },
+          ),
+        ));
+  }
+
+  // list header
   Widget _buildHeader(BuildContext context) {
+    List<Widget> headerItems = _contactFunctions.map((e) {
+      return _buildListItem(context, e);
+    }).toList();
+    // 插入search bar
+    headerItems.insert(0, _buildSearchBar(context));
     return Column(
-      children: _contactFunctions.map((e){
-        return _buildListItem(context, e);
-      }).toList(),
+      children: headerItems,
     );
   }
 
@@ -110,10 +148,10 @@ class ContactsState extends State<ContactsWidget> {
     Size screenSize = getSize(context);
     // 头像
     Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
-    if(model.avatarUrlString != null) {
-      if(model.avatarUrlString.contains('images/', 0)) {
+    if (model.avatarUrlString != null) {
+      if (model.avatarUrlString.contains('images/', 0)) {
         avatar = Image.asset(model.avatarUrlString, width: 44, height: 44);
-      }else {
+      } else {
         avatar = Image.network(model.avatarUrlString, width: 44);
       }
     }
@@ -124,52 +162,68 @@ class ContactsState extends State<ContactsWidget> {
           child: _buildSusWidget(susTag),
         ),
         Container(
-          height: _itemHeight.toDouble(),
-          width: screenSize.width,
-          child: Row(
-            children: <Widget>[
-              new Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
-              avatar,
-              Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
-              Text(model.showName),
-              Expanded(flex: 1, child: SizedBox(),),
-            ],
-          )
-        )
+            height: _itemHeight.toDouble(),
+            width: screenSize.width,
+            child: Row(
+              children: <Widget>[
+                new Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+                avatar,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+                Text(model.showName),
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+              ],
+            ))
       ],
     );
   }
 
-  @override
-  Widget build(BuildContext context) 
-  {
+  // 非搜索状态下的通讯录
+  Widget _buildContacts(BuildContext context) {
     double bp = double.parse(widget.params['bottom_padding']);
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-            title: const Text(
-                '通讯录',
-                style: TextStyle(color: Color(0xFF141414)),
-            ),
-            backgroundColor: WhiteColor,
-            elevation: 0.01,
+          title: const Text(
+            '通讯录',
+            style: TextStyle(color: Color(0xFF141414)),
           ),
+          backgroundColor: appBarColor,
+          elevation: 0.01,
+          brightness: Brightness.light,
+        ),
         body: AzListView(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, bp),
-            header: AzListViewHeader(
-              height: _itemHeight * _contactFunctions.length,
+          padding: EdgeInsets.fromLTRB(0, 0, 0, bp),
+          header: AzListViewHeader(
+              height: _itemHeight * _contactFunctions.length + _searchBarHeight,
               builder: (context) {
                 return _buildHeader(context);
-              }
-            ),
-            data: _contacts,
-            itemBuilder: (context, model) => _buildListItem(context, model),
-            suspensionWidget: _buildSusWidget(_suspensionTag),
-            isUseRealIndex: true,
-            itemHeight: _itemHeight,
-            suspensionHeight: _suspensionHeight,
-            onSusTagChanged: _onSusTagChanged,
-          ))
-    );
+              }),
+          data: _contacts,
+          itemBuilder: (context, model) => _buildListItem(context, model),
+          suspensionWidget: _buildSusWidget(_suspensionTag),
+          isUseRealIndex: true,
+          itemHeight: _itemHeight,
+          suspensionHeight: _suspensionHeight,
+          onSusTagChanged: _onSusTagChanged,
+        ));
+  }
+
+  // 通讯录搜索页
+  Widget _buildContactsInSearching(BuildContext context) {
+    return ContactsSearchingWidget();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: _inSeraching
+            ? _buildContactsInSearching(context)
+            : _buildContacts(context));
   }
 }

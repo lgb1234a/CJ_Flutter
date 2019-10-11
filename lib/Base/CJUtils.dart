@@ -66,3 +66,41 @@ dialog(BuildContext context, String title, String msg, String commitText,
             actions: <Widget>[cancelWidget, commitWidget],
           ));
 }
+
+class CJAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final Color titleColor;
+  final Color backgroundColor;
+  final Widget leading;
+  final List<Widget> actions;
+  final Widget flexibleSpace;
+  final PreferredSizeWidget bottom;
+
+  CJAppBar(this.title,
+      {this.titleColor = const Color(0xFF141414), 
+      this.leading, 
+      this.backgroundColor = const Color(0xFFFCFCFC), 
+      this.actions, 
+      this.flexibleSpace, 
+      this.bottom, 
+      }) : preferredSize = Size.fromHeight(kToolbarHeight + bottom?.preferredSize?.height ?? 0.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: leading,
+      title: Text(
+        title,
+        style: TextStyle(color: titleColor),
+      ),
+      actions: actions,
+      flexibleSpace: flexibleSpace,
+      bottom: bottom,
+      backgroundColor: backgroundColor,
+      elevation: 0.01,
+    );
+  }
+
+  @override
+  final Size preferredSize;
+}
