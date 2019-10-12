@@ -161,7 +161,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)friends:(NSArray *)params
 {
     FlutterResult result = params.lastObject;
-    NSMutableArray *contacts = [NSMutableArray array];
+    NSMutableArray *contacts = @[].mutableCopy;
     for (NIMUser *user in [NIMSDK sharedSDK].userManager.myFriends) {
         NIMKitInfo *info           = [[NIMKit sharedKit] infoByUser:user.userId option:nil];
         NSDictionary *contact = @{
@@ -172,6 +172,53 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         [contacts addObject:contact];
     }
     result(contacts);
+}
+
+// 群聊列表
++ (void)allMyTeams:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSMutableArray *teamInfos = @[].mutableCopy;
+    for (NIMTeam *team in [NIMSDK sharedSDK].teamManager.allMyTeams) {
+        [teamInfos addObject:@{
+            @"teamId": team.teamId,
+            @"teamName": team.teamName,
+            @"teamAvatar": team.avatarUrl
+        }];
+    }
+    result(teamInfos);
+}
+
+// 群成员信息
++ (void)teamMemberInfos:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSMutableArray *teamMemberInfos = @[].mutableCopy;
+    NSString *teamId = params.firstObject;
+    [[NIMSDK sharedSDK].teamManager fetchTeamMembers:teamId
+                                          completion:^(NSError * _Nullable error, NSArray<NIMTeamMember *> * _Nullable members)
+    {
+        for (NIMTeamMember *member in members) {
+            [teamMemberInfos addObject:@{
+                @"teamId": member.teamId,
+                @"userId": member.userId,
+                @"invitor": member.invitor,
+                @"inviterAccid": member.inviterAccid,
+                @"type": @(member.type),
+                @"showName": member.nickname,
+                @"isMuted": @(member.isMuted),
+                @"createTime": @(member.createTime),
+                @"customInfo": member.customInfo
+            }];
+            
+            if(member == members.lastObject) {
+                result(teamMemberInfos);
+                return;
+            }
+        }
+        // 没有成员或者error了
+        result(@[]);
+    }];
 }
 
 @end

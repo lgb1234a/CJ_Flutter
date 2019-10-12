@@ -39,8 +39,7 @@ class ContactsState extends State<ContactsWidget> {
   void loadData() async {
     List friends = await NimSdkUtil.friends();
     friends.forEach((f) {
-      _contacts.add(ContactInfo(f['showName'], f['avatarUrlString'],
-          infoId: f['infoId']));
+      _contacts.add(ContactInfo(f));
     });
     _handleList(_contacts);
   }
@@ -61,9 +60,18 @@ class ContactsState extends State<ContactsWidget> {
     SuspensionUtil.sortListBySuspensionTag(_contacts);
 
     _contactFunctions.addAll([
-      ContactInfo('新的朋友', 'images/icon_contact_newfriend@2x.png'),
-      ContactInfo('群聊', 'images/icon_contact_groupchat@2x.png'),
-      ContactInfo('手机通讯录好友', 'images/icon_contact_phone@2x.png')
+      ContactInfo({
+        'showName': '新的朋友',
+        'avatarUrlString': 'images/icon_contact_newfriend@2x.png'
+      }),
+      ContactInfo({
+        'showName': '群聊',
+        'avatarUrlString': 'images/icon_contact_groupchat@2x.png'
+      }),
+      ContactInfo({
+        'showName': '手机通讯录好友',
+        'avatarUrlString': 'images/icon_contact_phone@2x.png'
+      })
     ]);
 
     setState(() {});
@@ -214,9 +222,15 @@ class ContactsState extends State<ContactsWidget> {
         ));
   }
 
+  void cancelSearch() {
+    setState(() {
+      _inSeraching = false;
+    });
+  }
+
   // 通讯录搜索页
   Widget _buildContactsInSearching(BuildContext context) {
-    return ContactsSearchingWidget();
+    return ContactsSearchingWidget(cancelSearch);
   }
 
   @override

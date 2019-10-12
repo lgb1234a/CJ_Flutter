@@ -61,4 +61,16 @@ class NimSdkUtil {
     List friends = await _channel.invokeMethod('friends:');
     return friends;
   }
+
+  // 群聊列表
+  static Future<List>allMyTeams() async {
+    List teams = await _channel.invokeMethod('allMyTeams:');
+    return teams;
+  }
+
+  // 群成员信息
+  static Future<List>teamMemberInfos(String teamId) async {
+    List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
+    return teamMemberInfos;
+  }
 }
