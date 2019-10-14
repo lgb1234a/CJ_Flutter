@@ -175,7 +175,6 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     result(contacts);
 }
 
-<<<<<<< Updated upstream
 // 群聊列表
 + (void)allMyTeams:(NSArray *)params
 {
@@ -221,7 +220,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         // 没有成员或者error了
         result(@[]);
     }];
-=======
+}
 //***-----TF------***
 // 返回当前登录用户信息
 + (void)currentUser:(NSArray *)params
@@ -241,7 +240,6 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
              @"mobile": user.mobile ? : @"",
              @"ext": cjExt[@"cajian_id"]?:@"",
              });
->>>>>>> Stashed changes
 }
 
 @end

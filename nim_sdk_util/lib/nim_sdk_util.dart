@@ -62,7 +62,6 @@ class NimSdkUtil {
     List friends = await _channel.invokeMethod('friends:');
     return friends;
   }
-<<<<<<< Updated upstream
 
   // 群聊列表
   static Future<List>allMyTeams() async {
@@ -75,7 +74,6 @@ class NimSdkUtil {
     List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos;
   }
-=======
   //***-----TF------***
   // 当前用户信息
   static Future<dynamic>currentUser() async {
@@ -83,5 +81,4 @@ class NimSdkUtil {
     return info;
   }
 
->>>>>>> Stashed changes
 }
