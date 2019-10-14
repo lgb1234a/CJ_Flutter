@@ -169,7 +169,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         Container(
           height: 30,
           width: screenWidth,
-          padding: EdgeInsetsDirectional.only(start: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('联系人'),
         ));
     teams.insert(
@@ -177,7 +177,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         Container(
           height: 30,
           width: screenWidth,
-          padding: EdgeInsetsDirectional.only(start: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('群聊'),
         ));
     // 先联系人，再群聊
