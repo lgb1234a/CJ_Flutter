@@ -1,6 +1,7 @@
 #import "NimSdkUtilPlugin.h"
 #import <NIMKit.h>
 #import <CJBase/CJBase.h>
+#import <Foundation/Foundation.h>
 
 NSDictionary *JsonStringDecode(NSString *jsonString)
 {
@@ -184,7 +185,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         [teamInfos addObject:@{
             @"teamId": team.teamId,
             @"teamName": team.teamName,
-            @"teamAvatar": team.avatarUrl
+            @"teamAvatar": team.avatarUrl?:[NSNull null]
         }];
     }
     result(teamInfos);
@@ -203,13 +204,13 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
             [teamMemberInfos addObject:@{
                 @"teamId": member.teamId,
                 @"userId": member.userId,
-                @"invitor": member.invitor,
-                @"inviterAccid": member.inviterAccid,
+                @"invitor": member.invitor?:[NSNull null],
+                @"inviterAccid": member.inviterAccid?:[NSNull null],
                 @"type": @(member.type),
-                @"nickname": member.nickname,
+                @"nickname": member.nickname?:[NSNull null],
                 @"isMuted": @(member.isMuted),
                 @"createTime": @(member.createTime),
-                @"customInfo": member.customInfo
+                @"customInfo": member.customInfo?:[NSNull null]
             }];
             
             if(member == members.lastObject) {

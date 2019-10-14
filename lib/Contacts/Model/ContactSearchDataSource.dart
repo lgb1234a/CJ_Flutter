@@ -15,7 +15,7 @@ class ContactSearchDataSource {
   // 查找联系人
   static Future<List<CJSearchInterface>> searchContactBy(String key) async {
     List<ContactInfo> friends = await NimSdkUtil.friends();
-    List result = [];
+    List<ContactInfo> result = [];
     friends.forEach((e) {
 
       if (isKeyContained(key, e.showName) ||
@@ -30,7 +30,7 @@ class ContactSearchDataSource {
   // 查找群聊
   static Future<List<CJSearchInterface>> searchGroupBy(String key) async {
     List<TeamInfo> teams = await NimSdkUtil.allMyTeams();
-    List result = [];
+    List<TeamInfo> result = [];
     teams.forEach((t) async {
 
       if(isKeyContained(key, t.teamName) || isKeyContained(key, t.teamId)){
