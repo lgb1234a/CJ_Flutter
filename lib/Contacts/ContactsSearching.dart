@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'Model/ContactSearchDataSource.dart';
-import 'package:nim_sdk_util/TeamModel.dart';
-import 'package:nim_sdk_util/ContactModel.dart';
+import 'package:nim_sdk_util/nim_contactModel.dart';
+import 'package:nim_sdk_util/nim_teamModel.dart';
 
 class ContactsSearchingWidget extends StatefulWidget {
   final Function cancel;

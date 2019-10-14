@@ -9,7 +9,7 @@ import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'ContactsSearching.dart';
-import 'package:nim_sdk_util/ContactModel.dart';
+import 'package:nim_sdk_util/nim_contactModel.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
@@ -39,7 +39,7 @@ class ContactsState extends State<ContactsWidget> {
   void loadData() async {
     List friends = await NimSdkUtil.friends();
     friends.forEach((f) {
-      _contacts.add(ContactInfo(f));
+      _contacts.add(f);
     });
     _handleList(_contacts);
   }

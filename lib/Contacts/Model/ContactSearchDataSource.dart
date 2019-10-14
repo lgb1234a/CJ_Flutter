@@ -3,9 +3,9 @@
  *  通讯录搜索数据源
  */
 import 'package:nim_sdk_util/nim_sdk_util.dart';
-import 'package:nim_sdk_util/CJSearchInterface.dart';
-import 'package:nim_sdk_util/ContactModel.dart';
-import 'package:nim_sdk_util/TeamModel.dart';
+import 'package:nim_sdk_util/nim_searchInterface.dart';
+import 'package:nim_sdk_util/nim_contactModel.dart';
+import 'package:nim_sdk_util/nim_teamModel.dart';
 
 class ContactSearchDataSource {
   static bool isKeyContained(String key, String origin) {
@@ -40,7 +40,7 @@ class ContactSearchDataSource {
       List<TeamMemberInfo> members = await NimSdkUtil.teamMemberInfos(t.teamId);
       members.forEach((m) {
 
-        if (isKeyContained(key, m.nickname) ||
+        if (isKeyContained(key, m.nickName) ||
             isKeyContained(key, m.userId)) {
               t.keyword = key;
               result.add(t);

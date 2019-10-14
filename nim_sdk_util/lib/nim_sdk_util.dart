@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:nim_sdk_util/nim_user.dart';
-import 'ContactModel.dart';
-import 'TeamModel.dart';
+import 'nim_contactModel.dart';
+import 'nim_teamModel.dart';
 
 class NimSdkUtil {
   static const MethodChannel _channel =
