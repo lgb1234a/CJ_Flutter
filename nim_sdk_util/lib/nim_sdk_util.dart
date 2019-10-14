@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:nim_sdk_util/nim_user.dart';
 
 class NimSdkUtil {
   static const MethodChannel _channel =
@@ -61,6 +62,7 @@ class NimSdkUtil {
     List friends = await _channel.invokeMethod('friends:');
     return friends;
   }
+<<<<<<< Updated upstream
 
   // 群聊列表
   static Future<List>allMyTeams() async {
@@ -73,4 +75,13 @@ class NimSdkUtil {
     List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos;
   }
+=======
+  //***-----TF------***
+  // 当前用户信息
+  static Future<dynamic>currentUser() async {
+    dynamic info = await _channel.invokeMethod('currentUser:');
+    return info;
+  }
+
+>>>>>>> Stashed changes
 }

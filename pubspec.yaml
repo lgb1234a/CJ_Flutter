@@ -34,11 +34,10 @@ dependencies:
   lpinyin: ^1.0.7
   event_bus: ^1.1.0
   # firebase_storage: ^3.0.4
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
