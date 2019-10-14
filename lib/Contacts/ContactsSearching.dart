@@ -1,3 +1,4 @@
+
 /**
  *  Created by chenyn on 2019-10-11
  *  通讯录搜索页
@@ -6,6 +7,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'Model/ContactSearchDataSource.dart';
+import 'package:nim_sdk_util/TeamModel.dart';
+import 'package:nim_sdk_util/ContactModel.dart';
 
 class ContactsSearchingWidget extends StatefulWidget {
   final Function cancel;
@@ -20,6 +24,8 @@ class ContactsSearchingWidget extends StatefulWidget {
 class ContactsSearchingState extends State<ContactsSearchingWidget> {
   int _searchBarHeight = 50;
   TextEditingController _searchController = TextEditingController();
+  List<ContactInfo> _contacts;
+  List<TeamInfo> _teams;
 
   @override
   void initState() {
@@ -36,8 +42,13 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // 搜索文本变化
-  void searchTextChanged() {
-
+  void searchTextChanged() async {
+    List contacts = await ContactSearchDataSource.searchContactBy(_searchController.text);
+    List groups = await ContactSearchDataSource.searchGroupBy(_searchController.text);
+    setState(() {
+      _contacts = contacts;
+      _teams = groups;
+    });
   }
 
   // search bar

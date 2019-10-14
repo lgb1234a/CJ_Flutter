@@ -206,7 +206,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                 @"invitor": member.invitor,
                 @"inviterAccid": member.inviterAccid,
                 @"type": @(member.type),
-                @"showName": member.nickname,
+                @"nickname": member.nickname,
                 @"isMuted": @(member.isMuted),
                 @"createTime": @(member.createTime),
                 @"customInfo": member.customInfo
