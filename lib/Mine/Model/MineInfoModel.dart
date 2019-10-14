@@ -1,8 +1,11 @@
 
+import 'dart:ui' as prefix0;
+
 import 'package:flutter/cupertino.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 
 enum MineInfoCellType {
-  Function,    // 功能按钮
+  HeaderImg,    // 头像和图片
   Accessory,   // 入口
   Separator,   // 分割
 } 
@@ -16,56 +19,56 @@ class MineInfoModel {
   TapCallback onTap;
   bool needSeparatorLine;
   BuildContext ctx;
-
+  String iconTip;
   MineInfoModel(
     this.cellType, 
     this.title, 
     this.subTitle, 
     this.titleColor, 
-    this.onTap, 
+    this.iconTip,
+    this.onTap,
     {this.needSeparatorLine = true}
   );
 }
 
 final List<MineInfoModel> mineInfoCellModels = [
 
-  MineInfoModel(MineInfoCellType.Accessory, '头像', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.HeaderImg, '头像', null, null,'http://pic27.nipic.com/20130321/9678987_225139671149_2.jpg', (MineInfoModel model){
+    
+  }),
+  MineInfoModel(MineInfoCellType.Accessory, '手机号', '15507918906', null, 'images/login_bg@2x.png',(MineInfoModel model){
 
 
   }),
-  MineInfoModel(MineInfoCellType.Accessory, '手机号', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '昵称', '123', null, null,(MineInfoModel model){
 
 
   }),
-  MineInfoModel(MineInfoCellType.Accessory, '昵称', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '擦肩号', null, null, null,(MineInfoModel model){
 
 
   }),
-  MineInfoModel(MineInfoCellType.Accessory, '擦肩号', null, null, (MineInfoModel model){
-
-
-  }),
-  MineInfoModel(MineInfoCellType.Accessory, '我的二维码', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '我的二维码', null, null, null,(MineInfoModel model){
 
 
   },needSeparatorLine:false),
-  MineInfoModel(MineInfoCellType.Separator, null, null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Separator, null, null, null, null,(MineInfoModel model){
 
 
   },needSeparatorLine:false),
-  MineInfoModel(MineInfoCellType.Accessory, '性别', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '性别', null, null, null,(MineInfoModel model){
 
 
   }),
-  MineInfoModel(MineInfoCellType.Accessory, '生日', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '生日', null, null, null,(MineInfoModel model){
 
 
   }),
-  MineInfoModel(MineInfoCellType.Accessory, '邮箱', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '邮箱', null, null, null,(MineInfoModel model){
 
 
   }),
-  MineInfoModel(MineInfoCellType.Accessory, '签名', null, null, (MineInfoModel model){
+  MineInfoModel(MineInfoCellType.Accessory, '签名', null, null, null,(MineInfoModel model){
 
 
   }),

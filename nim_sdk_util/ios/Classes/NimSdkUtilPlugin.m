@@ -20,6 +20,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     return dic;
 }
 
+
 @implementation NimSdkUtilPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -219,6 +220,26 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         // 没有成员或者error了
         result(@[]);
     }];
+}
+//***-----TF------***
+// 返回当前登录用户信息
++ (void)currentUser:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
+    NIMUserInfo *user = [[NIMSDK sharedSDK].userManager userInfo:accid].userInfo;
+    NSDictionary *cjExt = JsonStringDecode(user.ext);
+    result(@{
+             @"nickName": user.nickName ? : @"",
+             @"avatarUrl": user.avatarUrl ? : @"",
+             @"thumbAvatarUrl" : user.thumbAvatarUrl ? : @"",
+             @"sign" : user.sign ? : @"",
+             @"gender": @(user.gender),
+             @"email": user.email ? : @"",
+             @"birth": user.birth ? : @"",
+             @"mobile": user.mobile ? : @"",
+             @"ext": cjExt[@"cajian_id"]?:@"",
+             });
 }
 
 @end

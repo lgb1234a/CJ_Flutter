@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:nim_sdk_util/nim_user.dart';
 
 class NimSdkUtil {
   static const MethodChannel _channel =
@@ -73,4 +74,11 @@ class NimSdkUtil {
     List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos;
   }
+  //***-----TF------***
+  // 当前用户信息
+  static Future<dynamic>currentUser() async {
+    dynamic info = await _channel.invokeMethod('currentUser:');
+    return info;
+  }
+
 }
