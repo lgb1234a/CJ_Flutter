@@ -1,5 +1,4 @@
 import 'package:cajian/Mine/MineInfo.dart';
-import 'package:cajian/Mine/Model/MineInfoModel.dart';
 /**
  *  Created by chenyn on 2019-06-28
  *  入口

@@ -72,11 +72,11 @@ class MineState extends State<MineWidget> {
                 '我',
                 style: TextStyle(color: Color(0xFF141414)),
             ),
-            backgroundColor: WhiteColor,
+            backgroundColor: whiteColor,
             elevation: 0.01,
           ),
           body: Container(
-            color: MainBgColor,
+            color: mainBgColor,
             child: mineTable,
           ),
         ),

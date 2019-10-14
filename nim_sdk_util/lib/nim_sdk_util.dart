@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:nim_sdk_util/nim_user.dart';
 import 'nim_contactModel.dart';
 import 'nim_teamModel.dart';
 

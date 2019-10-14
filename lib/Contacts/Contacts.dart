@@ -114,7 +114,7 @@ class ContactsState extends State<ContactsWidget> {
           height: 40,
           child: CupertinoButton(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            color: WhiteColor,
+            color: whiteColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[

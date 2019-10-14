@@ -10,7 +10,6 @@ class MineInfoAccessoryCell extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
      Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(
@@ -49,7 +48,7 @@ class MineInfoSeparatorCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 8,
-      color: MainBgColor,
+      color: mainBgColor,
     );
   }
 }
@@ -61,7 +60,6 @@ class HeaderImgCell extends StatelessWidget{
   HeaderImgCell(this.model,this.image);
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
      Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(

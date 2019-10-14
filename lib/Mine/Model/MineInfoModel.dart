@@ -1,8 +1,5 @@
 
-import 'dart:ui' as prefix0;
-
 import 'package:flutter/cupertino.dart';
-import 'package:nim_sdk_util/nim_sdk_util.dart';
 
 enum MineInfoCellType {
   HeaderImg,    // 头像和图片

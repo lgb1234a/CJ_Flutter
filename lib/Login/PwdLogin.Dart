@@ -125,7 +125,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('手机登录', style: new TextStyle(color: Colors.black),),
-        backgroundColor: MainBgColor,
+        backgroundColor: mainBgColor,
         elevation: 0.01,
         iconTheme: IconThemeData.fallback(),
       ),
@@ -193,7 +193,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
                       ],
                     ),
                     textColor: Colors.white,
-                    color: BlueColor,
+                    color: blueColor,
                     shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                     highlightColor: Colors.blue[700],
                     disabledColor: Colors.blueGrey,

@@ -21,10 +21,10 @@ double bottomPadding(BuildContext context) {
   return bottomPadding;
 }
 
-final Color MainBgColor = Color(0xFFECECEC);
-final Color WhiteColor = Color(0xFFFCFCFC);
-final Color BlackColor = Color(0xFF141414);
-final Color BlueColor = Color(0xFF3092EE);
+final Color mainBgColor = Color(0xFFECECEC);
+final Color whiteColor = Color(0xFFFCFCFC);
+final Color blackColor = Color(0xFF141414);
+final Color blueColor = Color(0xFF3092EE);
 
 class CJUtils {}
 

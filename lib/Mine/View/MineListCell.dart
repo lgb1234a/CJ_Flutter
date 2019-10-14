@@ -64,7 +64,7 @@ class MineListCellSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 8,
-      color: MainBgColor,
+      color: mainBgColor,
     );
   }
 }
@@ -130,7 +130,7 @@ class MineListProfileState extends State<MineListProfileHeader> {
               children: <Widget>[
                 Text(
                   _showName ?? '',
-                  style: TextStyle(fontSize: 17, color: BlackColor),
+                  style: TextStyle(fontSize: 17, color: blackColor),
                 ),
                 Text(
                   '擦肩号：$_cajianNo',

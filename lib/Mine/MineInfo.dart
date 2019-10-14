@@ -1,9 +1,7 @@
 import 'package:cajian/Mine/Dao/MineInfoDao.dart';
-import 'package:cajian/Mine/Model/MineModel.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:flutter/services.dart';
-import 'package:nim_sdk_util/nim_sdk_util.dart';
 
 import 'Model/MineInfoModel.dart';
 import 'View/MineInfoListCell.dart';
@@ -22,7 +20,6 @@ class _MineInfoState extends State<MineInfoWiget>{
   List _cellModels = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _platform = MethodChannel(widget.channelName);
     _platform.setMethodCallHandler(handler);
@@ -40,7 +37,6 @@ class _MineInfoState extends State<MineInfoWiget>{
   }
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new MaterialApp(
       home: Scaffold(
         appBar: new AppBar
@@ -51,14 +47,14 @@ class _MineInfoState extends State<MineInfoWiget>{
           ),
           title: Text(
             '个人信息',
-            style: TextStyle(color: BlackColor),
+            style: TextStyle(color: blackColor),
           ),
-          backgroundColor: MainBgColor,
+          backgroundColor: mainBgColor,
           elevation: 0.01,
           iconTheme: IconThemeData.fallback(),
         ),
         body: Container(
-          color: MainBgColor,
+          color: mainBgColor,
           child: ListView.separated(
               itemCount: _cellModels.length,
               itemBuilder: (BuildContext ctx, int index) {

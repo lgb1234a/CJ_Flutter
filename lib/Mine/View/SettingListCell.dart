@@ -34,7 +34,7 @@ class SettingSeparatorCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 8,
-      color: MainBgColor,
+      color: mainBgColor,
     );
   }
 }

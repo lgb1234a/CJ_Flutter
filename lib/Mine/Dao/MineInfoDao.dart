@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cajian/Mine/Model/MineInfoModel.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 

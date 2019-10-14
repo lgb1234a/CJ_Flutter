@@ -28,7 +28,7 @@ DEPENDENCIES:
   - nim_sdk_util (from `.symlinks/plugins/nim_sdk_util/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - FLAnimatedImage
     - M80AttributedLabel
     - NIMKit
@@ -45,7 +45,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   nim_sdk_util: 98a3316d5fbab472afc31a2cea4061b4a8f6bdd8
   NIMKit: 7b31db8f4fd0ad6c38647725f30c3758896ce98d
@@ -56,4 +56,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7fb83752f59ead6285236625b82473f90b1cb932
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.8.3

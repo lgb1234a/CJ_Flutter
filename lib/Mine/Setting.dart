@@ -75,14 +75,14 @@ class SettingState extends State<SettingWidget> {
           ),
           title: Text(
             '设置',
-            style: TextStyle(color: BlackColor),
+            style: TextStyle(color: blackColor),
           ),
-          backgroundColor: MainBgColor,
+          backgroundColor: mainBgColor,
           elevation: 0.01,
           iconTheme: IconThemeData.fallback(),
         ),
         body: Container(
-          color: MainBgColor,
+          color: mainBgColor,
           child: settingTable,
         ),
       ),

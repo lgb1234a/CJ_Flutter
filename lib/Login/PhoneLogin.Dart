@@ -124,7 +124,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('手机登录', style: new TextStyle(color: Colors.black),),
-        backgroundColor: MainBgColor,
+        backgroundColor: mainBgColor,
         elevation: 0.01,
         iconTheme: IconThemeData.fallback(),
       ),
@@ -179,7 +179,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                   new FlatButton(
                     child: new Text(
                       _countdownTime == 0 ?'获取验证码' : '$_countdownTime'+'s后重新获取', 
-                      style: new TextStyle(fontSize: 16, color: BlueColor),
+                      style: new TextStyle(fontSize: 16, color: blueColor),
                     ),
                     onPressed: _countdownTime == 0 ?(){
                       if(_phoneController.text.trim().length != 11) {
@@ -236,7 +236,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                       ],
                     ),
                     textColor: Colors.white,
-                    color: BlueColor,
+                    color: blueColor,
                     shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                     highlightColor: Colors.blue[700],
                     disabledColor: Colors.blueGrey,
