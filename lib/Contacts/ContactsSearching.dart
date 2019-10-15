@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 /**
  *  Created by chenyn on 2019-10-11
  *  通讯录搜索页
@@ -103,58 +104,96 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         ));
   }
 
-  // cell
-  Widget _buildItem(BuildContext context, CJSearchInterface model) {
-    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
+  // tile
+  Widget _buildTile(String avatarUrl, String showName, {String subTitle}) {
     double itemHeight = 72.1;
-    if (model is ContactInfo) {
-      return SizedBox(
-        height: itemHeight,
+    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
+
+    Widget tile = subTitle != null
+        ? ListTile(
+            leading: avatarUrl != null
+                ? Image.network(avatarUrl, width: 44, height: 44)
+                : avatar,
+            title: Text(showName),
+            subtitle: Text(subTitle),
+            onTap: () {
+              // 点击跳转到聊天
+            },
+          )
+        : ListTile(
+            leading: avatarUrl != null
+                ? Image.network(avatarUrl, width: 44, height: 44)
+                : avatar,
+            title: Text(showName),
+            onTap: () {
+              // 点击跳转到聊天
+            },
+          );
+
+    return SizedBox(
+      height: itemHeight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Divider(
+            height: 0.1,
+            indent: 12,
+          ),
+          tile
+        ],
+      ),
+    );
+  }
+
+  // 更多
+  Widget _buildMoreTile(BuildContext context, String title) {
+    double screenWidth = getSize(context).width;
+    return GestureDetector(
+        onTap: () {
+          // 跳转到更多列表,把 _teams 或者 _contacts带过去
+        },
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Divider(
-              height: 0.1,
               indent: 12,
+              height: 0.1,
             ),
-            ListTile(
-              leading: model.avatarUrlString != null
-                  ? Image.network(model.avatarUrlString, width: 44, height: 44)
-                  : avatar,
-              title: Text(model.showName),
-              subtitle: Text(''), // 显示匹配的关键词
-              onTap: () {
-                // 点击跳转到个人信息
-              },
+            SizedBox(
+              height: 60,
+              width: screenWidth,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flex(direction: Axis.horizontal, children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 12),
+                    ),
+                    Image.asset('images/icon_search_blue@2x.png',
+                        width: 33, height: 33),
+                    Text(title),
+                  ]),
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 14,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 6)),
+                ],
+              ),
             )
           ],
-        ),
-      );
+        ));
+  }
+
+  // cell
+  Widget _buildItem(BuildContext context, CJSearchInterface model) {
+    if (model is ContactInfo) {
+      return _buildTile(model.avatarUrlString, model.showName);
     }
 
     if (model is TeamInfo) {
-      return SizedBox(
-        height: itemHeight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Divider(
-              height: 0.1,
-              indent: 12,
-            ),
-            ListTile(
-              leading: model.teamAvatar != null
-                  ? Image.network(model.teamAvatar, width: 44, height: 44)
-                  : avatar,
-              title: Text(model.teamName),
-              subtitle: Text(''), // 显示匹配的关键词
-              onTap: () {
-                // 点击跳转到群聊
-              },
-            )
-          ],
-        ),
-      );
+      return _buildTile(model.teamAvatar, model.teamName);
     }
 
     return Center(
@@ -162,17 +201,28 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     );
   }
 
+  // section
   Widget _buildSection(BuildContext context, int index) {
     double screenWidth = getSize(context).width;
     List<Widget> contacts =
         _contacts.map((f) => _buildItem(context, f)).toList();
     List<Widget> teams = _teams.map((f) => _buildItem(context, f)).toList();
 
+    // 添加更多入口
+    if (contacts.length > 3) {
+      contacts = contacts.sublist(0, 3);
+      contacts.add(_buildMoreTile(context, '更多联系人'));
+    }
+
+    if (teams.length > 3) {
+      teams = teams.sublist(0, 3);
+      teams.add(_buildMoreTile(context, '更多群聊'));
+    }
+
     contacts.insert(
         0,
         Container(
           height: 30,
-          color: Colors.white,
           width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('联系人'),
@@ -185,6 +235,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('群聊'),
         ));
+
     // 先联系人，再群聊
     if (index == 0) {
       if (_contacts.length > 0) {
