@@ -56,6 +56,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   // search bar
   Widget _buildSearchBar(BuildContext context) {
     double top = topPadding(context);
+    double screenWidth = getSize(context).width;
     return Container(
         height: _searchBarHeight.toDouble() + top,
         color: Color(0xffe5e5e5),
@@ -64,24 +65,27 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: CupertinoTextField(
-                controller: _searchController,
-                autofocus: true,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(3.0))),
-                placeholder: '搜索',
-                prefix: Container(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Image.asset('images/icon_contact_search@2x.png'),
-                ),
-                prefixMode: OverlayVisibilityMode.always,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-              ),
-            ),
-            Container(
+            SizedBox(
+                height: 40,
+                width: screenWidth - 90,
+                child: CupertinoTextField(
+                  controller: _searchController,
+                  autofocus: true,
+                  expands: true,
+                  minLines: null,
+                  maxLines: null,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(3.0))),
+                  placeholder: '搜索',
+                  prefix: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Image.asset('images/icon_contact_search@2x.png'),
+                  ),
+                  prefixMode: OverlayVisibilityMode.always,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                )),
+            SizedBox(
               width: 70,
               child: FlatButton(
                 textColor: Colors.blue,
@@ -168,6 +172,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         0,
         Container(
           height: 30,
+          color: Colors.white,
           width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('联系人'),
@@ -197,8 +202,12 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
       );
     }
 
-    return Center(
-      child: Text('未搜索到相关信息~'),
+    return SizedBox(
+      width: screenWidth,
+      height: 300,
+      child: Center(
+        child: Text('未搜索到相关信息~'),
+      ),
     );
   }
 
@@ -223,10 +232,13 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
       body: Column(
         children: <Widget>[
           _buildSearchBar(context),
-          Expanded(
-            flex: 1,
-            child: _searchList(context),
-          )
+          MediaQuery.removePadding(
+              removeTop: true,
+              context: context,
+              child: Expanded(
+                flex: 1,
+                child: _searchList(context),
+              ))
         ],
       ),
     );
