@@ -4,6 +4,7 @@
  */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
@@ -13,8 +14,9 @@ import 'package:nim_sdk_util/nim_contactModel.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
+  final String channelName;
 
-  ContactsWidget(this.params);
+  ContactsWidget(this.params, this.channelName);
   ContactsState createState() {
     return new ContactsState();
   }
@@ -23,6 +25,7 @@ class ContactsWidget extends StatefulWidget {
 class ContactsState extends State<ContactsWidget> {
   List<ContactInfo> _contacts = List();
   List<ContactInfo> _contactFunctions = List();
+  MethodChannel platform;
   int _suspensionHeight = 40;
   int _itemHeight = 60;
   int _searchBarHeight = 60;
@@ -34,6 +37,13 @@ class ContactsState extends State<ContactsWidget> {
   void initState() {
     super.initState();
     loadData();
+    platform = MethodChannel(widget.channelName);
+    platform.setMethodCallHandler(handler);
+  }
+
+  // Native回调用
+  Future<dynamic> handler(MethodCall call) async {
+    debugPrint(call.method);
   }
 
   void loadData() async {
@@ -230,14 +240,16 @@ class ContactsState extends State<ContactsWidget> {
 
   // 通讯录搜索页
   Widget _buildContactsInSearching(BuildContext context) {
-    return ContactsSearchingWidget(cancelSearch);
+    return ContactsSearchingWidget(cancelSearch, platform);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: _inSeraching
-            ? _buildContactsInSearching(context)
+            ? _buildContactsInSearching(
+                context,
+              )
             : _buildContacts(context));
   }
 }

@@ -29,4 +29,15 @@ class ContactInfo extends ISuspensionBean implements CJSearchInterface {
 
   @override
   String keyword;
+
+  @override
+  Map toJson() {
+    return {
+      'showName': showName,
+      'avatarUrlString': avatarUrlString,
+      'infoId': infoId,
+      'tagIndex': tagIndex,
+      'namePinyin': namePinyin
+    };
+  }
 }

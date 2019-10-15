@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 /**
  *  Created by chenyn on 2019-10-11
  *  通讯录搜索页
@@ -7,14 +6,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:flutter/services.dart';
 import 'Model/ContactSearchDataSource.dart';
 import 'package:nim_sdk_util/nim_contactModel.dart';
 import 'package:nim_sdk_util/nim_teamModel.dart';
 import 'package:nim_sdk_util/nim_searchInterface.dart';
+import 'dart:convert' as convert;
 
 class ContactsSearchingWidget extends StatefulWidget {
   final Function cancel;
-  ContactsSearchingWidget(this.cancel);
+  final MethodChannel platform;
+  ContactsSearchingWidget(this.cancel, this.platform);
 
   @override
   State<StatefulWidget> createState() {
@@ -145,13 +147,35 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     );
   }
 
+  // 跳转到更多列表,把 _teams 或者 _contacts带过去
+  void _pushSerachResultViewController(int type) {
+    List models = [];
+    if (type == 0) {
+      models = _contacts.map((f) => f.toJson()).toList();
+    }
+
+    if (type == 1) {
+      models = _teams.map((f) => f.toJson()).toList();
+    }
+
+    Map params = {
+      'route': 'contact_search_result',
+      'channel_name': 'com.zqtd.cajian/contact_search_result',
+      'params': {
+        'models': models,
+        'keyword': _searchController.text,
+        'type': type
+      }
+    };
+    String pStr = convert.jsonEncode(params);
+    widget.platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+  }
+
   // 更多
-  Widget _buildMoreTile(BuildContext context, String title) {
+  Widget _buildMoreTile(BuildContext context, int type) {
     double screenWidth = getSize(context).width;
     return GestureDetector(
-        onTap: () {
-          // 跳转到更多列表,把 _teams 或者 _contacts带过去
-        },
+        onTap: () => _pushSerachResultViewController(type),
         child: Column(
           children: <Widget>[
             Divider(
@@ -163,7 +187,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
               width: screenWidth,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flex(direction: Axis.horizontal, children: <Widget>[
                     Padding(
@@ -171,7 +194,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
                     ),
                     Image.asset('images/icon_search_blue@2x.png',
                         width: 33, height: 33),
-                    Text(title),
+                    Text(type == 0 ? '更多联系人' : '更多群聊'),
                   ]),
                   Spacer(),
                   Icon(
@@ -188,6 +211,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // cell
   Widget _buildItem(BuildContext context, CJSearchInterface model) {
+    double screenWidth = getSize(context).width;
     if (model is ContactInfo) {
       return _buildTile(model.avatarUrlString, model.showName);
     }
@@ -196,8 +220,12 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
       return _buildTile(model.teamAvatar, model.teamName);
     }
 
-    return Center(
-      child: Text('未匹配到相关数据类型！'),
+    return SizedBox(
+      width: screenWidth,
+      height: 300,
+      child: Center(
+        child: Text('未匹配到相关数据类型~'),
+      ),
     );
   }
 
@@ -211,12 +239,12 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     // 添加更多入口
     if (contacts.length > 3) {
       contacts = contacts.sublist(0, 3);
-      contacts.add(_buildMoreTile(context, '更多联系人'));
+      contacts.add(_buildMoreTile(context, 0));
     }
 
     if (teams.length > 3) {
       teams = teams.sublist(0, 3);
-      teams.add(_buildMoreTile(context, '更多群聊'));
+      teams.add(_buildMoreTile(context, 1));
     }
 
     contacts.insert(

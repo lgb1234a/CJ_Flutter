@@ -1,4 +1,3 @@
-import 'package:cajian/Mine/MineInfo.dart';
 /**
  *  Created by chenyn on 2019-06-28
  *  入口
@@ -11,6 +10,8 @@ import 'Login/LoginEntrance.dart';
 import 'package:cajian/Mine/Mine.dart';
 import 'package:cajian/Contacts/Contacts.dart';
 import 'package:cajian/Mine/Setting.dart';
+import 'package:cajian/Mine/MineInfo.dart';
+import 'package:cajian/Contacts/ContactsSearchResultList.dart';
 
 Widget _widgetForRoute(String openUrl) {
   debugPrint('FlutterViewController openUrl:' + openUrl);
@@ -25,11 +26,13 @@ Widget _widgetForRoute(String openUrl) {
     case 'mine':
       return new MineWidget(cn);
     case 'contacts':
-      return new ContactsWidget(params);
+      return new ContactsWidget(params, cn);
     case 'setting':
       return new SettingWidget(cn);
     case 'mineInfo':
-    return new MineInfoWiget(cn);
+      return new MineInfoWiget(cn);
+    case 'contact_search_result':
+      return new ContactsSearchResultListWidget(params, cn);
     default:
       return MaterialApp(
         home: Scaffold(

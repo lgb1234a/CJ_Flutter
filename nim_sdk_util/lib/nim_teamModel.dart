@@ -18,6 +18,15 @@ class TeamInfo implements CJSearchInterface {
 
   @override
   String keyword;
+
+  @override
+  Map toJson() {
+    return {
+      'teamId': teamId,
+      'teamName': teamName,
+      'teamAvatar': teamAvatar
+    };
+  }
 }
 
 class TeamMemberInfo implements CJSearchInterface {
@@ -49,4 +58,19 @@ class TeamMemberInfo implements CJSearchInterface {
 
   @override
   String keyword;
+
+  @override
+  Map toJson() {
+    return {
+      'teamId': teamId,
+      'userId': userId,
+      'invitor': invitor,
+      'inviterAccid': inviterAccid,
+      'type': type,
+      'nickName': nickName,
+      'isMuted': isMuted,
+      'createTime': createTime,
+      'customInfo': customInfo
+    };
+  }
 }
