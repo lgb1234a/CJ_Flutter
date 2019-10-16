@@ -31,7 +31,6 @@ class ContactsState extends State<ContactsWidget> {
   int _searchBarHeight = 60;
   String _suspensionTag = "";
   bool _inSeraching = false;
-  Color appBarColor = Color(0xffe5e5e5);
 
   @override
   void initState() {

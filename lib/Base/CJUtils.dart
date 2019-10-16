@@ -25,6 +25,7 @@ final Color mainBgColor = Color(0xFFECECEC);
 final Color whiteColor = Color(0xFFFCFCFC);
 final Color blackColor = Color(0xFF141414);
 final Color blueColor = Color(0xFF3092EE);
+final Color appBarColor = Color(0xffe5e5e5);
 
 class CJUtils {}
 

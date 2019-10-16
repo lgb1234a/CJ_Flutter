@@ -10,6 +10,7 @@ import 'package:nim_sdk_util/nim_contactModel.dart';
 import 'package:nim_sdk_util/nim_teamModel.dart';
 import 'package:nim_sdk_util/nim_searchInterface.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'Model/ContactSearchDataSource.dart';
 
 const double searchBarHeight = 70;
 
@@ -17,7 +18,8 @@ const double searchBarHeight = 70;
 class ContactSearchBar extends StatefulWidget implements PreferredSizeWidget {
   final String keyword;
   final Function back;
-  ContactSearchBar(this.keyword, this.back);
+  final Function searchCallBack;
+  ContactSearchBar(this.keyword, this.back, this.searchCallBack);
 
   @override
   ContactSearchBarState createState() => ContactSearchBarState();
@@ -34,21 +36,60 @@ class ContactSearchBarState extends State<ContactSearchBar> {
     super.initState();
     // 初始化搜索框文案
     _searchController.text = widget.keyword;
+    _searchController
+        .addListener(() => widget.searchCallBack(_searchController.text));
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = getSize(context).width;
     return AppBar(
+      backgroundColor: appBarColor,
+      elevation: 0.01,
+      brightness: Brightness.dark,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back_ios),
+        icon: Icon(
+          Icons.arrow_back_ios,
+          color: blackColor,
+          size: 22,
+        ),
         onPressed: () => widget.back(),
       ),
+      titleSpacing: 0.0,
       title: SizedBox(
         height: 40,
+        width: screenWidth,
         child: CupertinoTextField(
           controller: _searchController,
+          autofocus: true,
+          expands: true,
+          minLines: null,
+          maxLines: null,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(3.0))),
+          placeholder: '搜索',
+          prefix: Container(
+            padding: EdgeInsets.only(left: 10),
+            child: Image.asset('images/icon_contact_search@2x.png'),
+          ),
+          prefixMode: OverlayVisibilityMode.always,
+          padding: EdgeInsets.symmetric(horizontal: 10),
         ),
       ),
+      actions: <Widget>[
+        SizedBox(
+          width: 70,
+          child: FlatButton(
+            textColor: Colors.blue,
+            child: Text(
+              '取消',
+              style: TextStyle(fontSize: 14),
+            ),
+            onPressed: () => widget.back(),
+          ),
+        )
+      ],
     );
   }
 }
@@ -60,12 +101,12 @@ class ContactsSearchResultListWidget extends StatefulWidget {
   final int type; // 查找的内容类型说明  0:联系人/1:群聊
   final List<CJSearchInterface> models; // contactInfo/teamInfo
 
-  static CJSearchInterface _toModel(Map model) {
-    if (model['type'] == 0) {
+  static CJSearchInterface _toModel(Map model, int type) {
+    if (type == 0) {
       return ContactInfo(model);
     }
 
-    if (model['type'] == 1) {
+    if (type == 1) {
       return TeamInfo(model);
     }
 
@@ -75,7 +116,7 @@ class ContactsSearchResultListWidget extends StatefulWidget {
   factory ContactsSearchResultListWidget(params, channelName) {
     List models = params['models'];
     return ContactsSearchResultListWidget._a(params['keyword'], params['type'],
-        models.map((f) => _toModel(f)).toList(), channelName);
+        models.map((f) => _toModel(f, params['type'])).toList(), channelName);
   }
   ContactsSearchResultListWidget._a(
       this.keyword, this.type, this.models, this.channelName)
@@ -90,16 +131,33 @@ class ContactsSearchResultListWidget extends StatefulWidget {
 class ContactsSearchResultListState
     extends State<ContactsSearchResultListWidget> {
   MethodChannel _platform;
+  List<CJSearchInterface> _infos = [];
   @override
   void initState() {
     super.initState();
     _platform = MethodChannel(widget.channelName);
     _platform.setMethodCallHandler(handler);
+    _infos = widget.models;
   }
 
   // Native回调用
   Future<dynamic> handler(MethodCall call) async {
     debugPrint(call.method);
+  }
+
+  // 搜索文本变化
+  void searchTextChanged(String keyword) async {
+    List<CJSearchInterface> infos = [];
+    if (widget.type == 0) {
+      infos = await ContactSearchDataSource.searchContactBy(keyword);
+    }
+    if (widget.type == 1) {
+      infos = await ContactSearchDataSource.searchGroupBy(keyword);
+    }
+
+    setState(() {
+      _infos = infos;
+    });
   }
 
   // tile
@@ -137,23 +195,27 @@ class ContactsSearchResultListState
   // item
   Widget _buildItem(BuildContext context, int idx) {
     double screenWidth = getSize(context).width;
-    // 因为在count的时候+1了，所以这里-1
-    CJSearchInterface model = widget.models[idx - 1];
-    if (idx == 0) {
-      return Container(
-        height: 30,
-        width: screenWidth,
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-        child: Text(widget.type == 0 ? '群聊' : '联系人'),
-      );
-    }
-    if (model is TeamInfo) {
-      return _buildTile(model.teamAvatar, model.teamName);
+
+    if (_infos.length > 0) {
+      if (idx == 0) {
+        return Container(
+          height: 30,
+          width: screenWidth,
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          child: Text(widget.type == 0 ? '群聊' : '联系人'),
+        );
+      }
+      // 因为在count的时候+1了，所以这里-1
+      CJSearchInterface model = _infos[idx - 1];
+      if (model is TeamInfo) {
+        return _buildTile(model.teamAvatar, model.teamName);
+      }
+
+      if (model is ContactInfo) {
+        return _buildTile(model.avatarUrlString, model.showName);
+      }
     }
 
-    if (model is ContactInfo) {
-      return _buildTile(model.avatarUrlString, model.showName);
-    }
     return SizedBox(
       width: screenWidth,
       height: 300,
@@ -165,15 +227,19 @@ class ContactsSearchResultListState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ContactSearchBar(widget.keyword,
-          () => _platform.invokeMethod('popFlutterViewController')),
-      body: ListView.separated(
-        itemCount: widget.models.length + 1,
-        itemBuilder: (context, idx) => _buildItem(context, idx),
-        separatorBuilder: (context, idx) => Divider(
-          height: 0.1,
-          indent: 12,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: ContactSearchBar(
+            widget.keyword,
+            () => _platform.invokeMethod('popFlutterViewController'),
+            searchTextChanged),
+        body: ListView.separated(
+          itemCount: _infos.length + 1,
+          itemBuilder: (context, idx) => _buildItem(context, idx),
+          separatorBuilder: (context, idx) => Divider(
+            height: 0.1,
+            indent: 12,
+          ),
         ),
       ),
     );

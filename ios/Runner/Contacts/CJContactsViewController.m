@@ -14,12 +14,19 @@
 
 @implementation CJContactsViewController
 
+- (instancetype)init
+{
+    int bottomPadding = BOTTOM_BAR_HEIGHT + (ISPROFILEDSCREEN?UNSAFE_BOTTOM_HEIGHT:0);
+    NSString *contactsOpenUrl = [NSString stringWithFormat:@"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\",\"params\":{\"bottom_padding\":\"%d\"}}", bottomPadding];
+    self = [super initWithFlutterOpenUrl:contactsOpenUrl];
+    if (self) {
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    int bottomPadding = BOTTOM_BAR_HEIGHT + (ISPROFILEDSCREEN?UNSAFE_BOTTOM_HEIGHT:0);
-    NSString *contactsOpenUrl = [NSString stringWithFormat:@"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\",\"params\":{\"bottom_padding\":\"%d\"}}", bottomPadding];
-    [self setInitialRoute:contactsOpenUrl];
     
     self.navigationController.navigationBar.hidden = YES;
 }

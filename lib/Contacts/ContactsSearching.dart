@@ -176,36 +176,39 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     double screenWidth = getSize(context).width;
     return GestureDetector(
         onTap: () => _pushSerachResultViewController(type),
-        child: Column(
-          children: <Widget>[
-            Divider(
-              indent: 12,
-              height: 0.1,
-            ),
-            SizedBox(
-              height: 60,
-              width: screenWidth,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Flex(direction: Axis.horizontal, children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 12),
-                    ),
-                    Image.asset('images/icon_search_blue@2x.png',
-                        width: 33, height: 33),
-                    Text(type == 0 ? '更多联系人' : '更多群聊'),
-                  ]),
-                  Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 14,
-                  ),
-                  Padding(padding: EdgeInsets.only(right: 6)),
-                ],
+        child: Container(
+          color: Colors.transparent,
+          child: Column(
+            children: <Widget>[
+              Divider(
+                indent: 12,
+                height: 0.1,
               ),
-            )
-          ],
+              SizedBox(
+                height: 60,
+                width: screenWidth,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Flex(direction: Axis.horizontal, children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 12),
+                      ),
+                      Image.asset('images/icon_search_blue@2x.png',
+                          width: 33, height: 33),
+                      Text(type == 0 ? '更多联系人' : '更多群聊'),
+                    ]),
+                    Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                    ),
+                    Padding(padding: EdgeInsets.only(right: 6)),
+                  ],
+                ),
+              )
+            ],
+          ),
         ));
   }
 
