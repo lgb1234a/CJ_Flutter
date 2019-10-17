@@ -10,7 +10,7 @@ import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'ContactsSearching.dart';
-import 'package:nim_sdk_util/nim_contactModel.dart';
+import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;

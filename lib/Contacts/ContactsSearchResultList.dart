@@ -6,11 +6,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nim_sdk_util/nim_contactModel.dart';
-import 'package:nim_sdk_util/nim_teamModel.dart';
-import 'package:nim_sdk_util/nim_searchInterface.dart';
+import 'package:nim_sdk_util/Model/nim_contactModel.dart';
+import 'package:nim_sdk_util/Model/nim_teamModel.dart';
+import 'package:nim_sdk_util/Model/nim_searchInterface.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'Model/ContactSearchDataSource.dart';
+import 'package:nim_sdk_util/Model/nim_modelView.dart';
 
 const double searchBarHeight = 70;
 
@@ -131,7 +132,7 @@ class ContactsSearchResultListWidget extends StatefulWidget {
 class ContactsSearchResultListState
     extends State<ContactsSearchResultListWidget> {
   MethodChannel _platform;
-  List<CJSearchInterface> _infos = [];
+  List _infos = [];
   @override
   void initState() {
     super.initState();
@@ -161,34 +162,14 @@ class ContactsSearchResultListState
   }
 
   // tile
-  Widget _buildTile(String avatarUrl, String showName, {String subTitle}) {
+  Widget _buildTile(NimSearchContactViewModel model) {
     double itemHeight = 72.1;
-    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
-
-    Widget tile = subTitle != null
-        ? ListTile(
-            leading: avatarUrl != null
-                ? Image.network(avatarUrl, width: 44, height: 44)
-                : avatar,
-            title: Text(showName),
-            subtitle: Text(subTitle),
-            onTap: () {
-              // 点击跳转到聊天
-            },
-          )
-        : ListTile(
-            leading: avatarUrl != null
-                ? Image.network(avatarUrl, width: 44, height: 44)
-                : avatar,
-            title: Text(showName),
-            onTap: () {
-              // 点击跳转到聊天
-            },
-          );
 
     return SizedBox(
       height: itemHeight,
-      child: tile,
+      child: model.cell((){
+        // 点击跳转到聊天
+      }),
     );
   }
 
@@ -202,18 +183,12 @@ class ContactsSearchResultListState
           height: 30,
           width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-          child: Text(widget.type == 0 ? '群聊' : '联系人'),
+          child: Text(widget.type == 0 ? '联系人' : '群聊'),
         );
       }
       // 因为在count的时候+1了，所以这里-1
-      CJSearchInterface model = _infos[idx - 1];
-      if (model is TeamInfo) {
-        return _buildTile(model.teamAvatar, model.teamName);
-      }
-
-      if (model is ContactInfo) {
-        return _buildTile(model.avatarUrlString, model.showName);
-      }
+      NimSearchContactViewModel model = _infos[idx - 1];
+      return _buildTile(model);
     }
 
     return SizedBox(

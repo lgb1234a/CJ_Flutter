@@ -8,10 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:flutter/services.dart';
 import 'Model/ContactSearchDataSource.dart';
-import 'package:nim_sdk_util/nim_contactModel.dart';
-import 'package:nim_sdk_util/nim_teamModel.dart';
-import 'package:nim_sdk_util/nim_searchInterface.dart';
+import 'package:nim_sdk_util/Model/nim_contactModel.dart';
+import 'package:nim_sdk_util/Model/nim_teamModel.dart';
 import 'dart:convert' as convert;
+import 'package:nim_sdk_util/Model/nim_modelView.dart';
 
 class ContactsSearchingWidget extends StatefulWidget {
   final Function cancel;
@@ -50,6 +50,9 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         await ContactSearchDataSource.searchContactBy(_searchController.text);
     List<TeamInfo> groups =
         await ContactSearchDataSource.searchGroupBy(_searchController.text);
+
+    // int count = groups.length;
+    // debugPrint('搜索出来的群聊数 --------  $count');
     setState(() {
       _contacts = contacts;
       _teams = groups;
@@ -107,30 +110,8 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // tile
-  Widget _buildTile(String avatarUrl, String showName, {String subTitle}) {
+  Widget _buildTile(NimSearchContactViewModel model) {
     double itemHeight = 72.1;
-    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
-
-    Widget tile = subTitle != null
-        ? ListTile(
-            leading: avatarUrl != null
-                ? Image.network(avatarUrl, width: 44, height: 44)
-                : avatar,
-            title: Text(showName),
-            subtitle: Text(subTitle),
-            onTap: () {
-              // 点击跳转到聊天
-            },
-          )
-        : ListTile(
-            leading: avatarUrl != null
-                ? Image.network(avatarUrl, width: 44, height: 44)
-                : avatar,
-            title: Text(showName),
-            onTap: () {
-              // 点击跳转到聊天
-            },
-          );
 
     return SizedBox(
       height: itemHeight,
@@ -141,7 +122,10 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
             height: 0.1,
             indent: 12,
           ),
-          tile
+          model.cell((){
+            // 点击跳转聊天
+            debugPrint('点击了cell！！！！！');
+          })
         ],
       ),
     );
@@ -213,16 +197,13 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // cell
-  Widget _buildItem(BuildContext context, CJSearchInterface model) {
+  Widget _buildItem(BuildContext context, NimSearchContactViewModel model) {
     double screenWidth = getSize(context).width;
-    if (model is ContactInfo) {
-      return _buildTile(model.avatarUrlString, model.showName);
+    
+    if(model != null) {
+      return _buildTile(model);
     }
-
-    if (model is TeamInfo) {
-      return _buildTile(model.teamAvatar, model.teamName);
-    }
-
+    
     return SizedBox(
       width: screenWidth,
       height: 300,
@@ -237,6 +218,12 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     double screenWidth = getSize(context).width;
     List<Widget> contacts =
         _contacts.map((f) => _buildItem(context, f)).toList();
+
+
+
+    // int count = _teams.length;
+    // debugPrint('群组数量 ---------  $count');
+    
     List<Widget> teams = _teams.map((f) => _buildItem(context, f)).toList();
 
     // 添加更多入口

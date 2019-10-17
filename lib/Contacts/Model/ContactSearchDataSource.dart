@@ -3,8 +3,8 @@
  *  通讯录搜索数据源
  */
 import 'package:nim_sdk_util/nim_sdk_util.dart';
-import 'package:nim_sdk_util/nim_contactModel.dart';
-import 'package:nim_sdk_util/nim_teamModel.dart';
+import 'package:nim_sdk_util/Model/nim_contactModel.dart';
+import 'package:nim_sdk_util/Model/nim_teamModel.dart';
 
 class ContactSearchDataSource {
   static bool isKeyContained(String key, String origin) {
