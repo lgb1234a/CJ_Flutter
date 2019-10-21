@@ -10,6 +10,7 @@
 #import "NIMInputMoreContainerView.h"
 #import "CJMoreContainerConfig.h"
 #import "CJCustomAttachmentDefines.h"
+#import "CJSessionInfoViewController.h"
 
 @interface CJSessionViewController ()
 
@@ -103,7 +104,9 @@
 - (void)enterSessionInfoPage:(id)sender
 {
     // TODO:跳转flutter 聊天信息页
-    
+    CJSessionInfoViewController *infoVC = [[CJSessionInfoViewController alloc] initWithSession:self.session];
+    [self.navigationController pushViewController:infoVC
+                                         animated:YES];
 }
 
 // 刷新消息

@@ -12,6 +12,7 @@ import 'package:cajian/Contacts/Contacts.dart';
 import 'package:cajian/Mine/Setting.dart';
 import 'package:cajian/Mine/MineInfo.dart';
 import 'package:cajian/Contacts/ContactsSearchResultList.dart';
+import 'Session/SessionInfo.dart';
 
 Widget _widgetForRoute(String openUrl) {
   debugPrint('FlutterViewController openUrl:' + openUrl);
@@ -33,6 +34,8 @@ Widget _widgetForRoute(String openUrl) {
       return new MineInfoWiget(cn);
     case 'contact_search_result':
       return new ContactsSearchResultListWidget(params, cn);
+    case 'session_info':
+      return new SessionInfoWidget(params);
     default:
       return MaterialApp(
         home: Scaffold(
