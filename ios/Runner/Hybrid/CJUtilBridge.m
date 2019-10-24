@@ -49,13 +49,13 @@ static FlutterResult _result = nil;
     CJUtilBridge.result = result;
     
     // flutter 调用
-    ZZLog(@"flutter call :%@", call.method);
+    ZZLog(@"!!!!!! flutter call :%@", call.method);
     NSArray *params = call.arguments;
     SEL callMethod = NSSelectorFromString(call.method);
     if([self respondsToSelector:callMethod]) {
         [self performSelector:callMethod withObject:params afterDelay:0];
     }else {
-        NSString *errorInfo = [NSString stringWithFormat:@"CJUtilBridge未实现%@", call.method];
+        NSString *errorInfo = [NSString stringWithFormat:@"!!!!!! CJUtilBridge未实现%@", call.method];
         NSAssert(NO, errorInfo);
     }
 }

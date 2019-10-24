@@ -14,9 +14,10 @@ class Session {
   String id;
   SessionType type;
 
-  factory Session(Map params) {
-    return Session._a(params['id'], params['type']);
-  }
-  
   Session._a(this.id, this.type);
+
+  // json -> model
+  Session.fromJson(Map json)
+      : id = json['id'],
+        type = json['type'];
 }

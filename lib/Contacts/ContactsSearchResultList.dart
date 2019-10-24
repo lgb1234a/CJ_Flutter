@@ -104,11 +104,11 @@ class ContactsSearchResultListWidget extends StatefulWidget {
 
   static CJSearchInterface _toModel(Map model, int type) {
     if (type == 0) {
-      return ContactInfo(model);
+      return ContactInfo.fromJson(model);
     }
 
     if (type == 1) {
-      return TeamInfo(model);
+      return TeamInfo.fromJson(model);
     }
 
     return null;

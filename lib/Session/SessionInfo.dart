@@ -4,6 +4,8 @@
  */
 import 'package:flutter/material.dart';
 import 'package:nim_sdk_util/Model/nim_session.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SessionInfoWidget extends StatefulWidget {
   final Map params;
@@ -20,7 +22,7 @@ class SessionInfoState extends State<SessionInfoWidget> {
   void initState() {
     super.initState();
 
-    _session = Session(widget.params);
+    _session = Session.fromJson(widget.params);
   }
 
   @override

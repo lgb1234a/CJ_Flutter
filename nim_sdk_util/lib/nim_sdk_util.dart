@@ -61,19 +61,19 @@ class NimSdkUtil {
   // 获取好友列表
   static Future<List<ContactInfo>>friends() async {
     List friends = await _channel.invokeMethod('friends:');
-    return friends.map((f)=>ContactInfo(f)).toList();
+    return friends.map((f)=>ContactInfo.fromJson(f)).toList();
   }
 
   // 群聊列表
   static Future<List<TeamInfo>>allMyTeams() async {
     List teams = await _channel.invokeMethod('allMyTeams:');
-    return teams.map((f)=>TeamInfo(f)).toList();
+    return teams.map((f)=>TeamInfo.fromJson(f)).toList();
   }
 
   // 群成员信息
   static Future<List<TeamMemberInfo>>teamMemberInfos(String teamId) async {
     List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
-    return teamMemberInfos.map((f)=>TeamMemberInfo(f)).toList();
+    return teamMemberInfos.map((f)=>TeamMemberInfo.fromJson(f)).toList();
   }
   //***-----TF------***
   // 当前用户信息

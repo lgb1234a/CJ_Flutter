@@ -69,15 +69,15 @@ class ContactsState extends State<ContactsWidget> {
     SuspensionUtil.sortListBySuspensionTag(_contacts);
 
     _contactFunctions.addAll([
-      ContactInfo({
+      ContactInfo.fromJson({
         'showName': '新的朋友',
         'avatarUrlString': 'images/icon_contact_newfriend@2x.png'
       }),
-      ContactInfo({
+      ContactInfo.fromJson({
         'showName': '群聊',
         'avatarUrlString': 'images/icon_contact_groupchat@2x.png'
       }),
-      ContactInfo({
+      ContactInfo.fromJson({
         'showName': '手机通讯录好友',
         'avatarUrlString': 'images/icon_contact_phone@2x.png'
       })

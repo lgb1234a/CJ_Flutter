@@ -35,14 +35,14 @@
         
         __weak typeof(self) wself = self;
         [_mc setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
-            ZZLog(@"flutter call :%@", call.method);
+            ZZLog(@"!!!!!! flutter call :%@", call.method);
             SEL callMethod = NSSelectorFromString(call.method);
             if([wself respondsToSelector:callMethod]) {
                 [wself performSelector:callMethod
                             withObject:call.arguments
                             afterDelay:0];
             }else {
-                ZZLog(@"%@未实现%@", NSStringFromClass(wself.class), call.method);
+                ZZLog(@"!!!!!! %@未实现%@", NSStringFromClass(wself.class), call.method);
             }
         }];
         
@@ -101,7 +101,7 @@
 
 - (void)dealloc
 {
-    ZZLog(@"%@ - dealloced!", NSStringFromClass(self.class));
+    ZZLog(@"!!!!!! %@ - dealloced!", NSStringFromClass(self.class));
 }
 
 @end

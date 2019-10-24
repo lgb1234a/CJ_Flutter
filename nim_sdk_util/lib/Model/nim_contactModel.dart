@@ -17,15 +17,13 @@ class ContactInfo extends ISuspensionBean
   String tagIndex;
   String namePinyin;
 
-  factory ContactInfo(Map info) {
-    return ContactInfo._a(info['showName'], info['avatarUrlString'],
-        infoId: info['infoId'],
-        tagIndex: info['tagIndex'],
-        namePinyin: info['namePinyin']);
-  }
-
-  ContactInfo._a(this.showName, this.avatarUrlString,
-      {this.infoId, this.tagIndex, this.namePinyin});
+  // json -> model
+  ContactInfo.fromJson(Map json)
+      : showName = json['showName'],
+        avatarUrlString = json['avatarUrlString'],
+        infoId = json['infoId'],
+        tagIndex = json['tagIndex'],
+        namePinyin = json['namePinyin'];
 
   @override
   String getSuspensionTag() => tagIndex;
@@ -60,19 +58,18 @@ class ContactInfo extends ISuspensionBean
     }
 
     Widget title = titleStart == null
-                ? Text(showName)
-                : Text.rich(TextSpan(
-                    text: titleStart == 0 ? '' : showName.substring(titleStart),
-                    children: [
-                      TextSpan(
-                          text: keyword,
-                          style: TextStyle(color: Colors.lightGreen)),
-                      TextSpan(
-                          text: showName.length > titleStart + keyword.length
-                              ? showName.substring(titleStart + keyword.length)
-                              : '')
-                    ],
-                  ));
+        ? Text(showName)
+        : Text.rich(TextSpan(
+            text: titleStart == 0 ? '' : showName.substring(titleStart),
+            children: [
+              TextSpan(
+                  text: keyword, style: TextStyle(color: Colors.lightGreen)),
+              TextSpan(
+                  text: showName.length > titleStart + keyword.length
+                      ? showName.substring(titleStart + keyword.length)
+                      : '')
+            ],
+          ));
 
     Widget tile = subTitle != null
         ? ListTile(

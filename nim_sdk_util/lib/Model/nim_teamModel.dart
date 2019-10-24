@@ -12,11 +12,13 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
   String teamName;
   String teamAvatar;
 
-  factory TeamInfo(Map info) {
-    return TeamInfo._a(info['teamId'], info['teamName'], info['teamAvatar']);
-  }
-
   TeamInfo._a(this.teamId, this.teamName, this.teamAvatar);
+
+  // json -> model
+  TeamInfo.fromJson(Map json)
+      : teamId = json['teamId'],
+        teamName = json['teamName'],
+        teamAvatar = json['teamAvatar'];
 
   @override
   String keyword;
@@ -42,19 +44,18 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
     }
 
     Widget title = titleStart == null
-                ? Text(teamName)
-                : Text.rich(TextSpan(
-                    text: titleStart == 0 ? '' : teamName.substring(titleStart),
-                    children: [
-                      TextSpan(
-                          text: keyword,
-                          style: TextStyle(color: Colors.lightGreen)),
-                      TextSpan(
-                          text: teamName.length > titleStart + keyword.length
-                              ? teamName.substring(titleStart + keyword.length)
-                              : '')
-                    ],
-                  ));
+        ? Text(teamName)
+        : Text.rich(TextSpan(
+            text: titleStart == 0 ? '' : teamName.substring(titleStart),
+            children: [
+              TextSpan(
+                  text: keyword, style: TextStyle(color: Colors.lightGreen)),
+              TextSpan(
+                  text: teamName.length > titleStart + keyword.length
+                      ? teamName.substring(titleStart + keyword.length)
+                      : '')
+            ],
+          ));
 
     Widget tile = subTitle != null
         ? ListTile(
@@ -99,21 +100,20 @@ class TeamMemberInfo implements CJSearchInterface {
   double createTime;
   String customInfo;
 
-  factory TeamMemberInfo(Map info) {
-    return TeamMemberInfo._a(
-        info['teamId'],
-        info['userId'],
-        info['invitor'],
-        info['inviterAccid'],
-        info['type'],
-        info['nickName'],
-        info['isMuted'],
-        info['createTime'],
-        info['customInfo']);
-  }
-
   TeamMemberInfo._a(this.teamId, this.userId, this.invitor, this.inviterAccid,
       this.type, this.nickName, this.isMuted, this.createTime, this.customInfo);
+
+  // json -> model
+  TeamMemberInfo.fromJson(Map json)
+      : teamId = json['teamId'],
+        userId = json['userId'],
+        invitor = json['invitor'],
+        inviterAccid = json['inviterAccid'],
+        type = json['type'],
+        nickName = json['nickName'],
+        isMuted = json['isMuted'],
+        createTime = json['createTime'],
+        customInfo = json['customInfo'];
 
   @override
   String keyword;
