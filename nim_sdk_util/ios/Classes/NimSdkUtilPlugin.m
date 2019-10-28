@@ -123,14 +123,19 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 {
     FlutterResult result = params.lastObject;
     NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
-    NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:accid option:nil];
-    NIMUser *me = [[NIMSDK sharedSDK].userManager userInfo:accid];
-    NSDictionary *cjExt = JsonStringDecode(me.userInfo.ext);
+    NIMUserInfo *user = [[NIMSDK sharedSDK].userManager userInfo:accid].userInfo;
+    NSDictionary *cjExt = JsonStringDecode(user.ext);
     result(@{
-            @"name": info.showName,
-            @"avatarUrl": info.avatarUrlString,
-            @"cajian_no": cjExt[@"cajian_id"]?:@""
-            });
+             @"showName": user.nickName ? : @"",
+             @"avatarUrlString": user.avatarUrl ? : @"",
+             @"thumbAvatarUrl" : user.thumbAvatarUrl ? : @"",
+             @"sign" : user.sign ? : @"",
+             @"gender": @(user.gender),
+             @"email": user.email ? : @"",
+             @"birth": user.birth ? : @"",
+             @"mobile": user.mobile ? : @"",
+             @"cajianNo": cjExt[@"cajian_id"]?:@"",
+             });
 }
 
 // 返回群信息
@@ -139,10 +144,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     FlutterResult result = params.lastObject;
     NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:params.firstObject
                                                option:nil];
+    
     result(@{
-            @"show_name": info.showName,
-            @"avatar_url_string": info.avatarUrlString?: [NSNull new],
-            // @"avatar_image": info.avatarImage?: [NSNull new]
+            @"showName": info.showName,
+            @"avatarUrlString": info.avatarUrlString?: [NSNull new],
+             @"avatarImage": [FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(info.avatarImage)]
             });
 }
 
@@ -152,10 +158,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     FlutterResult result = params.lastObject;
     NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:params.firstObject
                                                option:nil];
+    
     result(@{
-            @"show_name": info.showName,
-            @"avatar_url_string": info.avatarUrlString?: [NSNull new],
-            // @"avatar_image": info.avatarImage?: [NSNull new]
+            @"showName": info.showName,
+            @"avatarUrlString": info.avatarUrlString?: [NSNull new],
+             @"avatarImage": [FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(info.avatarImage)]
             });
 }
 
@@ -221,26 +228,6 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         // 没有成员或者error了
         result(@[]);
     }];
-}
-//***-----TF------***
-// 返回当前登录用户信息
-+ (void)currentUser:(NSArray *)params
-{
-    FlutterResult result = params.lastObject;
-    NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
-    NIMUserInfo *user = [[NIMSDK sharedSDK].userManager userInfo:accid].userInfo;
-    NSDictionary *cjExt = JsonStringDecode(user.ext);
-    result(@{
-             @"nickName": user.nickName ? : @"",
-             @"avatarUrl": user.avatarUrl ? : @"",
-             @"thumbAvatarUrl" : user.thumbAvatarUrl ? : @"",
-             @"sign" : user.sign ? : @"",
-             @"gender": @(user.gender),
-             @"email": user.email ? : @"",
-             @"birth": user.birth ? : @"",
-             @"mobile": user.mobile ? : @"",
-             @"ext": cjExt[@"cajian_id"]?:@"",
-             });
 }
 
 @end

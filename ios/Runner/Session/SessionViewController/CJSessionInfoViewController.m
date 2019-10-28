@@ -19,7 +19,7 @@
 - (instancetype)initWithSession:(NIMSession *)session
 {
     _mSession = session;
-    NSString *sessionInfoOpenUrl = [NSString stringWithFormat:@"{\"route\":\"session_info\",\"channel_name\":\"com.zqtd.cajian/session_info\",\"params\":{\"id\":\"%@\",\"type\":\"%ld\"}}", session.sessionId, session.sessionType];
+    NSString *sessionInfoOpenUrl = [NSString stringWithFormat:@"{\"route\":\"session_info\",\"channel_name\":\"com.zqtd.cajian/session_info\",\"params\":{\"id\":\"%@\",\"type\":%ld}}", session.sessionId, session.sessionType];
     self = [super initWithFlutterOpenUrl:sessionInfoOpenUrl];
     if (self) {
     }

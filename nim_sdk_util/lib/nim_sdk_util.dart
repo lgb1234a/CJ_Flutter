@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'Model/nim_contactModel.dart';
 import 'Model/nim_teamModel.dart';
+import 'Model/nim_userInfo.dart';
 
 class NimSdkUtil {
   static const MethodChannel _channel =
@@ -41,21 +42,21 @@ class NimSdkUtil {
   }
 
   // 当前用户信息
-  static Future<dynamic>currentUserInfo() async {
+  static Future<CurrentUserInfo>currentUserInfo() async {
     dynamic info = await _channel.invokeMethod('currentUserInfo:');
-    return info;
+    return CurrentUserInfo.fromJson(info);
   }
 
   // 获取群信息
-  static Future<dynamic>teamInfoById(String teamId) async {
+  static Future<TeamInfoFromId>teamInfoById(String teamId) async {
     dynamic teamInfo = await _channel.invokeMethod('teamInfo:', [teamId]);
-    return teamInfo;
+    return TeamInfoFromId.fromJson(teamInfo);
   }
 
   // 获取用户信息
-  static Future<dynamic>userInfoById(String sessionId) async {
+  static Future<UserInfo>userInfoById(String sessionId) async {
     dynamic userInfo = await _channel.invokeMethod('userInfo:', [sessionId]);
-    return userInfo;
+    return UserInfo.fromJson(userInfo);
   }
 
   // 获取好友列表
@@ -75,11 +76,4 @@ class NimSdkUtil {
     List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos.map((f)=>TeamMemberInfo.fromJson(f)).toList();
   }
-  //***-----TF------***
-  // 当前用户信息
-  static Future<dynamic>currentUser() async {
-    dynamic info = await _channel.invokeMethod('currentUser:');
-    return info;
-  }
-
 }

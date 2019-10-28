@@ -23,18 +23,25 @@ Widget _widgetForRoute(String openUrl) {
   Map params = initParams['params'];
   switch (route) {
     case 'login_entrance':
+    // 登录入口
       return new LoginEntrance(channelName: cn);
     case 'mine':
+    // 我的
       return new MineWidget(cn);
     case 'contacts':
+    // 通讯录页
       return new ContactsWidget(params, cn);
     case 'setting':
+    // 设置页
       return new SettingWidget(cn);
     case 'mineInfo':
+    // 我的信息页
       return new MineInfoWiget(cn);
     case 'contact_search_result':
+    // 搜索通讯录结果页
       return new ContactsSearchResultListWidget(params, cn);
     case 'session_info':
+    // 会话信息页
       return new SessionInfoWidget(params);
     default:
       return MaterialApp(

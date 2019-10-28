@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:convert' as convert;
 import 'package:nim_sdk_util/nim_sdk_util.dart';
+import 'package:nim_sdk_util/Model/nim_userInfo.dart';
 
 enum MineCellType {
   Profile, // 用户信息
@@ -27,8 +28,8 @@ class MineModel {
   MineModel(this.type, this.title, this.icon, this.onTap,
       {this.tipIcon, this.needSeparatorLine = false});
 
-  Future<dynamic> mineInfo() async {
-    dynamic info = await NimSdkUtil.currentUserInfo();
+  Future<CurrentUserInfo> mineInfo() async {
+    CurrentUserInfo info = await NimSdkUtil.currentUserInfo();
     return info;
   }
 }

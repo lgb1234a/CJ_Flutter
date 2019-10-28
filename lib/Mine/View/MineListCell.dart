@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/Model/MineModel.dart';
+import 'package:nim_sdk_util/Model/nim_userInfo.dart';
 
 class MineListCellOthers extends StatelessWidget {
   final MineModel model;
@@ -92,11 +93,11 @@ class MineListProfileState extends State<MineListProfileHeader> {
   }
 
   fetchInfo() async {
-    dynamic info = await widget.model.mineInfo();
+    CurrentUserInfo info = await widget.model.mineInfo();
     setState(() {
-      _avatarUrl = info['avatarUrl'];
-      _showName = info['name'];
-      _cajianNo = info['cajian_no'];
+      _avatarUrl = info.avatarUrlString;
+      _showName = info.showName;
+      _cajianNo = info.cajianNo;
     });
   }
 

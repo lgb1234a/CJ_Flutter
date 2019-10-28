@@ -6,6 +6,18 @@
 import 'nim_searchInterface.dart';
 import 'nim_modelView.dart';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
+
+class TeamInfoFromId {
+  String showName;
+  String avatarUrlString;
+  Uint8List avatarImage;
+
+  TeamInfoFromId.fromJson(Map json)
+      : showName = json['showName'],
+        avatarUrlString = json['avatarUrlString'],
+        avatarImage = json['avatarImage'];
+}
 
 class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
   String teamId;

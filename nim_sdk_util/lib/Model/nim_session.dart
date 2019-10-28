@@ -4,15 +4,15 @@
  */
 
 enum SessionType {
-  SessionTypeP2P,
-  SessionTypeTeam,
-  SessionTypeChatroom,
-  SessionTypeSuperTeam
+  P2P,
+  Team,
+  Chatroom,
+  SuperTeam
 }
 
 class Session {
   String id;
-  SessionType type;
+  int type;
 
   Session._a(this.id, this.type);
 
