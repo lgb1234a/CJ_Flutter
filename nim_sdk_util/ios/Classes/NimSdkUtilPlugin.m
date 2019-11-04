@@ -230,4 +230,59 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+// 获取会话置顶状态
++ (void)isStickedOnTop:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSString *sessionId = params.firstObject;
+    NSNumber *type = params[1];
+    NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:[NIMSession session:sessionId type:type.integerValue]];
+    BOOL isTop = [self recentSessionIsMark:recent
+                                      type:1];
+    
+    result(@(isTop));
+}
+
+// 获取会话是否开启消息提醒
++ (void)isNotifyForNewMsg:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSString *sessionId = params.firstObject;
+    BOOL notifyForNewMsg = [[NIMSDK sharedSDK].userManager notifyForNewMsg:sessionId];
+    
+    result(@(notifyForNewMsg));
+}
+
+#pragma mark ----- private --------
++ (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
+                       type:(NSInteger)type
+{
+    NSDictionary *localExt = recent.localExt;
+    NSString *key = [self keyForMarkType:type];
+    return [localExt[key] boolValue] == YES;
+}
+
+/*
+ // 最近会话本地扩展标记类型
+ typedef NS_ENUM(NSInteger, NTESRecentSessionMarkType){
+     // @ 标记
+     NTESRecentSessionMarkTypeAt,
+     // 置顶标记
+     NTESRecentSessionMarkTypeTop,
+ };
+ */
++ (NSString *)keyForMarkType:(NSInteger)type
+{
+    static NSDictionary *keys;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        keys = @{
+                 @(0) : @"NTESRecentSessionAtMark",
+                 @(1) : @"NTESRecentSessionTopMark"
+                 };
+    });
+    return [keys objectForKey:@(type)];
+}
+
+
 @end

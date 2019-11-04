@@ -8,6 +8,7 @@
 
 #import "CJUtilBridge.h"
 #import <MBProgressHUD.h>
+#import "CJContactSelectViewController.h"
 
 static FlutterMethodCall *_call = nil;
 static FlutterResult _result = nil;
@@ -96,6 +97,8 @@ static inline UIWindow *getkeyWindow()
                                                         object:nil
                                                       userInfo:userInfo];
 }
+
+//+ (void)
 
 
 @end

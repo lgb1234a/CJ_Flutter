@@ -76,4 +76,16 @@ class NimSdkUtil {
     List teamMemberInfos = await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos.map((f)=>TeamMemberInfo.fromJson(f)).toList();
   }
+
+  // 获取会话置顶状态
+  static Future<bool> isStickedOnTop(String sessionId, int sessionType) async {
+    bool isTop = await _channel.invokeMethod('isStickedOnTop', [sessionId, sessionType]);
+    return isTop;
+  }
+
+  // 获取会话是否开启消息提醒
+  static Future<bool> isNotifyForNewMsg(String sessionId) async {
+    bool isTop = await _channel.invokeMethod('isNotifyForNewMsg', [sessionId]);
+    return isTop;
+  }
 }

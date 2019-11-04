@@ -42,7 +42,7 @@ Widget _widgetForRoute(String openUrl) {
       return new ContactsSearchResultListWidget(params, cn);
     case 'session_info':
     // 会话信息页
-      return new SessionInfoWidget(params);
+      return new SessionInfoWidget(params, cn);
     default:
       return MaterialApp(
         home: Scaffold(
