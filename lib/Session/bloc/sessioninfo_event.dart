@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:nim_sdk_util/Model/nim_session.dart';
 
 @immutable
 abstract class SessioninfoEvent extends Equatable {
@@ -10,34 +11,30 @@ abstract class SessioninfoEvent extends Equatable {
 }
 
 /* p2p */
-
-class FetchUserAvatar extends SessioninfoEvent {
-  final String userId;
-  FetchUserAvatar({@required this.userId});
+class Fetch extends SessioninfoEvent {
+  final Session session;
+  Fetch({@required this.session});
 }
 
-class TappedUserAvatar extends SessioninfoEvent {}
+class TappedUserAvatar extends SessioninfoEvent {
+  final String userId; // 点对点聊天，对方的id
+  TappedUserAvatar({@required this.userId});
+}
 
 class CreateGroupSession extends SessioninfoEvent {
   final String userId; // 点对点聊天，对方的id
   CreateGroupSession({@required this.userId});
 }
 
-class FetchNotifyStatus extends SessioninfoEvent {
-  final String sessionId;
-  FetchNotifyStatus({@required this.sessionId});
+class SwitchNotifyStatus extends SessioninfoEvent {
+  final bool newValue;
+  SwitchNotifyStatus({@required this.newValue});
 }
 
-class SwitchNotifyStatus extends SessioninfoEvent {}
-
-class FetchIsStickOnTopStatus extends SessioninfoEvent {
-  final String sessionId;
-  final int sessionType;
-  FetchIsStickOnTopStatus(
-      {@required this.sessionId, @required this.sessionType});
+class SwitchStickOnTopStatus extends SessioninfoEvent {
+  final bool newValue;
+  SwitchStickOnTopStatus({@required this.newValue});
 }
-
-class SwitchStickOnTopStatus extends SessioninfoEvent {}
 
 class ClearChatHistory extends SessioninfoEvent {}
 

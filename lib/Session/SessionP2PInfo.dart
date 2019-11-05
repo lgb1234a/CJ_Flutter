@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/bloc.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
+import 'package:flutter/cupertino.dart';
 
 class SessionP2PInfo extends StatefulWidget {
   final Session _session;
@@ -38,7 +39,13 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
       width: 70,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[avatar, Text(showName)],
+        children: <Widget>[
+          avatar,
+          Text(
+            showName,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
       ),
     );
   }
@@ -46,8 +53,9 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
   // p2p list cell
   Widget _buildItem(BuildContext context, int idx, dynamic state) {
     double screentW = getSize(context).width;
-    if (idx == 0) {
-      if (state is UserInfoLoaded) {
+    
+    if (state is P2PSessionInfoLoaded) {
+      if (idx == 0) {
         // 用户信息区块
         UserInfo info = state.info;
         return Container(
@@ -57,7 +65,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
             children: <Widget>[
               GestureDetector(
                 child: _buildAvatar(info.avatarUrlString, info.showName),
-                onTap: () => _bloc.add(TappedUserAvatar()),
+                onTap: () => _bloc.add(TappedUserAvatar(userId: widget._session.id)),
               ),
               GestureDetector(
                 child:
@@ -69,11 +77,53 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
           ),
         );
       }
+
+      if (idx == 1) {
+        return Container(
+          width: screentW,
+          height: 40,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('消息提醒'),
+              CupertinoSwitch(
+                value: state.notifyStatus,
+                onChanged: (bool newValue) =>
+                    _bloc.add(SwitchNotifyStatus(newValue: newValue)),
+              ),
+            ],
+          ),
+        );
+      }
+
+      if (idx == 2) {
+        return Container(
+          width: screentW,
+          height: 40,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('聊天置顶'),
+              CupertinoSwitch(
+                value: state.isStickedOnTop,
+                onChanged: (bool newValue) =>
+                    _bloc.add(SwitchStickOnTopStatus(newValue: newValue)),
+              ),
+            ],
+          ),
+        );
+      }
     }
 
-    if (state is SessionNotifyStatusLoaded) {}
-
-    if (state is SessionIsStickedOnTopLoaded) {}
+    if (idx == 3) {
+      // 清空聊天记录按钮
+      return CupertinoButton.filled(
+        child: Text('清空聊天记录'),
+        onPressed: () => _bloc.add(ClearChatHistory()),
+      );
+    }
 
     return Container();
   }
@@ -81,18 +131,22 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
   @override
   Widget build(BuildContext context) {
     _bloc = BlocProvider.of<SessioninfoBloc>(context);
-    
-    return Scaffold(body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
-      builder: (context, state) {
-        return ListView.separated(
-          itemCount: 4,
-          itemBuilder: (context, idx) => _buildItem(context, idx, state),
-          separatorBuilder: (context, idx) => Container(
-            // color: Color(0xffe5e5e5),
-            height: 9,
-          ),
-        );
-      },
-    ));
+    double top = topPadding(context);
+    return Scaffold(
+        body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
+          condition: (previousState, state){
+            return true;
+          },
+          builder: (context, state) {
+            return ListView.separated(
+              padding: EdgeInsets.fromLTRB(12, top + 12, 12, 12),
+              itemCount: 4,
+              itemBuilder: (context, idx) => _buildItem(context, idx, state),
+              separatorBuilder: (context, idx) => Container(
+                height: 9,
+              ),
+            );
+          },
+        ));
   }
 }

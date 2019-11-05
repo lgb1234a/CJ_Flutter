@@ -1,3 +1,8 @@
+/**
+ * Created by chenyn 2019-10-27
+ * 聊天信息页的bloc信息流处理类
+ */
+
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
@@ -13,31 +18,64 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   @override
   SessioninfoState get initialState => InitialSessioninfoState();
 
+  P2PSessionInfoLoaded _previousState;
+
   @override
   Stream<SessioninfoState> mapEventToState(
     SessioninfoEvent event,
   ) async* {
-    if(event is FetchUserAvatar) {
-      UserInfo info = await _fetchUserInfo(event.userId);
-      yield UserInfoLoaded(info: info);
+    if (event is Fetch) {
+      // 加载所需的数据
+      UserInfo info = await _fetchUserInfo(event.session.id);
+      bool isStickOnTop =
+          await _fetchIsStickOnTop(event.session.id, event.session.type);
+      bool notifyForNewMsg = await _fetchIsNotifyForNewMsg(event.session.id);
+
+      _previousState = P2PSessionInfoLoaded(
+          info: info,
+          isStickedOnTop: isStickOnTop,
+          notifyStatus: notifyForNewMsg);
+      yield _previousState;
     }
 
-    if(event is FetchIsStickOnTopStatus) {
-      bool isStickOnTop = await _fetchIsStickOnTop(event.sessionId, event.sessionType);
-      yield SessionIsStickedOnTopLoaded(isStickedOnTop: isStickOnTop);
+    if (event is SwitchStickOnTopStatus) {
+      /* 切换置顶开关 */
+      bool newValue = event.newValue;
+
+      _previousState = P2PSessionInfoLoaded(
+          info: _previousState.info,
+          isStickedOnTop: newValue,
+          notifyStatus: _previousState.notifyStatus);
+      yield _previousState;
     }
 
+    if (event is SwitchNotifyStatus) {
+      /* 切换消息通知开关 */
+      bool newValue = event.newValue;
 
-    if(event is FetchNotifyStatus) {
-      bool notifyForNewMsg = await _fetchIsNotifyForNewMsg(event.sessionId);
-      yield SessionNotifyStatusLoaded(notifyStatus: notifyForNewMsg);
+      _previousState = P2PSessionInfoLoaded(
+          info: _previousState.info,
+          isStickedOnTop: _previousState.isStickedOnTop,
+          notifyStatus: newValue);
+      yield _previousState;
     }
 
-    if(event is CreateGroupSession) {
+    if (event is TappedUserAvatar) {
+      String userId = event.userId;
+      /* 跳转个人信息页 */
+      debugPrint('跳个人信息页：$userId');
+    }
+
+    if (event is CreateGroupSession) {
       /* 创建群聊 */
       String userId = event.userId;
       /* 调用native，拉起选择联系人组件 */
-      
+      debugPrint('拉起选择联系人');
+    }
+
+    if (event is ClearChatHistory) {
+      /* 清空聊天记录 */
+
     }
   }
 

@@ -13,6 +13,7 @@ import 'package:cajian/Mine/Setting.dart';
 import 'package:cajian/Mine/MineInfo.dart';
 import 'package:cajian/Contacts/ContactsSearchResultList.dart';
 import 'Session/SessionInfo.dart';
+import 'package:bloc/bloc.dart';
 
 Widget _widgetForRoute(String openUrl) {
   debugPrint('FlutterViewController openUrl:' + openUrl);
@@ -52,6 +53,28 @@ Widget _widgetForRoute(String openUrl) {
   }
 }
 
+/** 检测擦肩bloc数据流向 */
+class CJBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print('$error, $stacktrace');
+  }
+}
+
 void main() {
+  BlocSupervisor.delegate = CJBlocDelegate();
   runApp(_widgetForRoute(ui.window.defaultRouteName));
 }
