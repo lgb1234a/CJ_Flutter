@@ -7,6 +7,8 @@
 //  聊天信息页
 
 #import "CJSessionInfoViewController.h"
+#import "CJContactSelectViewController.h"
+#import "CJSessionViewController.h"
 
 @interface CJSessionInfoViewController ()
 
@@ -40,6 +42,62 @@
             self.title = [NSString stringWithFormat:@"%@(%ld)", info.showName, team.memberNumber];
         }];
     }
+}
+
+/// 创建群聊
+/// @param params 群成员ids
+- (void)createGroupChat:(NSArray *)params
+{
+    
+    NIMCreateTeamOption *option = [[NIMCreateTeamOption alloc] init];
+//    option.name       = @"";
+    option.type       = NIMTeamTypeAdvanced;
+    option.joinMode   = NIMTeamJoinModeNoAuth;
+    option.beInviteMode = NIMTeamBeInviteModeNoAuth;
+    option.inviteMode   = NIMTeamInviteModeAll;
+    
+    NIMContactFriendSelectConfig *config = [NIMContactFriendSelectConfig new];
+    config.needMutiSelected = YES;
+    config.alreadySelectedMemberId = params;
+    
+    CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
+    
+    __weak typeof(nav) weakNav = nav;
+    selectorVc.finished = ^(NSArray <NSString *>*ids) {
+        NSMutableArray *names = @[[[NIMKit sharedKit] infoByUser:[NIMSDK sharedSDK].loginManager.currentAccount option:nil].showName].mutableCopy;
+        // 获取成员名字
+        [ids enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [names addObject:[[NIMKit sharedKit] infoByUser:obj option:nil].showName];
+        }];
+        
+        option.name = [names componentsJoinedByString:@"、"];
+        [[NIMSDK sharedSDK].teamManager createTeam:option
+                                             users:ids
+                                        completion:^(NSError * __nullable error, NSString * __nullable teamId, NSArray<NSString *> * __nullable failedUserIds){
+            // 关闭选择器
+            [weakNav dismissViewControllerAnimated:YES completion:^{
+                if(error) {
+                    [UIViewController showError:error.description];
+                }else {
+                    [self pushTeamViewController:teamId];
+                }
+            }];
+        }];
+    };
+    
+    [self.navigationController presentViewController:nav
+                                            animated:YES
+                                          completion:nil];
+}
+
+#pragma mark -------- private ---------
+
+- (void)pushTeamViewController:(NSString *)teamId
+{
+    NIMSession *session = [NIMSession session:teamId type:NIMSessionTypeTeam];
+    CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
+    [self.navigationController pushViewController:sessionVC animated:YES];
 }
 
 @end

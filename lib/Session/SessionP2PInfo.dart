@@ -53,7 +53,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
   // p2p list cell
   Widget _buildItem(BuildContext context, int idx, dynamic state) {
     double screentW = getSize(context).width;
-    
+
     if (state is P2PSessionInfoLoaded) {
       if (idx == 0) {
         // 用户信息区块
@@ -65,7 +65,8 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
             children: <Widget>[
               GestureDetector(
                 child: _buildAvatar(info.avatarUrlString, info.showName),
-                onTap: () => _bloc.add(TappedUserAvatar(userId: widget._session.id)),
+                onTap: () =>
+                    _bloc.add(TappedUserAvatar(userId: widget._session.id)),
               ),
               GestureDetector(
                 child:
@@ -90,7 +91,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               CupertinoSwitch(
                 value: state.notifyStatus,
                 onChanged: (bool newValue) =>
-                    _bloc.add(SwitchNotifyStatus(newValue: newValue)),
+                    _bloc.add(SwitchNotifyStatus(session: widget._session, newValue: newValue)),
               ),
             ],
           ),
@@ -109,7 +110,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               CupertinoSwitch(
                 value: state.isStickedOnTop,
                 onChanged: (bool newValue) =>
-                    _bloc.add(SwitchStickOnTopStatus(newValue: newValue)),
+                    _bloc.add(SwitchStickOnTopStatus(session: widget._session, newValue: newValue)),
               ),
             ],
           ),
@@ -121,7 +122,8 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
       // 清空聊天记录按钮
       return CupertinoButton.filled(
         child: Text('清空聊天记录'),
-        onPressed: () => _bloc.add(ClearChatHistory()),
+        onPressed: () =>
+            _bloc.add(ClearChatHistory(session: widget._session)),
       );
     }
 
@@ -134,19 +136,19 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
     double top = topPadding(context);
     return Scaffold(
         body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
-          condition: (previousState, state){
-            return true;
-          },
-          builder: (context, state) {
-            return ListView.separated(
-              padding: EdgeInsets.fromLTRB(12, top + 12, 12, 12),
-              itemCount: 4,
-              itemBuilder: (context, idx) => _buildItem(context, idx, state),
-              separatorBuilder: (context, idx) => Container(
-                height: 9,
-              ),
-            );
-          },
-        ));
+      condition: (previousState, state) {
+        return true;
+      },
+      builder: (context, state) {
+        return ListView.separated(
+          padding: EdgeInsets.fromLTRB(12, top + 12, 12, 12),
+          itemCount: 4,
+          itemBuilder: (context, idx) => _buildItem(context, idx, state),
+          separatorBuilder: (context, idx) => Container(
+            height: 9,
+          ),
+        );
+      },
+    ));
   }
 }

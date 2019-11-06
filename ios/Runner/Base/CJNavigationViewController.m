@@ -19,6 +19,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (UIModalPresentationStyle)modalPresentationStyle
+{
+    return UIModalPresentationFullScreen;
+}
+
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {

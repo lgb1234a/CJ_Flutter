@@ -24,16 +24,39 @@
 }
 
 #pragma mark - Override
-- (void)onSelectedAvatar:(NSString *)userId
+- (void)onSelectedAvatar:(NIMRecentSession *)recentSession
              atIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO:用户信息页
+    CJSessionViewController *vc = [[CJSessionViewController alloc] initWithSession:recentSession.session];
+    [self.navigationController pushViewController:vc animated:YES];
 };
 
 - (void)onSelectedRecent:(NIMRecentSession *)recentSession atIndexPath:(NSIndexPath *)indexPath
 {
     CJSessionViewController *vc = [[CJSessionViewController alloc] initWithSession:recentSession.session];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (NSMutableArray *)customSortRecents:(NSMutableArray *)recentSessions
+{
+    [recentSessions sortUsingComparator:^NSComparisonResult(NIMRecentSession *obj1, NIMRecentSession *obj2) {
+        NSInteger score1 = [NTESSessionUtil recentSessionIsMark:obj1 type:NTESRecentSessionMarkTypeTop]? 10 : 0;
+        NSInteger score2 = [NTESSessionUtil recentSessionIsMark:obj2 type:NTESRecentSessionMarkTypeTop]? 10 : 0;
+        if (obj1.lastMessage.timestamp > obj2.lastMessage.timestamp)
+        {
+            score1 += 1;
+        }
+        else if (obj1.lastMessage.timestamp < obj2.lastMessage.timestamp)
+        {
+            score2 += 1;
+        }
+        if (score1 == score2)
+        {
+            return NSOrderedSame;
+        }
+        return score1 > score2? NSOrderedAscending : NSOrderedDescending;
+    }];
+    return recentSessions;
 }
 
 - (NSAttributedString *)contentForRecentSession:(NIMRecentSession *)recent

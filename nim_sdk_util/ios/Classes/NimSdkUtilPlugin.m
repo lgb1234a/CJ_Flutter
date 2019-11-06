@@ -253,6 +253,64 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     result(@(notifyForNewMsg));
 }
 
+// 清空聊天记录
++ (void)clearChatHistory:(NSArray *)params
+{
+    NSString *sessionId = params.firstObject;
+    NSNumber *type = params[1];
+    NIMSession *session = [NIMSession session:sessionId
+                                         type:type.integerValue];
+    
+    [[NIMSDK sharedSDK].conversationManager deleteAllmessagesInSession:session
+                                                                option:nil];
+}
+
+// 置顶聊天
++ (void)stickSessiOnTop:(NSArray *)params
+{
+    NSString *sessionId = params.firstObject;
+    NSNumber *type = params[1];
+    BOOL isTop = [params[2] boolValue];
+    
+    NIMSession *session = [NIMSession session:sessionId
+                                         type:type.integerValue];
+    if(isTop) {
+        [self addRecentSessionMark:session type:1];
+    }else {
+        [self removeRecentSessionMark:session type:1];
+    }
+}
+
+// 开关消息通知
++ (void)changeNotifyStatus:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSString *sessionId = params.firstObject;
+    NSNumber *type = params[1];
+    BOOL needMsgNotify = [params[2] boolValue];
+    
+    void(^errorBlock)(NSError *) = ^(NSError * _Nullable error){
+        if(error) {
+            [UIViewController showError:@"修改失败！"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
+    };
+    
+    if(type.integerValue == 0) {
+        [[NIMSDK sharedSDK].userManager updateNotifyState:needMsgNotify
+                                                  forUser:sessionId
+                                               completion:errorBlock];
+    }else {
+        NIMTeamNotifyState state = needMsgNotify? NIMTeamNotifyStateAll : NIMTeamNotifyStateNone;
+        [[NIMSDK sharedSDK].teamManager updateNotifyState:state
+                                                   inTeam:sessionId
+                                               completion:errorBlock];
+    }
+    
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type
@@ -282,6 +340,35 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                  };
     });
     return [keys objectForKey:@(type)];
+}
+
+
++ (void)addRecentSessionMark:(NIMSession *)session
+                        type:(NSInteger)type
+{
+    NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:session];
+    if (recent)
+    {
+        NSDictionary *localExt = recent.localExt?:@{};
+        NSMutableDictionary *dict = [localExt mutableCopy];
+        NSString *key = [self keyForMarkType:type];
+        [dict setObject:@(YES) forKey:key];
+        [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:dict recentSession:recent];
+    }
+
+
+}
+
++ (void)removeRecentSessionMark:(NIMSession *)session
+                           type:(NSInteger)type
+{
+    NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:session];
+    if (recent) {
+        NSMutableDictionary *localExt = [recent.localExt mutableCopy];
+        NSString *key = [self keyForMarkType:type];
+        [localExt removeObjectForKey:key];
+        [[NIMSDK sharedSDK].conversationManager updateRecentLocalExt:localExt recentSession:recent];
+    }
 }
 
 

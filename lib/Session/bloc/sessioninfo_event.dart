@@ -27,15 +27,20 @@ class CreateGroupSession extends SessioninfoEvent {
 }
 
 class SwitchNotifyStatus extends SessioninfoEvent {
+  final Session session;
   final bool newValue;
-  SwitchNotifyStatus({@required this.newValue});
+  SwitchNotifyStatus({@required this.session, @required this.newValue});
 }
 
 class SwitchStickOnTopStatus extends SessioninfoEvent {
+  final Session session;
   final bool newValue;
-  SwitchStickOnTopStatus({@required this.newValue});
+  SwitchStickOnTopStatus({@required this.session, @required this.newValue});
 }
 
-class ClearChatHistory extends SessioninfoEvent {}
+class ClearChatHistory extends SessioninfoEvent {
+  final Session session;
+  ClearChatHistory({@required this.session});
+}
 
 /* team */

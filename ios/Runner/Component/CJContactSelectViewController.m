@@ -64,6 +64,11 @@ CJSearchHeaderDelegate>
     return self;
 }
 
+- (UIModalPresentationStyle)modalPresentationStyle
+{
+    return UIModalPresentationFullScreen;
+}
+
 
 - (void)viewDidLoad
 {
@@ -110,25 +115,31 @@ CJSearchHeaderDelegate>
     }];
 }
 
+// 确定按钮
+- (UIButton *)barRightBtn
+{
+    if(!_barRightBtn) {
+        _barRightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _barRightBtn.frame = CGRectMake(0, 0, 50, 24);
+        [_barRightBtn setTitle:@"确定" forState:UIControlStateNormal];
+        _barRightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_barRightBtn setBackgroundColor:[UIColor yy_colorWithHexString:@"#7BB6ED"]];
+        _barRightBtn.layer.cornerRadius = 4.0;
+        _barRightBtn.layer.masksToBounds = YES;
+        
+        [_barRightBtn addTarget:self
+                         action:@selector(onConfirmBtnClicked:)
+               forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _barRightBtn;
+}
+
 // 配置导航条
 - (void)configNavgationBar
 {
     self.title = self.config.title;
     
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(0, 0, 50, 24);
-    [rightBtn setTitle:@"确定" forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [rightBtn setBackgroundColor:[UIColor yy_colorWithHexString:@"#7BB6ED"]];
-    rightBtn.layer.cornerRadius = 4.0;
-    rightBtn.layer.masksToBounds = YES;
-    
-    [rightBtn addTarget:self
-                 action:@selector(onConfirmBtnClicked:)
-       forControlEvents:UIControlEventTouchUpInside];
-    self.barRightBtn = rightBtn;
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:self.barRightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     

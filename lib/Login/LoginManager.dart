@@ -15,6 +15,16 @@ class LoginManager {
   String _accid;
   String _token;
 
+  Future<String> getAccid() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.get('accid');
+  }
+
+  Future<String> getToken() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.get('token');
+  }
+
   String get accid {
     return _accid;
   }

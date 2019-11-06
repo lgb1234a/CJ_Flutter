@@ -46,13 +46,6 @@ class SessionInfoState extends State<SessionInfoWidget> {
   Widget p2pSessionInfo(BuildContext context) {
     return BlocProvider<SessioninfoBloc>(
       builder: (context) => SessioninfoBloc(mc: _platform)..add(Fetch(session: _session)),
-        //  /* 请求用户信息 */
-        //  ..add(FetchUserAvatar(userId: _session.id))
-        //  /* 获取消息通知开关状态 */
-        //  ..add(FetchNotifyStatus(sessionId: _session.id))
-        //  /* 获取置顶状态 */
-        //  ..add(FetchIsStickOnTopStatus(
-        //     sessionId: _session.id, sessionType: _session.type)),
       child: SessionP2PInfo(_session),
     );
   }

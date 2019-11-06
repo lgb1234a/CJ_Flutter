@@ -72,7 +72,8 @@
                            withObject:call.arguments
                            afterDelay:0];
         }else {
-            [CJUtilBridge bridgeCall:call result:result];
+            [CJUtilBridge bridgeCall:call
+                              result:result];
         }
     }];
 }

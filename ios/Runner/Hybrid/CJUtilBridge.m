@@ -8,7 +8,6 @@
 
 #import "CJUtilBridge.h"
 #import <MBProgressHUD.h>
-#import "CJContactSelectViewController.h"
 
 static FlutterMethodCall *_call = nil;
 static FlutterResult _result = nil;
@@ -53,8 +52,11 @@ static FlutterResult _result = nil;
     ZZLog(@"!!!!!! flutter call :%@", call.method);
     NSArray *params = call.arguments;
     SEL callMethod = NSSelectorFromString(call.method);
-    if([self respondsToSelector:callMethod]) {
-        [self performSelector:callMethod withObject:params afterDelay:0];
+    if([self respondsToSelector:callMethod])
+    {
+        [self performSelector:callMethod
+                   withObject:params
+                   afterDelay:0];
     }else {
         NSString *errorInfo = [NSString stringWithFormat:@"!!!!!! CJUtilBridge未实现%@", call.method];
         NSAssert(NO, errorInfo);
@@ -97,8 +99,6 @@ static inline UIWindow *getkeyWindow()
                                                         object:nil
                                                       userInfo:userInfo];
 }
-
-//+ (void)
 
 
 @end

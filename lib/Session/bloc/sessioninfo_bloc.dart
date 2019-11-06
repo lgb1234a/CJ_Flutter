@@ -26,10 +26,13 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   ) async* {
     if (event is Fetch) {
       // 加载所需的数据
-      UserInfo info = await _fetchUserInfo(event.session.id);
-      bool isStickOnTop =
-          await _fetchIsStickOnTop(event.session.id, event.session.type);
-      bool notifyForNewMsg = await _fetchIsNotifyForNewMsg(event.session.id);
+      /* 用户头像、昵称 */
+      UserInfo info = await NimSdkUtil.userInfoById(event.session.id);
+      /* 置顶 */
+      bool isStickOnTop = await NimSdkUtil.isStickedOnTop(event.session);
+      /* 消息通知 */
+      bool notifyForNewMsg =
+          await NimSdkUtil.isNotifyForNewMsg(event.session.id);
 
       _previousState = P2PSessionInfoLoaded(
           info: info,
@@ -41,6 +44,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is SwitchStickOnTopStatus) {
       /* 切换置顶开关 */
       bool newValue = event.newValue;
+      NimSdkUtil.stickSessiOnTop(event.session, newValue);
 
       _previousState = P2PSessionInfoLoaded(
           info: _previousState.info,
@@ -50,14 +54,18 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     }
 
     if (event is SwitchNotifyStatus) {
-      /* 切换消息通知开关 */
+      /* 开关消息通知 */
       bool newValue = event.newValue;
+      bool success =
+          await NimSdkUtil.changeNotifyStatus(event.session, newValue);
 
-      _previousState = P2PSessionInfoLoaded(
-          info: _previousState.info,
-          isStickedOnTop: _previousState.isStickedOnTop,
-          notifyStatus: newValue);
-      yield _previousState;
+      if (success) {
+        _previousState = P2PSessionInfoLoaded(
+            info: _previousState.info,
+            isStickedOnTop: _previousState.isStickedOnTop,
+            notifyStatus: newValue);
+        yield _previousState;
+      }
     }
 
     if (event is TappedUserAvatar) {
@@ -69,31 +77,13 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is CreateGroupSession) {
       /* 创建群聊 */
       String userId = event.userId;
-      /* 调用native，拉起选择联系人组件 */
-      debugPrint('拉起选择联系人');
+      /* 调用native，拉起选择联系人组件,创建群聊 */
+      mc.invokeMethod('createGroupChat:', [userId]);
     }
 
     if (event is ClearChatHistory) {
       /* 清空聊天记录 */
-
+      await NimSdkUtil.clearChatHistory(event.session);
     }
-  }
-
-  // 获取用户信息
-  Future<UserInfo> _fetchUserInfo(String userId) async {
-    UserInfo info = await NimSdkUtil.userInfoById(userId);
-    return info;
-  }
-
-  // 获取会话置顶状态
-  Future<bool> _fetchIsStickOnTop(String sessionId, int sessionType) async {
-    bool isStickOnTop = await NimSdkUtil.isStickedOnTop(sessionId, sessionType);
-    return isStickOnTop;
-  }
-
-  // 获取会话是否开启消息提醒
-  Future<bool> _fetchIsNotifyForNewMsg(String sessionId) async {
-    bool isNotifyForNewMsg = await NimSdkUtil.isNotifyForNewMsg(sessionId);
-    return isNotifyForNewMsg;
   }
 }
