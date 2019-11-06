@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/Model/nim_session.dart';
-import '../Base/CJUtils.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import 'package:cajian/Session/bloc/bloc.dart';
@@ -26,7 +24,6 @@ class SessionInfoWidget extends StatefulWidget {
 class SessionInfoState extends State<SessionInfoWidget> {
   Session _session;
   MethodChannel _platform;
-  SessioninfoBloc _bloc;
 
   @override
   void initState() {

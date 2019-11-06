@@ -29,42 +29,95 @@ final Color appBarColor = Color(0xffe5e5e5);
 
 class CJUtils {}
 
-// 弹窗
-dialog(BuildContext context, String title, String msg, String commitText,
-    String cancelText, Function commitHandler, Function cancelHandler) {
-  var commitWidget = commitHandler == null
-      ? SizedBox()
-      : new FlatButton(
-          child: new Text(
-            commitText != null ? commitText : '确定',
-            style: TextStyle(color: Colors.blue),
-          ),
-          onPressed: () {
-            commitHandler();
-            Navigator.of(context).pop();
-          },
-        );
+// 弹窗 handlerTexts <-> handlers  一一对应，不然会报错
+cjDialog(BuildContext context, String title,
+    {String msg,
+    String cancelText = '取消',
+    Function cancelHandler,
+    List<String> handlerTexts,
+    List<Function> handlers}) {
 
-  var cancelWidget = cancelHandler == null
-      ? SizedBox()
-      : new FlatButton(
-          child: new Text(
-            cancelText != null ? cancelText : '取消',
-            style: TextStyle(color: Colors.red),
-          ),
+  assert(handlers.length == handlerTexts.length);
+
+    List<Widget> widgets = handlerTexts.map((f) {
+    int idx = handlerTexts.indexOf(f);
+    Function handler = handlers[idx];
+
+    return CupertinoDialogAction(
+      onPressed: (){
+        handler();
+        Navigator.of(context).pop();
+      },
+      child: Text(
+        f,
+        style: TextStyle(color: Colors.blue),
+      ),
+    );
+  }).toList();
+
+  var cancelAction = CupertinoDialogAction(
           onPressed: () {
-            cancelHandler();
+            cancelHandler != null && cancelHandler();
             Navigator.of(context).pop();
           },
+          isDefaultAction: true,
+          child: Text(cancelText),
+          textStyle: TextStyle(color: Colors.red),
         );
+  widgets.add(cancelAction);
 
   showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) => CupertinoAlertDialog(
             title: Text(title),
-            content: Text((msg)),
-            actions: <Widget>[cancelWidget, commitWidget],
+            content: Text(msg),
+            actions: widgets,
+          ));
+}
+
+// 底部弹窗组件 handlerTexts <-> handlers  一一对应，不然会报错
+cjSheet(BuildContext context, String title,
+    {String msg,
+    String cancelText = '取消',
+    Function cancelHandler,
+    List<String> handlerTexts,
+    List<Function> handlers}) {
+  
+  assert(handlers.length == handlerTexts.length);
+
+  List<Widget> widgets = handlerTexts.map((f) {
+    int idx = handlerTexts.indexOf(f);
+    Function handler = handlers[idx];
+
+    return CupertinoActionSheetAction(
+      onPressed: (){
+        handler();
+        Navigator.of(context).pop();
+      },
+      child: Text(
+        f,
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+  }).toList();
+
+  CupertinoActionSheetAction cancelBtn = CupertinoActionSheetAction(
+    onPressed: () {
+      cancelHandler != null && cancelHandler();
+      Navigator.of(context).pop();
+    },
+    isDefaultAction: true,
+    child: Text(cancelText),
+  );
+
+  showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+            title: Text(title),
+            message: Text(msg),
+            actions: widgets,
+            cancelButton: cancelBtn,
           ));
 }
 
@@ -77,14 +130,16 @@ class CJAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget flexibleSpace;
   final PreferredSizeWidget bottom;
 
-  CJAppBar(this.title,
-      {this.titleColor = const Color(0xFF141414), 
-      this.leading, 
-      this.backgroundColor = const Color(0xFFFCFCFC), 
-      this.actions, 
-      this.flexibleSpace, 
-      this.bottom, 
-      }) : preferredSize = Size.fromHeight(kToolbarHeight + bottom?.preferredSize?.height ?? 0.0);
+  CJAppBar(
+    this.title, {
+    this.titleColor = const Color(0xFF141414),
+    this.leading,
+    this.backgroundColor = const Color(0xFFFCFCFC),
+    this.actions,
+    this.flexibleSpace,
+    this.bottom,
+  }) : preferredSize = Size.fromHeight(
+            kToolbarHeight + bottom?.preferredSize?.height ?? 0.0);
 
   @override
   Widget build(BuildContext context) {

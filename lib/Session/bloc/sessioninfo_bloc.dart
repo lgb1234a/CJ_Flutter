@@ -83,7 +83,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
     if (event is ClearChatHistory) {
       /* 清空聊天记录 */
-      await NimSdkUtil.clearChatHistory(event.session);
+      NimSdkUtil.clearChatHistory(event.session);
     }
   }
 }
