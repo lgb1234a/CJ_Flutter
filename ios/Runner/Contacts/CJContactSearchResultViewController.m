@@ -9,7 +9,7 @@
 #import "CJContactSearchResultViewController.h"
 #import "CJSessionViewController.h"
 
-@interface CJContactSearchResultViewController ()
+@interface CJContactSearchResultViewController ()<UINavigationControllerDelegate>
 
 @end
 
@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.delegate = self;
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
