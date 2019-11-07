@@ -42,7 +42,8 @@ class SessionInfoState extends State<SessionInfoWidget> {
   // 点对点聊天的会话信息页
   Widget p2pSessionInfo(BuildContext context) {
     return BlocProvider<SessioninfoBloc>(
-      builder: (context) => SessioninfoBloc(mc: _platform)..add(Fetch(session: _session)),
+      builder: (context) =>
+          SessioninfoBloc(mc: _platform)..add(Fetch(session: _session)),
       child: SessionP2PInfo(_session),
     );
   }

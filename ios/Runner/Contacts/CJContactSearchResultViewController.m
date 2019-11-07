@@ -7,6 +7,7 @@
 //
 
 #import "CJContactSearchResultViewController.h"
+#import "CJSessionViewController.h"
 
 @interface CJContactSearchResultViewController ()
 
@@ -16,6 +17,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if(viewController == self) {
+        self.navigationController.navigationBar.hidden = YES;
+    }
+}
+
+- (void)createSession:(NSArray *)params
+{
+    NSString *sessionId = params.firstObject;
+    NSNumber *type = params[1];
+    
+    NIMSession *session = [NIMSession session:sessionId type:type.integerValue];
+    CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
+    [self.navigationController pushViewController:sessionVC
+                                         animated:YES];
 }
 
 @end

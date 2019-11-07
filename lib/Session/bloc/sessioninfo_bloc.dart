@@ -72,7 +72,6 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is TappedUserAvatar) {
       String userId = event.userId;
       /* 跳转个人信息页 */
-      debugPrint('跳个人信息页：$userId');
       Map params = {
         'container': 'CJUserInfoViewController',
         'route': 'user_info',

@@ -37,6 +37,11 @@
                                                object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.hidden = NO;
+}
+
 /* 重新修改session配置 */
 - (id<NIMSessionConfig>)sessionConfig
 {

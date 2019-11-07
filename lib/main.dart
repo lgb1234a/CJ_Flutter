@@ -14,7 +14,7 @@ import 'package:cajian/Mine/MineInfo.dart';
 import 'package:cajian/Contacts/ContactsSearchResultList.dart';
 import 'Session/SessionInfo.dart';
 import 'package:bloc/bloc.dart';
-import 'Session/UserInfo/UserInfoPage.dart';
+import 'Contacts/UserInfo/UserInfoPage.dart';
 
 Widget _widgetForRoute(String openUrl) {
   debugPrint('FlutterViewController openUrl:' + openUrl);
@@ -47,7 +47,7 @@ Widget _widgetForRoute(String openUrl) {
       return new SessionInfoWidget(params, cn);
     case 'user_info':
     // 个人信息页
-      return new UserInfoPage();
+      return new UserInfoPage(params, cn);
     default:
       return MaterialApp(
         home: Scaffold(

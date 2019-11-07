@@ -122,9 +122,16 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
             height: 0.1,
             indent: 12,
           ),
-          model.cell((){
-            // 点击跳转聊天
-            debugPrint('点击了cell！！！！！');
+          model.cell(() {
+            if (model is ContactInfo) {
+              // 点击跳转聊天
+              widget.platform.invokeMethod('createSession:', [model.infoId, 0]);
+            }
+
+            if (model is TeamInfo) {
+              // 点击跳转聊天
+              widget.platform.invokeMethod('createSession:', [model.teamId, 1]);
+            }
           })
         ],
       ),
@@ -200,11 +207,11 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   // cell
   Widget _buildItem(BuildContext context, NimSearchContactViewModel model) {
     double screenWidth = getSize(context).width;
-    
-    if(model != null) {
+
+    if (model != null) {
       return _buildTile(model);
     }
-    
+
     return SizedBox(
       width: screenWidth,
       height: 300,
@@ -220,11 +227,9 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     List<Widget> contacts =
         _contacts.map((f) => _buildItem(context, f)).toList();
 
-
-
     // int count = _teams.length;
     // debugPrint('群组数量 ---------  $count');
-    
+
     List<Widget> teams = _teams.map((f) => _buildItem(context, f)).toList();
 
     // 添加更多入口

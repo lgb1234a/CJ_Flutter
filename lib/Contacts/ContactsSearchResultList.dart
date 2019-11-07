@@ -167,8 +167,17 @@ class ContactsSearchResultListState
 
     return SizedBox(
       height: itemHeight,
-      child: model.cell((){
+      child: model.cell(() {
         // 点击跳转到聊天
+        if (model is ContactInfo) {
+          // 点击跳转聊天
+          _platform.invokeMethod('createSession:', [model.infoId, 0]);
+        }
+
+        if (model is TeamInfo) {
+          // 点击跳转聊天
+          _platform.invokeMethod('createSession:', [model.teamId, 1]);
+        }
       }),
     );
   }

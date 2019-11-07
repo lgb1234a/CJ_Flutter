@@ -11,6 +11,7 @@ import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'ContactsSearching.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
+import 'dart:convert' as convert;
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
@@ -25,7 +26,7 @@ class ContactsWidget extends StatefulWidget {
 class ContactsState extends State<ContactsWidget> {
   List<ContactInfo> _contacts = List();
   List<ContactInfo> _contactFunctions = List();
-  MethodChannel platform;
+  MethodChannel _platform;
   int _suspensionHeight = 40;
   int _itemHeight = 60;
   int _searchBarHeight = 60;
@@ -36,8 +37,8 @@ class ContactsState extends State<ContactsWidget> {
   void initState() {
     super.initState();
     loadData();
-    platform = MethodChannel(widget.channelName);
-    platform.setMethodCallHandler(handler);
+    _platform = MethodChannel(widget.channelName);
+    _platform.setMethodCallHandler(handler);
   }
 
   // Native回调用
@@ -181,21 +182,36 @@ class ContactsState extends State<ContactsWidget> {
         Container(
             height: _itemHeight.toDouble(),
             width: screenSize.width,
-            child: Row(
-              children: <Widget>[
-                new Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                ),
-                avatar,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                ),
-                Text(model.showName),
-                Expanded(
-                  flex: 1,
-                  child: SizedBox(),
-                ),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                String userId = model.infoId;
+                /* 跳转个人信息页 */
+                Map params = {
+                  'container': 'CJUserInfoViewController',
+                  'route': 'user_info',
+                  'channel_name': 'com.zqtd.cajian/user_info',
+                  'params': {'user_id': userId}
+                };
+                String pStr = convert.jsonEncode(params);
+                _platform
+                    .invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+              },
+              child: Row(
+                children: <Widget>[
+                  new Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                  avatar,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                  Text(model.showName),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                ],
+              ),
             ))
       ],
     );
@@ -239,7 +255,7 @@ class ContactsState extends State<ContactsWidget> {
 
   // 通讯录搜索页
   Widget _buildContactsInSearching(BuildContext context) {
-    return ContactsSearchingWidget(cancelSearch, platform);
+    return ContactsSearchingWidget(cancelSearch, _platform);
   }
 
   @override
