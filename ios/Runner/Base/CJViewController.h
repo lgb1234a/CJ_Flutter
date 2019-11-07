@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  \\******
  需要的JSON字符串格式如下
  {
+ 'container':'CJViewController'     //  容器类名字对应到native的类，不填默认为CJViewController
  'route':'login',
  'channel_name':'com.zqtd.cajian/login',
  'params':{

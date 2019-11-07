@@ -143,6 +143,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     }
 
     Map params = {
+      'container': 'CJContactSearchResultViewController',
       'route': 'contact_search_result',
       'channel_name': 'com.zqtd.cajian/contact_search_result',
       'params': {

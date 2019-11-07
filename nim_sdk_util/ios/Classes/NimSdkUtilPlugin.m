@@ -191,7 +191,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     for (NIMTeam *team in [NIMSDK sharedSDK].teamManager.allMyTeams) {
         [teamInfos addObject:@{
             @"teamId": team.teamId,
-            @"teamName": team.teamName,
+            @"teamName": team.teamName?:@"",
             @"teamAvatar": team.avatarUrl?:[NSNull null]
         }];
     }

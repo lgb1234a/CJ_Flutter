@@ -89,7 +89,19 @@
 - (void)pushViewControllerWithOpenUrl:(NSArray *)params
 {
     NSString *openUrl = params.firstObject;
-    CJViewController *nextVc = [[CJViewController alloc] initWithFlutterOpenUrl:openUrl];
+    
+    NSDictionary *p = [NSDictionary cj_dictionary:openUrl];
+    CJViewController *nextVc;
+    Class container = NSClassFromString(p[@"container"]);
+    if(container && [[container alloc] respondsToSelector:@selector(initWithFlutterOpenUrl:)])
+    {   // 指定了native容器
+        nextVc = [container alloc];
+        nextVc = [nextVc initWithFlutterOpenUrl:openUrl];
+    }else {
+        // 未指定
+        nextVc = [[CJViewController alloc] initWithFlutterOpenUrl:openUrl];
+    }
+    
     [self.navigationController pushViewController:nextVc
                                          animated:YES];
 }

@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import './bloc.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
+import 'dart:convert' as convert;
 
 class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   final MethodChannel mc;
@@ -72,6 +73,16 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       String userId = event.userId;
       /* 跳转个人信息页 */
       debugPrint('跳个人信息页：$userId');
+      Map params = {
+        'container': 'CJUserInfoViewController',
+        'route': 'user_info',
+        'channel_name': 'com.zqtd.cajian/user_info',
+        'params': {
+          'user_id': userId
+        }
+      };
+      String pStr = convert.jsonEncode(params);
+      mc.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
     }
 
     if (event is CreateGroupSession) {

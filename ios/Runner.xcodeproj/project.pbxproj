@@ -29,6 +29,7 @@
 		EF150D662355ADD0008EC12A /* CJContactSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */; };
 		EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */; };
 		EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */; };
+		EF6B89112373FD960015ED96 /* CJUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */; };
 		EF72D5B22341913C008E95A5 /* CJSearchTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */; };
 		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
 		EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */; };
@@ -133,6 +134,8 @@
 		EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserSelectTableViewCell.h; sourceTree = "<group>"; };
 		EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserSelectTableViewCell.m; sourceTree = "<group>"; };
 		EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CJUserSelectTableViewCell.xib; sourceTree = "<group>"; };
+		EF6B890F2373FD960015ED96 /* CJUserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserInfoViewController.h; sourceTree = "<group>"; };
+		EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserInfoViewController.m; sourceTree = "<group>"; };
 		EF72D5B02341913C008E95A5 /* CJSearchTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSearchTableHeaderView.h; sourceTree = "<group>"; };
 		EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSearchTableHeaderView.m; sourceTree = "<group>"; };
 		EF8A41072334AF7D00AF697E /* CJSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionViewController.h; sourceTree = "<group>"; };
@@ -369,6 +372,8 @@
 				EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */,
 				EF150D642355ADD0008EC12A /* CJContactSearchResultViewController.h */,
 				EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */,
+				EF6B890F2373FD960015ED96 /* CJUserInfoViewController.h */,
+				EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -886,6 +891,7 @@
 				EF8F542F234F27B100FFD30A /* NSURLSession+Coroutine.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8F5432234F27B100FFD30A /* NSXMLParser+Coroutine.m in Sources */,
+				EF6B89112373FD960015ED96 /* CJUserInfoViewController.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
 				EF8F542A234F27B100FFD30A /* UIImage+Coroutine.m in Sources */,
 				EF8F5439234F27B100FFD30A /* NSData+Coroutine.m in Sources */,
