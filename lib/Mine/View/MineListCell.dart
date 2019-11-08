@@ -93,7 +93,7 @@ class MineListProfileState extends State<MineListProfileHeader> {
   }
 
   fetchInfo() async {
-    CurrentUserInfo info = await widget.model.mineInfo();
+    UserInfo info = await widget.model.mineInfo();
     setState(() {
       _avatarUrl = info.avatarUrlString;
       _showName = info.showName;

@@ -25,6 +25,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -35,13 +41,6 @@
                                              selector:@selector(onCJUpdateMessageNotification:)
                                                  name:CJUpdateMessageNotification
                                                object:nil];
-}
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if(viewController == self) {
-        self.navigationController.navigationBar.hidden = NO;
-    }
 }
 
 /* 重新修改session配置 */

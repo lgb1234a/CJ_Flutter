@@ -8,8 +8,10 @@
 
 #import "CJUserInfoViewController.h"
 #import "CJContactSettingViewController.h"
+#import "CJContactSelectViewController.h"
+#import "CJSessionViewController.h"
 
-@interface CJUserInfoViewController ()<UINavigationControllerDelegate>
+@interface CJUserInfoViewController ()
 
 @end
 
@@ -17,18 +19,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.navigationController.delegate = self;
     self.title = @"详细资料";
     
     [self setUpNavBarItem];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if(viewController == self) {
-        self.navigationController.navigationBar.hidden = NO;
-    }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)setUpNavBarItem
@@ -53,6 +52,15 @@
     CJContactSettingViewController *vc = [[CJContactSettingViewController alloc] initWithUserId:userId];
     
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+// 发消息
+- (void)sendMessage:(NSArray *)params
+{
+    NSString *userId = params.firstObject;
+    NIMSession *session = [NIMSession session:userId type:NIMSessionTypeP2P];
+    CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
+    [self.navigationController pushViewController:sessionVC animated:YES];
 }
 
 @end

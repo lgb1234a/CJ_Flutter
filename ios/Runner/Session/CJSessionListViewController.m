@@ -23,6 +23,12 @@
     self.title = @"擦肩";
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
+
 #pragma mark - Override
 - (void)onSelectedAvatar:(NIMRecentSession *)recentSession
              atIndexPath:(NSIndexPath *)indexPath

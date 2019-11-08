@@ -4,7 +4,7 @@ import 'package:nim_sdk_util/Model/nim_userInfo.dart';
 
 class MineInfoDao {
   static Future<List> fetchModels() async {
-    CurrentUserInfo info = await NimSdkUtil.currentUserInfo();
+    UserInfo info = await NimSdkUtil.userInfoById();
     final gender = info.gender;
     final genderStr = genderTransString(gender);
     final List models = [];

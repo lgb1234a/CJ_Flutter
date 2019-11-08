@@ -46,7 +46,7 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
     String subTitle;
     int subTitleStart;
     int titleStart;
-    if (teamName.contains(keyword)) {
+    if (teamName != null && teamName.contains(keyword)) {
       titleStart = teamName.indexOf(keyword);
     }
 
@@ -56,7 +56,7 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
     }
 
     Widget title = titleStart == null
-        ? Text(teamName)
+        ? Text(teamName??'')
         : Text.rich(TextSpan(
             text: titleStart == 0 ? '' : teamName.substring(titleStart),
             children: [

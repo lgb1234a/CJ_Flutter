@@ -21,28 +21,25 @@ class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
 
     if(event is FetchUserInfo) {
       /* 获取用户信息 */
-      UserInfo info = await NimSdkUtil.userInfoById(event.userId);
+      UserInfo info = await NimSdkUtil.userInfoById(userId: event.userId);
       yield UserInfoLoaded(info: info);
     }
 
     if(event is TouchedUserAvatar) {
-
+      /* 点击查看头像 */
+      
     }
 
     if(event is TouchedAlias) {
-      
-    }
+      /* 跳转修改备注页面 */
 
-    if(event is TouchedMore) {
-      
     }
 
     if(event is TouchedSendMsg) {
-      
-    }
-
-    if(event is TouchedMore) {
-      
+      /* 创建群聊 */
+      String userId = event.userId;
+      /* 调用native，拉起选择联系人组件,创建群聊 */
+      mc.invokeMethod('sendMessage:', [userId]);
     }
   }
 }

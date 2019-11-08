@@ -9,7 +9,7 @@
 #import "CJContactSearchResultViewController.h"
 #import "CJSessionViewController.h"
 
-@interface CJContactSearchResultViewController ()<UINavigationControllerDelegate>
+@interface CJContactSearchResultViewController ()
 
 @end
 
@@ -17,16 +17,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.delegate = self;
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if(viewController == self) {
-        self.navigationController.navigationBar.hidden = YES;
-    }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
 }
 
+// 跳转聊天
 - (void)createSession:(NSArray *)params
 {
     NSString *sessionId = params.firstObject;

@@ -36,20 +36,15 @@ class NimSdkUtil {
     _channel.invokeMethod('logout');
   }
 
-  // 当前用户信息
-  static Future<CurrentUserInfo> currentUserInfo() async {
-    dynamic info = await _channel.invokeMethod('currentUserInfo:');
-    return CurrentUserInfo.fromJson(info);
-  }
-
   // 获取群信息
   static Future<TeamInfoFromId> teamInfoById(String teamId) async {
     dynamic teamInfo = await _channel.invokeMethod('teamInfo:', [teamId]);
     return TeamInfoFromId.fromJson(teamInfo);
   }
 
-  // 获取用户信息
-  static Future<UserInfo> userInfoById(String userId) async {
+  // 获取用户信息 
+  // userId 选填，不填默认获取当前用户信息
+  static Future<UserInfo> userInfoById({String userId}) async {
     dynamic userInfo = await _channel.invokeMethod('userInfo:', [userId]);
     return UserInfo.fromJson(userInfo);
   }

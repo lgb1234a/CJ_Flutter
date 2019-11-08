@@ -113,5 +113,7 @@
     <string>如果不允许，你将无法发送系统相机里的照片给朋友</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>如果不允许，你将无法发送系统相机里的照片给朋友</string>
+    <key>UIUserInterfaceStyle</key>
+    <string>Light</string>
 </dict>
 </plist>

@@ -48,17 +48,17 @@ class ContactInfo extends ISuspensionBean
     String subTitle;
     int subTitleStart;
     int titleStart;
-    if (showName.contains(keyword)) {
+    if (showName != null && showName.contains(keyword)) {
       titleStart = showName.indexOf(keyword);
     }
 
-    if (infoId.contains(keyword)) {
+    if (infoId != null && infoId.contains(keyword)) {
       subTitle = infoId;
       subTitleStart = subTitle.indexOf(keyword);
     }
 
     Widget title = titleStart == null
-        ? Text(showName)
+        ? Text(showName??'')
         : Text.rich(TextSpan(
             text: titleStart == 0 ? '' : showName.substring(titleStart),
             children: [

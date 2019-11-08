@@ -28,8 +28,8 @@ class MineModel {
   MineModel(this.type, this.title, this.icon, this.onTap,
       {this.tipIcon, this.needSeparatorLine = false});
 
-  Future<CurrentUserInfo> mineInfo() async {
-    CurrentUserInfo info = await NimSdkUtil.currentUserInfo();
+  Future<UserInfo> mineInfo() async {
+    UserInfo info = await NimSdkUtil.userInfoById();
     return info;
   }
 }

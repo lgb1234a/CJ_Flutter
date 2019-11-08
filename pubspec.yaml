@@ -78,6 +78,8 @@ flutter:
    - images/icon_contact_search@2x.png
    - images/icon_search_blue@2x.png
    - images/icon_session_info_add@2x.png
+   - images/icon_gender_female@2x.png
+   - images/icon_gender_male@2x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

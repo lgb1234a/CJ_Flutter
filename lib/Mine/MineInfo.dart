@@ -62,7 +62,7 @@ class _MineInfoState extends State<MineInfoWiget>{
               model.ctx = ctx;
               if (model.cellType == MineInfoCellType.HeaderImg){
                 var image;
-                if (model.iconTip.contains('http') ) {
+                if (model.iconTip != null && model.iconTip.contains('http') ) {
                   image = Image.network(model.iconTip == null ? '' : model.iconTip,width: 50,height: 50,);
                 } else {
                   image = Image.asset(model.iconTip == null ? '' : model.iconTip,);

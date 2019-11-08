@@ -28,7 +28,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is Fetch) {
       // 加载所需的数据
       /* 用户头像、昵称 */
-      UserInfo info = await NimSdkUtil.userInfoById(event.session.id);
+      UserInfo info = await NimSdkUtil.userInfoById(userId: event.session.id);
       /* 置顶 */
       bool isStickOnTop = await NimSdkUtil.isStickedOnTop(event.session);
       /* 消息通知 */

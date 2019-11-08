@@ -118,23 +118,29 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
-// 返回当前登录用户信息
-+ (void)currentUserInfo:(NSArray *)params
+// 返回用户信息
++ (void)userInfo:(NSArray *)params
 {
     FlutterResult result = params.lastObject;
     NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
-    NIMUserInfo *user = [[NIMSDK sharedSDK].userManager userInfo:accid].userInfo;
-    NSDictionary *cjExt = JsonStringDecode(user.ext);
+    if([params.firstObject isKindOfClass:NSString.class]) {
+        accid = params.firstObject;
+    }
+    NIMUser *user = [[NIMSDK sharedSDK].userManager userInfo:accid];
+    NIMUserInfo *userInfo = user.userInfo;
+    NSDictionary *cjExt = JsonStringDecode(userInfo.ext);
     result(@{
-             @"showName": user.nickName ? : @"",
-             @"avatarUrlString": user.avatarUrl ? : @"",
-             @"thumbAvatarUrl" : user.thumbAvatarUrl ? : @"",
-             @"sign" : user.sign ? : @"",
-             @"gender": @(user.gender),
-             @"email": user.email ? : @"",
-             @"birth": user.birth ? : @"",
-             @"mobile": user.mobile ? : @"",
-             @"cajianNo": cjExt[@"cajian_id"]?:@"",
+             @"showName": userInfo.nickName ?:[NSNull null],
+             @"avatarUrlString": userInfo.avatarUrl ?:[NSNull null],
+             @"thumbAvatarUrl" : userInfo.thumbAvatarUrl ?:[NSNull null],
+             @"sign" : userInfo.sign ?:[NSNull null],
+             @"gender": @(userInfo.gender),
+             @"email": userInfo.email ?:[NSNull null],
+             @"birth": userInfo.birth ?:[NSNull null],
+             @"mobile": userInfo.mobile ?:[NSNull null],
+             @"cajianNo": cjExt[@"cajian_id"]?:[NSNull null],
+             @"alias": user.alias?:[NSNull null],
+             @"userId": user.userId?:[NSNull null]
              });
 }
 
@@ -146,22 +152,8 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                                                option:nil];
     
     result(@{
-            @"showName": info.showName,
-            @"avatarUrlString": info.avatarUrlString?: [NSNull new],
-             @"avatarImage": [FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(info.avatarImage)]
-            });
-}
-
-// 返回用户信息
-+ (void)userInfo:(NSArray *)params
-{
-    FlutterResult result = params.lastObject;
-    NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:params.firstObject
-                                               option:nil];
-    
-    result(@{
-            @"showName": info.showName,
-            @"avatarUrlString": info.avatarUrlString?: [NSNull new],
+            @"showName": info.showName?:[NSNull null],
+            @"avatarUrlString": info.avatarUrlString?: [NSNull null],
              @"avatarImage": [FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(info.avatarImage)]
             });
 }
@@ -174,8 +166,8 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     for (NIMUser *user in [NIMSDK sharedSDK].userManager.myFriends) {
         NIMKitInfo *info           = [[NIMKit sharedKit] infoByUser:user.userId option:nil];
         NSDictionary *contact = @{
-                                  @"infoId": info.infoId,
-                                  @"showName": info.showName,
+                                  @"infoId": info.infoId?:[NSNull null],
+                                  @"showName": info.showName?:[NSNull null],
                                   @"avatarUrlString": info.avatarUrlString ?:[NSNull null]
                                   };
         [contacts addObject:contact];
@@ -190,8 +182,8 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     NSMutableArray *teamInfos = @[].mutableCopy;
     for (NIMTeam *team in [NIMSDK sharedSDK].teamManager.allMyTeams) {
         [teamInfos addObject:@{
-            @"teamId": team.teamId,
-            @"teamName": team.teamName?:@"",
+            @"teamId": team.teamId?:[NSNull null],
+            @"teamName": team.teamName?:[NSNull null],
             @"teamAvatar": team.avatarUrl?:[NSNull null]
         }];
     }
@@ -209,8 +201,8 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     {
         for (NIMTeamMember *member in members) {
             [teamMemberInfos addObject:@{
-                @"teamId": member.teamId,
-                @"userId": member.userId,
+                @"teamId": member.teamId?:[NSNull null],
+                @"userId": member.userId?:[NSNull null],
                 @"invitor": member.invitor?:[NSNull null],
                 @"inviterAccid": member.inviterAccid?:[NSNull null],
                 @"type": @(member.type),

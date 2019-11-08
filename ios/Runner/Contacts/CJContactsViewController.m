@@ -9,7 +9,7 @@
 #import "CJContactsViewController.h"
 #import "CJSessionViewController.h"
 
-@interface CJContactsViewController ()<UINavigationControllerDelegate>
+@interface CJContactsViewController ()
 
 @end
 
@@ -27,16 +27,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    self.navigationController.delegate = self;
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if(viewController == self) {
-        self.navigationController.navigationBar.hidden = YES;
-    }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)createSession:(NSArray *)params
