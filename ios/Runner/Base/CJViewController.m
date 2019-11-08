@@ -28,6 +28,8 @@
         [self setInitialRoute:openUrl];
         [self registerChannel];
         
+        _openUrl = openUrl;
+        
         NSDictionary *params = [NSDictionary cj_dictionary:openUrl];
         
         // 设置回调
@@ -110,6 +112,11 @@
 - (void)popFlutterViewController
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (NSDictionary *)params
+{
+    return [NSDictionary cj_dictionary:self.openUrl][@"params"];
 }
 
 - (void)dealloc

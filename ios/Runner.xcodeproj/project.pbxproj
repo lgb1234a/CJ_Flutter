@@ -27,6 +27,7 @@
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
 		EF150D662355ADD0008EC12A /* CJContactSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */; };
+		EF26EFB42375019D007DA362 /* CJContactSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26EFB32375019D007DA362 /* CJContactSettingViewController.m */; };
 		EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */; };
 		EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */; };
 		EF6B89112373FD960015ED96 /* CJUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */; };
@@ -131,6 +132,8 @@
 		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
 		EF150D642355ADD0008EC12A /* CJContactSearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactSearchResultViewController.h; sourceTree = "<group>"; };
 		EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactSearchResultViewController.m; sourceTree = "<group>"; };
+		EF26EFB22375019D007DA362 /* CJContactSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactSettingViewController.h; sourceTree = "<group>"; };
+		EF26EFB32375019D007DA362 /* CJContactSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactSettingViewController.m; sourceTree = "<group>"; };
 		EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserSelectTableViewCell.h; sourceTree = "<group>"; };
 		EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserSelectTableViewCell.m; sourceTree = "<group>"; };
 		EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CJUserSelectTableViewCell.xib; sourceTree = "<group>"; };
@@ -374,6 +377,8 @@
 				EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */,
 				EF6B890F2373FD960015ED96 /* CJUserInfoViewController.h */,
 				EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */,
+				EF26EFB22375019D007DA362 /* CJContactSettingViewController.h */,
+				EF26EFB32375019D007DA362 /* CJContactSettingViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -888,6 +893,7 @@
 				EF72D5B22341913C008E95A5 /* CJSearchTableHeaderView.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
 				EFD25940233DB5CF00E78DB6 /* CJContactSelectViewController.m in Sources */,
+				EF26EFB42375019D007DA362 /* CJContactSettingViewController.m in Sources */,
 				EF8F542F234F27B100FFD30A /* NSURLSession+Coroutine.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8F5432234F27B100FFD30A /* NSXMLParser+Coroutine.m in Sources */,

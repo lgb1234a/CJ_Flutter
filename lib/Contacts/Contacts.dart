@@ -179,23 +179,23 @@ class ContactsState extends State<ContactsWidget> {
           offstage: model.isShowSuspension != true,
           child: _buildSusWidget(susTag),
         ),
-        Container(
-            height: _itemHeight.toDouble(),
-            width: screenSize.width,
-            child: GestureDetector(
-              onTap: () {
-                String userId = model.infoId;
-                /* 跳转个人信息页 */
-                Map params = {
-                  'container': 'CJUserInfoViewController',
-                  'route': 'user_info',
-                  'channel_name': 'com.zqtd.cajian/user_info',
-                  'params': {'user_id': userId}
-                };
-                String pStr = convert.jsonEncode(params);
-                _platform
-                    .invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
-              },
+        GestureDetector(
+            onTap: () {
+              String userId = model.infoId;
+              /* 跳转个人信息页 */
+              Map params = {
+                'container': 'CJUserInfoViewController',
+                'route': 'user_info',
+                'channel_name': 'com.zqtd.cajian/user_info',
+                'params': {'user_id': userId}
+              };
+              String pStr = convert.jsonEncode(params);
+              _platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+            },
+            child: Container(
+              height: _itemHeight.toDouble(),
+              width: screenSize.width,
+              color: Colors.white,
               child: Row(
                 children: <Widget>[
                   new Padding(

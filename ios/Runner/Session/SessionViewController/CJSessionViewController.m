@@ -37,9 +37,11 @@
                                                object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    self.navigationController.navigationBar.hidden = NO;
+    if(viewController == self) {
+        self.navigationController.navigationBar.hidden = NO;
+    }
 }
 
 /* 重新修改session配置 */

@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CJViewController : FlutterViewController
 
+// 获取当前页面初始化参数
+@property (nonatomic, copy, readonly, nullable) NSDictionary *params;
+// 获取当前页面openUrl
+@property (nonatomic, copy, readonly, nullable) NSString *openUrl;
+
 /**
  初始化一个flutter 页面，以FlutterVC为容器
 
