@@ -18,9 +18,9 @@ const double searchBarHeight = 70;
 // 搜索框 app bar
 class ContactSearchBar extends StatefulWidget implements PreferredSizeWidget {
   final String keyword;
-  final Function back;
+  final Function cancel;
   final Function searchCallBack;
-  ContactSearchBar(this.keyword, this.back, this.searchCallBack);
+  ContactSearchBar(this.keyword, this.cancel, this.searchCallBack);
 
   @override
   ContactSearchBarState createState() => ContactSearchBarState();
@@ -31,6 +31,12 @@ class ContactSearchBar extends StatefulWidget implements PreferredSizeWidget {
 
 class ContactSearchBarState extends State<ContactSearchBar> {
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() { 
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -54,7 +60,7 @@ class ContactSearchBarState extends State<ContactSearchBar> {
           color: blackColor,
           size: 22,
         ),
-        onPressed: () => widget.back(),
+        onPressed: () => widget.cancel(),
       ),
       titleSpacing: 0.0,
       title: SizedBox(
@@ -62,7 +68,6 @@ class ContactSearchBarState extends State<ContactSearchBar> {
         width: screenWidth,
         child: CupertinoTextField(
           controller: _searchController,
-          autofocus: true,
           expands: true,
           minLines: null,
           maxLines: null,
@@ -87,7 +92,7 @@ class ContactSearchBarState extends State<ContactSearchBar> {
               '取消',
               style: TextStyle(fontSize: 14),
             ),
-            onPressed: () => widget.back(),
+            onPressed: () => widget.cancel(),
           ),
         )
       ],
@@ -139,6 +144,12 @@ class ContactsSearchResultListState
     _platform = MethodChannel(widget.channelName);
     _platform.setMethodCallHandler(handler);
     _infos = widget.models;
+  }
+
+  @override
+  void dispose() { 
+    
+    super.dispose();
   }
 
   // Native回调用

@@ -23,20 +23,21 @@
     // 配置云信服务
     [self configNIMServices];
     
-    /*根据登录状态初始化登录页面 vc*/
-    [self showDidLogoutRootVC];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLogin)
-                                                 name:@"loginSuccess"
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didLogout)
                                                  name:@"didLogout"
                                                object:nil];
     /* 登录回调代理 */
     [[NIMSDK sharedSDK].loginManager addDelegate:self];
+    
+    /*根据登录状态初始化登录页面 vc*/
+    NSString *accid = [[NSUserDefaults standardUserDefaults] objectForKey:@"flutter.accid"];
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"flutter.token"];
+    if(accid && token) {
+        [NimSdkUtilPlugin autoLogin:accid token:token];
+    }else {
+        [self showDidLogoutRootVC];
+    }
     
   // Override point for customization after application launch.
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
@@ -68,15 +69,10 @@
 }
 
 #pragma mark - 登录，这里只做UI和第三方库处理
-- (void)didLogin
-{
-    [[CJPayManager sharedManager] didLogin];
-    
-    [self showDidLoginSuccessRootVC];
-}
 
 - (void)didLogout
 {
+    // 接收通知回调
     [[CJPayManager sharedManager] didLogout];
     
     [self showDidLogoutRootVC];
@@ -101,7 +97,7 @@
                                                selectedImage:[UIImage imageNamed:@"icon_contact_pressed"]];
     contactsNav.tabBarItem.tag = 1;
     
-    CJMineViewController *mine = [CJMineViewController new];
+    CJMineViewController *mine = [[CJMineViewController alloc] init];
     CJNavigationViewController *mineNav = [[CJNavigationViewController alloc] initWithRootViewController:mine];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
                                                        image:[UIImage imageNamed:@"icon_setting_normal"]
@@ -123,6 +119,34 @@
 }
 
 #pragma mark - NIMLoginManagerDelegate
+
+- (void)onLogin:(NIMLoginStep)step
+{
+    switch (step) {
+        case NIMLoginStepLinking:
+            [UIViewController showLoadingWithMessage:@"正在连接服务器～"];
+            break;
+        case NIMLoginStepLinkFailed:
+            [UIViewController showError:@"连接服务器失败"];
+            break;
+        case NIMLoginStepLoginOK:
+            [[CJPayManager sharedManager] didLogin];
+            [self showDidLoginSuccessRootVC];
+            break;
+        case NIMLoginStepLoginFailed:
+            [UIViewController showError:@"登录失败"];
+            break;
+            break;
+        default:
+            break;
+    }
+    
+}
+
+- (void)onAutoLoginFailed:(NSError *)error
+{
+    [self showDidLogoutRootVC];
+}
 
 - (void)onKick:(NIMKickReason)code
     clientType:(NIMLoginClientType)clientType

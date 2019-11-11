@@ -13,4 +13,11 @@
  */
 + (void)logout;
 
+
+/// 自动登录
+/// @param accid id
+/// @param token token
++ (void)autoLogin:(NSString *)accid
+            token:(NSString *)token;
+
 @end

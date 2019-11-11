@@ -60,7 +60,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // search bar
-  Widget _buildSearchBar(BuildContext context) {
+  Widget _buildSearchBar() {
     double top = topPadding(context);
     double screenWidth = getSize(context).width;
     return Container(
@@ -140,6 +140,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // 跳转到更多列表,把 _teams 或者 _contacts带过去
   void _pushSerachResultViewController(int type) {
+    FocusScope.of(context).requestFocus(FocusNode());
     List models = [];
     if (type == 0) {
       models = _contacts.map((f) => f.toJson()).toList();
@@ -164,7 +165,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // 更多
-  Widget _buildMoreTile(BuildContext context, int type) {
+  Widget _buildMoreTile(int type) {
     double screenWidth = getSize(context).width;
     return GestureDetector(
         onTap: () => _pushSerachResultViewController(type),
@@ -205,7 +206,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // cell
-  Widget _buildItem(BuildContext context, NimSearchContactViewModel model) {
+  Widget _buildItem(NimSearchContactViewModel model) {
     double screenWidth = getSize(context).width;
 
     if (model != null) {
@@ -222,25 +223,25 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // section
-  Widget _buildSection(BuildContext context, int index) {
+  Widget _buildSection(int index) {
     double screenWidth = getSize(context).width;
     List<Widget> contacts =
-        _contacts.map((f) => _buildItem(context, f)).toList();
+        _contacts.map((f) => _buildItem(f)).toList();
 
     // int count = _teams.length;
     // debugPrint('群组数量 ---------  $count');
 
-    List<Widget> teams = _teams.map((f) => _buildItem(context, f)).toList();
+    List<Widget> teams = _teams.map((f) => _buildItem(f)).toList();
 
     // 添加更多入口
     if (contacts.length > 3) {
       contacts = contacts.sublist(0, 3);
-      contacts.add(_buildMoreTile(context, 0));
+      contacts.add(_buildMoreTile(0));
     }
 
     if (teams.length > 3) {
       teams = teams.sublist(0, 3);
-      teams.add(_buildMoreTile(context, 1));
+      teams.add(_buildMoreTile(1));
     }
 
     contacts.insert(
@@ -287,11 +288,11 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   }
 
   // search List
-  Widget _searchList(BuildContext context) {
+  Widget _searchList() {
     int itemCount = _contacts.length > 0 && _teams.length > 0 ? 2 : 1;
     return ListView.separated(
       itemCount: itemCount,
-      itemBuilder: (context, idx) => _buildSection(context, idx),
+      itemBuilder: (context, idx) => _buildSection(idx),
       separatorBuilder: (context, idx) {
         return Container(
           height: 9,
@@ -306,13 +307,13 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          _buildSearchBar(context),
+          _buildSearchBar(),
           MediaQuery.removePadding(
               removeTop: true,
               context: context,
               child: Expanded(
                 flex: 1,
-                child: _searchList(context),
+                child: _searchList(),
               ))
         ],
       ),

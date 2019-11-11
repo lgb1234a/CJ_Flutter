@@ -151,7 +151,7 @@ class ContactsState extends State<ContactsWidget> {
   // list header
   Widget _buildHeader(BuildContext context) {
     List<Widget> headerItems = _contactFunctions.map((e) {
-      return _buildListItem(context, e);
+      return _buildListItem(e);
     }).toList();
     // 插入search bar
     headerItems.insert(0, _buildSearchBar(context));
@@ -161,9 +161,8 @@ class ContactsState extends State<ContactsWidget> {
   }
 
   // cell
-  Widget _buildListItem(BuildContext context, ContactInfo model) {
+  Widget _buildListItem(ContactInfo model) {
     String susTag = model.getSuspensionTag();
-    Size screenSize = getSize(context);
     // 头像
     Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
     if (model.avatarUrlString != null) {
@@ -194,7 +193,6 @@ class ContactsState extends State<ContactsWidget> {
             },
             child: Container(
               height: _itemHeight.toDouble(),
-              width: screenSize.width,
               color: Colors.white,
               child: Row(
                 children: <Widget>[
@@ -218,7 +216,7 @@ class ContactsState extends State<ContactsWidget> {
   }
 
   // 非搜索状态下的通讯录
-  Widget _buildContacts(BuildContext context) {
+  Widget _buildContacts() {
     double bp = double.parse(widget.params['bottom_padding']);
     return Scaffold(
         appBar: AppBar(
@@ -238,7 +236,7 @@ class ContactsState extends State<ContactsWidget> {
                 return _buildHeader(context);
               }),
           data: _contacts,
-          itemBuilder: (context, model) => _buildListItem(context, model),
+          itemBuilder: (context, model) => _buildListItem(model),
           suspensionWidget: _buildSusWidget(_suspensionTag),
           isUseRealIndex: true,
           itemHeight: _itemHeight,
@@ -254,7 +252,7 @@ class ContactsState extends State<ContactsWidget> {
   }
 
   // 通讯录搜索页
-  Widget _buildContactsInSearching(BuildContext context) {
+  Widget _buildContactsInSearching() {
     return ContactsSearchingWidget(cancelSearch, _platform);
   }
 
@@ -262,9 +260,7 @@ class ContactsState extends State<ContactsWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: _inSeraching
-            ? _buildContactsInSearching(
-                context,
-              )
-            : _buildContacts(context));
+            ? _buildContactsInSearching()
+            : _buildContacts());
   }
 }

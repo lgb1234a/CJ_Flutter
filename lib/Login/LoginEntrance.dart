@@ -29,16 +29,6 @@ class LoginEntranceState extends State<LoginEntrance> {
     
     _platform = MethodChannel(widget.channelName);
     _platform.setMethodCallHandler(handler);
-
-    // 加载登录状态
-    SharedPreferences.getInstance().then((sp){
-      String accid = sp.getString('accid');
-      String token = sp.getString('token');
-      if(accid != null && token != null) 
-      {
-        NimSdkUtil.autoLogin(accid, token, '');
-      }
-    });
   }
 
   // Native回调用

@@ -78,8 +78,6 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
      {
          if(!error) {
              ZZLog(@"云信登录成功");
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccess"
-                                                                 object:self];
              result(@(YES));
          }else {
              ZZLog(@"%@", error);
@@ -93,11 +91,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 {
     [[NIMSDK sharedSDK].loginManager autoLogin:params.firstObject
                                          token:params[1]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccess"
-                                                        object:self];
 }
 
-+ (void)autoLogin:(NSString *)accid token:(NSString *)token
++ (void)autoLogin:(NSString *)accid
+            token:(NSString *)token
 {
     [[NIMSDK sharedSDK].loginManager autoLogin:accid
                                          token:token];
