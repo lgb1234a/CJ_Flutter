@@ -50,7 +50,6 @@ class TeamInfo implements NimSearchContactViewModel {
       return SizedBox();
     }
 
-    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
     String subTitle;
     int subTitleStart;
     int titleStart;
@@ -79,9 +78,11 @@ class TeamInfo implements NimSearchContactViewModel {
 
     Widget tile = subTitle != null
         ? ListTile(
-            leading: teamAvatar != null
-                ? Image.network(teamAvatar, width: 44, height: 44)
-                : avatar,
+            leading: FadeInImage.assetNetwork(
+              image: teamAvatar ?? '',
+              width: 44,
+              placeholder: 'images/icon_contact_groupchat@2x.png',
+            ),
             title: title,
             subtitle: Text.rich(TextSpan(text: '群id：', children: <TextSpan>[
               TextSpan(
@@ -98,9 +99,11 @@ class TeamInfo implements NimSearchContactViewModel {
             onTap: onTap,
           )
         : ListTile(
-            leading: teamAvatar != null
-                ? Image.network(teamAvatar, width: 44, height: 44)
-                : avatar,
+            leading: FadeInImage.assetNetwork(
+              image: teamAvatar ?? '',
+              width: 44,
+              placeholder: 'images/icon_contact_groupchat@2x.png',
+            ),
             title: title,
             onTap: onTap,
           );

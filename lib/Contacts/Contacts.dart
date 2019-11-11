@@ -164,14 +164,18 @@ class ContactsState extends State<ContactsWidget> {
   Widget _buildListItem(ContactInfo model) {
     String susTag = model.getSuspensionTag();
     // 头像
-    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
-    if (model.avatarUrlString != null) {
-      if (model.avatarUrlString.contains('images/', 0)) {
-        avatar = Image.asset(model.avatarUrlString, width: 44, height: 44);
-      } else {
-        avatar = Image.network(model.avatarUrlString, width: 44);
-      }
+    Widget avatar;
+    if (model.avatarUrlString != null &&
+        model.avatarUrlString.contains('images/', 0)) {
+      avatar = Image.asset(model.avatarUrlString, width: 44, height: 44);
+    } else {
+      avatar = FadeInImage.assetNetwork(
+        image: model.avatarUrlString ?? '',
+        width: 44,
+        placeholder: 'images/icon_avatar_placeholder@2x.png',
+      );
     }
+
     return Column(
       children: <Widget>[
         Offstage(
@@ -259,8 +263,6 @@ class ContactsState extends State<ContactsWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: _inSeraching
-            ? _buildContactsInSearching()
-            : _buildContacts());
+        home: _inSeraching ? _buildContactsInSearching() : _buildContacts());
   }
 }

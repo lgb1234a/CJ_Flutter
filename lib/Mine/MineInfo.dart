@@ -6,16 +6,14 @@ import 'package:flutter/services.dart';
 import 'Model/MineInfoModel.dart';
 import 'View/MineInfoListCell.dart';
 
-class MineInfoWiget extends StatefulWidget{
-
+class MineInfoWiget extends StatefulWidget {
   final String channelName;
   MineInfoWiget(this.channelName);
 
   _MineInfoState createState() => _MineInfoState();
 }
 
-class _MineInfoState extends State<MineInfoWiget>{
-
+class _MineInfoState extends State<MineInfoWiget> {
   MethodChannel _platform;
   List _cellModels = [];
   @override
@@ -25,25 +23,29 @@ class _MineInfoState extends State<MineInfoWiget>{
     _platform.setMethodCallHandler(handler);
     loadData();
   }
+
   loadData() async {
     List models = await MineInfoDao.fetchModels();
     setState(() {
       _cellModels = models;
     });
   }
+
   // Native回调用
   Future<dynamic> handler(MethodCall call) async {
     debugPrint(call.method);
   }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: Scaffold(
-        appBar: new AppBar
-        (
+        appBar: new AppBar(
           leading: new IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () { _platform.invokeMethod('popFlutterViewController'); },
+            onPressed: () {
+              _platform.invokeMethod('popFlutterViewController');
+            },
           ),
           title: Text(
             '个人信息',
@@ -56,19 +58,25 @@ class _MineInfoState extends State<MineInfoWiget>{
         body: Container(
           color: mainBgColor,
           child: ListView.separated(
-              itemCount: _cellModels.length,
-              itemBuilder: (BuildContext ctx, int index) {
+            itemCount: _cellModels.length,
+            itemBuilder: (BuildContext ctx, int index) {
               MineInfoModel model = _cellModels[index];
               model.ctx = ctx;
-              if (model.cellType == MineInfoCellType.HeaderImg){
+              if (model.cellType == MineInfoCellType.HeaderImg) {
                 var image;
-                if (model.iconTip != null && model.iconTip.contains('http') ) {
-                  image = Image.network(model.iconTip == null ? '' : model.iconTip,width: 50,height: 50,);
+                if (model.iconTip != null && model.iconTip.contains('http')) {
+                  image = FadeInImage.assetNetwork(
+                    image: model.iconTip ?? '',
+                    width: 44,
+                    placeholder: 'images/icon_avatar_placeholder@2x.png',
+                  );
                 } else {
-                  image = Image.asset(model.iconTip == null ? '' : model.iconTip,);
+                  image = Image.asset(
+                    model.iconTip == null ? '' : model.iconTip,
+                  );
                 }
-                return HeaderImgCell(model,image);
-              }else if (model.cellType == MineInfoCellType.Accessory) {
+                return HeaderImgCell(model, image);
+              } else if (model.cellType == MineInfoCellType.Accessory) {
                 return MineInfoAccessoryCell(model);
               } else if (model.cellType == MineInfoCellType.Separator) {
                 return MineInfoSeparatorCell(model);

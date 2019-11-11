@@ -103,7 +103,7 @@
         // 未指定
         nextVc = [[CJViewController alloc] initWithFlutterOpenUrl:openUrl];
     }
-    
+
     [self.navigationController pushViewController:nextVc
                                          animated:YES];
 }

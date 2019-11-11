@@ -8,8 +8,7 @@ import 'nim_modelView.dart';
 import 'package:flutter/material.dart';
 
 /// 通讯录成员model
-class ContactInfo extends ISuspensionBean
-    implements NimSearchContactViewModel {
+class ContactInfo extends ISuspensionBean implements NimSearchContactViewModel {
   String showName;
   String avatarUrlString;
   String infoId;
@@ -45,12 +44,10 @@ class ContactInfo extends ISuspensionBean
 
   @override
   Widget cell(Function onTap) {
-
-    if(keyword == null) {
+    if (keyword == null) {
       return SizedBox();
     }
 
-    Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
     String subTitle;
     int subTitleStart;
     int titleStart;
@@ -65,7 +62,7 @@ class ContactInfo extends ISuspensionBean
     }
 
     Widget title = titleStart == null
-        ? Text(showName??'')
+        ? Text(showName ?? '')
         : Text.rich(TextSpan(
             text: titleStart == 0 ? '' : showName.substring(titleStart),
             children: [
@@ -80,9 +77,11 @@ class ContactInfo extends ISuspensionBean
 
     Widget tile = subTitle != null
         ? ListTile(
-            leading: avatarUrlString != null
-                ? Image.network(avatarUrlString, width: 44, height: 44)
-                : avatar,
+            leading: FadeInImage.assetNetwork(
+              image: avatarUrlString ?? '',
+              width: 44,
+              placeholder: 'images/icon_avatar_placeholder@2x.png',
+            ),
             title: title,
             subtitle: Text.rich(TextSpan(text: '用户id：', children: <TextSpan>[
               TextSpan(
@@ -99,9 +98,11 @@ class ContactInfo extends ISuspensionBean
             onTap: onTap,
           )
         : ListTile(
-            leading: avatarUrlString != null
-                ? Image.network(avatarUrlString, width: 44, height: 44)
-                : avatar,
+            leading: FadeInImage.assetNetwork(
+              image: avatarUrlString ?? '',
+              width: 44,
+              placeholder: 'images/icon_avatar_placeholder@2x.png',
+            ),
             title: title,
             onTap: onTap,
           );

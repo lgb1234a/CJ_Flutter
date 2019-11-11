@@ -27,9 +27,10 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
 
   Widget _buildAvatar(String avatarStr, String showName) {
     Widget avatar = avatarStr.startsWith('http')
-        ? Image.network(
-            avatarStr,
-            width: 40,
+        ? FadeInImage.assetNetwork(
+            image: avatarStr ?? '',
+            width: 44,
+            placeholder: 'images/icon_avatar_placeholder@2x.png',
           )
         : Image.asset(
             avatarStr,
@@ -52,7 +53,6 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
 
   // p2p list cell
   Widget _buildItem(int idx, dynamic state) {
-
     if (state is P2PSessionInfoLoaded) {
       if (idx == 0) {
         // 用户信息区块

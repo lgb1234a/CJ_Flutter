@@ -103,64 +103,62 @@ class MineListProfileState extends State<MineListProfileHeader> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        height: 103,
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-            ),
-            _avatarUrl != null
-                ? Image.network(_avatarUrl, width: 56)
-                : Container(
-                    color: Colors.grey,
-                    width: 56,
-                    height: 56,
+          height: 103,
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+              ),
+              FadeInImage.assetNetwork(
+                image: _avatarUrl ?? '',
+                width: 44,
+                placeholder: 'images/icon_avatar_placeholder@2x.png',
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+              ),
+              Expanded(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    _showName ?? '',
+                    style: TextStyle(fontSize: 17, color: blackColor),
                   ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-            ),
-            Expanded(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _showName ?? '',
-                  style: TextStyle(fontSize: 17, color: blackColor),
-                ),
-                Text(
-                  '擦肩号：$_cajianNo',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF9B9B9B),
+                  Text(
+                    '擦肩号：$_cajianNo',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF9B9B9B),
+                    ),
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
                   ),
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                ),
-              ],
-            )),
-            Image.asset(
-              'images/icon_settings_gray_qr@2x.png',
-              width: 14,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-            ),
-            new Icon(
-              Icons.arrow_forward_ios,
-              size: 16,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 6),
-            ),
-          ],
-        )),
-        onTap: (){
-          widget.model.onTap(widget.model);
-        },
+                ],
+              )),
+              Image.asset(
+                'images/icon_settings_gray_qr@2x.png',
+                width: 14,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+              ),
+              new Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+              ),
+            ],
+          )),
+      onTap: () {
+        widget.model.onTap(widget.model);
+      },
     );
   }
 }

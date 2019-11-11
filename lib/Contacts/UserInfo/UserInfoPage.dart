@@ -115,40 +115,40 @@ class UserInfoPageState extends State<UserInfoPage> {
       padding: EdgeInsets.all(12),
       child: Row(
         children: <Widget>[
-          Image.network(
-            info.avatarUrlString??'',
+          FadeInImage.assetNetwork(
+            image: info.avatarUrlString ?? '',
             width: 44,
-            height: 44,
-            color: Colors.grey,
-            colorBlendMode: BlendMode.dstIn,
+            placeholder: 'images/icon_avatar_placeholder@2x.png',
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 6),
+                padding: EdgeInsets.only(left: 6),
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Text(info.alias ?? info.showName),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          Text(info.alias ?? info.showName),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                          ),
+                          Image.asset(
+                            info.gender == 2
+                                ? 'images/icon_gender_female@2x.png'
+                                : 'images/icon_gender_male@2x.png',
+                            width: 14,
+                          )
+                        ],
                       ),
-                      Image.asset(
-                        info.gender == 2
-                            ? 'images/icon_gender_female@2x.png'
-                            : 'images/icon_gender_male@2x.png',
-                        width: 14,
-                      )
-                    ],
-                  ),
-                ),
-                Text('擦肩号：${info.cajianNo}'),
-                info.alias != null ? Text('昵称：${info.showName}') : SizedBox()
-              ],
-            )),
+                    ),
+                    Text('擦肩号：${info.cajianNo}'),
+                    info.alias != null
+                        ? Text('昵称：${info.showName}')
+                        : SizedBox()
+                  ],
+                )),
           )
         ],
       ),
