@@ -169,11 +169,16 @@ class ContactsState extends State<ContactsWidget> {
         model.avatarUrlString.contains('images/', 0)) {
       avatar = Image.asset(model.avatarUrlString, width: 44, height: 44);
     } else {
-      avatar = FadeInImage.assetNetwork(
-        image: model.avatarUrlString ?? '',
-        width: 44,
-        placeholder: 'images/icon_avatar_placeholder@2x.png',
-      );
+      avatar = model.avatarUrlString != null
+          ? FadeInImage.assetNetwork(
+              image: model.avatarUrlString,
+              width: 44,
+              placeholder: 'images/icon_avatar_placeholder@2x.png',
+            )
+          : Image.asset(
+              'images/icon_avatar_placeholder@2x.png',
+              width: 44,
+            );
     }
 
     return Column(
@@ -208,10 +213,7 @@ class ContactsState extends State<ContactsWidget> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                   ),
                   Text(model.showName),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
+                  Spacer(),
                 ],
               ),
             ))

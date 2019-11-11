@@ -37,10 +37,7 @@ class MineListCellOthers extends StatelessWidget {
             model.tipIcon != null
                 ? new Image.asset(model.tipIcon)
                 : Divider(height: 0),
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
+            Spacer(),
             new Icon(
               Icons.arrow_forward_ios,
               size: 16,
@@ -112,11 +109,16 @@ class MineListProfileState extends State<MineListProfileHeader> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
               ),
-              FadeInImage.assetNetwork(
-                image: _avatarUrl ?? '',
-                width: 44,
-                placeholder: 'images/icon_avatar_placeholder@2x.png',
-              ),
+              _avatarUrl != null
+                  ? FadeInImage.assetNetwork(
+                      image: _avatarUrl,
+                      width: 44,
+                      placeholder: 'images/icon_avatar_placeholder@2x.png',
+                    )
+                  : Image.asset(
+                      'images/icon_avatar_placeholder@2x.png',
+                      width: 44,
+                    ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
               ),

@@ -26,16 +26,21 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
   }
 
   Widget _buildAvatar(String avatarStr, String showName) {
-    Widget avatar = avatarStr.startsWith('http')
-        ? FadeInImage.assetNetwork(
-            image: avatarStr ?? '',
-            width: 44,
-            placeholder: 'images/icon_avatar_placeholder@2x.png',
-          )
-        : Image.asset(
-            avatarStr,
+    Widget avatar = avatarStr == null
+        ? Image.asset(
+            'images/icon_avatar_placeholder@2x.png',
             width: 40,
-          );
+          )
+        : (avatarStr.startsWith('http')
+            ? FadeInImage.assetNetwork(
+                image: avatarStr,
+                width: 44,
+                placeholder: 'images/icon_avatar_placeholder@2x.png',
+              )
+            : Image.asset(
+                avatarStr,
+                width: 40,
+              ));
     return SizedBox(
       width: 70,
       child: Column(

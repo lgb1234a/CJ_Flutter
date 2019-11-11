@@ -77,11 +77,16 @@ class ContactInfo extends ISuspensionBean implements NimSearchContactViewModel {
 
     Widget tile = subTitle != null
         ? ListTile(
-            leading: FadeInImage.assetNetwork(
-              image: avatarUrlString ?? '',
-              width: 44,
-              placeholder: 'images/icon_avatar_placeholder@2x.png',
-            ),
+            leading: avatarUrlString != null
+                ? FadeInImage.assetNetwork(
+                    image: avatarUrlString,
+                    width: 44,
+                    placeholder: 'images/icon_avatar_placeholder@2x.png',
+                  )
+                : Image.asset(
+                    'images/icon_avatar_placeholder@2x.png',
+                    width: 44,
+                  ),
             title: title,
             subtitle: Text.rich(TextSpan(text: '用户id：', children: <TextSpan>[
               TextSpan(
@@ -98,11 +103,16 @@ class ContactInfo extends ISuspensionBean implements NimSearchContactViewModel {
             onTap: onTap,
           )
         : ListTile(
-            leading: FadeInImage.assetNetwork(
-              image: avatarUrlString ?? '',
-              width: 44,
-              placeholder: 'images/icon_avatar_placeholder@2x.png',
-            ),
+            leading: avatarUrlString != null
+                ? FadeInImage.assetNetwork(
+                    image: avatarUrlString,
+                    width: 44,
+                    placeholder: 'images/icon_avatar_placeholder@2x.png',
+                  )
+                : Image.asset(
+                    'images/icon_avatar_placeholder@2x.png',
+                    width: 44,
+                  ),
             title: title,
             onTap: onTap,
           );

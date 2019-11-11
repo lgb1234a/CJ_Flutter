@@ -115,11 +115,16 @@ class UserInfoPageState extends State<UserInfoPage> {
       padding: EdgeInsets.all(12),
       child: Row(
         children: <Widget>[
-          FadeInImage.assetNetwork(
-            image: info.avatarUrlString ?? '',
-            width: 44,
-            placeholder: 'images/icon_avatar_placeholder@2x.png',
-          ),
+          info.avatarUrlString != null
+              ? FadeInImage.assetNetwork(
+                  image: info.avatarUrlString,
+                  width: 44,
+                  placeholder: 'images/icon_avatar_placeholder@2x.png',
+                )
+              : Image.asset(
+                  'images/icon_avatar_placeholder@2x.png',
+                  width: 44,
+                ),
           Expanded(
             child: Container(
                 padding: EdgeInsets.only(left: 6),

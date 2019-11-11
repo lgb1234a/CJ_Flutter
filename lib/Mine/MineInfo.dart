@@ -65,11 +65,16 @@ class _MineInfoState extends State<MineInfoWiget> {
               if (model.cellType == MineInfoCellType.HeaderImg) {
                 var image;
                 if (model.iconTip != null && model.iconTip.contains('http')) {
-                  image = FadeInImage.assetNetwork(
-                    image: model.iconTip ?? '',
-                    width: 44,
-                    placeholder: 'images/icon_avatar_placeholder@2x.png',
-                  );
+                  image = model.iconTip != null
+                      ? FadeInImage.assetNetwork(
+                          image: model.iconTip,
+                          width: 44,
+                          placeholder: 'images/icon_avatar_placeholder@2x.png',
+                        )
+                      : Image.asset(
+                          'images/icon_avatar_placeholder@2x.png',
+                          width: 44,
+                        );
                 } else {
                   image = Image.asset(
                     model.iconTip == null ? '' : model.iconTip,

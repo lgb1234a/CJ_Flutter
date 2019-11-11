@@ -78,11 +78,16 @@ class TeamInfo implements NimSearchContactViewModel {
 
     Widget tile = subTitle != null
         ? ListTile(
-            leading: FadeInImage.assetNetwork(
-              image: teamAvatar ?? '',
-              width: 44,
-              placeholder: 'images/icon_contact_groupchat@2x.png',
-            ),
+            leading: teamAvatar != null
+                ? FadeInImage.assetNetwork(
+                    image: teamAvatar,
+                    width: 44,
+                    placeholder: 'images/icon_contact_groupchat@2x.png',
+                  )
+                : Image.asset(
+                    'images/icon_contact_groupchat@2x.png',
+                    width: 44,
+                  ),
             title: title,
             subtitle: Text.rich(TextSpan(text: '群id：', children: <TextSpan>[
               TextSpan(
@@ -99,11 +104,16 @@ class TeamInfo implements NimSearchContactViewModel {
             onTap: onTap,
           )
         : ListTile(
-            leading: FadeInImage.assetNetwork(
-              image: teamAvatar ?? '',
-              width: 44,
-              placeholder: 'images/icon_contact_groupchat@2x.png',
-            ),
+            leading: teamAvatar != null
+                ? FadeInImage.assetNetwork(
+                    image: teamAvatar ?? '',
+                    width: 44,
+                    placeholder: 'images/icon_contact_groupchat@2x.png',
+                  )
+                : Image.asset(
+                    'images/icon_contact_groupchat@2x.png',
+                    width: 44,
+                  ),
             title: title,
             onTap: onTap,
           );

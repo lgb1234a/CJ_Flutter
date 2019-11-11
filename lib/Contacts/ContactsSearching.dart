@@ -70,24 +70,24 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
             Expanded(
               flex: 1,
               child: SizedBox(
-                height: 40,
-                child: CupertinoTextField(
-                  controller: _searchController,
-                  autofocus: true,
-                  expands: true,
-                  minLines: null,
-                  maxLines: null,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(3.0))),
-                  placeholder: '搜索',
-                  prefix: Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Image.asset('images/icon_contact_search@2x.png'),
-                  ),
-                  prefixMode: OverlayVisibilityMode.always,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                )),
+                  height: 40,
+                  child: CupertinoTextField(
+                    controller: _searchController,
+                    autofocus: true,
+                    expands: true,
+                    minLines: null,
+                    maxLines: null,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(3.0))),
+                    placeholder: '搜索',
+                    prefix: Container(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Image.asset('images/icon_contact_search@2x.png'),
+                    ),
+                    prefixMode: OverlayVisibilityMode.always,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                  )),
             ),
             SizedBox(
               width: 70,
@@ -203,7 +203,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // cell
   Widget _buildItem(NimSearchContactViewModel model) {
-
     if (model != null) {
       return _buildTile(model);
     }
@@ -218,8 +217,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // section
   Widget _buildSection(int index) {
-    List<Widget> contacts =
-        _contacts.map((f) => _buildItem(f)).toList();
+    List<Widget> contacts = _contacts.map((f) => _buildItem(f)).toList();
 
     List<Widget> teams = _teams.map((f) => _buildItem(f)).toList();
 
@@ -235,18 +233,29 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     }
 
     contacts.insert(
-        0,
-        Container(
-          height: 30,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-          child: Text('联系人'),
-        ));
+      0,
+      Flex(
+        direction: Axis.horizontal,
+        children: <Widget>[
+          Container(
+            height: 30,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+            child: Text('联系人'),
+          )
+        ],
+      ),
+    );
     teams.insert(
         0,
-        Container(
-          height: 30,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-          child: Text('群聊'),
+        Flex(
+          direction: Axis.horizontal,
+          children: <Widget>[
+            Container(
+              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              child: Text('群聊'),
+            )
+          ],
         ));
 
     // 先联系人，再群聊
