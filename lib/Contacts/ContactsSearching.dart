@@ -50,9 +50,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         await ContactSearchDataSource.searchContactBy(_searchController.text);
     List<TeamInfo> groups =
         await ContactSearchDataSource.searchGroupBy(_searchController.text);
-
-    // int count = groups.length;
-    // debugPrint('搜索出来的群聊数 --------  $count');
     setState(() {
       _contacts = contacts;
       _teams = groups;
@@ -227,9 +224,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     double screenWidth = getSize(context).width;
     List<Widget> contacts =
         _contacts.map((f) => _buildItem(f)).toList();
-
-    // int count = _teams.length;
-    // debugPrint('群组数量 ---------  $count');
 
     List<Widget> teams = _teams.map((f) => _buildItem(f)).toList();
 

@@ -6,9 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nim_sdk_util/Model/nim_contactModel.dart';
-import 'package:nim_sdk_util/Model/nim_teamModel.dart';
-import 'package:nim_sdk_util/Model/nim_searchInterface.dart';
+import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'Model/ContactSearchDataSource.dart';
 import 'package:nim_sdk_util/Model/nim_modelView.dart';
@@ -105,9 +103,9 @@ class ContactsSearchResultListWidget extends StatefulWidget {
   final String channelName; // channel
   final String keyword; // 搜索关键词
   final int type; // 查找的内容类型说明  0:联系人/1:群聊
-  final List<CJSearchInterface> models; // contactInfo/teamInfo
+  final List<NimSearchContactViewModel> models; // contactInfo/teamInfo
 
-  static CJSearchInterface _toModel(Map model, int type) {
+  static NimSearchContactViewModel _toModel(Map model, int type) {
     if (type == 0) {
       return ContactInfo.fromJson(model);
     }
@@ -159,7 +157,7 @@ class ContactsSearchResultListState
 
   // 搜索文本变化
   void searchTextChanged(String keyword) async {
-    List<CJSearchInterface> infos = [];
+    List<NimSearchContactViewModel> infos = [];
     if (widget.type == 0) {
       infos = await ContactSearchDataSource.searchContactBy(keyword);
     }
@@ -194,14 +192,14 @@ class ContactsSearchResultListState
   }
 
   // item
-  Widget _buildItem(BuildContext context, int idx) {
-    double screenWidth = getSize(context).width;
+  Widget _buildItem(int idx) {
+    // double screenWidth = getSize(context).width;
 
     if (_infos.length > 0) {
       if (idx == 0) {
         return Container(
           height: 30,
-          width: screenWidth,
+          // width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text(widget.type == 0 ? '联系人' : '群聊'),
         );
@@ -212,7 +210,7 @@ class ContactsSearchResultListState
     }
 
     return SizedBox(
-      width: screenWidth,
+      // width: screenWidth,
       height: 300,
       child: Center(
         child: Text('未匹配到相关数据类型~'),
@@ -230,7 +228,7 @@ class ContactsSearchResultListState
             searchTextChanged),
         body: ListView.separated(
           itemCount: _infos.length + 1,
-          itemBuilder: (context, idx) => _buildItem(context, idx),
+          itemBuilder: (context, idx) => _buildItem(idx),
           separatorBuilder: (context, idx) => Divider(
             height: 0.1,
             indent: 12,

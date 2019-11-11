@@ -4,13 +4,12 @@
  */
 
 import 'package:azlistview/azlistview.dart';
-import 'nim_searchInterface.dart';
 import 'nim_modelView.dart';
 import 'package:flutter/material.dart';
 
 /// 通讯录成员model
 class ContactInfo extends ISuspensionBean
-    implements CJSearchInterface, NimSearchContactViewModel {
+    implements NimSearchContactViewModel {
   String showName;
   String avatarUrlString;
   String infoId;
@@ -23,7 +22,8 @@ class ContactInfo extends ISuspensionBean
         avatarUrlString = json['avatarUrlString'],
         infoId = json['infoId'],
         tagIndex = json['tagIndex'],
-        namePinyin = json['namePinyin'];
+        namePinyin = json['namePinyin'],
+        keyword = json['keyword'];
 
   @override
   String getSuspensionTag() => tagIndex;
@@ -38,16 +38,23 @@ class ContactInfo extends ISuspensionBean
       'avatarUrlString': avatarUrlString,
       'infoId': infoId,
       'tagIndex': tagIndex,
-      'namePinyin': namePinyin
+      'namePinyin': namePinyin,
+      'keyword': keyword
     };
   }
 
   @override
   Widget cell(Function onTap) {
+
+    if(keyword == null) {
+      return SizedBox();
+    }
+
     Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
     String subTitle;
     int subTitleStart;
     int titleStart;
+
     if (showName != null && showName.contains(keyword)) {
       titleStart = showName.indexOf(keyword);
     }

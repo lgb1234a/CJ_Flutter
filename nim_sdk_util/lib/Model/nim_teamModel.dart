@@ -2,8 +2,6 @@
  *  Created by chenyn on 2019-10-12
  *  群model
  */
-
-import 'nim_searchInterface.dart';
 import 'nim_modelView.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
@@ -19,7 +17,7 @@ class TeamInfoFromId {
         avatarImage = json['avatarImage'];
 }
 
-class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
+class TeamInfo implements NimSearchContactViewModel {
   String teamId;
   String teamName;
   String teamAvatar;
@@ -30,18 +28,28 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
   TeamInfo.fromJson(Map json)
       : teamId = json['teamId'],
         teamName = json['teamName'],
-        teamAvatar = json['teamAvatar'];
+        teamAvatar = json['teamAvatar'],
+        keyword = json['keyword'];
 
   @override
   String keyword;
 
   @override
   Map toJson() {
-    return {'teamId': teamId, 'teamName': teamName, 'teamAvatar': teamAvatar};
+    return {
+      'teamId': teamId,
+      'teamName': teamName,
+      'teamAvatar': teamAvatar,
+      'keyword': keyword
+    };
   }
 
   @override
   Widget cell(Function onTap) {
+    if (keyword == null) {
+      return SizedBox();
+    }
+
     Widget avatar = Container(color: Colors.grey, width: 44, height: 44);
     String subTitle;
     int subTitleStart;
@@ -56,7 +64,7 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
     }
 
     Widget title = titleStart == null
-        ? Text(teamName??'')
+        ? Text(teamName ?? '')
         : Text.rich(TextSpan(
             text: titleStart == 0 ? '' : teamName.substring(titleStart),
             children: [
@@ -101,7 +109,7 @@ class TeamInfo implements CJSearchInterface, NimSearchContactViewModel {
   }
 }
 
-class TeamMemberInfo implements CJSearchInterface {
+class TeamMemberInfo extends NimSearchContactViewModel {
   String teamId;
   String userId;
   String invitor;
@@ -143,5 +151,10 @@ class TeamMemberInfo implements CJSearchInterface {
       'createTime': createTime,
       'customInfo': customInfo
     };
+  }
+
+  @override
+  Widget cell(Function onTap) {
+    return SizedBox();
   }
 }

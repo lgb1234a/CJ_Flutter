@@ -2,7 +2,6 @@
  *  Created by chenyn on 2019-06-28
  *  入口
  */
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
@@ -20,7 +19,12 @@ import 'Contacts/ContactSetting/ContactSetting.dart';
 
 Widget _widgetForRoute(String openUrl) {
   debugPrint('FlutterViewController openUrl:' + openUrl);
-  dynamic initParams = json.decode(openUrl);
+  dynamic initParams = {};
+  try {
+    initParams = json.decode(openUrl);
+  } catch (e) {
+    print(e);
+  }
 
   String route = initParams['route'];
   String cn = initParams['channel_name'];
@@ -56,7 +60,7 @@ Widget _widgetForRoute(String openUrl) {
     default:
       return MaterialApp(
         home: Scaffold(
-          body: Center(child: Text('未找到route为: $route 的页面')),
+          body: Center(child: Text('无效的openUrl: $openUrl')),
         ),
       );
   }

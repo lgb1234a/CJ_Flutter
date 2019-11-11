@@ -11,7 +11,7 @@ class ContactSearchDataSource {
     if(origin == null || key == null) {
       return false;
     }
-    if(key.length == 0) {
+    if(key == null || key.length == 0) {
       return false;
     }
     return origin.contains(key);
@@ -39,6 +39,7 @@ class ContactSearchDataSource {
       if(isKeyContained(key, t.teamName) || isKeyContained(key, t.teamId)){
         t.keyword = key;
         result.add(t);
+        return;
       }
       List<TeamMemberInfo> members = await NimSdkUtil.teamMemberInfos(t.teamId);
       members.forEach((m) {
@@ -47,6 +48,7 @@ class ContactSearchDataSource {
             isKeyContained(key, m.userId)) {
               t.keyword = key;
               result.add(t);
+              return;
             }
       });
     });
