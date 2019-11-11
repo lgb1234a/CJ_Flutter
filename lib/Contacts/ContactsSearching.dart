@@ -59,7 +59,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   // search bar
   Widget _buildSearchBar() {
     double top = topPadding(context);
-    double screenWidth = getSize(context).width;
     return Container(
         height: _searchBarHeight.toDouble() + top,
         color: Color(0xffe5e5e5),
@@ -68,9 +67,10 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            Expanded(
+              flex: 1,
+              child: SizedBox(
                 height: 40,
-                width: screenWidth - 90,
                 child: CupertinoTextField(
                   controller: _searchController,
                   autofocus: true,
@@ -88,6 +88,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
                   prefixMode: OverlayVisibilityMode.always,
                   padding: EdgeInsets.symmetric(horizontal: 10),
                 )),
+            ),
             SizedBox(
               width: 70,
               child: FlatButton(
@@ -163,7 +164,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // 更多
   Widget _buildMoreTile(int type) {
-    double screenWidth = getSize(context).width;
     return GestureDetector(
         onTap: () => _pushSerachResultViewController(type),
         child: Container(
@@ -176,7 +176,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
               ),
               SizedBox(
                 height: 60,
-                width: screenWidth,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -204,14 +203,12 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // cell
   Widget _buildItem(NimSearchContactViewModel model) {
-    double screenWidth = getSize(context).width;
 
     if (model != null) {
       return _buildTile(model);
     }
 
     return SizedBox(
-      width: screenWidth,
       height: 300,
       child: Center(
         child: Text('未匹配到相关数据类型~'),
@@ -221,7 +218,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   // section
   Widget _buildSection(int index) {
-    double screenWidth = getSize(context).width;
     List<Widget> contacts =
         _contacts.map((f) => _buildItem(f)).toList();
 
@@ -242,7 +238,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         0,
         Container(
           height: 30,
-          width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('联系人'),
         ));
@@ -250,7 +245,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
         0,
         Container(
           height: 30,
-          width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text('群聊'),
         ));
@@ -273,7 +267,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     }
 
     return SizedBox(
-      width: screenWidth,
       height: 300,
       child: Center(
         child: Text('未搜索到相关信息~'),

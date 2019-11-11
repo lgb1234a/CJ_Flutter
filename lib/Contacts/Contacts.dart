@@ -115,7 +115,7 @@ class ContactsState extends State<ContactsWidget> {
   }
 
   // search bar
-  Widget _buildSearchBar(BuildContext context) {
+  Widget _buildSearchBar() {
     return Container(
         height: _searchBarHeight.toDouble(),
         color: appBarColor,
@@ -149,12 +149,12 @@ class ContactsState extends State<ContactsWidget> {
   }
 
   // list header
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader() {
     List<Widget> headerItems = _contactFunctions.map((e) {
       return _buildListItem(e);
     }).toList();
     // 插入search bar
-    headerItems.insert(0, _buildSearchBar(context));
+    headerItems.insert(0, _buildSearchBar());
     return Column(
       children: headerItems,
     );
@@ -233,7 +233,7 @@ class ContactsState extends State<ContactsWidget> {
           header: AzListViewHeader(
               height: _itemHeight * _contactFunctions.length + _searchBarHeight,
               builder: (context) {
-                return _buildHeader(context);
+                return _buildHeader();
               }),
           data: _contacts,
           itemBuilder: (context, model) => _buildListItem(model),

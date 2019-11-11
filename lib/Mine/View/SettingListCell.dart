@@ -12,11 +12,9 @@ class SettingFuncitonCell extends StatelessWidget
   SettingFuncitonCell(this.model);
   @override
   Widget build(BuildContext context) {
-    Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(
         height: 48,
-        width: screenSize.width,
         color: Colors.white,
         child: Center(
           child: Text(model.title, style: TextStyle(color: model.titleColor),),
@@ -44,11 +42,9 @@ class SettingAccessoryCell extends StatelessWidget {
   SettingAccessoryCell(this.model);
   @override
   Widget build(BuildContext context) {
-    Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(
         height: 48,
-        width: screenSize.width,
         color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

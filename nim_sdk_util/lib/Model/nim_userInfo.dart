@@ -1,7 +1,7 @@
-/**
- * created by chenyn 2019-10-28
- * 用户信息model
- */
+///
+/// created by chenyn 2019-10-28
+/// 用户信息model
+///
 
 class UserInfo {
   String userId;

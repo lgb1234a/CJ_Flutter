@@ -66,7 +66,7 @@ Widget _widgetForRoute(String openUrl) {
   }
 }
 
-/** 检测擦肩bloc数据流向 */
+/* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
   @override
   void onEvent(Bloc bloc, Object event) {

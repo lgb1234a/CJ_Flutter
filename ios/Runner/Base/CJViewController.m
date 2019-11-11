@@ -52,7 +52,6 @@
         [self setFlutterViewDidRenderCallback:^{
 //            [_mc invokeMethod:@"会在widget build完成之后调用" arguments:nil];
         }];
-        
     }
     return self;
 }
@@ -92,6 +91,7 @@
 {
     NSString *openUrl = params.firstObject;
     
+//    [self pushRoute:openUrl];
     NSDictionary *p = [NSDictionary cj_dictionary:openUrl];
     CJViewController *nextVc;
     Class container = NSClassFromString(p[@"container"]);

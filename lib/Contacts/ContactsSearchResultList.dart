@@ -47,7 +47,6 @@ class ContactSearchBarState extends State<ContactSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = getSize(context).width;
     return AppBar(
       backgroundColor: appBarColor,
       elevation: 0.01,
@@ -63,7 +62,6 @@ class ContactSearchBarState extends State<ContactSearchBar> {
       titleSpacing: 0.0,
       title: SizedBox(
         height: 40,
-        width: screenWidth,
         child: CupertinoTextField(
           controller: _searchController,
           expands: true,
@@ -193,13 +191,10 @@ class ContactsSearchResultListState
 
   // item
   Widget _buildItem(int idx) {
-    // double screenWidth = getSize(context).width;
-
     if (_infos.length > 0) {
       if (idx == 0) {
         return Container(
           height: 30,
-          // width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Text(widget.type == 0 ? '联系人' : '群聊'),
         );

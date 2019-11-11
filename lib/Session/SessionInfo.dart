@@ -40,7 +40,7 @@ class SessionInfoState extends State<SessionInfoWidget> {
   }
 
   // 点对点聊天的会话信息页
-  Widget p2pSessionInfo(BuildContext context) {
+  Widget p2pSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
       builder: (context) =>
           SessioninfoBloc(mc: _platform)..add(Fetch(session: _session)),
@@ -49,7 +49,7 @@ class SessionInfoState extends State<SessionInfoWidget> {
   }
 
   // 群聊天的会话信息页
-  Widget teamSessionInfo(BuildContext context) {
+  Widget teamSessionInfo() {
     return Scaffold(
       body: Center(child: Text('群聊天的会话信息页')),
     );
@@ -59,8 +59,8 @@ class SessionInfoState extends State<SessionInfoWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: _session.type == SessionType.P2P.index
-          ? p2pSessionInfo(context)
-          : teamSessionInfo(context),
+          ? p2pSessionInfo()
+          : teamSessionInfo(),
     );
   }
 }

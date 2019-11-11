@@ -51,8 +51,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
   }
 
   // p2p list cell
-  Widget _buildItem(BuildContext context, int idx, dynamic state) {
-    double screentW = getSize(context).width;
+  Widget _buildItem(int idx, dynamic state) {
 
     if (state is P2PSessionInfoLoaded) {
       if (idx == 0) {
@@ -60,7 +59,6 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
         UserInfo info = state.info;
         return Container(
           height: 70,
-          width: screentW,
           child: Row(
             children: <Widget>[
               GestureDetector(
@@ -81,7 +79,6 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
 
       if (idx == 1) {
         return Container(
-          width: screentW,
           height: 40,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,7 +97,6 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
 
       if (idx == 2) {
         return Container(
-          width: screentW,
           height: 40,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,7 +145,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
         return ListView.separated(
           padding: EdgeInsets.fromLTRB(12, top + 12, 12, 12),
           itemCount: 4,
-          itemBuilder: (context, idx) => _buildItem(context, idx, state),
+          itemBuilder: (context, idx) => _buildItem(idx, state),
           separatorBuilder: (context, idx) => Container(
             height: 9,
           ),

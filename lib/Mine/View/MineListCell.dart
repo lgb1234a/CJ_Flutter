@@ -13,11 +13,9 @@ class MineListCellOthers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(
         height: 48,
-        width: screenSize.width,
         color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

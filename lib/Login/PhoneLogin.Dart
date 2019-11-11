@@ -95,7 +95,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   }
 
   // 登录
-  Future<bool> login(BuildContext context) async {
+  Future<bool> login() async {
     if(_phoneController.text.trim().length != 11) {
       Hybird.showTip('请输入正确的手机号');
       return false;
@@ -119,7 +119,6 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = getSize(context);
     
     return new Scaffold(
       appBar: new AppBar(
@@ -219,8 +218,8 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
               new Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
               ),
-              new SizedBox(
-                width: screenSize.width - 40,
+              new Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 height: 40,
                 child: new FlatButton(
                     child: new Row(
@@ -242,7 +241,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                     disabledColor: Colors.blueGrey,
                     splashColor: Colors.grey,
                     onPressed: _confirmAvailabe&&!_loading?(){
-                      login(context).then((success){
+                      login().then((success){
                         loading(false);
                         if(success) {
                           Navigator.pop(context);

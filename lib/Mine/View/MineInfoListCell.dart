@@ -10,11 +10,9 @@ class MineInfoAccessoryCell extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-     Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(
         height: 48,
-        width: screenSize.width,
         color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,11 +58,9 @@ class HeaderImgCell extends StatelessWidget{
   HeaderImgCell(this.model,this.image);
   @override
   Widget build(BuildContext context) {
-     Size screenSize = getSize(context);
     return GestureDetector(
       child: Container(
         height: 48,
-        width: screenSize.width,
         color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -41,7 +41,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   }
 
   /* 备注 */
-  Widget _aliasSection(BuildContext context, UserInfo info) {
+  Widget _aliasSection(UserInfo info) {
     // UserinfoBloc bloc = BlocProvider.of<UserinfoBloc>(context);
     return GestureDetector(
       child: Container(
@@ -67,7 +67,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   }
 
   /* 信息区块 */
-  Widget _infoSection(BuildContext context, UserInfo info) {
+  Widget _infoSection(UserInfo info) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12),
       color: Colors.white,
@@ -109,7 +109,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   }
 
   /* 头像区块 */
-  Widget _avatarSection(BuildContext context, UserInfo info) {
+  Widget _avatarSection(UserInfo info) {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(12),
@@ -156,7 +156,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   }
 
   /* 发送消息按钮 */
-  Widget _sendMsgSection(BuildContext context, UserInfo info) {
+  Widget _sendMsgSection(UserInfo info) {
     // UserinfoBloc bloc = BlocProvider.of<UserinfoBloc>(context);
     return GestureDetector(
       child: Container(
@@ -189,19 +189,19 @@ class UserInfoPageState extends State<UserInfoPage> {
             if (state is UserInfoLoaded) {
               body = ListView(
                 children: <Widget>[
-                  _avatarSection(context, state.info),
+                  _avatarSection(state.info),
                   Container(
                     height: 9,
                   ),
-                  _aliasSection(context, state.info),
+                  _aliasSection(state.info),
                   Container(
                     height: 9,
                   ),
-                  _infoSection(context, state.info),
+                  _infoSection(state.info),
                   Container(
                     height: 9,
                   ),
-                  _sendMsgSection(context, state.info)
+                  _sendMsgSection(state.info)
                 ],
               );
             }
