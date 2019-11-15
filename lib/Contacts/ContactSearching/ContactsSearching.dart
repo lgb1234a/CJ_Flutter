@@ -23,6 +23,7 @@ class ContactsSearchingWidget extends StatefulWidget {
 class ContactsSearchingState extends State<ContactsSearchingWidget> {
   int _searchBarHeight = 50;
   TextEditingController _searchController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
   List<ContactInfo> _contacts = [];
   List<TeamInfo> _teams = [];
 
@@ -33,6 +34,10 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     super.initState();
     _searchController.addListener(
         () => _bloc.add(NewContactSearchEvent(_searchController.text)));
+
+    _scrollController.addListener((){
+      FocusScope.of(context).requestFocus(FocusNode());
+    });
   }
 
   @override
@@ -113,7 +118,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
             }
 
             // 点击了cell
-            _bloc.add(TouchedCell(session));
+            _bloc.add(TouchedCellEvent(session));
           })
         ],
       ),
@@ -125,7 +130,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     return GestureDetector(
         onTap: () {
           _bloc.add(
-              TouchedMore(type, _searchController.text, _contacts, _teams));
+              TouchedMoreEvent(type, _searchController.text, _contacts, _teams));
           // 隐藏键盘
           FocusScope.of(context).requestFocus(FocusNode());
         },
@@ -249,6 +254,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   Widget _searchList() {
     int itemCount = _contacts.length > 0 && _teams.length > 0 ? 2 : 1;
     return ListView.separated(
+      controller: _scrollController,
       itemCount: itemCount,
       itemBuilder: (context, idx) => _buildSection(idx),
       separatorBuilder: (context, idx) {

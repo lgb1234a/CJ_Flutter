@@ -23,13 +23,13 @@ class ContactsearchingBloc
       yield ContactsSearchingResult(contacts, groups);
     }
 
-    if (event is TouchedMore) {
+    if (event is TouchedMoreEvent) {
       /* 跳转更多 */
       pushSerachResultViewController(
           event.type, event.keyword, event.contacts, event.groups);
     }
 
-    if (event is TouchedCell) {
+    if (event is TouchedCellEvent) {
       /* 点击联系人 */
       FlutterBoost.singleton.channel.sendEvent('sendMessage',
           {'session_id': event.session.id, 'type': event.session.type});

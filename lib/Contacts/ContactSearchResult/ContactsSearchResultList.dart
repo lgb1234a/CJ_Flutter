@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:cajian/Base/CJUtils.dart';
-import '../Model/ContactSearchDataSource.dart';
 import 'package:nim_sdk_util/Model/nim_modelView.dart';
-import 'package:flutter_boost/flutter_boost.dart';
+import 'bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 const double searchBarHeight = 70;
 
@@ -132,6 +132,7 @@ class ContactsSearchResultListWidget extends StatefulWidget {
 class ContactsSearchResultListState
     extends State<ContactsSearchResultListWidget> {
   List _infos = [];
+  ContactsearchresultBloc _bloc;
   @override
   void initState() {
     super.initState();
@@ -143,26 +144,6 @@ class ContactsSearchResultListState
     super.dispose();
   }
 
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
-  }
-
-  // 搜索文本变化
-  void searchTextChanged(String keyword) async {
-    List<NimSearchContactViewModel> infos = [];
-    if (widget.type == 0) {
-      infos = await ContactSearchDataSource.searchContactBy(keyword);
-    }
-    if (widget.type == 1) {
-      infos = await ContactSearchDataSource.searchGroupBy(keyword);
-    }
-
-    setState(() {
-      _infos = infos;
-    });
-  }
-
   // tile
   Widget _buildTile(NimSearchContactViewModel model) {
     double itemHeight = 72.1;
@@ -170,18 +151,17 @@ class ContactsSearchResultListState
     return SizedBox(
       height: itemHeight,
       child: model.cell(() {
-        // 点击跳转到聊天
+        Session session;
         if (model is ContactInfo) {
-          /* 调用native，拉起选择联系人组件,创建群聊 */
-          FlutterBoost.singleton.channel.sendEvent(
-              'sendMessage', {'session_id': model.infoId, 'type': 0});
+          session = Session(model.infoId, 0);
         }
 
         if (model is TeamInfo) {
-          /* 调用native，拉起选择联系人组件,创建群聊 */
-          FlutterBoost.singleton.channel.sendEvent(
-              'sendMessage', {'session_id': model.teamId, 'type': 1});
+          session = Session(model.teamId, 0);
         }
+
+        // 点击了cell
+        _bloc.add(TappedCellEvent(session));
       }),
     );
   }
@@ -213,18 +193,32 @@ class ContactsSearchResultListState
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+        home: BlocProvider<ContactsearchresultBloc>(
+      builder: (context) {
+        _bloc = ContactsearchresultBloc();
+        return _bloc;
+      },
+      child: Scaffold(
         appBar: ContactSearchBar(widget.keyword,
-            () => FlutterBoost.singleton.closeCurrent(), searchTextChanged),
-        body: ListView.separated(
-          itemCount: _infos.length + 1,
-          itemBuilder: (context, idx) => _buildItem(idx),
-          separatorBuilder: (context, idx) => Divider(
-            height: 0.1,
-            indent: 12,
-          ),
+            () => _bloc.add(CancelSearchingEvent()), (text)=> _bloc.add(NewContactSearchEvent(widget.type, text))),
+        body: BlocBuilder<ContactsearchresultBloc, ContactsearchresultState>(
+          builder: (context, state) {
+
+            if(state is ContactsSearchingResult) {
+              _infos = state.contacts?? state.groups;
+            }
+            
+            return ListView.separated(
+              itemCount: _infos.length + 1,
+              itemBuilder: (context, idx) => _buildItem(idx),
+              separatorBuilder: (context, idx) => Divider(
+                height: 0.1,
+                indent: 12,
+              ),
+            );
+          },
         ),
       ),
-    );
+    ));
   }
 }

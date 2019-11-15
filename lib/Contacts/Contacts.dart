@@ -150,7 +150,8 @@ class ContactsWidgetState extends State<ContactsWidget> {
   Widget _buildContacts() {
     double bp = widget.params['bottom_padding'];
 
-    return BlocProvider<ContactsBloc>(
+    return MaterialApp(
+        home: BlocProvider<ContactsBloc>(
       builder: (BuildContext context) {
         _bloc = ContactsBloc()..add(ContactsFetchEvent());
         return _bloc;
@@ -167,32 +168,34 @@ class ContactsWidgetState extends State<ContactsWidget> {
         ),
         body: BlocBuilder<ContactsBloc, ContactsState>(
           builder: (context, state) {
-            if (state is ContactsLoaded || state is ContactsTagChanged)
-            {
-              if(state is ContactsTagChanged) {
+            if (state is ContactsLoaded || state is ContactsTagChanged) {
+              if (state is ContactsTagChanged) {
                 // 点击了索引需要调整
                 _suspensionTag = state.tag;
               }
-              
+
               ContactsLoaded previous;
-              if(_bloc.previousState is ContactsLoaded) {
+              if (_bloc.previousState is ContactsLoaded) {
                 previous = _bloc.previousState;
               }
               /* 加载完成 */
               return AzListView(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, bp),
                 header: AzListViewHeader(
-                    height: _itemHeight * _bloc.contactFunctions.length + _searchBarHeight,
+                    height: _itemHeight * _bloc.contactFunctions.length +
+                        _searchBarHeight,
                     builder: (context) {
                       return _buildHeader();
                     }),
-                data: state is ContactsLoaded ? state.contacts : previous.contacts,
+                data: state is ContactsLoaded
+                    ? state.contacts
+                    : previous.contacts,
                 itemBuilder: (context, model) => _buildListItem(model),
                 suspensionWidget: _buildSusWidget(_suspensionTag),
                 isUseRealIndex: true,
                 itemHeight: _itemHeight,
                 suspensionHeight: _suspensionHeight,
-                onSusTagChanged: (tag)=> _bloc.add(SusTagChangedEvent(tag)),
+                onSusTagChanged: (tag) => _bloc.add(SusTagChangedEvent(tag)),
               );
             }
 
@@ -202,7 +205,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
           },
         ),
       ),
-    );
+    ));
   }
 
   @override

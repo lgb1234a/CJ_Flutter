@@ -9,17 +9,17 @@ class NewContactSearchEvent extends ContactsearchingEvent {
   NewContactSearchEvent(this.keyword);
 }
 
-class TouchedMore extends ContactsearchingEvent {
+class TouchedMoreEvent extends ContactsearchingEvent {
   final int type; // 0: P2P  1:team
   final String keyword;
   final List<ContactInfo> contacts;
   final List<TeamInfo> groups;
-  TouchedMore(this.type, this.keyword, this.contacts, this.groups);
+  TouchedMoreEvent(this.type, this.keyword, this.contacts, this.groups);
 }
 
-class TouchedCell extends ContactsearchingEvent {
+class TouchedCellEvent extends ContactsearchingEvent {
   final Session session;
-  TouchedCell(this.session);
+  TouchedCellEvent(this.session);
 }
 
 class CancelSearchingEvent extends ContactsearchingEvent {}
