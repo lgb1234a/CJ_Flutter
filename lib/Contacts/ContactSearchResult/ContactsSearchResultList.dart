@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:cajian/Base/CJUtils.dart';
-import 'Model/ContactSearchDataSource.dart';
+import '../Model/ContactSearchDataSource.dart';
 import 'package:nim_sdk_util/Model/nim_modelView.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 

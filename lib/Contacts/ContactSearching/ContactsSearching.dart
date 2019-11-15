@@ -6,16 +6,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
-import 'Model/ContactSearchDataSource.dart';
+import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 import 'package:nim_sdk_util/Model/nim_teamModel.dart';
 import 'package:nim_sdk_util/Model/nim_modelView.dart';
-import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/bloc.dart';
 
 class ContactsSearchingWidget extends StatefulWidget {
-  // final Function cancel;
-  // ContactsSearchingWidget(this.cancel);
-
   @override
   State<StatefulWidget> createState() {
     return ContactsSearchingState();
@@ -28,30 +26,19 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   List<ContactInfo> _contacts = [];
   List<TeamInfo> _teams = [];
 
+  ContactsearchingBloc _bloc;
+
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(() {
-      searchTextChanged();
-    });
+    _searchController.addListener(
+        () => _bloc.add(NewContactSearchEvent(_searchController.text)));
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
-  }
-
-  // 搜索文本变化
-  void searchTextChanged() async {
-    List<ContactInfo> contacts =
-        await ContactSearchDataSource.searchContactBy(_searchController.text);
-    List<TeamInfo> groups =
-        await ContactSearchDataSource.searchGroupBy(_searchController.text);
-    setState(() {
-      _contacts = contacts;
-      _teams = groups;
-    });
   }
 
   // search bar
@@ -95,10 +82,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
                   '取消',
                   style: TextStyle(fontSize: 14),
                 ),
-                onPressed: () {
-                  // 取消搜索
-                  FlutterBoost.singleton.closeCurrent();
-                },
+                onPressed: () => _bloc.add(CancelSearchingEvent()),
               ),
             )
           ],
@@ -119,48 +103,32 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
             indent: 12,
           ),
           model.cell(() {
+            Session session;
             if (model is ContactInfo) {
-              /* 调用native，拉起选择联系人组件,创建群聊 */
-              FlutterBoost.singleton.channel.sendEvent(
-                  'sendMessage', {'session_id': model.infoId, 'type': 0});
+              session = Session(model.infoId, 0);
             }
 
             if (model is TeamInfo) {
-              /* 调用native，拉起选择联系人组件,创建群聊 */
-              FlutterBoost.singleton.channel.sendEvent(
-                  'sendMessage', {'session_id': model.teamId, 'type': 1});
+              session = Session(model.teamId, 0);
             }
+
+            // 点击了cell
+            _bloc.add(TouchedCell(session));
           })
         ],
       ),
     );
   }
 
-  // 跳转到更多列表,把 _teams 或者 _contacts带过去
-  void _pushSerachResultViewController(int type) {
-    FocusScope.of(context).requestFocus(FocusNode());
-    List models = [];
-    if (type == 0) {
-      models = _contacts.map((f) => f.toJson()).toList();
-    }
-
-    if (type == 1) {
-      models = _teams.map((f) => f.toJson()).toList();
-    }
-
-    FlutterBoost.singleton.open('contact_search_result', urlParams: {
-      'models': models,
-      'keyword': _searchController.text,
-      'type': type
-    }, exts: {
-      'animated': true
-    }).then((Map alue) {});
-  }
-
   // 更多
   Widget _buildMoreTile(int type) {
     return GestureDetector(
-        onTap: () => _pushSerachResultViewController(type),
+        onTap: () {
+          _bloc.add(
+              TouchedMore(type, _searchController.text, _contacts, _teams));
+          // 隐藏键盘
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
         child: Container(
           color: Colors.transparent,
           child: Column(
@@ -294,19 +262,31 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          _buildSearchBar(),
-          MediaQuery.removePadding(
-              removeTop: true,
-              context: context,
-              child: Expanded(
-                flex: 1,
-                child: _searchList(),
-              ))
-        ],
+    return BlocProvider<ContactsearchingBloc>(builder: (BuildContext context) {
+      _bloc = ContactsearchingBloc();
+      return _bloc;
+    }, child: Scaffold(
+      body: BlocBuilder<ContactsearchingBloc, ContactsearchingState>(
+        builder: (context, state) {
+          if (state is ContactsSearchingResult) {
+            _contacts = state.contacts;
+            _teams = state.groups;
+          }
+
+          return Column(
+              children: <Widget>[
+                _buildSearchBar(),
+                MediaQuery.removePadding(
+                    removeTop: true,
+                    context: context,
+                    child: Expanded(
+                      flex: 1,
+                      child: _searchList(),
+                    ))
+              ],
+            );
+        },
       ),
-    );
+    ));
   }
 }

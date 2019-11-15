@@ -14,7 +14,9 @@ class Session {
   String id;
   int type;
 
-  Session._a(this.id, this.type);
+  Session(this.id, this.type);
+
+
 
   // json -> model
   Session.fromJson(Map json)

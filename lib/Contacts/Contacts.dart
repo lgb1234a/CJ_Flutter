@@ -6,12 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nim_sdk_util/nim_sdk_util.dart';
-import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
-import 'package:flutter_boost/flutter_boost.dart';
 import 'bloc/bloc.dart';
 
 class ContactsWidget extends StatefulWidget {

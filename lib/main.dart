@@ -3,13 +3,13 @@
  *  入口
  */
 import 'package:flutter/material.dart';
-import 'Contacts/ContactsSearching.dart';
+import 'Contacts/ContactSearching/ContactsSearching.dart';
 import 'Login/LoginEntrance.dart';
 import 'package:cajian/Mine/Mine.dart';
 import 'package:cajian/Contacts/Contacts.dart';
 import 'package:cajian/Mine/Setting.dart';
 import 'package:cajian/Mine/MineInfo.dart';
-import 'package:cajian/Contacts/ContactsSearchResultList.dart';
+import 'package:cajian/Contacts/ContactSearchResult/ContactsSearchResultList.dart';
 import 'Session/SessionInfo.dart';
 import 'package:bloc/bloc.dart';
 import 'Contacts/UserInfo/UserInfoPage.dart';
