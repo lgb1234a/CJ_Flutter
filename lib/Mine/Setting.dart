@@ -8,11 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/Model/SettingModel.dart';
 import 'package:cajian/Mine/View/SettingListCell.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 class SettingWidget extends StatefulWidget {
-  final String channelName;
-  SettingWidget(this.channelName);
 
   SettingState createState() {
     return SettingState();
@@ -21,19 +19,9 @@ class SettingWidget extends StatefulWidget {
 
 class SettingState extends State<SettingWidget> {
 
-  MethodChannel _platform;
-
   @override
   void initState() {
     super.initState();
-
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
-  }
-
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
   }
 
   ListView settingTable = ListView.separated(
@@ -71,7 +59,9 @@ class SettingState extends State<SettingWidget> {
         (
           leading: new IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () { _platform.invokeMethod('popFlutterViewController'); },
+            onPressed: () { 
+              FlutterBoost.singleton.closeCurrent();
+               },
           ),
           title: Text(
             '设置',

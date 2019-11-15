@@ -23,3 +23,9 @@ class TouchedSendMsg extends UserinfoEvent{
   final String userId;
   TouchedSendMsg({@required this.userId});
 }
+
+/* 点击了更多 */
+class TouchedMore extends UserinfoEvent {
+  final String userId;
+  TouchedMore({@required this.userId});
+}

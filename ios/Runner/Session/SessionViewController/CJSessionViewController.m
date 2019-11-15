@@ -10,7 +10,6 @@
 #import "NIMInputMoreContainerView.h"
 #import "CJMoreContainerConfig.h"
 #import "CJCustomAttachmentDefines.h"
-#import "CJSessionInfoViewController.h"
 
 @interface CJSessionViewController ()
 
@@ -109,10 +108,11 @@
 #pragma mark - private
 - (void)enterSessionInfoPage:(id)sender
 {
-    // TODO:跳转flutter 聊天信息页
-    CJSessionInfoViewController *infoVC = [[CJSessionInfoViewController alloc] initWithSession:self.session];
-    [self.navigationController pushViewController:infoVC
-                                         animated:YES];
+    [FlutterBoostPlugin open:@"session_info"
+                   urlParams:@{@"id": self.session.sessionId, @"type": @(self.session.sessionType)}
+                        exts:@{@"animated": @(YES)}
+              onPageFinished:^(NSDictionary *result) {}
+                  completion:nil];
 }
 
 // 刷新消息

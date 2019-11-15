@@ -4,9 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:convert' as convert;
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:nim_sdk_util/Model/nim_userInfo.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 enum MineCellType {
   Profile, // 用户信息
@@ -35,10 +35,9 @@ class MineModel {
 }
 
 final List<MineModel> mineCellModels = [
-  MineModel(MineCellType.Profile, null, null, (MineModel model){
-    Map params = {'route':'mineInfo','channel_name':'com.zqtd.cajian/mineInfo'};
-    String pStr = convert.jsonEncode(params);
-    model.platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+  MineModel(MineCellType.Profile, null, null, (MineModel model) {
+    FlutterBoost.singleton
+        .open('mineInfo', exts: {'animated': true}).then((Map value) {});
   }),
   MineModel(MineCellType.Separator, null, null, null),
   MineModel(MineCellType.Others, '扫一扫', 'images/icon_settings_scan@2x.png',
@@ -70,10 +69,9 @@ final List<MineModel> mineCellModels = [
       'images/icon_setting_copy_contacts@2x.png', (MineModel model) => {}),
   MineModel(MineCellType.Separator, null, null, null),
   MineModel(MineCellType.Others, '设置', 'images/icon_settings_general@2x.png',
-      (MineModel model) 
-  {
-    Map params = {'route':'setting','channel_name':'com.zqtd.cajian/setting'};
-    String pStr = convert.jsonEncode(params);
-    model.platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+      (MineModel model) {
+        /* 跳转设置页面 */
+    FlutterBoost.singleton
+        .open('setting', exts: {'animated': true}).then((Map value) {});
   }),
 ];

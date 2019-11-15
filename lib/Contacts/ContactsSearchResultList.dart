@@ -10,6 +10,7 @@ import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'Model/ContactSearchDataSource.dart';
 import 'package:nim_sdk_util/Model/nim_modelView.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 const double searchBarHeight = 70;
 
@@ -31,7 +32,7 @@ class ContactSearchBarState extends State<ContactSearchBar> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
-  void dispose() { 
+  void dispose() {
     _searchController.dispose();
     super.dispose();
   }
@@ -98,7 +99,6 @@ class ContactSearchBarState extends State<ContactSearchBar> {
 
 // 列表组件
 class ContactsSearchResultListWidget extends StatefulWidget {
-  final String channelName; // channel
   final String keyword; // 搜索关键词
   final int type; // 查找的内容类型说明  0:联系人/1:群聊
   final List<NimSearchContactViewModel> models; // contactInfo/teamInfo
@@ -115,13 +115,12 @@ class ContactsSearchResultListWidget extends StatefulWidget {
     return null;
   }
 
-  factory ContactsSearchResultListWidget(params, channelName) {
+  factory ContactsSearchResultListWidget(params) {
     List models = params['models'];
     return ContactsSearchResultListWidget._a(params['keyword'], params['type'],
-        models.map((f) => _toModel(f, params['type'])).toList(), channelName);
+        models.map((f) => _toModel(f, params['type'])).toList());
   }
-  ContactsSearchResultListWidget._a(
-      this.keyword, this.type, this.models, this.channelName)
+  ContactsSearchResultListWidget._a(this.keyword, this.type, this.models)
       : assert(keyword.length > 0),
         assert(models.length > 0);
   @override
@@ -132,19 +131,15 @@ class ContactsSearchResultListWidget extends StatefulWidget {
 
 class ContactsSearchResultListState
     extends State<ContactsSearchResultListWidget> {
-  MethodChannel _platform;
   List _infos = [];
   @override
   void initState() {
     super.initState();
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
     _infos = widget.models;
   }
 
   @override
-  void dispose() { 
-    
+  void dispose() {
     super.dispose();
   }
 
@@ -177,13 +172,15 @@ class ContactsSearchResultListState
       child: model.cell(() {
         // 点击跳转到聊天
         if (model is ContactInfo) {
-          // 点击跳转聊天
-          _platform.invokeMethod('createSession:', [model.infoId, 0]);
+          /* 调用native，拉起选择联系人组件,创建群聊 */
+          FlutterBoost.singleton.channel.sendEvent(
+              'sendMessage', {'session_id': model.infoId, 'type': 0});
         }
 
         if (model is TeamInfo) {
-          // 点击跳转聊天
-          _platform.invokeMethod('createSession:', [model.teamId, 1]);
+          /* 调用native，拉起选择联系人组件,创建群聊 */
+          FlutterBoost.singleton.channel.sendEvent(
+              'sendMessage', {'session_id': model.teamId, 'type': 1});
         }
       }),
     );
@@ -217,10 +214,8 @@ class ContactsSearchResultListState
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: ContactSearchBar(
-            widget.keyword,
-            () => _platform.invokeMethod('popFlutterViewController'),
-            searchTextChanged),
+        appBar: ContactSearchBar(widget.keyword,
+            () => FlutterBoost.singleton.closeCurrent(), searchTextChanged),
         body: ListView.separated(
           itemCount: _infos.length + 1,
           itemBuilder: (context, idx) => _buildItem(idx),

@@ -5,17 +5,12 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import './bloc.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
-import 'dart:convert' as convert;
 
 class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
-  final MethodChannel mc;
-  SessioninfoBloc({@required this.mc});
-
   @override
   SessioninfoState get initialState => InitialSessioninfoState();
 
@@ -72,23 +67,21 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is TappedUserAvatar) {
       String userId = event.userId;
       /* 跳转个人信息页 */
-      Map params = {
-        'container': 'CJUserInfoViewController',
-        'route': 'user_info',
-        'channel_name': 'com.zqtd.cajian/user_info',
-        'params': {
-          'user_id': userId
-        }
-      };
-      String pStr = convert.jsonEncode(params);
-      mc.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+      FlutterBoost.singleton.open('user_info',
+          urlParams: {'user_id': userId},
+          exts: {'animated': true}).then((Map value) {
+        print(
+            "call me when page is finished. did recieve second route result $value");
+      });
     }
 
     if (event is CreateGroupSession) {
       /* 创建群聊 */
       String userId = event.userId;
       /* 调用native，拉起选择联系人组件,创建群聊 */
-      mc.invokeMethod('createGroupChat:', [userId]);
+      FlutterBoost.singleton.channel.sendEvent('createGroupChat', {
+        'user_ids': [userId]
+      });
     }
 
     if (event is ClearChatHistory) {

@@ -9,15 +9,13 @@ import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
-import 'ContactsSearching.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
-import 'dart:convert' as convert;
+import 'package:flutter_boost/flutter_boost.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
-  final String channelName;
 
-  ContactsWidget(this.params, this.channelName);
+  ContactsWidget(this.params);
   ContactsState createState() {
     return new ContactsState();
   }
@@ -26,19 +24,15 @@ class ContactsWidget extends StatefulWidget {
 class ContactsState extends State<ContactsWidget> {
   List<ContactInfo> _contacts = List();
   List<ContactInfo> _contactFunctions = List();
-  MethodChannel _platform;
   int _suspensionHeight = 40;
   int _itemHeight = 60;
   int _searchBarHeight = 60;
   String _suspensionTag = "";
-  bool _inSeraching = false;
 
   @override
   void initState() {
     super.initState();
     loadData();
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
   }
 
   // Native回调用
@@ -140,9 +134,7 @@ class ContactsState extends State<ContactsWidget> {
             ),
             onPressed: () {
               // 切换搜索状态
-              setState(() {
-                _inSeraching = true;
-              });
+              FlutterBoost.singleton.open('contact_searching', exts: {'animated': true});
             },
           ),
         ));
@@ -191,14 +183,9 @@ class ContactsState extends State<ContactsWidget> {
             onTap: () {
               String userId = model.infoId;
               /* 跳转个人信息页 */
-              Map params = {
-                'container': 'CJUserInfoViewController',
-                'route': 'user_info',
-                'channel_name': 'com.zqtd.cajian/user_info',
-                'params': {'user_id': userId}
-              };
-              String pStr = convert.jsonEncode(params);
-              _platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+              FlutterBoost.singleton.open('user_info',
+                  urlParams: {'user_id': userId},
+                  exts: {'animated': true}).then((Map value) {});
             },
             child: Container(
               height: _itemHeight.toDouble(),
@@ -223,7 +210,7 @@ class ContactsState extends State<ContactsWidget> {
 
   // 非搜索状态下的通讯录
   Widget _buildContacts() {
-    double bp = double.parse(widget.params['bottom_padding']);
+    double bp = widget.params['bottom_padding'];
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -251,20 +238,9 @@ class ContactsState extends State<ContactsWidget> {
         ));
   }
 
-  void cancelSearch() {
-    setState(() {
-      _inSeraching = false;
-    });
-  }
-
-  // 通讯录搜索页
-  Widget _buildContactsInSearching() {
-    return ContactsSearchingWidget(cancelSearch, _platform);
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: _inSeraching ? _buildContactsInSearching() : _buildContacts());
+        home: _buildContacts());
   }
 }

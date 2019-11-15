@@ -3,17 +3,17 @@
  * 个人信息页
  */
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './bloc/bloc.dart';
 import './bloc/userinfo_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
+import 'package:flutter_boost/flutter_boost.dart';
+import '../../Base/CJUtils.dart';
 
 class UserInfoPage extends StatefulWidget {
   final Map params;
-  final String channelName;
-  UserInfoPage(this.params, this.channelName);
+  UserInfoPage(this.params);
 
   @override
   State<StatefulWidget> createState() {
@@ -22,27 +22,19 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class UserInfoPageState extends State<UserInfoPage> {
-  MethodChannel _platform;
   String _userId;
   double _cellH = 44;
+  UserinfoBloc _bloc;
 
   @override
   void initState() {
     super.initState();
 
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
     _userId = widget.params['user_id'];
-  }
-
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
   }
 
   /* 备注 */
   Widget _aliasSection(UserInfo info) {
-    // UserinfoBloc bloc = BlocProvider.of<UserinfoBloc>(context);
     return GestureDetector(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
@@ -61,8 +53,7 @@ class UserInfoPageState extends State<UserInfoPage> {
           ],
         ),
       ),
-      onTap: () => BlocProvider.of<UserinfoBloc>(context)
-          .add(TouchedAlias(alias: info.alias)),
+      onTap: () => _bloc.add(TouchedAlias(alias: info.alias)),
     );
   }
 
@@ -162,7 +153,6 @@ class UserInfoPageState extends State<UserInfoPage> {
 
   /* 发送消息按钮 */
   Widget _sendMsgSection(UserInfo info) {
-    // UserinfoBloc bloc = BlocProvider.of<UserinfoBloc>(context);
     return GestureDetector(
       child: Container(
         height: _cellH,
@@ -172,8 +162,7 @@ class UserInfoPageState extends State<UserInfoPage> {
           children: <Widget>[Icon(Icons.send), Text('发消息')],
         ),
       ),
-      onTap: () => BlocProvider.of<UserinfoBloc>(context)
-          .add(TouchedSendMsg(userId: info.userId)),
+      onTap: () => _bloc.add(TouchedSendMsg(userId: info.userId)),
     );
   }
 
@@ -181,9 +170,35 @@ class UserInfoPageState extends State<UserInfoPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: BlocProvider<UserinfoBloc>(
-      builder: (context) =>
-          UserinfoBloc(mc: _platform)..add(FetchUserInfo(userId: _userId)),
+      builder: (context) {
+        _bloc = UserinfoBloc()..add(FetchUserInfo(userId: _userId));
+        return _bloc;
+      },
       child: Scaffold(
+        appBar: new AppBar(
+          leading: new IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              FlutterBoost.singleton.closeCurrent();
+            },
+          ),
+          title: Text(
+            '详细资料',
+            style: TextStyle(color: blackColor),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.more_horiz,
+                size: 33,
+              ),
+              onPressed: () => _bloc.add(TouchedMore(userId: _userId)),
+            )
+          ],
+          backgroundColor: mainBgColor,
+          elevation: 0.01,
+          iconTheme: IconThemeData.fallback(),
+        ),
         body: BlocBuilder<UserinfoBloc, UserinfoState>(
           builder: (context, state) {
             Widget body = Center(

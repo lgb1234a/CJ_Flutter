@@ -1,31 +1,31 @@
 //
-//  CJMineViewController.m
+//  CJLoginViewController.m
 //  Runner
 //
-//  Created by chenyn on 2019/8/15.
+//  Created by chenyn on 2019/11/13.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJMineViewController.h"
+#import "CJLoginViewController.h"
 
-@interface CJMineViewController ()
+@interface CJLoginViewController ()
 
 @end
 
-@implementation CJMineViewController
+@implementation CJLoginViewController
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        [self setName:@"mine"];
+        [self setName:@"login_entrance"];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated

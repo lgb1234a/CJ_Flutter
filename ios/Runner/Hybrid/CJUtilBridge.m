@@ -8,62 +8,10 @@
 
 #import "CJUtilBridge.h"
 #import <MBProgressHUD.h>
+#import "CJSessionViewController.h"
+#import "CJContactSelectViewController.h"
 
-static FlutterMethodCall *_call = nil;
-static FlutterResult _result = nil;
-
-@interface CJUtilBridge ()
-@property (nonatomic, strong, class) FlutterMethodCall *call;
-@property (nonatomic, copy, class) FlutterResult result;
-@end
-
-@implementation CJUtilBridge
-
-@dynamic call;
-@dynamic result;
-
-+ (FlutterMethodCall *)call
-{
-    return _call;
-}
-
-+ (void)setCall:(FlutterMethodCall *)call
-{
-    _call = call;
-}
-
-+ (FlutterResult)result
-{
-    return _result;
-}
-
-+ (void)setResult:(FlutterResult)result
-{
-    _result = result;
-}
-
-+ (void)bridgeCall:(FlutterMethodCall *)call
-            result:(FlutterResult)result
-{
-    CJUtilBridge.call = call;
-    CJUtilBridge.result = result;
-    
-    // flutter 调用
-    ZZLog(@"!!!!!! flutter call :%@", call.method);
-    NSArray *params = call.arguments;
-    SEL callMethod = NSSelectorFromString(call.method);
-    if([self respondsToSelector:callMethod])
-    {
-        [self performSelector:callMethod
-                   withObject:params
-                   afterDelay:0];
-    }else {
-        NSString *errorInfo = [NSString stringWithFormat:@"!!!!!! CJUtilBridge未实现%@", call.method];
-        NSAssert(NO, errorInfo);
-    }
-}
-
-static inline UIWindow *getkeyWindow()
+static inline UIWindow *cj_getkeyWindow()
 {
     if([UIApplication sharedApplication].keyWindow)
     {
@@ -75,30 +23,105 @@ static inline UIWindow *getkeyWindow()
     return [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, width, height)];
 }
 
-+ (void)showTip:(NSArray *)params
+@implementation CJUtilBridge
+
+- (void)initBridge
 {
-    MBProgressHUD *HUD = [MBProgressHUD HUDForView:getkeyWindow()];
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self sendMessage:arguments];
+    } forName:@"sendMessage"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self createGroupChat:arguments];
+    } forName:@"createGroupChat"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self showTip:arguments];
+    } forName:@"showTip"];
+    
+//    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+//
+//    } forName:@"showSheet"];
+}
+
+// 跳转聊天
+- (void)sendMessage:(NSDictionary *)params
+{
+    NSString *sessionId = params[@"session_id"];
+    NSNumber *type = params[@"type"];
+    
+    NIMSession *session = [NIMSession session:sessionId type:type.integerValue];
+    CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
+    [cj_rootNavigationController() pushViewController:sessionVC
+                                         animated:YES];
+}
+
+/// 创建群聊
+/// @param params 群成员ids
+- (void)createGroupChat:(NSDictionary *)params
+{
+    NIMCreateTeamOption *option = [[NIMCreateTeamOption alloc] init];
+    option.type       = NIMTeamTypeAdvanced;
+    option.joinMode   = NIMTeamJoinModeNoAuth;
+    option.beInviteMode = NIMTeamBeInviteModeNoAuth;
+    option.inviteMode   = NIMTeamInviteModeAll;
+    
+    NIMContactFriendSelectConfig *config = [NIMContactFriendSelectConfig new];
+    config.needMutiSelected = YES;
+    config.alreadySelectedMemberId = params[@"user_ids"];
+    
+    CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
+    
+    __weak typeof(nav) weakNav = nav;
+    selectorVc.finished = ^(NSArray <NSString *>*ids) {
+        NSMutableArray *names = @[[[NIMKit sharedKit] infoByUser:[NIMSDK sharedSDK].loginManager.currentAccount option:nil].showName].mutableCopy;
+        // 获取成员名字
+        [ids enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [names addObject:[[NIMKit sharedKit] infoByUser:obj option:nil].showName];
+        }];
+        
+        option.name = [names componentsJoinedByString:@"、"];
+        [[NIMSDK sharedSDK].teamManager createTeam:option
+                                             users:ids
+                                        completion:^(NSError * __nullable error, NSString * __nullable teamId, NSArray<NSString *> * __nullable failedUserIds){
+            // 关闭选择器
+            [weakNav dismissViewControllerAnimated:YES completion:nil];
+            [self sendMessage:@{@"session_id": teamId, @"type": @1}];
+        }];
+    };
+    
+    [[FlutterBoostPlugin sharedInstance].currentViewController
+                                    presentViewController:nav
+                                                 animated:YES
+                                               completion:nil];
+}
+
+- (void)showTip:(NSDictionary *)params
+{
+    MBProgressHUD *HUD = [MBProgressHUD HUDForView:cj_getkeyWindow()];
     if (!HUD) {
-        HUD = [MBProgressHUD showHUDAddedTo:getkeyWindow() animated:YES];
+        HUD = [MBProgressHUD showHUDAddedTo:cj_getkeyWindow() animated:YES];
     }
     HUD.contentColor = [UIColor whiteColor];
     HUD.bezelView.color = [[UIColor blackColor] colorWithAlphaComponent:0.8];
     HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
     HUD.mode = MBProgressHUDModeText;
-    HUD.label.text = params.firstObject;
+    HUD.label.text = params[@"text"];
     HUD.label.numberOfLines = 0;
     HUD.removeFromSuperViewOnHide = YES;
     [HUD hideAnimated:YES afterDelay:2];
 }
 
-+ (void)postNotification:(NSArray *)params
-{
-    NSString *name = params.firstObject;
-    id userInfo = params.lastObject;
-    [[NSNotificationCenter defaultCenter] postNotificationName:name
-                                                        object:nil
-                                                      userInfo:userInfo];
-}
-
+//- (void)showSheet:(NSDictionary *)params
+//{
+//    NSString *title = params[@"title"];
+//    NSString *message = params[@"message"];
+//    NSInteger style = [params[@"style"] integerValue];
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+//                                                                   message:message preferredStyle:style];
+//
+//
+//}
 
 @end

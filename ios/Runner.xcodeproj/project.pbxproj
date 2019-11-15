@@ -21,16 +21,15 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */; };
-		EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6222FABBD600CAD319 /* CJViewController.m */; };
+		EF11BE6B22FABBD600CAD319 /* CJFlutterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6222FABBD600CAD319 /* CJFlutterViewController.m */; };
 		EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */; };
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
-		EF150D662355ADD0008EC12A /* CJContactSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */; };
-		EF26EFB42375019D007DA362 /* CJContactSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26EFB32375019D007DA362 /* CJContactSettingViewController.m */; };
 		EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */; };
 		EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */; };
-		EF6B89112373FD960015ED96 /* CJUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */; };
+		EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */; };
+		EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552F237BDAB200EE1E35 /* CJLoginViewController.m */; };
 		EF72D5B22341913C008E95A5 /* CJSearchTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */; };
 		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
 		EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A410F2334BEC100AF697E /* CJMoreContainerConfig.m */; };
@@ -54,7 +53,6 @@
 		EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */; };
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
-		EF8C6EC6235D9A4800D60409 /* CJSessionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8C6EC5235D9A4800D60409 /* CJSessionInfoViewController.m */; };
 		EF8F5428234F27B100FFD30A /* UIAlertController+Coroutine.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8F5400234F27B100FFD30A /* UIAlertController+Coroutine.m */; };
 		EF8F5429234F27B100FFD30A /* UIVideoEditorController+Coroutine.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8F5402234F27B100FFD30A /* UIVideoEditorController+Coroutine.m */; };
 		EF8F542A234F27B100FFD30A /* UIImage+Coroutine.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8F5405234F27B100FFD30A /* UIImage+Coroutine.m */; };
@@ -119,8 +117,8 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF071BFE232634F8007E5D9B /* CJNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJNavigationViewController.h; sourceTree = "<group>"; };
 		EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJNavigationViewController.m; sourceTree = "<group>"; };
-		EF11BE5922FABBD600CAD319 /* CJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJViewController.h; sourceTree = "<group>"; };
-		EF11BE6222FABBD600CAD319 /* CJViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJViewController.m; sourceTree = "<group>"; };
+		EF11BE5922FABBD600CAD319 /* CJFlutterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJFlutterViewController.h; sourceTree = "<group>"; };
+		EF11BE6222FABBD600CAD319 /* CJFlutterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJFlutterViewController.m; sourceTree = "<group>"; };
 		EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		EF11BE6D22FABBFC00CAD319 /* CJUtilBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJUtilBridge.h; sourceTree = "<group>"; };
 		EF11BE6F22FABBFC00CAD319 /* CJUtilBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJUtilBridge.m; sourceTree = "<group>"; };
@@ -130,15 +128,13 @@
 		EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactsViewController.m; sourceTree = "<group>"; };
 		EF1422ED23055BF500AEAA55 /* CJMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMineViewController.h; sourceTree = "<group>"; };
 		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
-		EF150D642355ADD0008EC12A /* CJContactSearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactSearchResultViewController.h; sourceTree = "<group>"; };
-		EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactSearchResultViewController.m; sourceTree = "<group>"; };
-		EF26EFB22375019D007DA362 /* CJContactSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJContactSettingViewController.h; sourceTree = "<group>"; };
-		EF26EFB32375019D007DA362 /* CJContactSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactSettingViewController.m; sourceTree = "<group>"; };
 		EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserSelectTableViewCell.h; sourceTree = "<group>"; };
 		EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserSelectTableViewCell.m; sourceTree = "<group>"; };
 		EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CJUserSelectTableViewCell.xib; sourceTree = "<group>"; };
-		EF6B890F2373FD960015ED96 /* CJUserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserInfoViewController.h; sourceTree = "<group>"; };
-		EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserInfoViewController.m; sourceTree = "<group>"; };
+		EF6C552B237AAC8600EE1E35 /* PlatformRouterImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformRouterImp.h; sourceTree = "<group>"; };
+		EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlatformRouterImp.m; sourceTree = "<group>"; };
+		EF6C552E237BDAB200EE1E35 /* CJLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJLoginViewController.h; sourceTree = "<group>"; };
+		EF6C552F237BDAB200EE1E35 /* CJLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJLoginViewController.m; sourceTree = "<group>"; };
 		EF72D5B02341913C008E95A5 /* CJSearchTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSearchTableHeaderView.h; sourceTree = "<group>"; };
 		EF72D5B12341913C008E95A5 /* CJSearchTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSearchTableHeaderView.m; sourceTree = "<group>"; };
 		EF8A41072334AF7D00AF697E /* CJSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionViewController.h; sourceTree = "<group>"; };
@@ -177,8 +173,6 @@
 		EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_onTimer.aac; sourceTree = "<group>"; };
 		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
 		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
-		EF8C6EC4235D9A4800D60409 /* CJSessionInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJSessionInfoViewController.h; sourceTree = "<group>"; };
-		EF8C6EC5235D9A4800D60409 /* CJSessionInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJSessionInfoViewController.m; sourceTree = "<group>"; };
 		EF8F53FE234F27B100FFD30A /* cokit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cokit.h; sourceTree = "<group>"; };
 		EF8F5400234F27B100FFD30A /* UIAlertController+Coroutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Coroutine.m"; sourceTree = "<group>"; };
 		EF8F5401234F27B100FFD30A /* UIImage+Coroutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Coroutine.h"; sourceTree = "<group>"; };
@@ -331,6 +325,8 @@
 		EF11BE4E22FABACE00CAD319 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				EF6C552E237BDAB200EE1E35 /* CJLoginViewController.h */,
+				EF6C552F237BDAB200EE1E35 /* CJLoginViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -338,8 +334,10 @@
 		EF11BE5422FABBD600CAD319 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				EF11BE5922FABBD600CAD319 /* CJViewController.h */,
-				EF11BE6222FABBD600CAD319 /* CJViewController.m */,
+				EF6C552B237AAC8600EE1E35 /* PlatformRouterImp.h */,
+				EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */,
+				EF11BE5922FABBD600CAD319 /* CJFlutterViewController.h */,
+				EF11BE6222FABBD600CAD319 /* CJFlutterViewController.m */,
 				EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */,
 				EF071BFE232634F8007E5D9B /* CJNavigationViewController.h */,
 				EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */,
@@ -373,12 +371,6 @@
 			children = (
 				EF11BE7A22FAC74300CAD319 /* CJContactsViewController.h */,
 				EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */,
-				EF150D642355ADD0008EC12A /* CJContactSearchResultViewController.h */,
-				EF150D652355ADD0008EC12A /* CJContactSearchResultViewController.m */,
-				EF6B890F2373FD960015ED96 /* CJUserInfoViewController.h */,
-				EF6B89102373FD960015ED96 /* CJUserInfoViewController.m */,
-				EF26EFB22375019D007DA362 /* CJContactSettingViewController.h */,
-				EF26EFB32375019D007DA362 /* CJContactSettingViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -413,8 +405,6 @@
 				EF8A40FD2334A44000AF697E /* BubbleCell */,
 				EF8A41072334AF7D00AF697E /* CJSessionViewController.h */,
 				EF8A41082334AF7D00AF697E /* CJSessionViewController.m */,
-				EF8C6EC4235D9A4800D60409 /* CJSessionInfoViewController.h */,
-				EF8C6EC5235D9A4800D60409 /* CJSessionInfoViewController.m */,
 			);
 			path = SessionViewController;
 			sourceTree = "<group>";
@@ -858,6 +848,7 @@
 			files = (
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
 				EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */,
+				EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8F542E234F27B100FFD30A /* NSUserDefaults+Coroutine.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,
@@ -882,28 +873,25 @@
 				EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */,
 				EF8F5438234F27B100FFD30A /* NSKeyedArchiver+Coroutine.m in Sources */,
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
-				EF11BE6B22FABBD600CAD319 /* CJViewController.m in Sources */,
+				EF11BE6B22FABBD600CAD319 /* CJFlutterViewController.m in Sources */,
 				EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
-				EF150D662355ADD0008EC12A /* CJContactSearchResultViewController.m in Sources */,
-				EF8C6EC6235D9A4800D60409 /* CJSessionInfoViewController.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
 				EF8F5434234F27B100FFD30A /* NSFileManager+Coroutine.m in Sources */,
 				EF8F5435234F27B100FFD30A /* NSURLConnection+Coroutine.m in Sources */,
 				EF72D5B22341913C008E95A5 /* CJSearchTableHeaderView.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
 				EFD25940233DB5CF00E78DB6 /* CJContactSelectViewController.m in Sources */,
-				EF26EFB42375019D007DA362 /* CJContactSettingViewController.m in Sources */,
 				EF8F542F234F27B100FFD30A /* NSURLSession+Coroutine.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8F5432234F27B100FFD30A /* NSXMLParser+Coroutine.m in Sources */,
-				EF6B89112373FD960015ED96 /* CJUserInfoViewController.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
 				EF8F542A234F27B100FFD30A /* UIImage+Coroutine.m in Sources */,
 				EF8F5439234F27B100FFD30A /* NSData+Coroutine.m in Sources */,
 				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
 				EFD25944233DB6F400E78DB6 /* CJContactSelectConfig.m in Sources */,
 				EF8F542D234F27B100FFD30A /* NSPropertyList+Coroutine.m in Sources */,
+				EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
 				EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */,
 				EF8F5429234F27B100FFD30A /* UIVideoEditorController+Coroutine.m in Sources */,

@@ -104,6 +104,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_boost:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "feature/flutter_1.9_upgrade"
+      resolved-ref: "7422c7c17337c5e78183d8c0fdeffce9775dceca"
+      url: "https://github.com/alibaba/flutter_boost.git"
+    source: git
+    version: "0.1.54"
   flutter_test:
     dependency: "direct dev"
     description: flutter

@@ -3,18 +3,15 @@
  * 聊天信息页
  */
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/Model/nim_session.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:async';
 import 'package:cajian/Session/bloc/bloc.dart';
 import './SessionP2PInfo.dart';
 
 class SessionInfoWidget extends StatefulWidget {
   final Map params;
-  final String channelName;
-  SessionInfoWidget(this.params, this.channelName);
+  SessionInfoWidget(this.params);
   @override
   State<StatefulWidget> createState() {
     return SessionInfoState();
@@ -23,27 +20,18 @@ class SessionInfoWidget extends StatefulWidget {
 
 class SessionInfoState extends State<SessionInfoWidget> {
   Session _session;
-  MethodChannel _platform;
 
   @override
   void initState() {
     super.initState();
-
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
     _session = Session.fromJson(widget.params);
-  }
-
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
   }
 
   // 点对点聊天的会话信息页
   Widget p2pSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
       builder: (context) =>
-          SessioninfoBloc(mc: _platform)..add(Fetch(session: _session)),
+          SessioninfoBloc()..add(Fetch(session: _session)),
       child: SessionP2PInfo(_session),
     );
   }

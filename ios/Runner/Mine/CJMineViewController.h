@@ -6,11 +6,11 @@
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJViewController.h"
+#import "CJFlutterViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJMineViewController : CJViewController
+@interface CJMineViewController : CJFlutterViewController
 
 @end
 

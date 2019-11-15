@@ -2,25 +2,20 @@ import 'package:cajian/Mine/Dao/MineInfoDao.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_boost/flutter_boost.dart';
 import 'Model/MineInfoModel.dart';
 import 'View/MineInfoListCell.dart';
 
 class MineInfoWiget extends StatefulWidget {
-  final String channelName;
-  MineInfoWiget(this.channelName);
 
   _MineInfoState createState() => _MineInfoState();
 }
 
 class _MineInfoState extends State<MineInfoWiget> {
-  MethodChannel _platform;
   List _cellModels = [];
   @override
   void initState() {
     super.initState();
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
     loadData();
   }
 
@@ -44,7 +39,8 @@ class _MineInfoState extends State<MineInfoWiget> {
           leading: new IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              _platform.invokeMethod('popFlutterViewController');
+              // _platform.invokeMethod('popFlutterViewController');
+              FlutterBoost.singleton.closeCurrent();
             },
           ),
           title: Text(

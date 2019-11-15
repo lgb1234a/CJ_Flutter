@@ -4,14 +4,11 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'Model/MineModel.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/View/MineListCell.dart';
 
 class MineWidget extends StatefulWidget {
-  final String channelName;
-  MineWidget(this.channelName);
   
   MineState createState() {
     return new MineState();
@@ -19,19 +16,10 @@ class MineWidget extends StatefulWidget {
 }
 
 class MineState extends State<MineWidget> {
-  MethodChannel _platform;
 
   @override
   void initState() {
     super.initState();
-
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
-  }
-
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
   }
 
   @override
@@ -42,8 +30,7 @@ class MineState extends State<MineWidget> {
       itemBuilder: (BuildContext context, int index) 
       {
         MineModel model = mineCellModels[index];
-        model.platform = _platform;
-
+        
         if(model.type == MineCellType.Others) {
           return new MineListCellOthers(model);
         }else if(model.type == MineCellType.Separator) {

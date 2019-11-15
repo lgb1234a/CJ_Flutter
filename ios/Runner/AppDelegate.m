@@ -1,9 +1,9 @@
 #include "AppDelegate.h"
 #include "GeneratedPluginRegistrant.h"
-#import "CJViewController.h"
+#import "CJFlutterViewController.h"
 #import "CJSessionListViewController.h"
 #import "CJContactsViewController.h"
-#import "CJViewController.h"
+#import "CJFlutterViewController.h"
 #import "CJMineViewController.h"
 #import <nim_sdk_util/NimSdkUtilPlugin.h>
 #import <WxSdkPlugin.h>
@@ -11,13 +11,23 @@
 #import "CJCellLayoutConfig.h"
 #import "CJNotificationCenter.h"
 #import "CJPayManager.h"
+#import "PlatformRouterImp.h"
+#import "CJUtilBridge.h"
+#import "CJLoginViewController.h"
+
+@interface AppDelegate ()
+
+@property (nonatomic, strong)PlatformRouterImp *router;
+
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     // 初始化flutter
-    [GeneratedPluginRegistrant registerWithRegistry:self];
+//    [GeneratedPluginRegistrant registerWithRegistry:self];
     // 注册微信sdk
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
     // 配置云信服务
@@ -27,12 +37,20 @@
                                              selector:@selector(didLogout)
                                                  name:@"didLogout"
                                                object:nil];
+    
     /* 登录回调代理 */
     [[NIMSDK sharedSDK].loginManager addDelegate:self];
     
     /*根据登录状态初始化登录页面 vc*/
     NSString *accid = [[NSUserDefaults standardUserDefaults] objectForKey:@"flutter.accid"];
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"flutter.token"];
+    
+    // 初始化flutter
+    _router = [PlatformRouterImp new];
+    [FlutterBoostPlugin.sharedInstance startFlutterWithPlatform:_router
+                                                        onStart:^(FlutterEngine *engine) {
+        [[CJUtilBridge alloc] initBridge];
+    }];
     if(accid && token) {
         [NimSdkUtilPlugin autoLogin:accid token:token];
     }else {
@@ -84,38 +102,40 @@
     UITabBarController *tabbar = [[UITabBarController alloc] init];
     
     CJSessionListViewController *listVC = [[CJSessionListViewController alloc] init];
-    CJNavigationViewController *listNav = [[CJNavigationViewController alloc] initWithRootViewController:listVC];
-    listNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"擦肩"
+    listVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"擦肩"
                                                        image:[UIImage imageNamed:@"icon_message_normal"]
                                                selectedImage:[UIImage imageNamed:@"icon_message_pressed"]];
-    listNav.tabBarItem.tag = 0;
+    listVC.tabBarItem.tag = 0;
     
     CJContactsViewController *contactsVC = [[CJContactsViewController alloc] init];
-    CJNavigationViewController *contactsNav = [[CJNavigationViewController alloc] initWithRootViewController:contactsVC];
-    contactsNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"通讯录"
+    contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"通讯录"
                                                        image:[UIImage imageNamed:@"icon_contact_normal"]
                                                selectedImage:[UIImage imageNamed:@"icon_contact_pressed"]];
-    contactsNav.tabBarItem.tag = 1;
+    contactsVC.tabBarItem.tag = 1;
     
-    CJMineViewController *mine = [[CJMineViewController alloc] init];
-    CJNavigationViewController *mineNav = [[CJNavigationViewController alloc] initWithRootViewController:mine];
-    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
+    CJMineViewController *mineVC = [[CJMineViewController alloc] init];
+    mineVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
                                                        image:[UIImage imageNamed:@"icon_setting_normal"]
                                                selectedImage:[UIImage imageNamed:@"icon_setting_pressed"]];
-    mineNav.tabBarItem.tag = 2;
+    mineVC.tabBarItem.tag = 2;
     
-    tabbar.viewControllers = @[listNav, contactsNav, mineNav];
+    tabbar.viewControllers = @[listVC, contactsVC, mineVC];
+    CJNavigationViewController *root = [[CJNavigationViewController alloc] initWithRootViewController:tabbar];
     
-    self.window.rootViewController = tabbar;
+    self.window.rootViewController = root;
     self.tabbar = tabbar;
+    
+    _router.navigationController = root;
 }
 
 // 展示登出成功的页面根视图
 - (void)showDidLogoutRootVC
 {
-    NSString *openUrl = @"{\"route\":\"login_entrance\",\"channel_name\":\"com.zqtd.cajian/login_entrance\"}";
-    CJViewController *rootVC = [[CJViewController alloc] initWithFlutterOpenUrl:openUrl];
-    self.window.rootViewController = rootVC;
+    CJLoginViewController *loginVC = [[CJLoginViewController alloc] init];
+    CJNavigationViewController *root = [[CJNavigationViewController alloc] initWithRootViewController:loginVC];
+    
+    self.window.rootViewController = root;
+    _router.navigationController = root;
 }
 
 #pragma mark - NIMLoginManagerDelegate

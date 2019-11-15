@@ -54,6 +54,7 @@ final List<SettingModel> settingCellModels = [
       needSeparatorLine: false),
   SettingModel(SettingCellType.Function, '退出登录', null, Color(0xFFFA5151),
       (SettingModel model) {
+
     cjDialog(model.ctx, '提示',
         msg: '确定要退出登录吗？',
         handlerTexts: ['确定'],

@@ -17,10 +17,10 @@
 
 - (instancetype)init
 {
-    int bottomPadding = BOTTOM_BAR_HEIGHT + (ISPROFILEDSCREEN?UNSAFE_BOTTOM_HEIGHT:0);
-    NSString *contactsOpenUrl = [NSString stringWithFormat:@"{\"route\":\"contacts\",\"channel_name\":\"com.zqtd.cajian/contacts\",\"params\":{\"bottom_padding\":\"%d\"}}", bottomPadding];
-    self = [super initWithFlutterOpenUrl:contactsOpenUrl];
+    self = [super init];
     if (self) {
+        double bottomPadding = BOTTOM_BAR_HEIGHT + (ISPROFILEDSCREEN?UNSAFE_BOTTOM_HEIGHT:0);
+        [self setName:@"contacts" params:@{@"bottom_padding": @(bottomPadding)}];
     }
     return self;
 }
@@ -29,22 +29,11 @@
     [super viewDidLoad];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBarHidden = YES;
-}
 
-- (void)createSession:(NSArray *)params
+- (void)viewWillAppear:(BOOL)animated
 {
-    NSString *sessionId = params.firstObject;
-    NSNumber *type = params[1];
-    
-    NIMSession *session = [NIMSession session:sessionId type:type.integerValue];
-    CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
-    [self.navigationController pushViewController:sessionVC
-                                         animated:YES];
+    [super viewWillAppear:animated];
+    cj_rootNavigationController().navigationBarHidden = YES;
 }
-
 
 @end

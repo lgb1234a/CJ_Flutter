@@ -4,34 +4,18 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'Login.dart';
 
 class LoginEntrance extends StatefulWidget {
-  final String channelName;
-
-  LoginEntrance({this.channelName});
-
   LoginEntranceState createState() {
     return new LoginEntranceState();
   }
 }
 
 class LoginEntranceState extends State<LoginEntrance> {
-  MethodChannel _platform;
-
   @override
   void initState() {
     super.initState();
-    
-    
-    _platform = MethodChannel(widget.channelName);
-    _platform.setMethodCallHandler(handler);
-  }
-
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
   }
 
   @override
@@ -46,7 +30,7 @@ class LoginEntranceState extends State<LoginEntrance> {
 
   @override
   Widget build(BuildContext context) {
-    var home = LoginWidget(_platform);
+    var home = LoginWidget();
 
     return new MaterialApp(
       home: home,

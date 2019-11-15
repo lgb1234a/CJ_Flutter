@@ -7,6 +7,7 @@
 //
 
 #import "CJNavigationViewController.h"
+#import "CJFlutterViewController.h"
 
 @interface CJNavigationViewController ()
 
@@ -16,7 +17,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (UIModalPresentationStyle)modalPresentationStyle
@@ -26,6 +26,12 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    if([viewController isKindOfClass:FLBFlutterViewContainer.class]) {
+        self.navigationBar.hidden = YES;
+    }else {
+        self.navigationBar.hidden = NO;
+    }
+    
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -33,6 +39,17 @@
         viewController.hidesBottomBarWhenPushed = YES;
     }
     [super pushViewController:viewController animated:animated];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated
+{
+    UIViewController *previous = self.viewControllers[self.viewControllers.count - 2];
+    if([previous isKindOfClass:FLBFlutterViewContainer.class]) {
+        self.navigationBar.hidden = YES;
+    }else {
+        self.navigationBar.hidden = NO;
+    }
+    return [super popViewControllerAnimated:animated];
 }
 
 @end

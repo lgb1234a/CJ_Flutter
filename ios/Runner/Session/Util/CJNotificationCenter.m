@@ -87,15 +87,14 @@ NIMChatManagerDelegate>
 - (void)playMessageAudioTip
 {
     UITabBarController *tb = ((AppDelegate *)[UIApplication sharedApplication].delegate).tabbar;
-    UINavigationController *nav = tb.selectedViewController;
+    UIViewController *vc = tb.selectedViewController;
     BOOL needPlay = YES;
-    for (UIViewController *vc in nav.viewControllers) {
-        if ([vc isKindOfClass:[NIMSessionViewController class]])
-        {
-            needPlay = NO;
-            break;
-        }
+    
+    if ([vc isKindOfClass:[NIMSessionViewController class]])
+    {
+        needPlay = NO;
     }
+    
     if (needPlay) {
         [self.player stop];
         [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryAmbient error:nil];
@@ -233,14 +232,13 @@ NIMChatManagerDelegate>
 - (NIMSessionViewController *)currentSessionViewController
 {
     UITabBarController *tb = ((AppDelegate *)[UIApplication sharedApplication].delegate).tabbar;
-    UINavigationController *nav = tb.selectedViewController;
-    for (UIViewController *vc in nav.viewControllers)
+    UIViewController *vc = tb.selectedViewController;
+    
+    if ([vc isKindOfClass:[NIMSessionViewController class]])
     {
-        if ([vc isKindOfClass:[NIMSessionViewController class]])
-        {
-            return (NIMSessionViewController *)vc;
-        }
+        return (NIMSessionViewController *)vc;
     }
+    
     return nil;
 }
 

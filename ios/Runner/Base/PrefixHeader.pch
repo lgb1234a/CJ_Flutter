@@ -17,6 +17,14 @@
 #import <NIMKit.h>
 #import <CJBase/CJBase.h>
 #import "CJNavigationViewController.h"
+#import <flutter_boost/FlutterBoost.h>
+#import "AppDelegate.h"
+
+// 根导航控制器
+static inline UINavigationController *cj_rootNavigationController() {
+    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return (UINavigationController *)delegate.window.rootViewController;
+}
 
 //状态栏高度
 #define STATUS_BAR_HEIGHT ([[UIApplication sharedApplication] statusBarFrame].size.height)

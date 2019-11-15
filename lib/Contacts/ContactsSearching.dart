@@ -6,17 +6,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
-import 'package:flutter/services.dart';
 import 'Model/ContactSearchDataSource.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 import 'package:nim_sdk_util/Model/nim_teamModel.dart';
-import 'dart:convert' as convert;
 import 'package:nim_sdk_util/Model/nim_modelView.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 class ContactsSearchingWidget extends StatefulWidget {
-  final Function cancel;
-  final MethodChannel platform;
-  ContactsSearchingWidget(this.cancel, this.platform);
+  // final Function cancel;
+  // ContactsSearchingWidget(this.cancel);
 
   @override
   State<StatefulWidget> createState() {
@@ -99,7 +97,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
                 ),
                 onPressed: () {
                   // 取消搜索
-                  widget.cancel();
+                  FlutterBoost.singleton.closeCurrent();
                 },
               ),
             )
@@ -122,13 +120,15 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
           ),
           model.cell(() {
             if (model is ContactInfo) {
-              // 点击跳转聊天
-              widget.platform.invokeMethod('createSession:', [model.infoId, 0]);
+              /* 调用native，拉起选择联系人组件,创建群聊 */
+              FlutterBoost.singleton.channel.sendEvent(
+                  'sendMessage', {'session_id': model.infoId, 'type': 0});
             }
 
             if (model is TeamInfo) {
-              // 点击跳转聊天
-              widget.platform.invokeMethod('createSession:', [model.teamId, 1]);
+              /* 调用native，拉起选择联系人组件,创建群聊 */
+              FlutterBoost.singleton.channel.sendEvent(
+                  'sendMessage', {'session_id': model.teamId, 'type': 1});
             }
           })
         ],
@@ -148,18 +148,13 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
       models = _teams.map((f) => f.toJson()).toList();
     }
 
-    Map params = {
-      'container': 'CJContactSearchResultViewController',
-      'route': 'contact_search_result',
-      'channel_name': 'com.zqtd.cajian/contact_search_result',
-      'params': {
-        'models': models,
-        'keyword': _searchController.text,
-        'type': type
-      }
-    };
-    String pStr = convert.jsonEncode(params);
-    widget.platform.invokeMethod('pushViewControllerWithOpenUrl:', [pStr]);
+    FlutterBoost.singleton.open('contact_search_result', urlParams: {
+      'models': models,
+      'keyword': _searchController.text,
+      'type': type
+    }, exts: {
+      'animated': true
+    }).then((Map alue) {});
   }
 
   // 更多

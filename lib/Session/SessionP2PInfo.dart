@@ -4,6 +4,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'bloc/bloc.dart';
 import '../Base/CJUtils.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
@@ -142,20 +143,35 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
     _bloc = BlocProvider.of<SessioninfoBloc>(context);
     double top = topPadding(context);
     return Scaffold(
-        body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
-      condition: (previousState, state) {
-        return true;
-      },
-      builder: (context, state) {
-        return ListView.separated(
-          padding: EdgeInsets.fromLTRB(12, top + 12, 12, 12),
-          itemCount: 4,
-          itemBuilder: (context, idx) => _buildItem(idx, state),
-          separatorBuilder: (context, idx) => Container(
-            height: 9,
+        appBar: new AppBar(
+          leading: new IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              FlutterBoost.singleton.closeCurrent();
+            },
           ),
-        );
-      },
-    ));
+          title: Text(
+            '聊天信息',
+            style: TextStyle(color: blackColor),
+          ),
+          backgroundColor: mainBgColor,
+          elevation: 0.01,
+          iconTheme: IconThemeData.fallback(),
+        ),
+        body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
+          condition: (previousState, state) {
+            return true;
+          },
+          builder: (context, state) {
+            return ListView.separated(
+              padding: EdgeInsets.fromLTRB(12, top + 12, 12, 12),
+              itemCount: 4,
+              itemBuilder: (context, idx) => _buildItem(idx, state),
+              separatorBuilder: (context, idx) => Container(
+                height: 9,
+              ),
+            );
+          },
+        ));
   }
 }

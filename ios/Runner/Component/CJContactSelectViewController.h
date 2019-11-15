@@ -6,12 +6,12 @@
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJViewController.h"
+#import <Foundation/Foundation.h>
 #import "NIMContactSelectConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJContactSelectViewController : CJViewController
+@interface CJContactSelectViewController : UIViewController
 
 @property (nonatomic, copy) void (^finished)(NSArray *ids);
 

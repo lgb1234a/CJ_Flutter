@@ -5,12 +5,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_boost/flutter_boost.dart';
+import '../../Base/CJUtils.dart';
 
 class ContactSetting extends StatefulWidget {
   final Map params;
-  final String channelName;
-  ContactSetting(this.params, this.channelName);
+  ContactSetting(this.params);
 
   @override
   State<StatefulWidget> createState() {
@@ -23,6 +23,21 @@ class ContactSettingState extends State<ContactSetting> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: new AppBar(
+          leading: new IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              FlutterBoost.singleton.closeCurrent();
+            },
+          ),
+          title: Text(
+            '个人信息设置',
+            style: TextStyle(color: blackColor),
+          ),
+          backgroundColor: mainBgColor,
+          elevation: 0.01,
+          iconTheme: IconThemeData.fallback(),
+        ),
         body: Center(
           child: Text('联系人设置页面'),
         ),
