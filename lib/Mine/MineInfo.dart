@@ -39,7 +39,6 @@ class _MineInfoState extends State<MineInfoWiget> {
           leading: new IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // _platform.invokeMethod('popFlutterViewController');
               FlutterBoost.singleton.closeCurrent();
             },
           ),

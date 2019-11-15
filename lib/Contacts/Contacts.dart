@@ -5,88 +5,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'bloc/bloc.dart';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
 
   ContactsWidget(this.params);
-  ContactsState createState() {
-    return new ContactsState();
+  ContactsWidgetState createState() {
+    return new ContactsWidgetState();
   }
 }
 
-class ContactsState extends State<ContactsWidget> {
-  List<ContactInfo> _contacts = List();
-  List<ContactInfo> _contactFunctions = List();
+class ContactsWidgetState extends State<ContactsWidget> {
   int _suspensionHeight = 40;
   int _itemHeight = 60;
   int _searchBarHeight = 60;
   String _suspensionTag = "";
 
+  ContactsBloc _bloc;
+
   @override
   void initState() {
     super.initState();
-    loadData();
   }
 
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
-  }
-
-  void loadData() async {
-    List friends = await NimSdkUtil.friends();
-    friends.forEach((f) {
-      _contacts.add(f);
-    });
-    _handleList(_contacts);
-  }
-
-  void _handleList(List<ContactInfo> list) {
-    if (list == null || list.isEmpty) return;
-    for (int i = 0, length = list.length; i < length; i++) {
-      String pinyin = PinyinHelper.getPinyinE(list[i].showName);
-      String tag = pinyin.substring(0, 1).toUpperCase();
-      list[i].namePinyin = pinyin;
-      if (RegExp("[A-Z]").hasMatch(tag)) {
-        list[i].tagIndex = tag;
-      } else {
-        list[i].tagIndex = "#";
-      }
-    }
-    //根据A-Z排序
-    SuspensionUtil.sortListBySuspensionTag(_contacts);
-
-    _contactFunctions.addAll([
-      ContactInfo.fromJson({
-        'showName': '新的朋友',
-        'avatarUrlString': 'images/icon_contact_newfriend@2x.png'
-      }),
-      ContactInfo.fromJson({
-        'showName': '群聊',
-        'avatarUrlString': 'images/icon_contact_groupchat@2x.png'
-      }),
-      ContactInfo.fromJson({
-        'showName': '手机通讯录好友',
-        'avatarUrlString': 'images/icon_contact_phone@2x.png'
-      })
-    ]);
-
-    setState(() {});
-  }
-
-  void _onSusTagChanged(String tag) {
-    setState(() {
-      _suspensionTag = tag;
-    });
-  }
-
+  /* 置顶section header */
   Widget _buildSusWidget(String susTag) {
     if (susTag == null || susTag == '') {
       return Container();
@@ -132,17 +82,14 @@ class ContactsState extends State<ContactsWidget> {
                 )
               ],
             ),
-            onPressed: () {
-              // 切换搜索状态
-              FlutterBoost.singleton.open('contact_searching', exts: {'animated': true});
-            },
+            onPressed: () => _bloc.add(ContactsSearchEvent()),
           ),
         ));
   }
 
   // list header
   Widget _buildHeader() {
-    List<Widget> headerItems = _contactFunctions.map((e) {
+    List<Widget> headerItems = _bloc.contactFunctions.map((e) {
       return _buildListItem(e);
     }).toList();
     // 插入search bar
@@ -180,13 +127,7 @@ class ContactsState extends State<ContactsWidget> {
           child: _buildSusWidget(susTag),
         ),
         GestureDetector(
-            onTap: () {
-              String userId = model.infoId;
-              /* 跳转个人信息页 */
-              FlutterBoost.singleton.open('user_info',
-                  urlParams: {'user_id': userId},
-                  exts: {'animated': true}).then((Map value) {});
-            },
+            onTap: () => _bloc.add(ContactTappedEvent(model)),
             child: Container(
               height: _itemHeight.toDouble(),
               color: Colors.white,
@@ -211,7 +152,13 @@ class ContactsState extends State<ContactsWidget> {
   // 非搜索状态下的通讯录
   Widget _buildContacts() {
     double bp = widget.params['bottom_padding'];
-    return Scaffold(
+
+    return BlocProvider<ContactsBloc>(
+      builder: (BuildContext context) {
+        _bloc = ContactsBloc()..add(ContactsFetchEvent());
+        return _bloc;
+      },
+      child: Scaffold(
         appBar: AppBar(
           title: const Text(
             '通讯录',
@@ -221,26 +168,48 @@ class ContactsState extends State<ContactsWidget> {
           elevation: 0.01,
           brightness: Brightness.light,
         ),
-        body: AzListView(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, bp),
-          header: AzListViewHeader(
-              height: _itemHeight * _contactFunctions.length + _searchBarHeight,
-              builder: (context) {
-                return _buildHeader();
-              }),
-          data: _contacts,
-          itemBuilder: (context, model) => _buildListItem(model),
-          suspensionWidget: _buildSusWidget(_suspensionTag),
-          isUseRealIndex: true,
-          itemHeight: _itemHeight,
-          suspensionHeight: _suspensionHeight,
-          onSusTagChanged: _onSusTagChanged,
-        ));
+        body: BlocBuilder<ContactsBloc, ContactsState>(
+          builder: (context, state) {
+            if (state is ContactsLoaded || state is ContactsTagChanged)
+            {
+              if(state is ContactsTagChanged) {
+                // 点击了索引需要调整
+                _suspensionTag = state.tag;
+              }
+              
+              ContactsLoaded previous;
+              if(_bloc.previousState is ContactsLoaded) {
+                previous = _bloc.previousState;
+              }
+              /* 加载完成 */
+              return AzListView(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, bp),
+                header: AzListViewHeader(
+                    height: _itemHeight * _bloc.contactFunctions.length + _searchBarHeight,
+                    builder: (context) {
+                      return _buildHeader();
+                    }),
+                data: state is ContactsLoaded ? state.contacts : previous.contacts,
+                itemBuilder: (context, model) => _buildListItem(model),
+                suspensionWidget: _buildSusWidget(_suspensionTag),
+                isUseRealIndex: true,
+                itemHeight: _itemHeight,
+                suspensionHeight: _suspensionHeight,
+                onSusTagChanged: (tag)=> _bloc.add(SusTagChangedEvent(tag)),
+              );
+            }
+
+            return Center(
+              child: CupertinoActivityIndicator(),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: _buildContacts());
+    return MaterialApp(home: _buildContacts());
   }
 }

@@ -213,7 +213,6 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   // section
   Widget _buildSection(int index) {
     List<Widget> contacts = _contacts.map((f) => _buildItem(f)).toList();
-
     List<Widget> teams = _teams.map((f) => _buildItem(f)).toList();
 
     // 添加更多入口
