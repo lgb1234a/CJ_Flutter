@@ -37,7 +37,7 @@ class MineModel {
 final List<MineModel> mineCellModels = [
   MineModel(MineCellType.Profile, null, null, (MineModel model) {
     FlutterBoost.singleton
-        .open('mineInfo', exts: {'animated': true}).then((Map value) {});
+        .open('mine_info', exts: {'animated': true}).then((Map value) {});
   }),
   MineModel(MineCellType.Separator, null, null, null),
   MineModel(MineCellType.Others, '扫一扫', 'images/icon_settings_scan@2x.png',

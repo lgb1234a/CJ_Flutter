@@ -1,7 +1,6 @@
 import 'package:cajian/Mine/Dao/MineInfoDao.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'Model/MineInfoModel.dart';
 import 'View/MineInfoListCell.dart';
@@ -24,11 +23,6 @@ class _MineInfoState extends State<MineInfoWiget> {
     setState(() {
       _cellModels = models;
     });
-  }
-
-  // Native回调用
-  Future<dynamic> handler(MethodCall call) async {
-    debugPrint(call.method);
   }
 
   @override
