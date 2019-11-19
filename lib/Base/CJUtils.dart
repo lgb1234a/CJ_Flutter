@@ -36,43 +36,37 @@ cjDialog(BuildContext context, String title,
     Function cancelHandler,
     List<String> handlerTexts,
     List<Function> handlers}) {
-
   assert(handlers.length == handlerTexts.length);
 
-    List<Widget> widgets = handlerTexts.map((f) {
-    int idx = handlerTexts.indexOf(f);
-    Function handler = handlers[idx];
-
-    return CupertinoDialogAction(
-      onPressed: (){
-        handler();
-        Navigator.of(context).pop();
-      },
-      child: Text(
-        f,
-        style: TextStyle(color: Colors.blue),
-      ),
-    );
-  }).toList();
-
-  var cancelAction = CupertinoDialogAction(
-          onPressed: () {
-            cancelHandler != null && cancelHandler();
-            Navigator.of(context).pop();
-          },
-          isDefaultAction: true,
-          child: Text(cancelText),
-          textStyle: TextStyle(color: Colors.red),
-        );
-  widgets.add(cancelAction);
-
-  showDialog(
-      barrierDismissible: false,
+  showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
             title: Text(title),
             content: Text(msg),
-            actions: widgets,
+            actions: handlerTexts.map((f) {
+              int idx = handlerTexts.indexOf(f);
+              Function handler = handlers[idx];
+
+              return CupertinoDialogAction(
+                onPressed: () {
+                  handler();
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  f,
+                  style: TextStyle(color: Colors.blue),
+                ),
+              );
+            }).toList()
+              ..add(CupertinoDialogAction(
+                onPressed: () {
+                  cancelHandler != null && cancelHandler();
+                  Navigator.of(context).pop();
+                },
+                isDefaultAction: true,
+                child: Text(cancelText),
+                textStyle: TextStyle(color: Colors.red),
+              )),
           ));
 }
 
@@ -83,41 +77,36 @@ cjSheet(BuildContext context, String title,
     Function cancelHandler,
     List<String> handlerTexts,
     List<Function> handlers}) {
-  
   assert(handlers.length == handlerTexts.length);
-
-  List<Widget> widgets = handlerTexts.map((f) {
-    int idx = handlerTexts.indexOf(f);
-    Function handler = handlers[idx];
-
-    return CupertinoActionSheetAction(
-      onPressed: (){
-        handler();
-        Navigator.of(context).pop();
-      },
-      child: Text(
-        f,
-        style: TextStyle(color: Colors.red),
-      ),
-    );
-  }).toList();
-
-  CupertinoActionSheetAction cancelBtn = CupertinoActionSheetAction(
-    onPressed: () {
-      cancelHandler != null && cancelHandler();
-      Navigator.of(context).pop();
-    },
-    isDefaultAction: true,
-    child: Text(cancelText),
-  );
 
   showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
             title: Text(title),
             message: Text(msg),
-            actions: widgets,
-            cancelButton: cancelBtn,
+            actions: handlerTexts.map((f) {
+              int idx = handlerTexts.indexOf(f);
+              Function handler = handlers[idx];
+
+              return CupertinoActionSheetAction(
+                onPressed: () {
+                  handler();
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  f,
+                  style: TextStyle(color: Colors.red),
+                ),
+              );
+            }).toList(),
+            cancelButton: CupertinoActionSheetAction(
+              onPressed: () {
+                cancelHandler != null && cancelHandler();
+                Navigator.of(context).pop();
+              },
+              isDefaultAction: true,
+              child: Text(cancelText),
+            ),
           ));
 }
 

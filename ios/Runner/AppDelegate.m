@@ -156,7 +156,6 @@
         case NIMLoginStepLoginFailed:
             [UIViewController showError:@"登录失败"];
             break;
-            break;
         default:
             break;
     }

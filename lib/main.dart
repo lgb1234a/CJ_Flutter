@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       'mine': (pageName, params, _) => MineWidget(),
       'contacts': (pageName, params, _) => ContactsWidget(params),
       'setting': (pageName, params, _) => SettingWidget(),
-      'mine_info': (pageName, params, _) => MineInfoWiget(),
+      'mine_info': (pageName, params, _) => MineInfoWiget(),                  
       'contact_searching': (pageName, params, _) => ContactsSearchingWidget(),
       'contact_search_result': (pageName, params, _) => ContactsSearchResultListWidget(params),
       'session_info': (pageName, params, _) => SessionInfoWidget(params),
