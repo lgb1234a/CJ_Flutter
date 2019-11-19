@@ -4,7 +4,9 @@
  */
 import 'package:flutter/material.dart';
 import 'Contacts/ContactSearching/ContactsSearching.dart';
-import 'Login/LoginEntrance.dart';
+import 'Login/Login.dart';
+import 'package:cajian/Login/PhoneLogin.Dart';
+import 'package:cajian/Login/PwdLogin.Dart';
 import 'package:cajian/Mine/Mine.dart';
 import 'package:cajian/Contacts/Contacts.dart';
 import 'package:cajian/Mine/Setting.dart';
@@ -15,6 +17,7 @@ import 'package:bloc/bloc.dart';
 import 'Contacts/UserInfo/UserInfoPage.dart';
 import 'Contacts/ContactSetting/ContactSetting.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'Login/Register/Register.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -53,7 +56,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     FlutterBoost.singleton.registerPageBuilders({
-      'login_entrance': (pageName, params, _) => LoginEntrance(),
+      'register': (pageName, params, _) => RegisterWidget(),
+      'login': (pageName, params, _) => LoginWidget(),
+      'phone_login': (pageName, params, _) => PhoneLoginWidget(),
+      'pwd_login': (pageName, params, _) => PwdLoginWidget(),
       'mine': (pageName, params, _) => MineWidget(),
       'contacts': (pageName, params, _) => ContactsWidget(params),
       'setting': (pageName, params, _) => SettingWidget(),

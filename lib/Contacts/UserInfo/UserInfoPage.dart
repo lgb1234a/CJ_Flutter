@@ -175,8 +175,8 @@ class UserInfoPageState extends State<UserInfoPage> {
         return _bloc;
       },
       child: Scaffold(
-        appBar: new AppBar(
-          leading: new IconButton(
+        appBar: AppBar(
+          leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               FlutterBoost.singleton.closeCurrent();

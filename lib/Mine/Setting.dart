@@ -53,11 +53,11 @@ class SettingState extends State<SettingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        appBar: new AppBar
+        appBar: AppBar
         (
-          leading: new IconButton(
+          leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () { 
               FlutterBoost.singleton.closeCurrent();

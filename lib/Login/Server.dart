@@ -23,3 +23,9 @@ Future<Result> loginByPwd(String phone, String pwd) async {
   return response;
 }
 
+// 注册
+Future<Result> register(String phone, String code) async {
+  Result response = await CJRequestEngine.postJson('/g2/user/register', {'phone': phone, 'vecode': code});
+  return response;
+}
+

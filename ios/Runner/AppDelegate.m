@@ -26,8 +26,6 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // 初始化flutter
-//    [GeneratedPluginRegistrant registerWithRegistry:self];
     // 注册微信sdk
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
     // 配置云信服务

@@ -1,6 +1,6 @@
 /**
- *  Created by chenyn on 2019-07-12
- *  验证码登录
+ *  Created by chenyn on 2019-11-19
+ *  注册页
  */
 
 import 'package:flutter/material.dart';
@@ -11,15 +11,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
-import 'LoginManager.dart';
+import '../LoginManager.dart';
 
-class PhoneLoginWidget extends StatefulWidget {
-  PhoneLoginState createState() {
-    return PhoneLoginState();
+class RegisterWidget extends StatefulWidget {
+  RegisterState createState() {
+    return RegisterState();
   }
 }
 
-class PhoneLoginState extends State<PhoneLoginWidget> {
+class RegisterState extends State<RegisterWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _codeController = TextEditingController();
   GlobalKey _formKey = GlobalKey<FormState>();
@@ -93,7 +93,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   }
 
   // 登录
-  Future<bool> login() async {
+  Future<bool> _register() async {
     if (_phoneController.text.trim().length != 11) {
       FlutterBoost.singleton.channel
           .sendEvent('showTip', {'text': '请输入正确的手机号'});
@@ -108,7 +108,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
     loading(true);
     Result response =
-        await loginByCode(_phoneController.text, _codeController.text);
+        await register(_phoneController.text, _codeController.text);
     if (response.success) {
       bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
@@ -133,19 +133,12 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                 onPressed: () => FlutterBoost.singleton.closeCurrent(),
               ),
               title: Text(
-                '手机登录',
+                '注册',
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: mainBgColor,
               elevation: 0.01,
               iconTheme: IconThemeData.fallback(),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text('注册'),
-                  onPressed: () => FlutterBoost.singleton
-                      .open('register', exts: {'animated': true}),
-                )
-              ],
             ),
             body: Form(
                 key: _formKey,
@@ -258,7 +251,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              '登录',
+                              '注册',
                               style: TextStyle(fontSize: 16),
                             ),
                             Padding(
@@ -282,7 +275,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                         splashColor: Colors.grey,
                         onPressed: _confirmAvailabe && !_loading
                             ? () {
-                                login().then((success) {
+                                _register().then((success) {
                                   loading(false);
                                   if (success) {
                                     Navigator.pop(context);

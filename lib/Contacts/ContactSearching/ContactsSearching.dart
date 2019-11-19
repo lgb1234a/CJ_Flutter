@@ -35,7 +35,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
     _searchController.addListener(
         () => _bloc.add(NewContactSearchEvent(_searchController.text)));
 
-    _scrollController.addListener((){
+    _scrollController.addListener(() {
       FocusScope.of(context).requestFocus(FocusNode());
     });
   }
@@ -129,8 +129,8 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   Widget _buildMoreTile(int type) {
     return GestureDetector(
         onTap: () {
-          _bloc.add(
-              TouchedMoreEvent(type, _searchController.text, _contacts, _teams));
+          _bloc.add(TouchedMoreEvent(
+              type, _searchController.text, _contacts, _teams));
           // 隐藏键盘
           FocusScope.of(context).requestFocus(FocusNode());
         },
@@ -268,7 +268,9 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ContactsearchingBloc>(builder: (BuildContext context) {
+    return MaterialApp(
+        home:
+            BlocProvider<ContactsearchingBloc>(builder: (BuildContext context) {
       _bloc = ContactsearchingBloc();
       return _bloc;
     }, child: Scaffold(
@@ -280,19 +282,19 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
           }
 
           return Column(
-              children: <Widget>[
-                _buildSearchBar(),
-                MediaQuery.removePadding(
-                    removeTop: true,
-                    context: context,
-                    child: Expanded(
-                      flex: 1,
-                      child: _searchList(),
-                    ))
-              ],
-            );
+            children: <Widget>[
+              _buildSearchBar(),
+              MediaQuery.removePadding(
+                  removeTop: true,
+                  context: context,
+                  child: Expanded(
+                    flex: 1,
+                    child: _searchList(),
+                  ))
+            ],
+          );
         },
       ),
-    ));
+    )));
   }
 }

@@ -18,7 +18,7 @@
 {
     self = [super init];
     if (self) {
-        [self setName:@"login_entrance"];
+        [self setName:@"login"];
     }
     return self;
 }

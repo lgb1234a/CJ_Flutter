@@ -11,7 +11,7 @@ import 'package:cajian/Mine/View/MineListCell.dart';
 class MineWidget extends StatefulWidget {
   
   MineState createState() {
-    return new MineState();
+    return MineState();
   }
 }
 
@@ -32,9 +32,9 @@ class MineState extends State<MineWidget> {
         MineModel model = mineCellModels[index];
         
         if(model.type == MineCellType.Others) {
-          return new MineListCellOthers(model);
+          return MineListCellOthers(model);
         }else if(model.type == MineCellType.Separator) {
-          return new MineListCellSeparator();
+          return MineListCellSeparator();
         }else if(model.type == MineCellType.Profile) {
           return MineListProfileHeader(model);
         }
@@ -52,9 +52,9 @@ class MineState extends State<MineWidget> {
       },
     );
 
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
             title: const Text(
                 '我',
                 style: TextStyle(color: Color(0xFF141414)),
