@@ -43,12 +43,15 @@
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
-    UIViewController *previous = self.viewControllers[self.viewControllers.count - 2];
-    if([previous isKindOfClass:FLBFlutterViewContainer.class]) {
-        self.navigationBar.hidden = YES;
-    }else {
-        self.navigationBar.hidden = NO;
+    if(self.viewControllers.count >= 2) {
+        UIViewController *previous = self.viewControllers[self.viewControllers.count - 2];
+        if([previous isKindOfClass:FLBFlutterViewContainer.class]) {
+            self.navigationBar.hidden = YES;
+        }else {
+            self.navigationBar.hidden = NO;
+        }
     }
+    
     return [super popViewControllerAnimated:animated];
 }
 
