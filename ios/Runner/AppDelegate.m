@@ -1,10 +1,8 @@
 #include "AppDelegate.h"
 #include "GeneratedPluginRegistrant.h"
 #import "CJFlutterViewController.h"
-#import "CJSessionListViewController.h"
-#import "CJContactsViewController.h"
+#import "CJLoginViewController.h"
 #import "CJFlutterViewController.h"
-#import "CJMineViewController.h"
 #import <nim_sdk_util/NimSdkUtilPlugin.h>
 #import <WxSdkPlugin.h>
 #import "CJCustomAttachmentDecoder.h"
@@ -13,7 +11,7 @@
 #import "CJPayManager.h"
 #import "PlatformRouterImp.h"
 #import "CJUtilBridge.h"
-#import "CJLoginViewController.h"
+#import "CJTabbarControllerController.h"
 
 @interface AppDelegate ()
 
@@ -97,27 +95,8 @@
 // 展示登录成功的页面根视图
 - (void)showDidLoginSuccessRootVC
 {
-    UITabBarController *tabbar = [[UITabBarController alloc] init];
+    CJTabbarControllerController *tabbar = [[CJTabbarControllerController alloc] initWithRootViewControllers];
     
-    CJSessionListViewController *listVC = [[CJSessionListViewController alloc] init];
-    listVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"擦肩"
-                                                       image:[UIImage imageNamed:@"icon_message_normal"]
-                                               selectedImage:[UIImage imageNamed:@"icon_message_pressed"]];
-    listVC.tabBarItem.tag = 0;
-    
-    CJContactsViewController *contactsVC = [[CJContactsViewController alloc] init];
-    contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"通讯录"
-                                                       image:[UIImage imageNamed:@"icon_contact_normal"]
-                                               selectedImage:[UIImage imageNamed:@"icon_contact_pressed"]];
-    contactsVC.tabBarItem.tag = 1;
-    
-    CJMineViewController *mineVC = [[CJMineViewController alloc] init];
-    mineVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
-                                                       image:[UIImage imageNamed:@"icon_setting_normal"]
-                                               selectedImage:[UIImage imageNamed:@"icon_setting_pressed"]];
-    mineVC.tabBarItem.tag = 2;
-    
-    tabbar.viewControllers = @[listVC, contactsVC, mineVC];
     CJNavigationViewController *root = [[CJNavigationViewController alloc] initWithRootViewController:tabbar];
     
     self.window.rootViewController = root;

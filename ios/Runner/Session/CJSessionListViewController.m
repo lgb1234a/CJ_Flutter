@@ -10,6 +10,7 @@
 #import "CJSessionViewController.h"
 #import "NTESSessionUtil.h"
 #import "CJCustomAttachmentDefines.h"
+#import "NIMKitTitleView.h"
 
 @interface CJSessionListViewController ()
 
@@ -19,14 +20,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"擦肩";
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBarHidden = NO;
+    cj_rootNavigationController().navigationBarHidden = NO;
 }
+
 
 #pragma mark - Override
 - (void)onSelectedAvatar:(NIMRecentSession *)recentSession

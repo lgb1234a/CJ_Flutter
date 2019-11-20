@@ -26,7 +26,8 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if([viewController isKindOfClass:FLBFlutterViewContainer.class]) {
+    if([viewController isKindOfClass:FLBFlutterViewContainer.class])
+    {
         self.navigationBar.hidden = YES;
     }else {
         self.navigationBar.hidden = NO;
