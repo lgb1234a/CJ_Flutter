@@ -13,7 +13,7 @@ class TouchedMoreEvent extends ContactsearchingEvent {
   final int type; // 0: P2P  1:team
   final String keyword;
   final List<ContactInfo> contacts;
-  final List<TeamInfo> groups;
+  final List<Team> groups;
   TouchedMoreEvent(this.type, this.keyword, this.contacts, this.groups);
 }
 

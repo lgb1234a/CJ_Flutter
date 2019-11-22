@@ -6,26 +6,96 @@ import 'nim_modelView.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 
-class TeamInfoFromId {
+class TeamInfo {
+  /// 显示名
   String showName;
+  /// 头像url
   String avatarUrlString;
+  /// 头像图片
   Uint8List avatarImage;
+  /// 群ID
+  String teamId;
+  /// 群名称
+  String teamName;
+  /// 群缩略头像
+  /// @discussion 仅适用于使用云信上传服务进行上传的资源，否则无效。
+  String thumbAvatarUrl;
+  /// 群类型
+  /// 普通群 = 0, 高级群 = 1     
+  int type;
+  /// 群拥有者ID
+  /// @discussion 普通群拥有者就是群创建者,但是高级群可以进行拥有信息的转让
+  String owner;
+  /// 群介绍
+  String intro;
+  /// 群公告
+  String announcement;
+  /// 群成员人数
+  int memberNumber;
+  /// 群等级
+  /// @discussion 目前群人数主要是限制群人数上限
+  int level;
+  /// 群创建时间
+  double createTime;
+  /// 群验证方式
+  /// @discussion 只有高级群有效
+  int joinMode;
+  /// 群邀请权限
+  /// @discussion 只有高级群有效
+  int inviteMode;
+  /// 被邀请模式
+  /// @discussion 只有高级群有效
+  int beInviteMode;
+  /// 修改群信息权限
+  /// @discussion 只有高级群有效
+  int updateInfoMode;
+  /// 修改群客户端自定义字段权限
+  /// @discussion 只有高级群有效
+  int updateClientCustomMode;
+  /// 群服务端自定义信息
+  /// @discussion 应用方可以自行拓展这个字段做个性化配置,客户端不可以修改这个字段
+  String serverCustomInfo;
+  /// 群客户端自定义信息
+  /// @discussion 应用方可以自行拓展这个字段做个性化配置,客户端可以修改这个字段
+  String clientCustomInfo;
+  /// 群消息通知状态
+  /// @discussion 这个设置影响群消息的 APNS 推送
+  int notifyStateForNewMsg;
 
-  TeamInfoFromId.fromJson(Map json)
+  TeamInfo.fromJson(Map json)
       : showName = json['showName'],
         avatarUrlString = json['avatarUrlString'],
-        avatarImage = json['avatarImage'];
+        avatarImage = json['avatarImage'],
+        teamId = json['teamId'],
+        teamName = json['teamName'],
+        thumbAvatarUrl = json['thumbAvatarUrl'],
+        type = json['type'],
+        owner = json['owner'],
+        intro = json['intro'],
+        announcement = json['announcement'],
+        memberNumber = json['memberNumber'],
+        level = json['level'],
+        createTime = json['createTime'],
+        joinMode = json['joinMode'],
+        inviteMode = json['inviteMode'],
+        beInviteMode = json['beInviteMode'],
+        updateInfoMode = json['updateInfoMode'],
+        updateClientCustomMode = json['updateClientCustomMode'],
+        serverCustomInfo = json['serverCustomInfo'],
+        clientCustomInfo = json['clientCustomInfo'],
+        notifyStateForNewMsg = json['notifyStateForNewMsg']
+        ;
 }
 
-class TeamInfo implements NimSearchContactViewModel {
+class Team implements NimSearchContactViewModel {
   String teamId;
   String teamName;
   String teamAvatar;
 
-  TeamInfo._a(this.teamId, this.teamName, this.teamAvatar);
+  Team._a(this.teamId, this.teamName, this.teamAvatar);
 
   // json -> model
-  TeamInfo.fromJson(Map json)
+  Team.fromJson(Map json)
       : teamId = json['teamId'],
         teamName = json['teamName'],
         teamAvatar = json['teamAvatar'],

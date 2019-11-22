@@ -32,9 +32,9 @@ class ContactSearchDataSource {
   }
 
   // 查找群聊
-  static Future<List<TeamInfo>> searchGroupBy(String key) async {
-    List<TeamInfo> teams = await NimSdkUtil.allMyTeams();
-    List<TeamInfo> result = [];
+  static Future<List<Team>> searchGroupBy(String key) async {
+    List<Team> teams = await NimSdkUtil.allMyTeams();
+    List<Team> result = [];
     teams.forEach((t) async {
       if(isKeyContained(key, t.teamName) || isKeyContained(key, t.teamId)){
         t.keyword = key;

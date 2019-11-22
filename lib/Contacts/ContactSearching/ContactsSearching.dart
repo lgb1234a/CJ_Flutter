@@ -25,7 +25,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   TextEditingController _searchController = TextEditingController();
   ScrollController _scrollController = ScrollController();
   List<ContactInfo> _contacts = [];
-  List<TeamInfo> _teams = [];
+  List<Team> _teams = [];
 
   ContactsearchingBloc _bloc;
 
@@ -113,7 +113,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
               session = Session(model.infoId, 0);
             }
 
-            if (model is TeamInfo) {
+            if (model is Team) {
               session = Session(model.teamId, 0);
             }
 

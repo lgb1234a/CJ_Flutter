@@ -35,7 +35,7 @@ dependencies:
   event_bus: ^1.1.0
   bloc: ^2.0.0
   flutter_bloc: ^2.0.0
-  equatable: ^0.6.1
+  equatable: ^1.0.0
   flutter_boost:
             git:
                 url: 'https://github.com/alibaba/flutter_boost.git'
@@ -85,6 +85,7 @@ flutter:
    - images/icon_gender_female@2x.png
    - images/icon_gender_male@2x.png
    - images/icon_avatar_placeholder@2x.png
+   - images/icon_session_info_remove@2x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -22,7 +22,7 @@ class ContactsearchresultBloc
         yield ContactsSearchingResult(contacts: contacts);
       }
       if (event.type == 1) {
-        List<TeamInfo> groups = await ContactSearchDataSource.searchGroupBy(event.keyword);
+        List<Team> groups = await ContactSearchDataSource.searchGroupBy(event.keyword);
         yield ContactsSearchingResult(groups: groups);
       }
     }

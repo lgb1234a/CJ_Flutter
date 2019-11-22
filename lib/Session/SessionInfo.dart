@@ -8,6 +8,7 @@ import 'package:nim_sdk_util/Model/nim_session.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cajian/Session/bloc/bloc.dart';
 import './SessionP2PInfo.dart';
+import './SessionTeamInfo.dart';
 
 class SessionInfoWidget extends StatefulWidget {
   final Map params;
@@ -30,16 +31,18 @@ class SessionInfoState extends State<SessionInfoWidget> {
   // 点对点聊天的会话信息页
   Widget p2pSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
-      builder: (context) =>
-          SessioninfoBloc()..add(Fetch(session: _session)),
+      builder: (context) => SessioninfoBloc()..add(Fetch(session: _session)),
       child: SessionP2PInfo(_session),
     );
   }
 
   // 群聊天的会话信息页
   Widget teamSessionInfo() {
-    return Scaffold(
-      body: Center(child: Text('群聊天的会话信息页')),
+    return BlocProvider<SessioninfoBloc>(
+      builder: (context) => SessioninfoBloc()
+        ..add(Fetch(session: _session))
+        ..add(FetchMemberInfos(session: _session)),
+      child: SessionTeamInfoWidget(_session),
     );
   }
 

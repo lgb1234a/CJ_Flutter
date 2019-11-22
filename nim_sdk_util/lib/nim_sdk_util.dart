@@ -36,64 +36,64 @@ class NimSdkUtil {
     _channel.invokeMethod('logout');
   }
 
-  // 获取群信息
-  static Future<TeamInfoFromId> teamInfoById(String teamId) async {
+  /// 获取群信息
+  static Future<TeamInfo> teamInfoById(String teamId) async {
     dynamic teamInfo = await _channel.invokeMethod('teamInfo:', [teamId]);
-    return TeamInfoFromId.fromJson(teamInfo);
+    return TeamInfo.fromJson(teamInfo);
   }
 
-  // 获取用户信息 
-  // userId 选填，不填默认获取当前用户信息
+  /// 获取用户信息 
+  /// userId 选填，不填默认获取当前用户信息
   static Future<UserInfo> userInfoById({String userId}) async {
     dynamic userInfo = await _channel.invokeMethod('userInfo:', [userId]);
     return UserInfo.fromJson(userInfo);
   }
 
-  // 获取好友列表
+  /// 获取好友列表
   static Future<List<ContactInfo>> friends() async {
     List friends = await _channel.invokeMethod('friends:');
     return friends.map((f) => ContactInfo.fromJson(f)).toList();
   }
 
-  // 群聊列表
-  static Future<List<TeamInfo>> allMyTeams() async {
+  /// 群聊列表
+  static Future<List<Team>> allMyTeams() async {
     List teams = await _channel.invokeMethod('allMyTeams:');
-    return teams.map((f) => TeamInfo.fromJson(f)).toList();
+    return teams.map((f) => Team.fromJson(f)).toList();
   }
 
-  // 群成员信息
+  /// 群成员信息
   static Future<List<TeamMemberInfo>> teamMemberInfos(String teamId) async {
     List teamMemberInfos =
         await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos.map((f) => TeamMemberInfo.fromJson(f)).toList();
   }
 
-  // 获取会话置顶状态
+  /// 获取会话置顶状态
   static Future<bool> isStickedOnTop(Session session) async {
     bool isTop = await _channel
         .invokeMethod('isStickedOnTop:', [session.id, session.type]);
     return isTop;
   }
 
-  // 获取会话是否开启消息提醒
+  /// 获取会话是否开启消息提醒
   static Future<bool> isNotifyForNewMsg(String sessionId) async {
     bool isTop = await _channel.invokeMethod('isNotifyForNewMsg:', [sessionId]);
     return isTop;
   }
 
-  // 删除聊天记录
+  /// 删除聊天记录
   static Future<void> clearChatHistory(Session session) async {
     await _channel
         .invokeMethod('clearChatHistory:', [session.id, session.type]);
   }
 
-  // 聊天置顶开关
+  /// 聊天置顶开关
   static Future<void> stickSessiOnTop(Session session, bool isTop) async {
     await _channel
         .invokeMethod('stickSessiOnTop:', [session.id, session.type, isTop]);
   }
 
-  // 消息通知开关
+  /// 消息通知开关
   static Future<bool> changeNotifyStatus(
       Session session, bool needNotify) async {
     bool success = await _channel.invokeMethod(

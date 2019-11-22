@@ -21,20 +21,40 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     SessioninfoEvent event,
   ) async* {
     if (event is Fetch) {
-      // 加载所需的数据
-      /* 用户头像、昵称 */
-      UserInfo info = await NimSdkUtil.userInfoById(userId: event.session.id);
-      /* 置顶 */
-      bool isStickOnTop = await NimSdkUtil.isStickedOnTop(event.session);
-      /* 消息通知 */
-      bool notifyForNewMsg =
-          await NimSdkUtil.isNotifyForNewMsg(event.session.id);
+      /// 加载所需的数据
+      if (event.session.type == 0) {
+        /* 用户头像、昵称 */
+        UserInfo info = await NimSdkUtil.userInfoById(userId: event.session.id);
+        /* 置顶 */
+        bool isStickOnTop = await NimSdkUtil.isStickedOnTop(event.session);
+        /* 消息通知 */
+        bool notifyForNewMsg =
+            await NimSdkUtil.isNotifyForNewMsg(event.session.id);
 
-      _previousState = P2PSessionInfoLoaded(
-          info: info,
-          isStickedOnTop: isStickOnTop,
-          notifyStatus: notifyForNewMsg);
-      yield _previousState;
+        _previousState = P2PSessionInfoLoaded(
+            info: info,
+            isStickedOnTop: isStickOnTop,
+            notifyStatus: notifyForNewMsg);
+        yield _previousState;
+      } else {
+        /// 加载群数据
+        TeamInfo teamInfo = await NimSdkUtil.teamInfoById(event.session.id);
+        yield TeamSessionInfoLoaded(info: teamInfo);
+      }
+    }
+
+    /// 获取群成员
+    if (event is FetchMemberInfos) {
+      List<TeamMemberInfo> members =
+          await NimSdkUtil.teamMemberInfos(event.session.id);
+      List<UserInfo> infos = [];
+
+      List<Future<UserInfo>> mapFutures = members
+          .map((f) async => await NimSdkUtil.userInfoById(userId: f.userId))
+          .toList();
+
+      infos = await Future.wait(mapFutures);
+      yield TeamMembersLoaded(members: infos);
     }
 
     if (event is SwitchStickOnTopStatus) {
@@ -87,6 +107,17 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is ClearChatHistory) {
       /* 清空聊天记录 */
       NimSdkUtil.clearChatHistory(event.session);
+    }
+
+    if(event is OperateMembersEvent) {
+      /// 操作群成员
+      if(event.type == 0) {
+
+      }
+
+      if(event.type == 1) {
+        
+      }
     }
   }
 }

@@ -18,7 +18,7 @@ class ContactsearchingBloc
       /* 新搜索关键词 */
       List<ContactInfo> contacts =
           await ContactSearchDataSource.searchContactBy(event.keyword);
-      List<TeamInfo> groups =
+      List<Team> groups =
           await ContactSearchDataSource.searchGroupBy(event.keyword);
       yield ContactsSearchingResult(contacts, groups);
     }
@@ -44,7 +44,7 @@ class ContactsearchingBloc
 
 // 跳转到更多列表,把 teams 或者 contacts带过去
 void pushSerachResultViewController(int type, String keyword,
-    List<ContactInfo> contacts, List<TeamInfo> groups) {
+    List<ContactInfo> contacts, List<Team> groups) {
   List models = [];
   if (type == 0) {
     models = contacts.map((f) => f.toJson()).toList();

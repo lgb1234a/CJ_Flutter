@@ -144,15 +144,36 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 返回群信息
 + (void)teamInfo:(NSArray *)params
 {
+    NSString *teamId = params.firstObject;
     FlutterResult result = params.lastObject;
-    NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:params.firstObject
+    NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:teamId
                                                option:nil];
     
+    NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:teamId];
+    
     result(@{
-            @"showName": info.showName?:[NSNull null],
-            @"avatarUrlString": info.avatarUrlString?: [NSNull null],
-             @"avatarImage": [FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(info.avatarImage)]
-            });
+        @"showName": info.showName?:[NSNull null],
+        @"avatarUrlString": info.avatarUrlString?: [NSNull null],
+         @"avatarImage": [FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(info.avatarImage)],
+        @"teamId": team.teamId?:[NSNull null],
+        @"teamName": team.teamName?:[NSNull null],
+        @"thumbAvatarUrl": team.thumbAvatarUrl?:[NSNull null],
+        @"type": @(team.type),
+        @"owner": team.owner?:[NSNull null],
+        @"intro": team.intro?:[NSNull null],
+        @"announcement": team.announcement?:[NSNull null],
+        @"memberNumber": @(team.memberNumber),
+        @"level": @(team.level),
+        @"createTime": @(team.createTime),
+        @"joinMode": @(team.joinMode),
+        @"inviteMode": @(team.inviteMode),
+        @"beInviteMode": @(team.beInviteMode),
+        @"updateInfoMode": @(team.updateInfoMode),
+        @"updateClientCustomMode": @(team.updateClientCustomMode),
+        @"serverCustomInfo": team.serverCustomInfo?:[NSNull null],
+        @"clientCustomInfo": team.clientCustomInfo?:[NSNull null],
+        @"notifyStateForNewMsg": @(team.notifyStateForNewMsg),
+    });
 }
 
 // 获取好友列表

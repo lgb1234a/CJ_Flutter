@@ -18,6 +18,7 @@ class UserInfo {
   /* 别名备注 */
   String alias;
 
+  UserInfo();
 
   UserInfo.fromJson(Map json)
       : userId = json['userId'],

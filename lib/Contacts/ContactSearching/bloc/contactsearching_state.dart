@@ -9,6 +9,6 @@ class InitialContactsearchingState extends ContactsearchingState {}
 
 class ContactsSearchingResult extends ContactsearchingState {
   final List<ContactInfo> contacts;
-  final List<TeamInfo> groups;
+  final List<Team> groups;
   ContactsSearchingResult(this.contacts, this.groups);
 }

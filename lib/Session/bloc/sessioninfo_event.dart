@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nim_sdk_util/Model/nim_session.dart';
+import 'package:nim_sdk_util/Model/nim_model.dart';
 
 @immutable
 abstract class SessioninfoEvent extends Equatable {
@@ -44,3 +45,18 @@ class ClearChatHistory extends SessioninfoEvent {
 }
 
 /* team */
+class FetchMemberInfos extends SessioninfoEvent {
+  final Session session;
+  FetchMemberInfos({@required this.session});
+}
+
+class OperateMembersEvent extends SessioninfoEvent {
+  /// 1:加人进群，2:踢人
+  final int type;
+  OperateMembersEvent({@required this.type});
+}
+
+class ShowAllMembersEvent extends SessioninfoEvent {
+  final List<UserInfo> members;
+  ShowAllMembersEvent({@required this.members});
+}

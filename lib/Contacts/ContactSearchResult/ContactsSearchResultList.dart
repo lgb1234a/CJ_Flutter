@@ -109,7 +109,7 @@ class ContactsSearchResultListWidget extends StatefulWidget {
     }
 
     if (type == 1) {
-      return TeamInfo.fromJson(model);
+      return Team.fromJson(model);
     }
 
     return null;
@@ -156,7 +156,7 @@ class ContactsSearchResultListState
           session = Session(model.infoId, 0);
         }
 
-        if (model is TeamInfo) {
+        if (model is Team) {
           session = Session(model.teamId, 0);
         }
 
