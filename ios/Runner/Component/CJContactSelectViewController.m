@@ -73,7 +73,7 @@ CJSearchHeaderDelegate>
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self configNavgationBar];
     
     [self.view addSubview:self.header];
@@ -198,7 +198,7 @@ CJSearchHeaderDelegate>
 - (CJSearchTableHeaderView *)header
 {
     if(!_header) {
-        _header = [[CJSearchTableHeaderView alloc] initWithFrame:CGRectMake(0, TOP_TOOL_BAR_HEIGHT, SCREEN_WIDTH, 50)];
+        _header = [[CJSearchTableHeaderView alloc] initWithFrame:CGRectMake(10, TOP_TOOL_BAR_HEIGHT, SCREEN_WIDTH, 50)];
         _header.delegate = self;
     }
     return _header;

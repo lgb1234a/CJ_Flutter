@@ -42,7 +42,7 @@ class NimSdkUtil {
     return TeamInfo.fromJson(teamInfo);
   }
 
-  /// 获取用户信息 
+  /// 获取用户信息
   /// userId 选填，不填默认获取当前用户信息
   static Future<UserInfo> userInfoById({String userId}) async {
     dynamic userInfo = await _channel.invokeMethod('userInfo:', [userId]);
@@ -66,6 +66,13 @@ class NimSdkUtil {
     List teamMemberInfos =
         await _channel.invokeMethod('teamMemberInfos:', [teamId]);
     return teamMemberInfos.map((f) => TeamMemberInfo.fromJson(f)).toList();
+  }
+
+  /// 获取单个群成员信息
+  static Future<TeamMemberInfo> teamMemberInfoById(
+      String teamId, String userId) async {
+    Map memberInfo = await _channel.invokeMethod('teamMemberInfo:', [teamId, userId]);
+    return TeamMemberInfo.fromJson(memberInfo);
   }
 
   /// 获取会话置顶状态
@@ -99,5 +106,10 @@ class NimSdkUtil {
     bool success = await _channel.invokeMethod(
         'changeNotifyStatus:', [session.id, session.type, needNotify]);
     return success;
+  }
+
+  /// 退出群聊
+  static Future<void> quitTeam(String teamId) async {
+    await _channel.invokeMethod('quitTeam:', [teamId]);
   }
 }

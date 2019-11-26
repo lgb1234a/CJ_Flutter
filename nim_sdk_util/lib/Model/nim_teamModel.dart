@@ -193,14 +193,25 @@ class Team implements NimSearchContactViewModel {
 }
 
 class TeamMemberInfo extends NimSearchContactViewModel {
+  /// 群id
   String teamId;
+  /// 群成员id
   String userId;
+  /// 邀请者id
+  /// @dicusssion 此字段仅当该成员为自己时有效。不允许查看其他群成员的邀请者
   String invitor;
+  /// 邀请者Accid
+  /// @discussion 该属性值为@""或者自身Accid时均表示无邀请人，当为nil时需要主动调用接口去获取
   String inviterAccid;
+  /// 群成员类型 0:普通 1:群主 2:管理员 3:申请加入用户
   int type;
+  /// 群昵称
   String nickName;
+  /// 被禁言
   bool isMuted;
+  /// 进群时间
   double createTime;
+  /// 新成员群自定义信息
   String customInfo;
 
   TeamMemberInfo._a(this.teamId, this.userId, this.invitor, this.inviterAccid,

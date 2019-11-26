@@ -1,4 +1,3 @@
-import 'package:cajian/Session/SessionInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 
@@ -23,8 +22,9 @@ class P2PSessionInfoLoaded extends SessioninfoState {
 /// 群聊信息加载完成
 class TeamSessionInfoLoaded extends SessioninfoState {
   final TeamInfo info;
+  final TeamMemberInfo memberInfo;
   TeamSessionInfoLoaded(
-      {@required this.info});
+      {@required this.info, @required this.memberInfo});
 }
 
 /// 群成员信息

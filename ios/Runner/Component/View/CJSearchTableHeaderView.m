@@ -90,7 +90,6 @@ CJTextFieldInput>
     if(!_mCollectionView) {
         UICollectionViewFlowLayout *fl = [[UICollectionViewFlowLayout alloc] init];
         fl.itemSize = CGSizeMake(self.frame.size.height - 10, self.frame.size.height - 10);
-        fl.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
         fl.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         fl.minimumInteritemSpacing = 5.f;
         

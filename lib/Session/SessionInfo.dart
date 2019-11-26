@@ -3,6 +3,7 @@
  * 聊天信息页
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/Model/nim_session.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,28 +22,48 @@ class SessionInfoWidget extends StatefulWidget {
 
 class SessionInfoState extends State<SessionInfoWidget> {
   Session _session;
+  VoidCallback _callBack;
+  SessioninfoBloc _bloc;
+
+  @override
+  void dispose() {
+    _callBack();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
     _session = Session.fromJson(widget.params);
+    _callBack = FlutterBoost.singleton.channel
+        .addEventListener('updateTeamMember', (name, arguments) {
+      print('updatedTeamMember  ----------------------   ' + name);
+      _bloc.add(FetchMemberInfos());
+      return;
+    });
   }
 
   // 点对点聊天的会话信息页
   Widget p2pSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
-      builder: (context) => SessioninfoBloc()..add(Fetch(session: _session)),
-      child: SessionP2PInfo(_session),
+      builder: (context) {
+        _bloc = SessioninfoBloc(session: _session)..add(Fetch());
+        return _bloc;
+      },
+      child: SessionP2PInfo(),
     );
   }
 
   // 群聊天的会话信息页
   Widget teamSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
-      builder: (context) => SessioninfoBloc()
-        ..add(Fetch(session: _session))
-        ..add(FetchMemberInfos(session: _session)),
-      child: SessionTeamInfoWidget(_session),
+      builder: (context) {
+        _bloc = SessioninfoBloc(session: _session)
+          ..add(Fetch())
+          ..add(FetchMemberInfos());
+        return _bloc;
+      },
+      child: SessionTeamInfoWidget(),
     );
   }
 

@@ -240,6 +240,26 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+// 获取单个群成员信息
++ (void)teamMemberInfo:(NSArray *)params
+{
+    FlutterResult result = params.lastObject;
+    NSString *teamId = params.firstObject;
+    NSString *userId = [params tn_objectAtIndex:1];
+    NIMTeamMember *member = [[NIMSDK sharedSDK].teamManager teamMember:userId inTeam:teamId];
+    result(@{
+        @"teamId": member.teamId?:[NSNull null],
+        @"userId": member.userId?:[NSNull null],
+        @"invitor": member.invitor?:[NSNull null],
+        @"inviterAccid": member.inviterAccid?:[NSNull null],
+        @"type": @(member.type),
+        @"nickname": member.nickname?:[NSNull null],
+        @"isMuted": @(member.isMuted),
+        @"createTime": @(member.createTime),
+        @"customInfo": member.customInfo?:[NSNull null]
+    });
+}
+
 // 获取会话置顶状态
 + (void)isStickedOnTop:(NSArray *)params
 {
@@ -319,6 +339,16 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                                                completion:errorBlock];
     }
     
+}
+
+
+/// 退出群聊
+/// @param params 群id
+- (void)quitTeam:(NSArray *)params
+{
+    NSString *teamId = params.firstObject;
+    [[NIMSDK sharedSDK].teamManager quitTeam:teamId
+                                  completion:nil];
 }
 
 #pragma mark ----- private --------

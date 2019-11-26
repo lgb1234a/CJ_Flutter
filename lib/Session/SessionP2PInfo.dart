@@ -11,8 +11,6 @@ import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class SessionP2PInfo extends StatefulWidget {
-  final Session _session;
-  SessionP2PInfo(this._session);
   @override
   State<StatefulWidget> createState() {
     return SessionP2PInfoState();
@@ -70,13 +68,13 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               GestureDetector(
                 child: _buildAvatar(info.avatarUrlString, info.showName),
                 onTap: () =>
-                    _bloc.add(TappedUserAvatar(userId: widget._session.id)),
+                    _bloc.add(TappedUserAvatar()),
               ),
               GestureDetector(
                 child:
                     _buildAvatar('images/icon_session_info_add@2x.png', '创建群聊'),
                 onTap: () =>
-                    _bloc.add(CreateGroupSession(userId: widget._session.id)),
+                    _bloc.add(CreateGroupSession()),
               )
             ],
           ),
@@ -94,7 +92,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               CupertinoSwitch(
                 value: state.notifyStatus,
                 onChanged: (bool newValue) => _bloc.add(SwitchNotifyStatus(
-                    session: widget._session, newValue: newValue)),
+                    newValue: newValue)),
               ),
             ],
           ),
@@ -112,7 +110,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               CupertinoSwitch(
                 value: state.isStickedOnTop,
                 onChanged: (bool newValue) => _bloc.add(SwitchStickOnTopStatus(
-                    session: widget._session, newValue: newValue)),
+                    newValue: newValue)),
               ),
             ],
           ),
@@ -128,9 +126,8 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
           cjSheet(context, '警告', msg: '确定要清空聊天记录吗？', handlerTexts: [
             '确定'
           ], handlers: [
-            () => _bloc.add(ClearChatHistory(session: widget._session))
+            () => _bloc.add(ClearChatHistory())
           ]);
-          // _bloc.add(ClearChatHistory(session: widget._session))
         },
       );
     }

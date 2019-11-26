@@ -39,9 +39,15 @@ static inline UIWindow *cj_getkeyWindow()
         [self showTip:arguments];
     } forName:@"showTip"];
     
-//    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
-//
-//    } forName:@"showSheet"];
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self addContactsToTeam:arguments];
+    } forName:@"addTeamMember"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self kickUserOutTeam:arguments];
+    } forName:@"kickUserOutTeam"];
+    
+    
 }
 
 // 跳转聊天
@@ -97,6 +103,9 @@ static inline UIWindow *cj_getkeyWindow()
                                                completion:nil];
 }
 
+
+/// 提示信息
+/// @param params 提示文案
 - (void)showTip:(NSDictionary *)params
 {
     MBProgressHUD *HUD = [MBProgressHUD HUDForView:cj_getkeyWindow()];
@@ -113,15 +122,81 @@ static inline UIWindow *cj_getkeyWindow()
     [HUD hideAnimated:YES afterDelay:2];
 }
 
-//- (void)showSheet:(NSDictionary *)params
-//{
-//    NSString *title = params[@"title"];
-//    NSString *message = params[@"message"];
-//    NSInteger style = [params[@"style"] integerValue];
-//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-//                                                                   message:message preferredStyle:style];
-//
-//
-//}
+/// 邀请联系人进群
+/// @param params 群id
+- (void)addContactsToTeam:(NSDictionary *)params
+{
+    NIMContactFriendSelectConfig *config = [NIMContactFriendSelectConfig new];
+    config.needMutiSelected = YES;
+    config.filterIds = params[@"filter_ids"];
+    
+    CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
+    
+    __weak typeof(nav) weakNav = nav;
+    __weak typeof(self) weakSelf = self;
+    selectorVc.finished = ^(NSArray <NSString *>*ids)
+    {
+        [[NIMSDK sharedSDK].teamManager addUsers:ids
+                                          toTeam:params[@"team_id"]
+                                      postscript:nil
+                                          attach:nil
+                                      completion:^(NSError * _Nullable error, NSArray<NIMTeamMember *> * _Nullable members) {
+            if(!error) {
+                [weakSelf showTip:@{@"text": @"邀请成功"}];
+                [[FlutterBoostPlugin sharedInstance] sendEvent:@"updateTeamMember"
+                                                     arguments:@{@"name":@"邀请成功"}];
+            }else {
+                [weakSelf showTip:@{@"text": @"邀请失败"}];
+            }
+            // 关闭选择器
+            [weakNav dismissViewControllerAnimated:YES completion:nil];
+            
+        }];
+    };
+    
+    [[FlutterBoostPlugin sharedInstance].currentViewController
+                                    presentViewController:nav
+                                                 animated:YES
+                                               completion:nil];
+}
+
+
+/// 踢出群聊
+/// @param params 参数
+- (void)kickUserOutTeam:(NSDictionary *)params
+{
+    NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+    config.needMutiSelected = YES;
+    config.teamId = params[@"team_id"];
+    
+    CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
+    
+    __weak typeof(nav) weakNav = nav;
+    __weak typeof(self) weakSelf = self;
+    selectorVc.finished = ^(NSArray <NSString *>*ids)
+    {
+        [[NIMSDK sharedSDK].teamManager kickUsers:ids
+                                         fromTeam:config.teamId
+                                       completion:^(NSError * _Nullable error) {
+            // 关闭选择器
+            [weakNav dismissViewControllerAnimated:YES completion:nil];
+            if(!error) {
+                [weakSelf showTip:@{@"text": @"踢人成功"}];
+                [[FlutterBoostPlugin sharedInstance] sendEvent:@"updateTeamMember"
+                                                     arguments:@{@"name":@"踢人成功"}];
+            }else {
+                [weakSelf showTip:@{@"text": @"踢人失败"}];
+            }
+            
+        }];
+    };
+    
+    [[FlutterBoostPlugin sharedInstance].currentViewController
+                                    presentViewController:nav
+                                                 animated:YES
+                                               completion:nil];
+}
 
 @end

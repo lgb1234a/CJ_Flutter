@@ -9,13 +9,10 @@ import 'package:flutter_boost/flutter_boost.dart';
 import '../Base/CJUtils.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:nim_sdk_util/nim_sdk_util.dart';
 
 double indent = 12;
 
 class SessionTeamInfoWidget extends StatefulWidget {
-  final Session session;
-  SessionTeamInfoWidget(this.session);
   @override
   State<StatefulWidget> createState() {
     return _SessionTeamInfoState();
@@ -26,6 +23,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   SessioninfoBloc _bloc;
   TeamInfo _teamInfo;
   List<UserInfo> _members;
+  TeamMemberInfo _memberInfo;
 
   Widget _sectionLoading() {
     return Container(
@@ -65,6 +63,9 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   /// 群聊名字
   Widget _teamName() {
+    if (_teamInfo == null) {
+      return Container();
+    }
     return _cell(
         Text('群聊名称'),
         Row(
@@ -81,7 +82,10 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     return _cell(
         Text('群二维码'),
         Row(
-          children: <Widget>[Image.asset(''), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Image.asset('images/icon_settings_gray_qr@2x.png'),
+            Icon(Icons.arrow_forward_ios)
+          ],
         ),
         () {});
   }
@@ -98,16 +102,22 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _nickName() {
+    if (_memberInfo == null) {
+      return Container();
+    }
     return _cell(
         Text('我在本群的群昵称'),
         Row(
-          children: <Widget>[Text('点击设置'), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Text(_memberInfo.nickName == null ? '点击设置' : _memberInfo.nickName),
+            Icon(Icons.arrow_forward_ios)
+          ],
         ),
         () {});
   }
 
   ///
-  Widget _teamManager() {
+  Widget _teamManage() {
     return _cell(
         Text('群管理'),
         Row(
@@ -162,7 +172,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   ///
   Widget _quitGroup() {
     return CupertinoButton(
-      onPressed: () {},
+      onPressed: () => _bloc.add(QuitTeamEvent()),
       color: Colors.white,
       child: Container(
         constraints: BoxConstraints(minHeight: 46),
@@ -173,7 +183,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   /// 查看全部群成员
   Widget _showAllMembers() {
-    if (_members.length < 9) {
+    if (_members == null || _members.length < 9) {
       return Container();
     }
     return GestureDetector(
@@ -190,7 +200,11 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   Widget _buildMemberOperateBtn(int operateType) {
     return GestureDetector(
-        onTap: () => _bloc.add(OperateMembersEvent(type: operateType)),
+        onTap: () {
+          List<String> ids = [];
+          _members.forEach((f) => ids.add(f.userId));
+          _bloc.add(OperateMembersEvent(type: operateType, filterIds: ids));
+        },
         child: SizedBox(
             width: 70,
             child: Image.asset(
@@ -255,7 +269,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             }
             if (f == _ms.last) {
               // 倒数第一个 减号
-              return _buildMemberOperateBtn(2);
+              return _buildMemberOperateBtn(0);
             }
 
             return _buildAvatar(f.avatarUrlString, f.showName);
@@ -268,6 +282,8 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_teamInfo == null) {
       return _sectionLoading();
     }
+    int dt = (_teamInfo.createTime * 1000).ceil();
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(dt);
     return ListTile(
       leading: _teamInfo.avatarUrlString != null
           ? FadeInImage.assetNetwork(
@@ -282,7 +298,12 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       title: Text(_teamInfo.showName),
       subtitle: Text(
         '于' +
-            _teamInfo.createTime.toString() +
+            date.year.toString() +
+            '年' +
+            date.month.toString() +
+            '月' +
+            date.day.toString() +
+            '日' +
             '创建  群号：' +
             _teamInfo.teamId.toString(),
         style: TextStyle(color: Colors.grey),
@@ -340,7 +361,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
                   indent: indent,
                   height: 0.5,
                 ),
-                _teamManager(),
+                _teamManage(),
                 Container(height: 8),
                 _chatHistory(),
                 Divider(
