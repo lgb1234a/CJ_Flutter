@@ -28,9 +28,9 @@
 {
     if([viewController isKindOfClass:FLBFlutterViewContainer.class])
     {
-        self.navigationBar.hidden = YES;
+        self.navigationBarHidden = YES;
     }else {
-        self.navigationBar.hidden = NO;
+        self.navigationBarHidden = NO;
     }
     
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -47,9 +47,9 @@
     if(self.viewControllers.count >= 2) {
         UIViewController *previous = self.viewControllers[self.viewControllers.count - 2];
         if([previous isKindOfClass:FLBFlutterViewContainer.class]) {
-            self.navigationBar.hidden = YES;
+            self.navigationBarHidden = YES;
         }else {
-            self.navigationBar.hidden = NO;
+            self.navigationBarHidden = NO;
         }
     }
     

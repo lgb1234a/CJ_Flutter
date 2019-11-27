@@ -18,7 +18,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   @override
   SessioninfoState get initialState => InitialSessioninfoState();
 
-  P2PSessionInfoLoaded _previousState;
+  SessioninfoState _previousState;
 
   @override
   Stream<SessioninfoState> mapEventToState(
@@ -32,7 +32,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         /* 置顶 */
         bool isStickOnTop = await NimSdkUtil.isStickedOnTop(session);
         /* 消息通知 */
-        bool notifyForNewMsg = await NimSdkUtil.isNotifyForNewMsg(session.id);
+        bool notifyForNewMsg = await NimSdkUtil.isNotifyForNewMsg(session);
 
         _previousState = P2PSessionInfoLoaded(
             info: info,
@@ -43,10 +43,20 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         /// 加载群数据
         TeamInfo teamInfo = await NimSdkUtil.teamInfoById(session.id);
         String userId = await LoginManager().getAccid();
-        /// 当前用户的群成员信息
+        /* 置顶 */
+        bool isStickOnTop = await NimSdkUtil.isStickedOnTop(session);
+        /* 消息通知 */
+        bool notifyForNewMsg = await NimSdkUtil.isNotifyForNewMsg(session);
+
+        /// 当前用户的信息
         TeamMemberInfo memberInfo =
             await NimSdkUtil.teamMemberInfoById(session.id, userId);
-        yield TeamSessionInfoLoaded(info: teamInfo, memberInfo: memberInfo);
+        _previousState = TeamSessionInfoLoaded(
+            info: teamInfo,
+            memberInfo: memberInfo,
+            isStickOnTop: isStickOnTop,
+            msgNotify: notifyForNewMsg);
+        yield _previousState;
       }
     }
 
@@ -67,25 +77,48 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is SwitchStickOnTopStatus) {
       /* 切换置顶开关 */
       bool newValue = event.newValue;
-      NimSdkUtil.stickSessiOnTop(session, newValue);
+      NimSdkUtil.stickSessinOnTop(session, newValue);
 
-      _previousState = P2PSessionInfoLoaded(
-          info: _previousState.info,
-          isStickedOnTop: newValue,
-          notifyStatus: _previousState.notifyStatus);
+      if (session.type == 0) {
+        P2PSessionInfoLoaded p = _previousState;
+        _previousState = P2PSessionInfoLoaded(
+            info: p.info,
+            isStickedOnTop: newValue,
+            notifyStatus: p.notifyStatus);
+      } else {
+        /// 群
+        TeamSessionInfoLoaded p = _previousState;
+        _previousState = TeamSessionInfoLoaded(
+            info: p.info,
+            memberInfo: p.memberInfo,
+            isStickOnTop: newValue,
+            msgNotify: p.msgNotify);
+      }
       yield _previousState;
     }
 
     if (event is SwitchNotifyStatus) {
       /* 开关消息通知 */
       bool newValue = event.newValue;
+      print('new Value: $newValue');
       bool success = await NimSdkUtil.changeNotifyStatus(session, newValue);
 
       if (success) {
-        _previousState = P2PSessionInfoLoaded(
-            info: _previousState.info,
-            isStickedOnTop: _previousState.isStickedOnTop,
-            notifyStatus: newValue);
+        if (session.type == 0) {
+          P2PSessionInfoLoaded p = _previousState;
+          _previousState = P2PSessionInfoLoaded(
+              info: p.info,
+              isStickedOnTop: p.isStickedOnTop,
+              notifyStatus: newValue);
+        } else {
+          /// 群
+          TeamSessionInfoLoaded p = _previousState;
+          _previousState = TeamSessionInfoLoaded(
+              info: p.info,
+              memberInfo: p.memberInfo,
+              isStickOnTop: p.isStickOnTop,
+              msgNotify: newValue);
+        }
         yield _previousState;
       }
     }
@@ -95,10 +128,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       /* 跳转个人信息页 */
       FlutterBoost.singleton.open('user_info',
           urlParams: {'user_id': userId},
-          exts: {'animated': true}).then((Map value) {
-        print(
-            "call me when page is finished. did recieve second route result $value");
-      });
+          exts: {'animated': true});
     }
 
     if (event is CreateGroupSession) {
@@ -130,7 +160,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       }
     }
 
-    if(event is QuitTeamEvent) {
+    if (event is QuitTeamEvent) {
       /// 退群
       await NimSdkUtil.quitTeam(session.id);
     }

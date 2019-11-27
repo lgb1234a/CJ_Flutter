@@ -24,6 +24,8 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   TeamInfo _teamInfo;
   List<UserInfo> _members;
   TeamMemberInfo _memberInfo;
+  bool _msgNotify = false;
+  bool _isStickOnTop = false;
 
   Widget _sectionLoading() {
     return Container(
@@ -141,10 +143,10 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     return _cell(
         Text('消息免打扰'),
         CupertinoSwitch(
-          value: false,
-          onChanged: (value) {},
+          value: _msgNotify,
+          onChanged: (value) => _bloc.add(SwitchNotifyStatus(newValue: value)),
         ),
-        () {});
+        () => {});
   }
 
   ///
@@ -152,21 +154,22 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     return _cell(
         Text('聊天置顶'),
         CupertinoSwitch(
-          value: false,
-          onChanged: (value) {},
+          value: _isStickOnTop,
+          onChanged: (value) =>
+              _bloc.add(SwitchStickOnTopStatus(newValue: value)),
         ),
-        () {});
+        () => {});
   }
 
   ///
   Widget _clearHistory() {
     return _cell(
         Text('清空聊天记录'),
-        CupertinoSwitch(
-          value: false,
-          onChanged: (value) {},
-        ),
-        () {});
+        Icon(Icons.arrow_forward_ios),
+        () => cjSheet(context, '警告',
+            msg: '确定要清空聊天记录吗？',
+            handlerTexts: ['确定'],
+            handlers: [() => _bloc.add(ClearChatHistory())]));
   }
 
   ///
@@ -334,7 +337,12 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         builder: (context, state) {
           if (state is TeamSessionInfoLoaded || state is TeamMembersLoaded) {
             /// 加载OK
-            if (state is TeamSessionInfoLoaded) _teamInfo = state.info;
+            if (state is TeamSessionInfoLoaded) {
+              _teamInfo = state.info;
+              _memberInfo = state.memberInfo;
+              _isStickOnTop = state.isStickOnTop;
+              _msgNotify = state.msgNotify;
+            }
             if (state is TeamMembersLoaded) _members = state.members;
             return ListView(
               children: <Widget>[

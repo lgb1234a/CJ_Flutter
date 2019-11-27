@@ -67,14 +67,12 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
             children: <Widget>[
               GestureDetector(
                 child: _buildAvatar(info.avatarUrlString, info.showName),
-                onTap: () =>
-                    _bloc.add(TappedUserAvatar()),
+                onTap: () => _bloc.add(TappedUserAvatar()),
               ),
               GestureDetector(
                 child:
                     _buildAvatar('images/icon_session_info_add@2x.png', '创建群聊'),
-                onTap: () =>
-                    _bloc.add(CreateGroupSession()),
+                onTap: () => _bloc.add(CreateGroupSession()),
               )
             ],
           ),
@@ -91,8 +89,8 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               Text('消息提醒'),
               CupertinoSwitch(
                 value: state.notifyStatus,
-                onChanged: (bool newValue) => _bloc.add(SwitchNotifyStatus(
-                    newValue: newValue)),
+                onChanged: (bool newValue) =>
+                    _bloc.add(SwitchNotifyStatus(newValue: newValue)),
               ),
             ],
           ),
@@ -109,8 +107,8 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
               Text('聊天置顶'),
               CupertinoSwitch(
                 value: state.isStickedOnTop,
-                onChanged: (bool newValue) => _bloc.add(SwitchStickOnTopStatus(
-                    newValue: newValue)),
+                onChanged: (bool newValue) =>
+                    _bloc.add(SwitchStickOnTopStatus(newValue: newValue)),
               ),
             ],
           ),
@@ -122,13 +120,10 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
       // 清空聊天记录按钮
       return CupertinoButton.filled(
         child: Text('清空聊天记录'),
-        onPressed: () {
-          cjSheet(context, '警告', msg: '确定要清空聊天记录吗？', handlerTexts: [
-            '确定'
-          ], handlers: [
-            () => _bloc.add(ClearChatHistory())
-          ]);
-        },
+        onPressed: () => cjSheet(context, '警告',
+            msg: '确定要清空聊天记录吗？',
+            handlerTexts: ['确定'],
+            handlers: [() => _bloc.add(ClearChatHistory())]),
       );
     }
 

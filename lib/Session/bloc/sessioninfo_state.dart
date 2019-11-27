@@ -23,13 +23,17 @@ class P2PSessionInfoLoaded extends SessioninfoState {
 class TeamSessionInfoLoaded extends SessioninfoState {
   final TeamInfo info;
   final TeamMemberInfo memberInfo;
+  final bool msgNotify;
+  final bool isStickOnTop;
   TeamSessionInfoLoaded(
-      {@required this.info, @required this.memberInfo});
+      {@required this.info,
+      @required this.memberInfo,
+      @required this.msgNotify,
+      @required this.isStickOnTop});
 }
 
 /// 群成员信息
 class TeamMembersLoaded extends SessioninfoState {
   final List<UserInfo> members;
-  TeamMembersLoaded(
-      {@required this.members});
+  TeamMembersLoaded({@required this.members});
 }

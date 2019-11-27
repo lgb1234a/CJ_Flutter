@@ -278,7 +278,15 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 {
     FlutterResult result = params.lastObject;
     NSString *sessionId = params.firstObject;
-    BOOL notifyForNewMsg = [[NIMSDK sharedSDK].userManager notifyForNewMsg:sessionId];
+    NSNumber *type = [params tn_objectAtIndex:1];
+    
+    BOOL notifyForNewMsg = NO;
+    if(type.integerValue == 0) {
+        notifyForNewMsg = [[NIMSDK sharedSDK].userManager notifyForNewMsg:sessionId];
+    }else {
+        NIMTeamNotifyState state = [[NIMSDK sharedSDK].teamManager notifyStateForNewMsg:sessionId];
+        notifyForNewMsg = state == NIMTeamNotifyStateAll;
+    }
     
     result(@(notifyForNewMsg));
 }
@@ -296,7 +304,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 置顶聊天
-+ (void)stickSessiOnTop:(NSArray *)params
++ (void)stickSessinOnTop:(NSArray *)params
 {
     NSString *sessionId = params.firstObject;
     NSNumber *type = params[1];

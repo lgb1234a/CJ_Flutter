@@ -71,7 +71,8 @@ class NimSdkUtil {
   /// 获取单个群成员信息
   static Future<TeamMemberInfo> teamMemberInfoById(
       String teamId, String userId) async {
-    Map memberInfo = await _channel.invokeMethod('teamMemberInfo:', [teamId, userId]);
+    Map memberInfo =
+        await _channel.invokeMethod('teamMemberInfo:', [teamId, userId]);
     return TeamMemberInfo.fromJson(memberInfo);
   }
 
@@ -83,8 +84,9 @@ class NimSdkUtil {
   }
 
   /// 获取会话是否开启消息提醒
-  static Future<bool> isNotifyForNewMsg(String sessionId) async {
-    bool isTop = await _channel.invokeMethod('isNotifyForNewMsg:', [sessionId]);
+  static Future<bool> isNotifyForNewMsg(Session session) async {
+    bool isTop = await _channel
+        .invokeMethod('isNotifyForNewMsg:', [session.id, session.type]);
     return isTop;
   }
 
@@ -95,9 +97,9 @@ class NimSdkUtil {
   }
 
   /// 聊天置顶开关
-  static Future<void> stickSessiOnTop(Session session, bool isTop) async {
+  static Future<void> stickSessinOnTop(Session session, bool isTop) async {
     await _channel
-        .invokeMethod('stickSessiOnTop:', [session.id, session.type, isTop]);
+        .invokeMethod('stickSessinOnTop:', [session.id, session.type, isTop]);
   }
 
   /// 消息通知开关
