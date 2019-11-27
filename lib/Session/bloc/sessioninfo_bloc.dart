@@ -51,6 +51,8 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         /// 当前用户的信息
         TeamMemberInfo memberInfo =
             await NimSdkUtil.teamMemberInfoById(session.id, userId);
+
+        print('查询信息完成！！！！');
         _previousState = TeamSessionInfoLoaded(
             info: teamInfo,
             memberInfo: memberInfo,
@@ -127,8 +129,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       String userId = session.id;
       /* 跳转个人信息页 */
       FlutterBoost.singleton.open('user_info',
-          urlParams: {'user_id': userId},
-          exts: {'animated': true});
+          urlParams: {'user_id': userId}, exts: {'animated': true});
     }
 
     if (event is CreateGroupSession) {
@@ -162,7 +163,22 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
     if (event is QuitTeamEvent) {
       /// 退群
-      await NimSdkUtil.quitTeam(session.id);
+      bool success = await NimSdkUtil.quitTeam(session.id);
+      if (success)
+        FlutterBoost.singleton.channel.sendEvent('popToRootPage', null);
+    }
+
+    if (event is DismissTeamEvent) {
+      /// 解散群聊
+      bool success = await NimSdkUtil.dismissTeam(session.id);
+      if (success)
+        FlutterBoost.singleton.channel.sendEvent('popToRootPage', null);
+    }
+
+    if (event is TappedTeamMemberAvatarEvent) {
+      /// 点击了群成员头像,跳转群成员信息页
+      FlutterBoost.singleton.open('member_info',
+          urlParams: {'member_id': event.memberId}, exts: {'animated': true});
     }
   }
 }

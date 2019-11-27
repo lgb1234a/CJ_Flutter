@@ -37,7 +37,6 @@ class SessionInfoState extends State<SessionInfoWidget> {
     _session = Session.fromJson(widget.params);
     _callBack = FlutterBoost.singleton.channel
         .addEventListener('updateTeamMember', (name, arguments) {
-      print('updatedTeamMember  ----------------------   ' + name);
       _bloc.add(FetchMemberInfos());
       return;
     });

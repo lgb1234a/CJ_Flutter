@@ -18,6 +18,7 @@ import 'Contacts/UserInfo/UserInfoPage.dart';
 import 'Contacts/ContactSetting/ContactSetting.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'Login/Register/Register.dart';
+import 'Session/SessionMemberInfo.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
       'session_info': (pageName, params, _) => SessionInfoWidget(params),
       'user_info': (pageName, params, _) => UserInfoPage(params),
       'contact_setting': (pageName, params, _) => ContactSetting(params),
+      'member_info': (pageName, params, _) => SessionMemberInfoWidget(params),
     });
   }
 

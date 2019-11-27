@@ -47,7 +47,9 @@ static inline UIWindow *cj_getkeyWindow()
         [self kickUserOutTeam:arguments];
     } forName:@"kickUserOutTeam"];
     
-    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self popToRootPage];
+    } forName:@"popToRootPage"];
 }
 
 // 跳转聊天
@@ -197,6 +199,13 @@ static inline UIWindow *cj_getkeyWindow()
                                     presentViewController:nav
                                                  animated:YES
                                                completion:nil];
+}
+
+
+/// 回到根视图
+- (void)popToRootPage
+{
+    [cj_rootNavigationController() popToRootViewControllerAnimated:YES];
 }
 
 @end

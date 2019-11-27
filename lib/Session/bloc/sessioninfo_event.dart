@@ -36,8 +36,7 @@ class OperateMembersEvent extends SessioninfoEvent {
   /// 1:加人进群，2:踢人
   final int type;
   final List<String> filterIds;
-  OperateMembersEvent(
-      {@required this.type, @required this.filterIds});
+  OperateMembersEvent({@required this.type, @required this.filterIds});
 }
 
 class ShowAllMembersEvent extends SessioninfoEvent {
@@ -46,3 +45,10 @@ class ShowAllMembersEvent extends SessioninfoEvent {
 }
 
 class QuitTeamEvent extends SessioninfoEvent {}
+
+class DismissTeamEvent extends SessioninfoEvent {}
+
+class TappedTeamMemberAvatarEvent extends SessioninfoEvent {
+  final String memberId;
+  TappedTeamMemberAvatarEvent({@required this.memberId});
+}

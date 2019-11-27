@@ -174,12 +174,22 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _quitGroup() {
+    if (_memberInfo == null || _teamInfo == null) {
+      return Container();
+    }
+    String tip = _memberInfo.userId == _teamInfo.owner ? '解散群聊' : '退出群聊';
     return CupertinoButton(
-      onPressed: () => _bloc.add(QuitTeamEvent()),
+      onPressed: () => cjSheet(context, '警告', msg: '确定要$tip吗？', handlerTexts: [
+        '确定'
+      ], handlers: [
+        () => _memberInfo.userId == _teamInfo.owner
+            ? _bloc.add(DismissTeamEvent())
+            : _bloc.add(QuitTeamEvent())
+      ]),
       color: Colors.white,
       child: Container(
         constraints: BoxConstraints(minHeight: 46),
-        child: Text('退出群聊', style: TextStyle(color: Colors.red)),
+        child: Text(tip, style: TextStyle(color: Colors.red)),
       ),
     );
   }
@@ -218,7 +228,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             )));
   }
 
-  Widget _buildAvatar(String avatarStr, String showName) {
+  Widget _buildAvatar(String avatarStr, String showName, String memberId) {
     Widget avatar = avatarStr == null
         ? Image.asset(
             'images/icon_avatar_placeholder@2x.png',
@@ -234,19 +244,21 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
                 avatarStr,
                 width: 40,
               ));
-    return SizedBox(
-      width: 70,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          avatar,
-          Text(
-            showName,
-            overflow: TextOverflow.ellipsis,
-          )
-        ],
-      ),
-    );
+    return GestureDetector(
+        onTap: () => _bloc.add(TappedTeamMemberAvatarEvent(memberId: memberId)),
+        child: SizedBox(
+          width: 70,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              avatar,
+              Text(
+                showName,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
+        ));
   }
 
   /// 群成员
@@ -275,7 +287,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
               return _buildMemberOperateBtn(0);
             }
 
-            return _buildAvatar(f.avatarUrlString, f.showName);
+            return _buildAvatar(f.avatarUrlString, f.showName, f.userId);
           }).toList(),
         ));
   }

@@ -111,7 +111,12 @@ class NimSdkUtil {
   }
 
   /// 退出群聊
-  static Future<void> quitTeam(String teamId) async {
-    await _channel.invokeMethod('quitTeam:', [teamId]);
+  static Future<bool> quitTeam(String teamId) async {
+    return await _channel.invokeMethod('quitTeam:', [teamId]);
+  }
+
+  /// 解散群聊
+  static Future<bool> dismissTeam(String teamId) async {
+    return await _channel.invokeMethod('dismissTeam:', [teamId]);
   }
 }

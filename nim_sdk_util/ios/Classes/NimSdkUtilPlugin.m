@@ -352,11 +352,37 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 
 /// 退出群聊
 /// @param params 群id
-- (void)quitTeam:(NSArray *)params
++ (void)quitTeam:(NSArray *)params
 {
     NSString *teamId = params.firstObject;
+    FlutterResult result = params.lastObject;
     [[NIMSDK sharedSDK].teamManager quitTeam:teamId
-                                  completion:nil];
+                                  completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"退出群聊失败，请重试"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
+    }];
+}
+
+
+/// 解散群聊
+/// @param params 群id
++ (void)dismissTeam:(NSArray *)params
+{
+    NSString *teamId = params.firstObject;
+    FlutterResult result = params.lastObject;
+    [[NIMSDK sharedSDK].teamManager dismissTeam:teamId
+                                     completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"解散群聊失败，请重试"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
+    }];
 }
 
 #pragma mark ----- private --------
