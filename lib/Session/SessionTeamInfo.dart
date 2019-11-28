@@ -81,6 +81,9 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   /// 群二维码
   Widget _code() {
+    if (_teamInfo == null) {
+      return Container();
+    }
     return _cell(
         Text('群二维码'),
         Row(
@@ -88,8 +91,16 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             Image.asset('images/icon_settings_gray_qr@2x.png'),
             Icon(Icons.arrow_forward_ios)
           ],
-        ),
-        () {});
+        ), () {
+      String qrCodeUrl =
+          'https://api.youxi2018.cn/v2/jump/g/' + _teamInfo.teamId;
+      _bloc.add(TappedTeamQrCode(
+          qrCodeUrl,
+          _teamInfo.avatarUrlString == null
+              ? 'images/icon_contact_groupchat@2x.png'
+              : _teamInfo.avatarUrlString,
+          44));
+    });
   }
 
   ///

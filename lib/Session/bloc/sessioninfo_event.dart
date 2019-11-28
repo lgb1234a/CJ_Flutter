@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
@@ -51,4 +52,17 @@ class DismissTeamEvent extends SessioninfoEvent {}
 class TappedTeamMemberAvatarEvent extends SessioninfoEvent {
   final String memberId;
   TappedTeamMemberAvatarEvent({@required this.memberId});
+}
+
+class TappedTeamQrCode extends SessioninfoEvent {
+  /// 生成二维码的内容
+  final String contentStr;
+
+  /// 内嵌图片路径
+  final String embeddedImgAssetPath;
+
+  /// 内嵌图片样式
+  final double embeddedImgSize;
+  TappedTeamQrCode(
+      this.contentStr, this.embeddedImgAssetPath, this.embeddedImgSize);
 }

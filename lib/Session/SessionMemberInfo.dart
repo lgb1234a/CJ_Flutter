@@ -20,8 +20,8 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: new AppBar(
-          leading: new IconButton(
+        appBar: AppBar(
+          leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               FlutterBoost.singleton.closeCurrent();

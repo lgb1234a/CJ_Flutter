@@ -52,7 +52,6 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         TeamMemberInfo memberInfo =
             await NimSdkUtil.teamMemberInfoById(session.id, userId);
 
-        print('查询信息完成！！！！');
         _previousState = TeamSessionInfoLoaded(
             info: teamInfo,
             memberInfo: memberInfo,
@@ -179,6 +178,18 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       /// 点击了群成员头像,跳转群成员信息页
       FlutterBoost.singleton.open('member_info',
           urlParams: {'member_id': event.memberId}, exts: {'animated': true});
+    }
+
+    if (event is TappedTeamQrCode) {
+      /// 跳转群二维码页面
+      FlutterBoost.singleton.open('qrcode', urlParams: {
+        'title': '群二维码',
+        'content': event.contentStr,
+        'embeddedImgAssetPath': event.embeddedImgAssetPath,
+        'embeddedImgStyle': event.embeddedImgSize
+      }, exts: {
+        'animated': true
+      });
     }
   }
 }

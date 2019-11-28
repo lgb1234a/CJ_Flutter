@@ -19,6 +19,7 @@ import 'Contacts/ContactSetting/ContactSetting.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'Login/Register/Register.dart';
 import 'Session/SessionMemberInfo.dart';
+import 'Components/QrCodePage.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -64,13 +65,15 @@ class _MyAppState extends State<MyApp> {
       'mine': (pageName, params, _) => MineWidget(),
       'contacts': (pageName, params, _) => ContactsWidget(params),
       'setting': (pageName, params, _) => SettingWidget(),
-      'mine_info': (pageName, params, _) => MineInfoWiget(),                  
+      'mine_info': (pageName, params, _) => MineInfoWiget(),
       'contact_searching': (pageName, params, _) => ContactsSearchingWidget(),
-      'contact_search_result': (pageName, params, _) => ContactsSearchResultListWidget(params),
+      'contact_search_result': (pageName, params, _) =>
+          ContactsSearchResultListWidget(params),
       'session_info': (pageName, params, _) => SessionInfoWidget(params),
       'user_info': (pageName, params, _) => UserInfoPage(params),
       'contact_setting': (pageName, params, _) => ContactSetting(params),
       'member_info': (pageName, params, _) => SessionMemberInfoWidget(params),
+      'qrcode': (pageName, params, _) => QrCodePage(params: params),
     });
   }
 
@@ -82,6 +85,5 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onRoutePushed(
-      String pageName, String uniqueId, Map params, Route route, Future _) {
-  }
+      String pageName, String uniqueId, Map params, Route route, Future _) {}
 }
