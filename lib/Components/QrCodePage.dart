@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../Base/CJUtils.dart';
+import 'package:flutter/cupertino.dart';
 
 class QrCodePage extends StatefulWidget {
   final Map params;
@@ -15,6 +16,17 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
+
+  /// 保存到手机相册
+  void _saveCodeToAlbum() {
+
+  }
+
+  /// 分享二维码
+  void _shareCode() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     String title =
@@ -51,24 +63,70 @@ class _QrCodePageState extends State<QrCodePage> {
           elevation: 0.01,
           iconTheme: IconThemeData.fallback(),
         ),
+        backgroundColor: Color(0xffe5e5e5),
         body: Center(
-          child: QrImage(
-            version: QrVersions.auto,
-            data: widget.params['content'],
-            embeddedImage: ip,
-            embeddedImageStyle: QrEmbeddedImageStyle(size: embeddedImgSize),
-            size: 200,
-            gapless: false,
-            errorStateBuilder: (cxt, err) {
-              return Container(
-                child: Center(
-                  child: Text(
-                    "二维码解析出错了～",
-                    textAlign: TextAlign.center,
-                  ),
+          child: Container(
+            height: 300,
+            width: 300,
+            child: Column(
+              children: <Widget>[
+                QrImage(
+                  version: QrVersions.auto,
+                  data: widget.params['content'],
+                  embeddedImage: ip,
+                  embeddedImageStyle:
+                      QrEmbeddedImageStyle(size: embeddedImgSize),
+                  size: 200,
+                  gapless: false,
+                  errorStateBuilder: (cxt, err) {
+                    return Container(
+                      child: Center(
+                        child: Text(
+                          "二维码解析出错了～",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+                Container(
+                  height: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      CupertinoButton(
+                        color: Colors.white,
+                        padding: EdgeInsets.all(10),
+                        minSize: 44,
+                        child: Container(
+                          child: Text(
+                            '保存到手机',
+                            style: TextStyle(color: Colors.grey),
+                            textAlign: TextAlign.center,
+                          ),
+                          width: 100,
+                        ),
+                        onPressed: _saveCodeToAlbum,
+                      ),
+                      CupertinoButton(
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(10),
+                        minSize: 44,
+                        child: Container(
+                          child: Text(
+                            '分享',
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                          width: 100,
+                        ),
+                        onPressed: _shareCode,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
