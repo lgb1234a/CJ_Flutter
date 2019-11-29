@@ -2,10 +2,14 @@
 /// 二维码显示页
 ///
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../Base/CJUtils.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 class QrCodePage extends StatefulWidget {
   final Map params;
@@ -16,16 +20,23 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
+  GlobalKey _qrCodeKey = new GlobalKey();
 
   /// 保存到手机相册
-  void _saveCodeToAlbum() {
+  void _saveCodeToAlbum() async {
+    /// 拿到图层
+    RenderRepaintBoundary boundary =
+        _qrCodeKey.currentContext.findRenderObject();
+    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
 
+    FlutterBoost.singleton.channel
+        .sendEvent('saveImageToAlbum', {'img_data': pngBytes});
   }
 
   /// 分享二维码
-  void _shareCode() {
-
-  }
+  void _shareCode() {}
 
   @override
   Widget build(BuildContext context) {
@@ -70,24 +81,27 @@ class _QrCodePageState extends State<QrCodePage> {
             width: 300,
             child: Column(
               children: <Widget>[
-                QrImage(
-                  version: QrVersions.auto,
-                  data: widget.params['content'],
-                  embeddedImage: ip,
-                  embeddedImageStyle:
-                      QrEmbeddedImageStyle(size: embeddedImgSize),
-                  size: 200,
-                  gapless: false,
-                  errorStateBuilder: (cxt, err) {
-                    return Container(
-                      child: Center(
-                        child: Text(
-                          "二维码解析出错了～",
-                          textAlign: TextAlign.center,
+                RepaintBoundary(
+                  key: _qrCodeKey,
+                  child: QrImage(
+                    version: QrVersions.auto,
+                    data: widget.params['content'],
+                    embeddedImage: ip,
+                    embeddedImageStyle:
+                        QrEmbeddedImageStyle(size: embeddedImgSize),
+                    size: 200,
+                    gapless: false,
+                    errorStateBuilder: (cxt, err) {
+                      return Container(
+                        child: Center(
+                          child: Text(
+                            "二维码解析出错了～",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
                 Container(
                   height: 100,

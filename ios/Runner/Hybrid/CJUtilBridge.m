@@ -50,6 +50,10 @@ static inline UIWindow *cj_getkeyWindow()
     [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
         [self popToRootPage];
     } forName:@"popToRootPage"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self saveImageToAlbum:arguments];
+    } forName:@"saveImageToAlbum"];
 }
 
 // 跳转聊天
@@ -206,6 +210,25 @@ static inline UIWindow *cj_getkeyWindow()
 - (void)popToRootPage
 {
     [cj_rootNavigationController() popToRootViewControllerAnimated:YES];
+}
+
+/// 保存图片到相册
+- (void)saveImageToAlbum:(NSDictionary *)params
+{
+    FlutterStandardTypedData *imgData = params[@"img_data"];
+    UIImage *image = [[UIImage alloc] initWithData:imgData.data];
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (void)image:(UIImage *)image
+didFinishSavingWithError:(NSError *)error
+  contextInfo:(void *)contextInfo
+{
+    if(error) {
+        [UIViewController showError:@"图片保存失败"];
+    }else {
+        [UIViewController showSuccess:@"图片保存成功"];
+    }
 }
 
 @end
