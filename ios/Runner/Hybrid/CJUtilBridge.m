@@ -28,10 +28,6 @@ static inline UIWindow *cj_getkeyWindow()
 - (void)initBridge
 {
     [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
-        [self sendMessage:arguments];
-    } forName:@"sendMessage"];
-    
-    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
         [self createGroupChat:arguments];
     } forName:@"createGroupChat"];
     
@@ -59,9 +55,9 @@ static inline UIWindow *cj_getkeyWindow()
 // 跳转聊天
 - (void)sendMessage:(NSDictionary *)params
 {
-    NSString *sessionId = params[@"session_id"];
+    NSString *sessionId = params[@"id"];
     NSNumber *type = params[@"type"];
-    
+
     NIMSession *session = [NIMSession session:sessionId type:type.integerValue];
     CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
     [cj_rootNavigationController() pushViewController:sessionVC
@@ -99,7 +95,7 @@ static inline UIWindow *cj_getkeyWindow()
                                         completion:^(NSError * __nullable error, NSString * __nullable teamId, NSArray<NSString *> * __nullable failedUserIds){
             // 关闭选择器
             [weakNav dismissViewControllerAnimated:YES completion:nil];
-            [self sendMessage:@{@"session_id": teamId, @"type": @1}];
+            [self sendMessage:@{@"id": teamId, @"type": @1}];
         }];
     };
     

@@ -33,8 +33,14 @@
 - (void)onSelectedAvatar:(NIMRecentSession *)recentSession
              atIndexPath:(NSIndexPath *)indexPath
 {
-    CJSessionViewController *vc = [[CJSessionViewController alloc] initWithSession:recentSession.session];
-    [self.navigationController pushViewController:vc animated:YES];
+    [FlutterBoostPlugin open:@"nativePage://android&iosPageName=CJSessionViewController"
+                   urlParams:@{@"id": recentSession.session.sessionId, @"type": @(recentSession.session.sessionType)}
+                        exts:@{@"animated": @1}
+              onPageFinished:^(NSDictionary *d) {
+        
+    } completion:^(BOOL completion) {
+        
+    }];
 };
 
 - (void)onSelectedRecent:(NIMRecentSession *)recentSession atIndexPath:(NSIndexPath *)indexPath

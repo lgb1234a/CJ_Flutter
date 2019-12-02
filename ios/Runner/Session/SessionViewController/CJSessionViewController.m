@@ -24,9 +24,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+// flutter boost 协议
+- (instancetype)initWithBoostParams:(NSDictionary *)boost_params
+{
+    NIMSession *session = [NIMSession session:boost_params[@"id"]
+                   type:[boost_params[@"type"] integerValue]];
+    self = [super initWithSession:session];
+    if(self) {
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     /* 配置导航条按钮 */
     [self setUpNavBarItem];
     

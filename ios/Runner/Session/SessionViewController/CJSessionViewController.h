@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJSessionViewController : NIMSessionViewController
+@interface CJSessionViewController : NIMSessionViewController<CJBoostViewController>
+
+- (instancetype)initWithBoostParams:(NSDictionary *)boost_params;
 
 @end
 

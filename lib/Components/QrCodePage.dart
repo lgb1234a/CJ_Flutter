@@ -36,7 +36,9 @@ class _QrCodePageState extends State<QrCodePage> {
   }
 
   /// 分享二维码
-  void _shareCode() {}
+  void _shareCode() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {

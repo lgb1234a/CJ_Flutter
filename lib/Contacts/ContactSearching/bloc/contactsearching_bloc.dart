@@ -31,8 +31,10 @@ class ContactsearchingBloc
 
     if (event is TouchedCellEvent) {
       /* 点击联系人 */
-      FlutterBoost.singleton.channel.sendEvent('sendMessage',
-          {'session_id': event.session.id, 'type': event.session.type});
+      FlutterBoost.singleton.open(
+          'nativePage://android&iosPageName=CJSessionViewController',
+          urlParams: {'id': event.session.id, 'type': event.session.type},
+          exts: {'animated': true});
     }
 
     if (event is CancelSearchingEvent) {
@@ -43,8 +45,8 @@ class ContactsearchingBloc
 }
 
 // 跳转到更多列表,把 teams 或者 contacts带过去
-void pushSerachResultViewController(int type, String keyword,
-    List<ContactInfo> contacts, List<Team> groups) {
+void pushSerachResultViewController(
+    int type, String keyword, List<ContactInfo> contacts, List<Team> groups) {
   List models = [];
   if (type == 0) {
     models = contacts.map((f) => f.toJson()).toList();

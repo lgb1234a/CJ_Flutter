@@ -30,11 +30,11 @@ class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
     }
 
     if (event is TouchedSendMsg) {
-      /* 创建群聊 */
-      String userId = event.userId;
       /* 调用native，拉起选择联系人组件,创建群聊 */
-      FlutterBoost.singleton.channel
-          .sendEvent('sendMessage', {'session_id': userId, 'type': 0});
+      FlutterBoost.singleton.open(
+          'nativePage://android&iosPageName=CJSessionViewController',
+          urlParams: {'id': event.userId, 'type': 0},
+          exts: {'animated': true});
     }
 
     if (event is TouchedMore) {

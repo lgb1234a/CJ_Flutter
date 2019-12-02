@@ -157,7 +157,7 @@ class ContactsSearchResultListState
         }
 
         if (model is Team) {
-          session = Session(model.teamId, 0);
+          session = Session(model.teamId, 1);
         }
 
         // 点击了cell
@@ -182,7 +182,6 @@ class ContactsSearchResultListState
     }
 
     return SizedBox(
-      // width: screenWidth,
       height: 300,
       child: Center(
         child: Text('未匹配到相关数据类型~'),

@@ -29,8 +29,10 @@ class ContactsearchresultBloc
 
     /* 点击cell */
     if (event is TappedCellEvent) {
-      FlutterBoost.singleton.channel.sendEvent('sendMessage',
-          {'session_id': event.session.id, 'type': event.session.type});
+      FlutterBoost.singleton.open(
+          'nativePage://android&iosPageName=CJSessionViewController',
+          urlParams: {'id': event.session.id, 'type': event.session.type},
+          exts: {'animated': true});
     }
 
     if (event is CancelSearchingEvent) {

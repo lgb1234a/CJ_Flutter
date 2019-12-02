@@ -8,6 +8,7 @@
 
 #import "PlatformRouterImp.h"
 #import <flutter_boost/FlutterBoost.h>
+#import "CJFlutterViewController.h"
 
 @interface PlatformRouterImp()
 @end
@@ -21,9 +22,29 @@
   completion:(void (^)(BOOL))completion
 {
     BOOL animated = [exts[@"animated"] boolValue];
-    FLBFlutterViewContainer *vc = FLBFlutterViewContainer.new;
-    [vc setName:name params:params];
-    [self.navigationController pushViewController:vc animated:animated];
+    if([name hasPrefix:@"nativePage://"]) {
+        // native
+        NSArray *paths = [name componentsSeparatedByString:@"&"];
+        if(paths.count == 1) {
+            
+            return;
+        }
+        NSString *iosPath = paths[1];
+        NSString *clsName = [iosPath componentsSeparatedByString:@"="][1];
+        
+        Class cls = NSClassFromString(clsName);
+        
+        NSAssert([cls conformsToProtocol:@protocol(CJBoostViewController)], @"viewController do not conformsToProtocol <CJBoostViewController> !");
+        
+        UIViewController *vc = [[cls alloc] initWithBoostParams:params];
+        [self.navigationController pushViewController:vc animated:animated];
+    }else {
+        // 纯flutter页面
+        FLBFlutterViewContainer *vc = FLBFlutterViewContainer.new;
+        [vc setName:name params:params];
+        [self.navigationController pushViewController:vc animated:animated];
+    }
+    
     if(completion) completion(YES);
 }
 

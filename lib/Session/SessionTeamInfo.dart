@@ -72,7 +72,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Text('群聊名称'),
         Row(
           children: <Widget>[
-            Text(_teamInfo.teamName),
+            Text(_teamInfo.teamName == null ? '' : _teamInfo.teamName),
             Icon(Icons.arrow_forward_ios)
           ],
         ),
@@ -264,7 +264,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             children: <Widget>[
               avatar,
               Text(
-                showName,
+                showName == null ? '' : showName,
                 overflow: TextOverflow.ellipsis,
               )
             ],
@@ -321,7 +321,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
               'images/icon_contact_groupchat@2x.png',
               width: 44,
             ),
-      title: Text(_teamInfo.showName),
+      title: Text(_teamInfo.showName == null ? '' : _teamInfo.showName),
       subtitle: Text(
         '于' +
             date.year.toString() +

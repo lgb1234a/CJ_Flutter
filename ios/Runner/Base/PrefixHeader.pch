@@ -19,6 +19,7 @@
 #import "CJNavigationViewController.h"
 #import <flutter_boost/FlutterBoost.h>
 #import "AppDelegate.h"
+#import "CJFlutterViewController.h"
 
 // 根导航控制器
 static inline UINavigationController *cj_rootNavigationController() {

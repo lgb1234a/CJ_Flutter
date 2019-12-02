@@ -47,7 +47,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
         children: <Widget>[
           avatar,
           Text(
-            showName,
+            showName == null ? '' : showName,
             overflow: TextOverflow.ellipsis,
           )
         ],

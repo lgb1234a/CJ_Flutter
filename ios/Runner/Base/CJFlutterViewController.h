@@ -8,6 +8,13 @@
 
 #import <Flutter/Flutter.h>
 
+@protocol CJBoostViewController <NSObject>
+
+@required
+- (instancetype)initWithBoostParams:(NSDictionary *)boost_params;
+
+@end
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CJFlutterViewController : FLBFlutterViewContainer
