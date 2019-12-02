@@ -26,7 +26,7 @@
 		EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7822FAC65300CAD319 /* CJSessionListViewController.m */; };
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
-		EF42BB4D2385316200DAA191 /* CJTabbarControllerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42BB4C2385316200DAA191 /* CJTabbarControllerController.m */; };
+		EF42BB4D2385316200DAA191 /* CJTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42BB4C2385316200DAA191 /* CJTabbarController.m */; };
 		EF5BA6C0234057B5007F52B1 /* CJUserSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */; };
 		EF5BA6C1234057B5007F52B1 /* CJUserSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */; };
 		EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */; };
@@ -129,8 +129,8 @@
 		EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJContactsViewController.m; sourceTree = "<group>"; };
 		EF1422ED23055BF500AEAA55 /* CJMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMineViewController.h; sourceTree = "<group>"; };
 		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
-		EF42BB4B2385316200DAA191 /* CJTabbarControllerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJTabbarControllerController.h; sourceTree = "<group>"; };
-		EF42BB4C2385316200DAA191 /* CJTabbarControllerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJTabbarControllerController.m; sourceTree = "<group>"; };
+		EF42BB4B2385316200DAA191 /* CJTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJTabbarController.h; sourceTree = "<group>"; };
+		EF42BB4C2385316200DAA191 /* CJTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJTabbarController.m; sourceTree = "<group>"; };
 		EF5BA6BD234057B5007F52B1 /* CJUserSelectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJUserSelectTableViewCell.h; sourceTree = "<group>"; };
 		EF5BA6BE234057B5007F52B1 /* CJUserSelectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJUserSelectTableViewCell.m; sourceTree = "<group>"; };
 		EF5BA6BF234057B5007F52B1 /* CJUserSelectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CJUserSelectTableViewCell.xib; sourceTree = "<group>"; };
@@ -344,8 +344,8 @@
 				EF11BE6322FABBD600CAD319 /* PrefixHeader.pch */,
 				EF071BFE232634F8007E5D9B /* CJNavigationViewController.h */,
 				EF071BFF232634F8007E5D9B /* CJNavigationViewController.m */,
-				EF42BB4B2385316200DAA191 /* CJTabbarControllerController.h */,
-				EF42BB4C2385316200DAA191 /* CJTabbarControllerController.m */,
+				EF42BB4B2385316200DAA191 /* CJTabbarController.h */,
+				EF42BB4C2385316200DAA191 /* CJTabbarController.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -873,7 +873,7 @@
 				EF8A412A2338733700AF697E /* CJSessionCustomContentConfig.m in Sources */,
 				EF8F5431234F27B100FFD30A /* NSJSONSerialization+Coroutine.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
-				EF42BB4D2385316200DAA191 /* CJTabbarControllerController.m in Sources */,
+				EF42BB4D2385316200DAA191 /* CJTabbarController.m in Sources */,
 				EF8F5433234F27B100FFD30A /* NSString+Coroutine.m in Sources */,
 				EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */,
 				EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */,

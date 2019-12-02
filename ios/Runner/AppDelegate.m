@@ -11,7 +11,7 @@
 #import "CJPayManager.h"
 #import "PlatformRouterImp.h"
 #import "CJUtilBridge.h"
-#import "CJTabbarControllerController.h"
+#import "CJTabbarController.h"
 
 @interface AppDelegate ()
 
@@ -95,7 +95,7 @@
 // 展示登录成功的页面根视图
 - (void)showDidLoginSuccessRootVC
 {
-    CJTabbarControllerController *tabbar = [[CJTabbarControllerController alloc] initWithRootViewControllers];
+    CJTabbarController *tabbar = [[CJTabbarController alloc] initWithRootViewControllers];
     
     CJNavigationViewController *root = [[CJNavigationViewController alloc] initWithRootViewController:tabbar];
     

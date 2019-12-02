@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
       'login': (pageName, params, _) => LoginWidget(),
       'phone_login': (pageName, params, _) => PhoneLoginWidget(),
       'pwd_login': (pageName, params, _) => PwdLoginWidget(),
-      'mine': (pageName, params, _) => MineWidget(),
+      'mine': (pageName, params, _) => MineWidget(params),
       'contacts': (pageName, params, _) => ContactsWidget(params),
       'setting': (pageName, params, _) => SettingWidget(),
       'mine_info': (pageName, params, _) => MineInfoWiget(),

@@ -8,6 +8,7 @@
 
 #import "CJNavigationViewController.h"
 #import "CJFlutterViewController.h"
+#import "CJTabbarController.h"
 
 @interface CJNavigationViewController ()
 
@@ -29,6 +30,11 @@
     if([viewController isKindOfClass:FLBFlutterViewContainer.class])
     {
         self.navigationBarHidden = YES;
+    }else if([viewController isKindOfClass:CJTabbarController.class])
+    {
+        // 根视图
+        UIViewController *vc = ((CJTabbarController *)viewController).selectedViewController;
+        self.navigationBarHidden = [vc isKindOfClass:FLBFlutterViewContainer.class];
     }else {
         self.navigationBarHidden = NO;
     }
@@ -48,7 +54,13 @@
         UIViewController *previous = self.viewControllers[self.viewControllers.count - 2];
         if([previous isKindOfClass:FLBFlutterViewContainer.class]) {
             self.navigationBarHidden = YES;
-        }else {
+        }else if([previous isKindOfClass:CJTabbarController.class])
+        {
+            // 根视图
+            UIViewController *vc = ((CJTabbarController *)previous).selectedViewController;
+            self.navigationBarHidden = [vc isKindOfClass:FLBFlutterViewContainer.class];
+        }
+        else {
             self.navigationBarHidden = NO;
         }
     }

@@ -72,6 +72,6 @@ final List<MineModel> mineCellModels = [
       (MineModel model) {
         /* 跳转设置页面 */
     FlutterBoost.singleton
-        .open('setting', exts: {'animated': true}).then((Map value) {});
+        .open('setting', exts: {'animated': true});
   }),
 ];

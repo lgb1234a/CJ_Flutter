@@ -18,14 +18,14 @@
 {
     self = [super init];
     if (self) {
-        [self setName:@"mine"];
+        double bottomPadding = BOTTOM_BAR_HEIGHT + (ISPROFILEDSCREEN?UNSAFE_BOTTOM_HEIGHT:0);
+        [self setName:@"mine" params:@{@"bottom_padding": @(bottomPadding)}];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

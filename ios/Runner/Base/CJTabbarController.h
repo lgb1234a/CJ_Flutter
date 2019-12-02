@@ -1,5 +1,5 @@
 //
-//  CJTabbarControllerController.h
+//  CJTabbarController.h
 //  Runner
 //
 //  Created by chenyn on 2019/11/20.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJTabbarControllerController : UITabBarController
+@interface CJTabbarController : UITabBarController
 
 - (instancetype)initWithRootViewControllers;
 

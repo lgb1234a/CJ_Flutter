@@ -28,7 +28,6 @@
     cj_rootNavigationController().navigationBarHidden = NO;
 }
 
-
 #pragma mark - Override
 - (void)onSelectedAvatar:(NIMRecentSession *)recentSession
              atIndexPath:(NSIndexPath *)indexPath

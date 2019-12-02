@@ -9,14 +9,15 @@ import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/View/MineListCell.dart';
 
 class MineWidget extends StatefulWidget {
-  
+  final Map params;
+  MineWidget(this.params);
+
   MineState createState() {
     return MineState();
   }
 }
 
 class MineState extends State<MineWidget> {
-
   @override
   void initState() {
     super.initState();
@@ -24,25 +25,18 @@ class MineState extends State<MineWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    ListView mineTable = ListView.separated(
+    double bp = widget.params['bottom_padding'];
+    
+    Widget mineTable = ListView.separated(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, bp),
       itemCount: mineCellModels.length,
-      itemBuilder: (BuildContext context, int index) 
-      {
+      itemBuilder: (BuildContext context, int index) {
         MineModel model = mineCellModels[index];
-        
-        if(model.type == MineCellType.Others) {
-          return MineListCellOthers(model);
-        }else if(model.type == MineCellType.Separator) {
-          return MineListCellSeparator();
-        }else if(model.type == MineCellType.Profile) {
-          return MineListProfileHeader(model);
-        }
-        return null;
+        return cellForModel(model);
       },
       separatorBuilder: (BuildContext context, int index) {
         MineModel model = mineCellModels[index];
-        if(model.needSeparatorLine) {
+        if (model.needSeparatorLine) {
           return Container(
             color: Colors.white,
             child: Divider(indent: 16.0),
@@ -55,18 +49,15 @@ class MineState extends State<MineWidget> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-            title: const Text(
-                '我',
-                style: TextStyle(color: Color(0xFF141414)),
-            ),
-            backgroundColor: whiteColor,
-            elevation: 0.01,
-          ),
-          body: Container(
-            color: mainBgColor,
-            child: mineTable,
-          ),
+          backgroundColor: Colors.white,
+          elevation: 0.01,
+          brightness: Brightness.light,
         ),
+        body: Container(
+          color: mainBgColor,
+          child: mineTable,
+        ),
+      ),
     );
   }
 }

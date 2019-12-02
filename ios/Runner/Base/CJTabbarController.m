@@ -1,26 +1,24 @@
 //
-//  CJTabbarControllerController.m
+//  CJTabbarController.m
 //  Runner
 //
 //  Created by chenyn on 2019/11/20.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJTabbarControllerController.h"
-
+#import "CJTabbarController.h"
 #import "CJMineViewController.h"
 #import "CJContactsViewController.h"
 #import "CJSessionListViewController.h"
 
-@interface CJTabbarControllerController ()
+@interface CJTabbarController ()
 
 @end
 
-@implementation CJTabbarControllerController
+@implementation CJTabbarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.navigationItem.title = @"擦肩";
 }
 

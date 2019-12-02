@@ -7,6 +7,18 @@ import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/Model/MineModel.dart';
 import 'package:nim_sdk_util/Model/nim_userInfo.dart';
 
+Widget cellForModel(MineModel model) {
+  if(model.type == MineCellType.Others) {
+    return MineListCellOthers(model);
+  }else if(model.type == MineCellType.Separator) {
+    return MineListCellSeparator();
+  }else if(model.type == MineCellType.Profile) {
+    return MineListProfileHeader(model);
+  }
+
+  return Container();
+}
+
 class MineListCellOthers extends StatelessWidget {
   final MineModel model;
   MineListCellOthers(this.model);
