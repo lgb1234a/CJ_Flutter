@@ -114,7 +114,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
             }
 
             if (model is Team) {
-              session = Session(model.teamId, 0);
+              session = Session(model.teamId, 1);
             }
 
             // 点击了cell
