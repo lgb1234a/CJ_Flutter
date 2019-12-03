@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - CJBase (0.11):
+  - CJBase (0.15):
     - AFNetworking
     - MBProgressHUD
     - NIMKit
@@ -22,6 +22,8 @@ PODS:
     - Reachability
     - YYModel
   - cocore (1.2.5)
+  - cokit (1.2.6):
+    - coobjc (~> 1.2.0)
   - coobjc (1.2.0):
     - cocore (~> 1.2.0)
   - Flutter (1.0.0)
@@ -61,6 +63,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - CJBase (from `CJBase`)
+  - cokit
   - coobjc
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_boost (from `.symlinks/plugins/flutter_boost/ios`)
@@ -78,6 +81,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - cocore
+    - cokit
     - coobjc
     - M80AttributedLabel
     - MBProgressHUD
@@ -106,8 +110,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  CJBase: 9d680f0e9e476ca9970a2a8f897abc14083aa4c6
+  CJBase: c0bfc73a12d647dccb1cfba338dbf09ca6e98887
   cocore: 5099f3ba3f73e32c9c61ad9a388ae59fd4911a5f
+  cokit: fbfad971c6aff7cf67f9e1b292aa43bc051c08fd
   coobjc: 090a460e32e90d0e820e64c31cf7b79dece51a7c
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_boost: a7cfa776b75329d5e7d101d0cd33e75042bcde69
@@ -125,6 +130,6 @@ SPEC CHECKSUMS:
   wx_sdk: a363566eb1fefe7d6e6a6d067d055202c3b80fdf
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 118f91b00d2c0aac5010fa924b14465df3630dc6
+PODFILE CHECKSUM: 0dc1a23b958f997415ec9538b91077afd613adca
 
 COCOAPODS: 1.8.4

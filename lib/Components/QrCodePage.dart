@@ -10,6 +10,7 @@ import '../Base/CJUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'CJShare.dart';
 
 class QrCodePage extends StatefulWidget {
   final Map params;
@@ -36,8 +37,16 @@ class _QrCodePageState extends State<QrCodePage> {
   }
 
   /// 分享二维码
-  void _shareCode() {
-    
+  void _shareCode() async {
+    /// 拿到图层
+    RenderRepaintBoundary boundary =
+        _qrCodeKey.currentContext.findRenderObject();
+    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    /// 分享窗口
+    cjShowSharePopView(
+        context, CJShareModel(CJShareType.Image, imgData: pngBytes));
   }
 
   @override
