@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-// import 'Model/nim_contactModel.dart';
-// import 'Model/nim_teamModel.dart';
-// import 'Model/nim_userInfo.dart';
 import 'Model/nim_model.dart';
 
 class NimSdkUtil {
@@ -21,14 +18,15 @@ class NimSdkUtil {
   /// sdk登录
   static Future<bool> doSDKLogin(
       String accid, String token, String name) async {
-    bool success =
-        await _channel.invokeMethod('doLogin:', [accid, token, name]);
+    bool success = await _channel.invokeMethod(
+        'doLogin:', {'accid': accid, 'token': token, 'name': name});
     return success;
   }
 
   /// 自动登录
   static void autoLogin(String accid, String token, String name) {
-    _channel.invokeMethod('autoLogin:', [accid, token, name]);
+    _channel.invokeMethod(
+        'autoLogin:', {'accid': accid, 'token': token, 'name': name});
   }
 
   /// 登出
@@ -38,14 +36,16 @@ class NimSdkUtil {
 
   /// 获取群信息
   static Future<TeamInfo> teamInfoById(String teamId) async {
-    dynamic teamInfo = await _channel.invokeMethod('teamInfo:', [teamId]);
+    dynamic teamInfo =
+        await _channel.invokeMethod('teamInfo:', {'teamId': teamId});
     return TeamInfo.fromJson(teamInfo);
   }
 
   /// 获取用户信息
   /// userId 选填，不填默认获取当前用户信息
   static Future<UserInfo> userInfoById({String userId}) async {
-    dynamic userInfo = await _channel.invokeMethod('userInfo:', [userId]);
+    dynamic userInfo =
+        await _channel.invokeMethod('userInfo:', {'userId': userId});
     return UserInfo.fromJson(userInfo);
   }
 
@@ -64,59 +64,59 @@ class NimSdkUtil {
   /// 群成员信息
   static Future<List<TeamMemberInfo>> teamMemberInfos(String teamId) async {
     List teamMemberInfos =
-        await _channel.invokeMethod('teamMemberInfos:', [teamId]);
+        await _channel.invokeMethod('teamMemberInfos:', {'teamId': teamId});
     return teamMemberInfos.map((f) => TeamMemberInfo.fromJson(f)).toList();
   }
 
   /// 获取单个群成员信息
   static Future<TeamMemberInfo> teamMemberInfoById(
       String teamId, String userId) async {
-    Map memberInfo =
-        await _channel.invokeMethod('teamMemberInfo:', [teamId, userId]);
+    Map memberInfo = await _channel
+        .invokeMethod('teamMemberInfo:', {'teamId': teamId, 'userId': userId});
     return TeamMemberInfo.fromJson(memberInfo);
   }
 
   /// 获取会话置顶状态
   static Future<bool> isStickedOnTop(Session session) async {
-    bool isTop = await _channel
-        .invokeMethod('isStickedOnTop:', [session.id, session.type]);
+    bool isTop = await _channel.invokeMethod(
+        'isStickedOnTop:', {'id': session.id, 'type': session.type});
     return isTop;
   }
 
   /// 获取会话是否开启消息提醒
   static Future<bool> isNotifyForNewMsg(Session session) async {
-    bool isTop = await _channel
-        .invokeMethod('isNotifyForNewMsg:', [session.id, session.type]);
+    bool isTop = await _channel.invokeMethod(
+        'isNotifyForNewMsg:', {'id': session.id, 'type': session.type});
     return isTop;
   }
 
   /// 删除聊天记录
   static Future<void> clearChatHistory(Session session) async {
-    await _channel
-        .invokeMethod('clearChatHistory:', [session.id, session.type]);
+    await _channel.invokeMethod(
+        'clearChatHistory:', {'id': session.id, 'type': session.type});
   }
 
   /// 聊天置顶开关
   static Future<void> stickSessinOnTop(Session session, bool isTop) async {
-    await _channel
-        .invokeMethod('stickSessinOnTop:', [session.id, session.type, isTop]);
+    await _channel.invokeMethod('stickSessinOnTop:',
+        {'id': session.id, 'type': session.type, 'isTop': isTop});
   }
 
   /// 消息通知开关
   static Future<bool> changeNotifyStatus(
       Session session, bool needNotify) async {
-    bool success = await _channel.invokeMethod(
-        'changeNotifyStatus:', [session.id, session.type, needNotify]);
+    bool success = await _channel.invokeMethod('changeNotifyStatus:',
+        {'id': session.id, 'type': session.type, 'needNotify': needNotify});
     return success;
   }
 
   /// 退出群聊
   static Future<bool> quitTeam(String teamId) async {
-    return await _channel.invokeMethod('quitTeam:', [teamId]);
+    return await _channel.invokeMethod('quitTeam:', {'teamId': teamId});
   }
 
   /// 解散群聊
   static Future<bool> dismissTeam(String teamId) async {
-    return await _channel.invokeMethod('dismissTeam:', [teamId]);
+    return await _channel.invokeMethod('dismissTeam:', {'teamId': teamId});
   }
 }

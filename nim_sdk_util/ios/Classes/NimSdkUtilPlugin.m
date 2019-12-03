@@ -3,6 +3,7 @@
 #import <CJBase/CJBase.h>
 #import <Foundation/Foundation.h>
 
+static NSString *CJResultKey = @"flutter_result";
 NSDictionary *JsonStringDecode(NSString *jsonString)
 {
     if (jsonString == nil) {
@@ -40,10 +41,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
       SEL sel = NSSelectorFromString(call.method);
       if([NimSdkUtilPlugin respondsToSelector:sel]) {
           NSArray *params = call.arguments;
-          NSMutableArray *p = params?params.mutableCopy : @[].mutableCopy;
-          [p addObject:result];
+          NSMutableDictionary *p = params?params.mutableCopy : @{}.mutableCopy;
+          [p setObject:result forKey:CJResultKey];
           [NimSdkUtilPlugin performSelector:sel
-                                 withObject:p
+                                 withObject:p.copy
                                  afterDelay:0];
       }else {
           result(FlutterMethodNotImplemented);
@@ -66,12 +67,12 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 登录云信sdk
-+ (void)doLogin:(NSArray *)params
++ (void)doLogin:(NSDictionary *)params
 {
-    NSString *accid = params.firstObject;
-    NSString *token = params[1];
+    NSString *accid = params[@"accid"];
+    NSString *token = params[@"token"];
     
-    FlutterResult result = params.lastObject;
+    FlutterResult result = params[CJResultKey];
     [[NIMSDK sharedSDK].loginManager login:accid
                                      token:token
                                 completion:^(NSError * _Nullable error)
@@ -87,10 +88,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 自动登录
-+ (void)autoLogin:(NSArray *)params
++ (void)autoLogin:(NSDictionary *)params
 {
-    [[NIMSDK sharedSDK].loginManager autoLogin:params.firstObject
-                                         token:params[1]];
+    [[NIMSDK sharedSDK].loginManager autoLogin:params[@"accid"]
+                                         token:params[@"token"]];
 }
 
 + (void)autoLogin:(NSString *)accid
@@ -116,12 +117,12 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 返回用户信息
-+ (void)userInfo:(NSArray *)params
++ (void)userInfo:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
+    FlutterResult result = params[CJResultKey];
     NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
-    if([params.firstObject isKindOfClass:NSString.class]) {
-        accid = params.firstObject;
+    if(![params[@"userId"] isKindOfClass:NSNull.class]) {
+        accid = params[@"userId"];
     }
     NIMUser *user = [[NIMSDK sharedSDK].userManager userInfo:accid];
     NIMUserInfo *userInfo = user.userInfo;
@@ -142,10 +143,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 返回群信息
-+ (void)teamInfo:(NSArray *)params
++ (void)teamInfo:(NSDictionary *)params
 {
-    NSString *teamId = params.firstObject;
-    FlutterResult result = params.lastObject;
+    NSString *teamId = params[@"teamId"];
+    FlutterResult result = params[CJResultKey];
     NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:teamId
                                                option:nil];
     
@@ -177,9 +178,9 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 获取好友列表
-+ (void)friends:(NSArray *)params
++ (void)friends:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
+    FlutterResult result = params[CJResultKey];
     NSMutableArray *contacts = @[].mutableCopy;
     for (NIMUser *user in [NIMSDK sharedSDK].userManager.myFriends) {
         NIMKitInfo *info           = [[NIMKit sharedKit] infoByUser:user.userId option:nil];
@@ -194,9 +195,9 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 群聊列表
-+ (void)allMyTeams:(NSArray *)params
++ (void)allMyTeams:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
+    FlutterResult result = params[CJResultKey];
     NSMutableArray *teamInfos = @[].mutableCopy;
     for (NIMTeam *team in [NIMSDK sharedSDK].teamManager.allMyTeams) {
         [teamInfos addObject:@{
@@ -209,11 +210,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 群成员信息
-+ (void)teamMemberInfos:(NSArray *)params
++ (void)teamMemberInfos:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
+    FlutterResult result = params[CJResultKey];
     NSMutableArray *teamMemberInfos = @[].mutableCopy;
-    NSString *teamId = params.firstObject;
+    NSString *teamId = params[@"teamId"];
     [[NIMSDK sharedSDK].teamManager fetchTeamMembers:teamId
                                           completion:^(NSError * _Nullable error, NSArray<NIMTeamMember *> * _Nullable members)
     {
@@ -241,11 +242,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 获取单个群成员信息
-+ (void)teamMemberInfo:(NSArray *)params
++ (void)teamMemberInfo:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
-    NSString *teamId = params.firstObject;
-    NSString *userId = [params tn_objectAtIndex:1];
+    FlutterResult result = params[CJResultKey];
+    NSString *teamId = params[@"teamId"];
+    NSString *userId = params[@"userId"];
     NIMTeamMember *member = [[NIMSDK sharedSDK].teamManager teamMember:userId inTeam:teamId];
     result(@{
         @"teamId": member.teamId?:[NSNull null],
@@ -261,11 +262,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 获取会话置顶状态
-+ (void)isStickedOnTop:(NSArray *)params
++ (void)isStickedOnTop:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
-    NSString *sessionId = params.firstObject;
-    NSNumber *type = params[1];
+    FlutterResult result = params[CJResultKey];
+    NSString *sessionId = params[@"id"];
+    NSNumber *type = params[@"type"];
     NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:[NIMSession session:sessionId type:type.integerValue]];
     BOOL isTop = [self recentSessionIsMark:recent
                                       type:1];
@@ -274,11 +275,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 获取会话是否开启消息提醒
-+ (void)isNotifyForNewMsg:(NSArray *)params
++ (void)isNotifyForNewMsg:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
-    NSString *sessionId = params.firstObject;
-    NSNumber *type = [params tn_objectAtIndex:1];
+    FlutterResult result = params[CJResultKey];
+    NSString *sessionId = params[@"id"];
+    NSNumber *type = params[@"type"];
     
     BOOL notifyForNewMsg = NO;
     if(type.integerValue == 0) {
@@ -292,10 +293,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 清空聊天记录
-+ (void)clearChatHistory:(NSArray *)params
++ (void)clearChatHistory:(NSDictionary *)params
 {
-    NSString *sessionId = params.firstObject;
-    NSNumber *type = params[1];
+    NSString *sessionId = params[@"id"];
+    NSNumber *type = params[@"type"];
     NIMSession *session = [NIMSession session:sessionId
                                          type:type.integerValue];
     
@@ -304,11 +305,11 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 置顶聊天
-+ (void)stickSessinOnTop:(NSArray *)params
++ (void)stickSessinOnTop:(NSDictionary *)params
 {
-    NSString *sessionId = params.firstObject;
-    NSNumber *type = params[1];
-    BOOL isTop = [params[2] boolValue];
+    NSString *sessionId = params[@"id"];
+    NSNumber *type = params[@"type"];
+    BOOL isTop = [params[@"isTop"] boolValue];
     
     NIMSession *session = [NIMSession session:sessionId
                                          type:type.integerValue];
@@ -320,12 +321,12 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 }
 
 // 开关消息通知
-+ (void)changeNotifyStatus:(NSArray *)params
++ (void)changeNotifyStatus:(NSDictionary *)params
 {
-    FlutterResult result = params.lastObject;
-    NSString *sessionId = params.firstObject;
-    NSNumber *type = params[1];
-    BOOL needMsgNotify = [params[2] boolValue];
+    FlutterResult result = params[CJResultKey];
+    NSString *sessionId = params[@"id"];
+    NSNumber *type = params[@"type"];
+    BOOL needMsgNotify = [params[@"needNotify"] boolValue];
     
     void(^errorBlock)(NSError *) = ^(NSError * _Nullable error){
         if(error) {
@@ -352,10 +353,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 
 /// 退出群聊
 /// @param params 群id
-+ (void)quitTeam:(NSArray *)params
++ (void)quitTeam:(NSDictionary *)params
 {
-    NSString *teamId = params.firstObject;
-    FlutterResult result = params.lastObject;
+    NSString *teamId = params[@"teamId"];
+    FlutterResult result = params[CJResultKey];
     [[NIMSDK sharedSDK].teamManager quitTeam:teamId
                                   completion:^(NSError * _Nullable error) {
         if(error) {
@@ -370,10 +371,10 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 
 /// 解散群聊
 /// @param params 群id
-+ (void)dismissTeam:(NSArray *)params
++ (void)dismissTeam:(NSDictionary *)params
 {
-    NSString *teamId = params.firstObject;
-    FlutterResult result = params.lastObject;
+    NSString *teamId = params[@"teamId"];
+    FlutterResult result = params[CJResultKey];
     [[NIMSDK sharedSDK].teamManager dismissTeam:teamId
                                      completion:^(NSError * _Nullable error) {
         if(error) {
