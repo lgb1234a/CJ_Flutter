@@ -86,9 +86,6 @@
          {
              if(!error) {
                  [UIViewController showSuccess:@"登录成功"];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccess"
-                                                                     object:self];
-                 
                  // 持久化accid和token
                  [self stashLoginInfo:account token:token];
              }

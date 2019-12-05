@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 /// 接口
 cjShowSharePopView(BuildContext context, CJShareModel model) {
@@ -31,6 +32,9 @@ class CJShareModel {
   /// 类型
   CJShareType type;
 
+  /// 文本内容
+  String text;
+
   /// 图片数据
   Uint8List imgData;
 
@@ -38,6 +42,16 @@ class CJShareModel {
   String linkUrlString;
 
   CJShareModel(this.type, {this.imgData, this.linkUrlString});
+
+  /// 转json
+  Map toJson() {
+    return {
+      'type': type.index,
+      'text': text,
+      'imgData': imgData,
+      'linkUrlString': linkUrlString
+    };
+  }
 }
 
 /// share 组件
@@ -50,12 +64,17 @@ class CJShare extends StatefulWidget {
 }
 
 class _CJShareState extends State<CJShare> {
+
+  /// 分享到擦肩
+  void _shareToCaJian() {
+    FlutterBoost.singleton.channel.sendEvent('share', widget.model.toJson());
+  }
+
+
   /// 分享给好友
   Widget _shareToFirends() {
     return GestureDetector(
-      onTap: () {
-        print('share to firend!');
-      },
+      onTap: () => _shareToCaJian(),
       child: Container(
         height: 70,
         width: 100,
@@ -210,9 +229,9 @@ class _CJShareState extends State<CJShare> {
     ];
     if (widget.model.type == CJShareType.Link) {
       actions.addAll([_shareToCollect(), _shareToSafari(), _shareToLink()]);
-    } else if(widget.model.type == CJShareType.Text){
+    } else if (widget.model.type == CJShareType.Text) {
       actions.addAll([_shareToCollect()]);
-    }else {
+    } else {
       actions.addAll([_shareToCollect()]);
     }
     return Container(

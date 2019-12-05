@@ -26,7 +26,7 @@
         // native
         NSArray *paths = [name componentsSeparatedByString:@"&"];
         if(paths.count == 1) {
-            
+            ZZLog(@"nativePage路径缺失：%@", name);
             return;
         }
         NSString *iosPath = paths[1];
@@ -54,11 +54,31 @@
   completion:(void (^)(BOOL))completion
 {
     BOOL animated = [exts[@"animated"] boolValue];
-    FLBFlutterViewContainer *vc = FLBFlutterViewContainer.new;
-    [vc setName:name params:params];
-    [self.navigationController presentViewController:vc animated:animated completion:^{
-        if(completion) completion(YES);
-    }];
+    if([name hasPrefix:@"nativePage://"]) {
+        // native
+        NSArray *paths = [name componentsSeparatedByString:@"&"];
+        if(paths.count == 1) {
+            ZZLog(@"nativePage路径缺失：%@", name);
+            return;
+        }
+        NSString *iosPath = paths[1];
+        NSString *clsName = [iosPath componentsSeparatedByString:@"="][1];
+        
+        Class cls = NSClassFromString(clsName);
+        
+        NSAssert([cls conformsToProtocol:@protocol(CJBoostViewController)], @"viewController do not conformsToProtocol <CJBoostViewController> !");
+        
+        UIViewController *vc = [[cls alloc] initWithBoostParams:params];
+        [self.navigationController presentViewController:vc animated:animated completion:^{
+            if(completion) completion(YES);
+        }];
+    }else {
+        FLBFlutterViewContainer *vc = FLBFlutterViewContainer.new;
+        [vc setName:name params:params];
+        [self.navigationController presentViewController:vc animated:animated completion:^{
+            if(completion) completion(YES);
+        }];
+    }
 }
 
 - (void)close:(NSString *)uid

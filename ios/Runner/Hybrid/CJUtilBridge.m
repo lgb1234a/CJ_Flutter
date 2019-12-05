@@ -10,6 +10,8 @@
 #import <MBProgressHUD.h>
 #import "CJSessionViewController.h"
 #import "CJContactSelectViewController.h"
+#import "CJChatSelectViewController.h"
+#import "CJShareAlertViewController.h"
 
 static inline UIWindow *cj_getkeyWindow()
 {
@@ -22,6 +24,10 @@ static inline UIWindow *cj_getkeyWindow()
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     return [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, width, height)];
 }
+
+@interface CJUtilBridge () <CJChatSelectResult, CJShareAlertResult>
+
+@end
 
 @implementation CJUtilBridge
 
@@ -50,6 +56,10 @@ static inline UIWindow *cj_getkeyWindow()
     [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
         [self saveImageToAlbum:arguments];
     } forName:@"saveImageToAlbum"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self share:arguments];
+    } forName:@"share"];
 }
 
 // 跳转聊天
@@ -93,9 +103,13 @@ static inline UIWindow *cj_getkeyWindow()
         [[NIMSDK sharedSDK].teamManager createTeam:option
                                              users:ids
                                         completion:^(NSError * __nullable error, NSString * __nullable teamId, NSArray<NSString *> * __nullable failedUserIds){
-            // 关闭选择器
-            [weakNav dismissViewControllerAnimated:YES completion:nil];
-            [self sendMessage:@{@"id": teamId, @"type": @1}];
+            if(!error && teamId) {
+                // 关闭选择器
+                [weakNav dismissViewControllerAnimated:YES completion:nil];
+                [self sendMessage:@{@"id": teamId, @"type": @1}];
+            }else {
+                [UIViewController showError:@"创建群聊失败!"];
+            }
         }];
     };
     
@@ -216,6 +230,31 @@ static inline UIWindow *cj_getkeyWindow()
     UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
+/// 分享
+- (void)share:(NSDictionary *)shareData
+{
+    /// type:  0-text  1-image 2-link
+    NSInteger type = [shareData[@"type"] integerValue];
+    if(type == 0 || type == 1) {
+        // 分享文本 、 图片
+        CJChatSelectViewController *chatSelectVC = [CJChatSelectViewController viewControllerWithDelegate:self];
+        
+        CJNavigationViewController *navController = [[CJNavigationViewController alloc] initWithRootViewController:chatSelectVC];
+        [cj_rootNavigationController() presentViewController:navController
+                                                    animated:YES
+                                                  completion:nil];
+        
+        chatSelectVC.completion = ^(NIMSession * _Nonnull session) {
+            
+            // share alert
+            [self shareAlert:shareData session:session];
+        };
+    }else if(type == 2) {
+        
+    }
+}
+
+#pragma mark ----- private ----
 - (void)image:(UIImage *)image
 didFinishSavingWithError:(NSError *)error
   contextInfo:(void *)contextInfo
@@ -225,6 +264,57 @@ didFinishSavingWithError:(NSError *)error
     }else {
         [UIViewController showSuccess:@"图片保存成功"];
     }
+}
+
+- (void)shareAlert:(NSDictionary *)shareData
+           session:(NIMSession *)session
+{
+    NSInteger type = [shareData[@"type"] integerValue];
+    CJShareModel *model;
+    if(type == 0) {
+        model = [CJShareTextModel new];
+        
+    }else if(type == 1) {
+        model = [CJShareImageModel new];
+        FlutterStandardTypedData *imgData = shareData[@"imgData"];
+        ((CJShareImageModel*)model).imageData = imgData.data;
+    }
+    
+    CJShareAlertViewController *alertVC =
+            [CJShareAlertViewController viewControllerWithSession:session
+                                                      shareObject:model
+                                                      forwordImpl:self];
+    [cj_rootNavigationController() presentViewController:alertVC
+                                                animated:YES
+                                              completion:nil];
+}
+
+#pragma mark --- delegate ---
+
+// 选择了一个会话
+- (void)didSelectedSession:(NIMRecentSession *)rcntSession
+                      from:(CJChatSelectViewController *)vc
+{
+    [vc.navigationController dismissViewControllerAnimated:YES completion:^{
+        vc.completion(rcntSession.session);
+    }];
+}
+
+// 创建新的群聊
+- (void)shareToNewSession:(NIMSession *)session from:(CJChatSelectViewController *)vc
+{
+    [vc.navigationController dismissViewControllerAnimated:YES completion:^{
+        vc.completion(session);
+    }];
+}
+
+/// 转发
+- (void)shouldForword:(CJShareModel *)model session:(NIMSession *)session
+{
+    CJSessionViewController *sessionVC = [[CJSessionViewController alloc] initWithSession:session];
+    sessionVC.shareModel = model;
+    [cj_rootNavigationController() pushViewController:sessionVC
+                                             animated:YES];
 }
 
 @end

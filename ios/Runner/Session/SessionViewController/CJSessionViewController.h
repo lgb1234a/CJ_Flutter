@@ -8,9 +8,14 @@
 
 #import "NIMSessionViewController.h"
 
+@class CJShareModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CJSessionViewController : NIMSessionViewController<CJBoostViewController>
+
+/// 分享的数据
+@property (nonatomic, strong, nullable) CJShareModel *shareModel;
 
 - (instancetype)initWithBoostParams:(NSDictionary *)boost_params;
 

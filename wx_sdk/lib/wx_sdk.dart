@@ -11,7 +11,7 @@ class WxSdk {
     return version;
   }
 
-  static Future wxLogin() async {
+  static Future<void> wxLogin() async {
     await _channel.invokeMethod('wxlogin');
   }
 }

@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - CJBase (0.15):
+  - CJBase (0.17):
     - AFNetworking
     - MBProgressHUD
     - NIMKit
@@ -110,7 +110,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  CJBase: c0bfc73a12d647dccb1cfba338dbf09ca6e98887
+  CJBase: ac594f734fc8d8969cb5ed60e75dd9326682f47e
   cocore: 5099f3ba3f73e32c9c61ad9a388ae59fd4911a5f
   cokit: fbfad971c6aff7cf67f9e1b292aa43bc051c08fd
   coobjc: 090a460e32e90d0e820e64c31cf7b79dece51a7c

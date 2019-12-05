@@ -10,6 +10,7 @@
 #import "NIMInputMoreContainerView.h"
 #import "CJMoreContainerConfig.h"
 #import "CJCustomAttachmentDefines.h"
+#import <NIMMessageMaker.h>
 
 @interface CJSessionViewController ()
 
@@ -44,6 +45,28 @@
                                              selector:@selector(onCJUpdateMessageNotification:)
                                                  name:CJUpdateMessageNotification
                                                object:nil];
+    
+    /// 处理分享数据
+    [self handleShareData];
+}
+
+- (void)handleShareData
+{
+    if(self.shareModel) {
+        if(self.shareModel.type == CajianShareTypeImage) {
+            CJShareImageModel *imgModel = (CJShareImageModel *)self.shareModel;
+            co_launch(^{
+                UIImage *shareImage = await([UIImage async_imageWithData:imgModel.imageData]);
+                [self sendMessage:[NIMMessageMaker msgWithImage:shareImage]];
+            });
+        }
+        
+        // 备注
+        if(!cj_empty_string(self.shareModel.leaveMessage)) {
+            [self sendMessage:[NIMMessageMaker msgWithText:self.shareModel.leaveMessage]];
+        }
+        self.shareModel = nil;
+    }
 }
 
 /* 重新修改session配置 */
