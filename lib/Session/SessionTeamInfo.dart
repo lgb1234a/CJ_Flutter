@@ -256,7 +256,8 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
                 width: 40,
               ));
     return GestureDetector(
-        onTap: () => _bloc.add(TappedTeamMemberAvatarEvent(memberId: memberId)),
+        onTap: () => _bloc.add(TappedTeamMemberAvatarEvent(
+            teamId: _teamInfo.teamId, memberId: memberId)),
         child: SizedBox(
           width: 70,
           child: Column(

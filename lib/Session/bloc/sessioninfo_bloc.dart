@@ -177,7 +177,8 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
     if (event is TappedTeamMemberAvatarEvent) {
       /// 点击了群成员头像,跳转群成员信息页
       FlutterBoost.singleton.open('member_info',
-          urlParams: {'member_id': event.memberId}, exts: {'animated': true});
+          urlParams: {'team_id': event.teamId, 'member_id': event.memberId},
+          exts: {'animated': true});
     }
 
     if (event is TappedTeamQrCode) {

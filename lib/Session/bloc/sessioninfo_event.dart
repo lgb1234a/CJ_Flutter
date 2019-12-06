@@ -50,8 +50,9 @@ class QuitTeamEvent extends SessioninfoEvent {}
 class DismissTeamEvent extends SessioninfoEvent {}
 
 class TappedTeamMemberAvatarEvent extends SessioninfoEvent {
+  final String teamId;
   final String memberId;
-  TappedTeamMemberAvatarEvent({@required this.memberId});
+  TappedTeamMemberAvatarEvent({@required this.teamId, @required this.memberId});
 }
 
 class TappedTeamQrCode extends SessioninfoEvent {
