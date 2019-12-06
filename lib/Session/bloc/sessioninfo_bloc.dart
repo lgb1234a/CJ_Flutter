@@ -71,11 +71,11 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
       TeamSessionInfoLoaded p = _previousState;
       _previousState = TeamSessionInfoLoaded(
-            info: p.info,
-            members: infos,
-            memberInfo: p.memberInfo,
-            isStickOnTop: p.isStickOnTop,
-            msgNotify: p.msgNotify);
+          info: p.info,
+          members: infos,
+          memberInfo: p.memberInfo,
+          isStickOnTop: p.isStickOnTop,
+          msgNotify: p.msgNotify);
       yield _previousState;
     }
 
@@ -201,8 +201,8 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
     if (event is ShowAllMembersEvent) {
       /// 查看全部群成员
-      FlutterBoost.singleton
-          .open('member_list', urlParams: {}, exts: {'animated': true});
+      FlutterBoost.singleton.open('member_list',
+          urlParams: {'teamId': session.id}, exts: {'animated': true});
     }
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:nim_sdk_util/Model/nim_model.dart';
 
 @immutable
 abstract class SessioninfoEvent extends Equatable {
@@ -40,10 +39,7 @@ class OperateMembersEvent extends SessioninfoEvent {
   OperateMembersEvent({@required this.type, @required this.filterIds});
 }
 
-class ShowAllMembersEvent extends SessioninfoEvent {
-  final List<UserInfo> members;
-  ShowAllMembersEvent({@required this.members});
-}
+class ShowAllMembersEvent extends SessioninfoEvent {}
 
 class QuitTeamEvent extends SessioninfoEvent {}
 

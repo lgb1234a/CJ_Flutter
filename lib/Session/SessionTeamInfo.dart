@@ -211,7 +211,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       return Container();
     }
     return GestureDetector(
-      onTap: () => _bloc.add(ShowAllMembersEvent(members: _members)),
+      onTap: () => _bloc.add(ShowAllMembersEvent()),
       child: Container(
         height: 40,
         child: Row(
