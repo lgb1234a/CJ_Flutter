@@ -62,9 +62,8 @@
             });
         }
         
-        // 备注
+        // 留言
         if(!cj_empty_string(self.shareModel.leaveMessage)) {
-            [self.tableView reloadData];
             [self.tableView layoutIfNeeded];
             
             [self sendMessage:[NIMMessageMaker msgWithText:self.shareModel.leaveMessage]];
