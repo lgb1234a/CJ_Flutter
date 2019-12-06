@@ -52,8 +52,12 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         TeamMemberInfo memberInfo =
             await NimSdkUtil.teamMemberInfoById(session.id, userId);
 
+        ///
+        List<UserInfo> infos = await memberInfos();
+
         _previousState = TeamSessionInfoLoaded(
             info: teamInfo,
+            members: infos,
             memberInfo: memberInfo,
             isStickOnTop: isStickOnTop,
             msgNotify: notifyForNewMsg);
@@ -63,16 +67,16 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
     /// 获取群成员
     if (event is FetchMemberInfos) {
-      List<TeamMemberInfo> members =
-          await NimSdkUtil.teamMemberInfos(session.id);
-      List<UserInfo> infos = [];
+      List<UserInfo> infos = await memberInfos();
 
-      List<Future<UserInfo>> mapFutures = members
-          .map((f) async => await NimSdkUtil.userInfoById(userId: f.userId))
-          .toList();
-
-      infos = await Future.wait(mapFutures);
-      yield TeamMembersLoaded(members: infos);
+      TeamSessionInfoLoaded p = _previousState;
+      _previousState = TeamSessionInfoLoaded(
+            info: p.info,
+            members: infos,
+            memberInfo: p.memberInfo,
+            isStickOnTop: p.isStickOnTop,
+            msgNotify: p.msgNotify);
+      yield _previousState;
     }
 
     if (event is SwitchStickOnTopStatus) {
@@ -91,6 +95,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         TeamSessionInfoLoaded p = _previousState;
         _previousState = TeamSessionInfoLoaded(
             info: p.info,
+            members: p.members,
             memberInfo: p.memberInfo,
             isStickOnTop: newValue,
             msgNotify: p.msgNotify);
@@ -116,6 +121,7 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
           TeamSessionInfoLoaded p = _previousState;
           _previousState = TeamSessionInfoLoaded(
               info: p.info,
+              members: p.members,
               memberInfo: p.memberInfo,
               isStickOnTop: p.isStickOnTop,
               msgNotify: newValue);
@@ -193,12 +199,23 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       });
     }
 
-    if(event is ShowAllMembersEvent) {
+    if (event is ShowAllMembersEvent) {
       /// 查看全部群成员
-      FlutterBoost.singleton.open('member_list', urlParams: {
-      }, exts: {
-        'animated': true
-      });
+      FlutterBoost.singleton
+          .open('member_list', urlParams: {}, exts: {'animated': true});
     }
+  }
+
+  Future<List<UserInfo>> memberInfos() async {
+    /// 获取群成员
+    List<TeamMemberInfo> members = await NimSdkUtil.teamMemberInfos(session.id);
+    List<UserInfo> infos = [];
+
+    List<Future<UserInfo>> mapFutures = members
+        .map((f) async => await NimSdkUtil.userInfoById(userId: f.userId))
+        .toList();
+
+    infos = await Future.wait(mapFutures);
+    return infos;
   }
 }

@@ -22,6 +22,7 @@ class P2PSessionInfoLoaded extends SessioninfoState {
 /// 群聊信息加载完成
 class TeamSessionInfoLoaded extends SessioninfoState {
   final TeamInfo info;
+  final List<UserInfo> members;
   final TeamMemberInfo memberInfo;
   final bool msgNotify;
   final bool isStickOnTop;
@@ -29,11 +30,6 @@ class TeamSessionInfoLoaded extends SessioninfoState {
       {@required this.info,
       @required this.memberInfo,
       @required this.msgNotify,
-      @required this.isStickOnTop});
-}
-
-/// 群成员信息
-class TeamMembersLoaded extends SessioninfoState {
-  final List<UserInfo> members;
-  TeamMembersLoaded({@required this.members});
+      @required this.isStickOnTop, 
+      @required this.members});
 }

@@ -359,16 +359,15 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       ),
       body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
         builder: (context, state) {
-          if (state is TeamSessionInfoLoaded || state is TeamMembersLoaded) {
             /// 加载OK
             if (state is TeamSessionInfoLoaded) {
               _teamInfo = state.info;
+              _members = state.members;
               _memberInfo = state.memberInfo;
               _isStickOnTop = state.isStickOnTop;
               _msgNotify = state.msgNotify;
-            }
-            if (state is TeamMembersLoaded) _members = state.members;
-            return ListView(
+
+              return ListView(
               children: <Widget>[
                 _teamInfoHeader(),
                 _teamMemberSection(),
@@ -412,7 +411,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
                 _quitGroup()
               ],
             );
-          }
+            }
           return Center(
             child: Container(),
           );

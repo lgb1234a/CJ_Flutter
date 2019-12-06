@@ -21,6 +21,7 @@ class SessionMemberInfoWidget extends StatefulWidget {
 class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
   TeamMemberInfo _memberInfo;
   UserInfo _userInfo;
+  bool _isBlocked = false;
   double indent = 12;
   @override
   void initState() {
@@ -34,8 +35,25 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
         widget.params['team_id'], widget.params['member_id']);
     _userInfo =
         await NimSdkUtil.userInfoById(userId: widget.params['member_id']);
+    _isBlocked = await NimSdkUtil.isUserBlocked(widget.params['member_id']);
 
     setState(() {});
+  }
+
+  /// 操作拉黑/取消拉黑用户
+  void changeUserBlockStatus(bool newValue) async {
+    bool success;
+    if (newValue) {
+      success = await NimSdkUtil.blockUser(widget.params['member_id']);
+    } else {
+      success = await NimSdkUtil.cancelBlockUser(widget.params['member_id']);
+    }
+
+    if (success) {
+      setState(() {
+        _isBlocked = newValue;
+      });
+    }
   }
 
   /// 群成员信息
@@ -114,8 +132,8 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
     return _cell(
         Text('加入黑名单'),
         CupertinoSwitch(
-          value: false,
-          onChanged: (newValue) {},
+          value: _isBlocked,
+          onChanged: (newValue) => changeUserBlockStatus(newValue),
         ),
         () {});
   }
@@ -139,47 +157,56 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
           elevation: 0.01,
           iconTheme: IconThemeData.fallback(),
         ),
-        body: ListView(
-          children: <Widget>[
-            _infoHeader(),
-            Container(
-              height: 8,
-            ),
-            _nickName(),
-            Divider(
-              indent: indent,
-              height: 0.5,
-            ),
-            _memberType(),
-            Divider(
-              indent: indent,
-              height: 0.5,
-            ),
-            _joinTime(),
-            Divider(
-              indent: indent,
-              height: 0.5,
-            ),
-            _addBlockList(),
-            Container(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: CupertinoButton(
-                color: Colors.blueAccent,
-                child: Text(
-                  '发送消息',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => FlutterBoost.singleton.open(
-                    'nativePage://android&iosPageName=CJSessionViewController',
-                    urlParams: {'id': widget.params['team_id'], 'type': 0},
-                    exts: {'animated': true}),
+        body: _memberInfo == null
+            ? Center(
+                child: CupertinoActivityIndicator(),
+              )
+            : ListView(
+                children: <Widget>[
+                  _infoHeader(),
+                  Container(
+                    height: 8,
+                  ),
+                  _nickName(),
+                  Divider(
+                    indent: indent,
+                    height: 0.5,
+                  ),
+                  _memberType(),
+                  Divider(
+                    indent: indent,
+                    height: 0.5,
+                  ),
+                  _joinTime(),
+                  Divider(
+                    indent: indent,
+                    height: 0.5,
+                  ),
+                  _addBlockList(),
+                  Container(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child: CupertinoButton(
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '发送消息',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => FlutterBoost.singleton.open(
+                          'nativePage://android&iosPageName=CJSessionViewController',
+                          urlParams: {
+                            'id': widget.params['member_id'],
+                            'type': 0
+                          },
+                          exts: {
+                            'animated': true
+                          }),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }

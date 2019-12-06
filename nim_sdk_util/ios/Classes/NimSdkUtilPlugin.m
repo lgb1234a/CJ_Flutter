@@ -386,6 +386,68 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+
+/// 判断用户是否被拉黑
+/// @param params 用户id
++ (void)isUserBlocked:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    BOOL isBlocked = [[NIMSDK sharedSDK].userManager isUserInBlackList:params[@"userId"]];
+    result(@(isBlocked));
+}
+
+
+/// 把用户加入黑名单
+/// @param params 用户ID
++ (void)blockUser:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].userManager addToBlackList:params[@"userId"]
+                                        completion:^(NSError * _Nullable error) {
+        if(!error) {
+            result(@(YES));
+        }else {
+            [UIViewController showError:@"加入黑名单失败"];
+            result(@(NO));
+        }
+    }];
+}
+
+
+/// 移出黑名单
+/// @param params 用户ID
++ (void)cancelBlockUser:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].userManager removeFromBlackBlackList:params[@"userId"] completion:^(NSError * _Nullable error) {
+        if(!error) {
+            result(@(YES));
+        }else {
+            [UIViewController showError:@"移出黑名单失败"];
+            result(@(NO));
+        }
+    }];
+}
+
+
+/// 返回黑名单列表
+/// @param params 回调
++ (void)blockUserList:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    NSArray<NIMUser *> *users = [[NIMSDK sharedSDK].userManager myBlackList];
+    if(cj_empty_array(users)) {
+        // 返回空列表
+        result(@[]);
+    }else {
+        NSArray <NSString *>*userIds = [users cj_map:^id _Nonnull(NIMUser *user) {
+            return user.userId;
+        }];
+        
+        result(userIds);
+    }
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type
