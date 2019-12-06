@@ -192,5 +192,13 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         'animated': true
       });
     }
+
+    if(event is ShowAllMembersEvent) {
+      /// 查看全部群成员
+      FlutterBoost.singleton.open('member_list', urlParams: {
+      }, exts: {
+        'animated': true
+      });
+    }
   }
 }

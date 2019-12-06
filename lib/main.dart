@@ -20,6 +20,7 @@ import 'package:flutter_boost/flutter_boost.dart';
 import 'Login/Register/Register.dart';
 import 'Session/SessionMemberInfo.dart';
 import 'Components/QrCodePage.dart';
+import 'Session/SessionMemberList.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -74,6 +75,7 @@ class _MyAppState extends State<MyApp> {
       'contact_setting': (pageName, params, _) => ContactSetting(params),
       'member_info': (pageName, params, _) => SessionMemberInfoWidget(params),
       'qrcode': (pageName, params, _) => QrCodePage(params: params),
+      'member_list': (pageName, params, _) => SessionMemberListPage(params: params),
     });
   }
 
