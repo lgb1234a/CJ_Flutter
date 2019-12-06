@@ -27,6 +27,7 @@
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
 		EF42BB4D2385316200DAA191 /* CJTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42BB4C2385316200DAA191 /* CJTabbarController.m */; };
+		EF5FD2D22399E9D6006A664D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5FD2D12399E9D6006A664D /* libz.tbd */; };
 		EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */; };
 		EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552F237BDAB200EE1E35 /* CJLoginViewController.m */; };
 		EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41082334AF7D00AF697E /* CJSessionViewController.m */; };
@@ -107,6 +108,7 @@
 		EF1422EE23055BF500AEAA55 /* CJMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMineViewController.m; sourceTree = "<group>"; };
 		EF42BB4B2385316200DAA191 /* CJTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJTabbarController.h; sourceTree = "<group>"; };
 		EF42BB4C2385316200DAA191 /* CJTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJTabbarController.m; sourceTree = "<group>"; };
+		EF5FD2D12399E9D6006A664D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EF6C552B237AAC8600EE1E35 /* PlatformRouterImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformRouterImp.h; sourceTree = "<group>"; };
 		EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlatformRouterImp.m; sourceTree = "<group>"; };
 		EF6C552E237BDAB200EE1E35 /* CJLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJLoginViewController.h; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5FD2D22399E9D6006A664D /* libz.tbd in Frameworks */,
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				61F3DCBE914A0DC334E3167B /* libPods-Runner.a in Frameworks */,
@@ -182,6 +185,7 @@
 		8678AA9EE0AD431CEC58EA35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF5FD2D12399E9D6006A664D /* libz.tbd */,
 				0291630783B7CDDFABAA0A2F /* libPods-Runner.a */,
 			);
 			name = Frameworks;

@@ -56,13 +56,17 @@
         if(self.shareModel.type == CajianShareTypeImage) {
             CJShareImageModel *imgModel = (CJShareImageModel *)self.shareModel;
             co_launch(^{
-                UIImage *shareImage = await([UIImage async_imageWithData:imgModel.imageData]);
-                [self sendMessage:[NIMMessageMaker msgWithImage:shareImage]];
+                UIImage *img = await([UIImage async_imageWithData:imgModel.imageData]);
+                NIMMessage *msg = [NIMMessageMaker msgWithImage:img];
+                [self sendMessage:msg];
             });
         }
         
         // 备注
         if(!cj_empty_string(self.shareModel.leaveMessage)) {
+            [self.tableView reloadData];
+            [self.tableView layoutIfNeeded];
+            
             [self sendMessage:[NIMMessageMaker msgWithText:self.shareModel.leaveMessage]];
         }
         self.shareModel = nil;
