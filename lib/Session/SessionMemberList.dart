@@ -39,7 +39,11 @@ class _SessionMemberListPageState extends State<SessionMemberListPage> {
 
     fetchData();
 
-    _searchController.addListener(() {});
+    _searchController.addListener(() {
+      setState(() {
+        _inSearching = _searchController.text.isNotEmpty;
+      });
+    });
 
     _scrollController.addListener(() {
       /// 隐藏键盘
@@ -63,18 +67,24 @@ class _SessionMemberListPageState extends State<SessionMemberListPage> {
   /// search bar
   Widget _buildSearchBar() {
     return Container(
-        height: _searchBarHeight.toDouble(),
-        color: appBarColor,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: SizedBox(
-          height: 40,
-          child: CupertinoTextField(
-            controller: _searchController,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            prefix: Image.asset('images/icon_contact_search@2x.png'),
-            placeholder: '搜索',
-          ),
-        ));
+      height: _searchBarHeight.toDouble(),
+      color: mainBgColor,
+      padding: EdgeInsets.all(10),
+      constraints: BoxConstraints(minHeight: 40),
+      child: CupertinoTextField(
+        controller: _searchController,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        prefix: Container(
+          padding: EdgeInsets.only(left: 10),
+          child: Image.asset('images/icon_contact_search@2x.png'),
+        ),
+        placeholder: '搜索',
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(3.0))),
+        clearButtonMode: OverlayVisibilityMode.editing,
+      ),
+    );
   }
 
   /// 构建item
@@ -131,20 +141,62 @@ class _SessionMemberListPageState extends State<SessionMemberListPage> {
     );
   }
 
+  /// 搜索结果列表
+  Widget _searchResultList() {
+    String key = _searchController.text;
+    List<Map> memberSearchResult = _infos.where((f) {
+      TeamMemberInfo memberInfo = f['memberInfo'];
+      UserInfo userInfo = f['userInfo'];
+      return (memberInfo.nickName != null &&
+              memberInfo.nickName.contains(key)) ||
+          userInfo.showName.contains(key);
+    }).toList();
+
+    return SliverList(
+      key: Key('SliverFixedExtentList'),
+      delegate: SliverChildListDelegate(memberSearchResult.map((f) {
+        UserInfo userInfo = f['userInfo'];
+        TeamMemberInfo memberInfo = f['memberInfo'];
+        return ListTile(
+          onTap: () => FlutterBoost.singleton.open('member_info', urlParams: {
+            'team_id': memberInfo.teamId,
+            'member_id': memberInfo.userId
+          }, exts: {
+            'animated': true
+          }),
+          leading: userInfo.avatarUrlString != null
+              ? FadeInImage.assetNetwork(
+                  image: userInfo.avatarUrlString,
+                  width: 44,
+                  placeholder: 'images/icon_avatar_placeholder@2x.png',
+                )
+              : Image.asset(
+                  'images/icon_avatar_placeholder@2x.png',
+                  width: 44,
+                ),
+          title: Text(memberInfo.nickName != null
+              ? memberInfo.nickName
+              : userInfo.showName),
+        );
+      }).toList()),
+    );
+  }
+
   /// 列表
   Widget _list() {
     if (_infos == null) return Container();
 
     return Expanded(
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: <Widget>[
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [_buildSearchBar()],
-              ),
-            ),
-            SliverGrid(
+        child:
+            CustomScrollView(controller: _scrollController, slivers: <Widget>[
+      SliverAppBar(
+        flexibleSpace: _buildSearchBar(),
+        backgroundColor: mainBgColor,
+      ),
+      SliverPadding(padding: EdgeInsets.only(bottom: 10)),
+      _inSearching
+          ? _searchResultList()
+          : SliverGrid(
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
               delegate: SliverChildListDelegate(
@@ -152,9 +204,8 @@ class _SessionMemberListPageState extends State<SessionMemberListPage> {
                     .map((f) => _buildAvatar(f['memberInfo'], f['userInfo']))
                     .toList(),
               ),
-            )]
-        )
-      );
+            )
+    ]));
   }
 
   @override
