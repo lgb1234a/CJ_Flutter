@@ -121,7 +121,7 @@ class SessionP2PInfoState extends State<SessionP2PInfo> {
       return CupertinoButton.filled(
         child: Text('清空聊天记录'),
         onPressed: () => cjSheet(context, '警告',
-            msg: '确定要清空聊天记录吗？',
+            content: Text('确定要清空聊天记录吗？'),
             handlerTexts: ['确定'],
             handlers: [() => _bloc.add(ClearChatHistory())]),
       );

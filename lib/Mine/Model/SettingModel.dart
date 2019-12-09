@@ -56,7 +56,7 @@ final List<SettingModel> settingCellModels = [
       (SettingModel model) {
 
     cjDialog(model.ctx, '提示',
-        msg: '确定要退出登录吗？',
+        content: Text('确定要退出登录吗？'),
         handlerTexts: ['确定'],
         handlers: [() => LoginManager().logout()]);
   }),

@@ -31,18 +31,23 @@ class CJUtils {}
 
 // 弹窗 handlerTexts <-> handlers  一一对应，不然会报错
 cjDialog(BuildContext context, String title,
-    {String msg,
+    {Widget content,
     String cancelText = '取消',
     Function cancelHandler,
     List<String> handlerTexts,
     List<Function> handlers}) {
-  assert(handlers.length == handlerTexts.length);
+  if (handlers != null && handlerTexts != null) {
+    assert(handlers.length == handlerTexts.length);
+  }else {
+    handlerTexts = [];
+    handlers = [];
+  }
 
   showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
             title: Text(title),
-            content: Text(msg),
+            content: content,
             actions: handlerTexts.map((f) {
               int idx = handlerTexts.indexOf(f);
               Function handler = handlers[idx];
@@ -72,18 +77,23 @@ cjDialog(BuildContext context, String title,
 
 // 底部弹窗组件 handlerTexts <-> handlers  一一对应，不然会报错
 cjSheet(BuildContext context, String title,
-    {String msg,
+    {Widget content,
     String cancelText = '取消',
     Function cancelHandler,
     List<String> handlerTexts,
     List<Function> handlers}) {
-  assert(handlers.length == handlerTexts.length);
+  if (handlers != null && handlerTexts != null) {
+    assert(handlers.length == handlerTexts.length);
+  }else {
+    handlerTexts = [];
+    handlers = [];
+  }
 
   showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
             title: Text(title),
-            message: Text(msg),
+            message: content,
             actions: handlerTexts.map((f) {
               int idx = handlerTexts.indexOf(f);
               Function handler = handlers[idx];

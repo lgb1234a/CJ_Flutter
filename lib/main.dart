@@ -21,6 +21,7 @@ import 'Login/Register/Register.dart';
 import 'Session/SessionMemberInfo.dart';
 import 'Components/QrCodePage.dart';
 import 'Session/SessionMemberList.dart';
+import 'Session/TeamAnnouncement.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -59,23 +60,41 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     FlutterBoost.singleton.registerPageBuilders({
+      /// 注册页
       'register': (pageName, params, _) => RegisterWidget(),
+      /// 登录入口
       'login': (pageName, params, _) => LoginWidget(),
+      /// 验证码登录页
       'phone_login': (pageName, params, _) => PhoneLoginWidget(),
+      /// 密码登录页
       'pwd_login': (pageName, params, _) => PwdLoginWidget(),
+      /// 我
       'mine': (pageName, params, _) => MineWidget(params),
+      /// 联系人
       'contacts': (pageName, params, _) => ContactsWidget(params),
+      /// 设置
       'setting': (pageName, params, _) => SettingWidget(),
+      /// 我的个人信息
       'mine_info': (pageName, params, _) => MineInfoWiget(),
+      /// 通讯录搜索页
       'contact_searching': (pageName, params, _) => ContactsSearchingWidget(),
+      /// 通讯录搜索结果页
       'contact_search_result': (pageName, params, _) =>
           ContactsSearchResultListWidget(params),
+      /// 聊天信息
       'session_info': (pageName, params, _) => SessionInfoWidget(params),
+      /// 用户信息
       'user_info': (pageName, params, _) => UserInfoPage(params),
+      /// 联系人设置
       'contact_setting': (pageName, params, _) => ContactSetting(params),
+      /// 群成员信息
       'member_info': (pageName, params, _) => SessionMemberInfoWidget(params),
+      /// 二维码
       'qrcode': (pageName, params, _) => QrCodePage(params: params),
+      /// 全部群成员
       'member_list': (pageName, params, _) => SessionMemberListPage(params: params),
+      /// 群公告
+      'team_announcement': (pageName, params, _) => TeamAnnouncementPage(params: params),
     });
   }
 

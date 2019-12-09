@@ -41,7 +41,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       {Widget subTitle}) {
     List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
 
-    return GestureDetector(
+    return new GestureDetector(
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: indent),
@@ -103,17 +103,18 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     });
   }
 
-  ///
+  /// 群公告
   Widget _announce() {
     return _cell(
         Text('群公告'),
         Row(
           children: <Widget>[Text('点击查看群公告'), Icon(Icons.arrow_forward_ios)],
-        ),
-        () {});
+        ), () {
+      _bloc.add(TappedTeamAnnouncement());
+    });
   }
 
-  ///
+  /// 群昵称
   Widget _nickName() {
     if (_memberInfo == null) {
       return Container();
@@ -125,8 +126,9 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             Text(_memberInfo.nickName == null ? '点击设置' : _memberInfo.nickName),
             Icon(Icons.arrow_forward_ios)
           ],
-        ),
-        () {});
+        ), () {
+      cjDialog(context, '设置群昵称');
+    });
   }
 
   ///
@@ -178,7 +180,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Text('清空聊天记录'),
         Icon(Icons.arrow_forward_ios),
         () => cjSheet(context, '警告',
-            msg: '确定要清空聊天记录吗？',
+            content: Text('确定要清空聊天记录吗？'),
             handlerTexts: ['确定'],
             handlers: [() => _bloc.add(ClearChatHistory())]));
   }
@@ -190,7 +192,8 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     }
     String tip = _memberInfo.userId == _teamInfo.owner ? '解散群聊' : '退出群聊';
     return CupertinoButton(
-      onPressed: () => cjSheet(context, '警告', msg: '确定要$tip吗？', handlerTexts: [
+      onPressed: () =>
+          cjSheet(context, '警告', content: Text('确定要$tip吗？'), handlerTexts: [
         '确定'
       ], handlers: [
         () => _memberInfo.userId == _teamInfo.owner
@@ -280,7 +283,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     }
     List<UserInfo> _ms =
         _members.length > 8 ? _members.sublist(0, 8) : _members.toList();
-    // 插入两个，用来处理加号和减号显示
+    // 插入两个，用来���理加号和减号显示
     _ms.addAll([UserInfo(), UserInfo()]);
 
     return Container(
@@ -359,15 +362,16 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       ),
       body: BlocBuilder<SessioninfoBloc, SessioninfoState>(
         builder: (context, state) {
-            /// 加载OK
-            if (state is TeamSessionInfoLoaded) {
-              _teamInfo = state.info;
-              _members = state.members;
-              _memberInfo = state.memberInfo;
-              _isStickOnTop = state.isStickOnTop;
-              _msgNotify = state.msgNotify;
+          /// 加载OK
+          if (state is TeamSessionInfoLoaded) {
+            _teamInfo = state.info;
+            _members = state.members;
+            _memberInfo = state.memberInfo;
+            _isStickOnTop = state.isStickOnTop;
+            _msgNotify = state.msgNotify;
 
-              return ListView(
+            return ListView(
+              key: Key('ListView'),
               children: <Widget>[
                 _teamInfoHeader(),
                 _teamMemberSection(),
@@ -411,7 +415,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
                 _quitGroup()
               ],
             );
-            }
+          }
           return Center(
             child: Container(),
           );

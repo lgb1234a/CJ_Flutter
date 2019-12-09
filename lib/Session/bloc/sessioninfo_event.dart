@@ -63,3 +63,6 @@ class TappedTeamQrCode extends SessioninfoEvent {
   TappedTeamQrCode(
       this.contentStr, this.embeddedImgAssetPath, this.embeddedImgSize);
 }
+
+/// 查看群公告
+class TappedTeamAnnouncement extends SessioninfoEvent {}

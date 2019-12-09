@@ -204,6 +204,12 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       FlutterBoost.singleton.open('member_list',
           urlParams: {'teamId': session.id}, exts: {'animated': true});
     }
+
+    if(event is TappedTeamAnnouncement) {
+      /// 查看群公告
+      FlutterBoost.singleton.open('team_announcement',
+          urlParams: {'teamId': session.id}, exts: {'animated': true});
+    }
   }
 
   Future<List<UserInfo>> memberInfos() async {
