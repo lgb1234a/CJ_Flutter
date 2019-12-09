@@ -43,5 +43,17 @@ class TeammanageBloc extends Bloc<TeammanageEvent, TeammanageState> {
       FlutterBoost.singleton.open('web_view',
           urlParams: {'url': url, 'title': '群机器人'}, exts: {'animated': true});
     }
+
+    if (event is TeamTransform) {
+      /// 群转让
+      FlutterBoost.singleton.channel
+          .sendEvent('teamTransform', {'teamId': teamId});
+    }
+
+    if (event is TeamManagerSetting) {
+      /// 群管理员设置
+      FlutterBoost.singleton.channel.sendEvent('setTeamManager',
+          {'teamId': teamId, 'managerIds': previousState.managers});
+    }
   }
 }

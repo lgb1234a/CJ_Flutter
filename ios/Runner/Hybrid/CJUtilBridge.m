@@ -60,6 +60,14 @@ static inline UIWindow *cj_getkeyWindow()
     [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
         [self share:arguments];
     } forName:@"share"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self transformTeam:arguments];
+    } forName:@"teamTransform"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self setTeamManager:arguments];
+    } forName:@"setTeamManager"];
 }
 
 // 跳转聊天
@@ -124,18 +132,8 @@ static inline UIWindow *cj_getkeyWindow()
 /// @param params 提示文案
 - (void)showTip:(NSDictionary *)params
 {
-    MBProgressHUD *HUD = [MBProgressHUD HUDForView:cj_getkeyWindow()];
-    if (!HUD) {
-        HUD = [MBProgressHUD showHUDAddedTo:cj_getkeyWindow() animated:YES];
-    }
-    HUD.contentColor = [UIColor whiteColor];
-    HUD.bezelView.color = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-    HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
-    HUD.mode = MBProgressHUDModeText;
-    HUD.label.text = params[@"text"];
-    HUD.label.numberOfLines = 0;
-    HUD.removeFromSuperViewOnHide = YES;
-    [HUD hideAnimated:YES afterDelay:2];
+    [UIViewController showMessage:params[@"text"]
+                       afterDelay:2];
 }
 
 /// 邀请联系人进群
@@ -190,7 +188,6 @@ static inline UIWindow *cj_getkeyWindow()
     CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
     
     __weak typeof(nav) weakNav = nav;
-    __weak typeof(self) weakSelf = self;
     selectorVc.finished = ^(NSArray <NSString *>*ids)
     {
         [[NIMSDK sharedSDK].teamManager kickUsers:ids
@@ -199,11 +196,11 @@ static inline UIWindow *cj_getkeyWindow()
             // 关闭选择器
             [weakNav dismissViewControllerAnimated:YES completion:nil];
             if(!error) {
-                [weakSelf showTip:@{@"text": @"踢人成功"}];
+                [UIViewController showSuccess:@"踢人成功"];
                 [[FlutterBoostPlugin sharedInstance] sendEvent:@"updateTeamMember"
                                                      arguments:@{@"name":@"踢人成功"}];
             }else {
-                [weakSelf showTip:@{@"text": @"踢人失败"}];
+                [UIViewController showError:@"踢人失败"];
             }
             
         }];
@@ -252,6 +249,86 @@ static inline UIWindow *cj_getkeyWindow()
     }else if(type == 2) {
         
     }
+}
+
+/// 群转让
+- (void)transformTeam:(NSDictionary *)params
+{
+    NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+    config.needMutiSelected = NO;
+    config.teamId = params[@"teamId"];
+    
+    CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
+    
+    __weak typeof(nav) weakNav = nav;
+    selectorVc.finished = ^(NSArray <NSString *>*ids)
+    {
+        [[NIMSDK sharedSDK].teamManager transferManagerWithTeam:config.teamId
+                                                     newOwnerId:ids.firstObject
+                                                        isLeave:NO
+                                                     completion:^(NSError * _Nullable error) {
+            // 关闭选择器
+            [weakNav dismissViewControllerAnimated:YES completion:nil];
+            
+            if(!error) {
+                [UIViewController showSuccess:@"移交成功"];
+            }else {
+                [UIViewController showError:@"移交失败"];
+            }
+        }];
+    };
+    
+    [[FlutterBoostPlugin sharedInstance].currentViewController
+                                    presentViewController:nav
+                                                 animated:YES
+                                               completion:nil];
+}
+
+/// 设置群管理员
+- (void)setTeamManager:(NSDictionary *)params
+{
+    NSArray <NSString *>* managerIds = params[@"managerIds"];
+    NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+    config.needMutiSelected = YES;
+    config.teamId = params[@"teamId"];
+    config.alreadySelectedMemberId = managerIds;
+    
+    CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
+    
+    __weak typeof(nav) weakNav = nav;
+    selectorVc.finished = ^(NSArray <NSString *>*ids)
+    {
+        [weakNav dismissViewControllerAnimated:YES completion:nil];
+        /// 对比ids和 params[@"managerIds"]，新增的调用add，移除的调用remove
+        NSArray *newIds = [ids cj_filter:^BOOL(NSString *userId) {
+            return ![managerIds containsObject:userId];
+        }];
+        
+        NSArray *removeIds = [managerIds cj_filter:^BOOL(NSString *userId) {
+            return ![ids containsObject:userId];
+        }];
+        
+        // 添加
+        [[NIMSDK sharedSDK].teamManager addManagersToTeam:config.teamId
+                                                    users:newIds
+                                               completion:^(NSError * _Nullable error) {
+            
+        }];
+        
+        // 移除
+        [[NIMSDK sharedSDK].teamManager removeManagersFromTeam:config.teamId
+                                                         users:removeIds
+                                                    completion:^(NSError * _Nullable error) {
+            
+        }];
+    };
+    
+    [[FlutterBoostPlugin sharedInstance].currentViewController
+                                    presentViewController:nav
+                                                 animated:YES
+                                               completion:nil];
 }
 
 #pragma mark ----- private ----

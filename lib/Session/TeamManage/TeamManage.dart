@@ -63,7 +63,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
             Icon(Icons.arrow_forward_ios)
           ],
         ),
-        () {});
+        () => _bloc.add(TeamManagerSetting()));
   }
 
   ///  群机器人
@@ -74,6 +74,16 @@ class _TeamManagePageState extends State<TeamManagePage> {
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
         ),
         () => _bloc.add(TappedToRobotSetting()));
+  }
+
+  /// 群转让
+  Widget _teamTransform() {
+    return _cell(
+        Text('群转让'),
+        Row(
+          children: <Widget>[Text('点击设置'), Icon(Icons.arrow_forward_ios)],
+        ),
+        () => _bloc.add(TeamTransform()));
   }
 
   @override
@@ -108,7 +118,12 @@ class _TeamManagePageState extends State<TeamManagePage> {
                   children: <Widget>[
                     _managerSetting(),
                     Container(height: 8),
-                    _teamRobots()
+                    _teamRobots(),
+                    Divider(
+                      indent: indent,
+                      height: 0.5,
+                    ),
+                    _teamTransform()
                   ],
                 );
               } else {
