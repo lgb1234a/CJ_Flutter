@@ -24,8 +24,17 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   TeamInfo _teamInfo;
   List<UserInfo> _members;
   TeamMemberInfo _memberInfo;
+  TextEditingController _nickNameController = TextEditingController();
+  TextEditingController _teamNameController = TextEditingController();
   bool _msgNotify = false;
   bool _isStickOnTop = false;
+
+  @override
+  void dispose() {
+    _nickNameController.dispose();
+    _teamNameController.dispose();
+    super.dispose();
+  }
 
   Widget _sectionLoading() {
     return Container(
@@ -75,8 +84,25 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             Text(_teamInfo.teamName == null ? '' : _teamInfo.teamName),
             Icon(Icons.arrow_forward_ios)
           ],
-        ),
-        () {});
+        ), () {
+      if (_memberInfo.type == 1) {
+        cjDialog(context, '设置名称',
+            content: CupertinoTextField(
+              controller: _teamNameController,
+              clearButtonMode: OverlayVisibilityMode.editing,
+            ),
+            handlers: [
+              () {
+                if (_teamNameController.text.isNotEmpty) {
+                  _bloc.add(UpdateTeamName(teamName: _teamNameController.text));
+                }
+              }
+            ],
+            handlerTexts: [
+              '确定'
+            ]);
+      }
+    });
   }
 
   /// 群二维码
@@ -127,7 +153,22 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
             Icon(Icons.arrow_forward_ios)
           ],
         ), () {
-      cjDialog(context, '设置群昵称');
+      cjDialog(context, '设置群昵称',
+          content: CupertinoTextField(
+            controller: _nickNameController,
+            clearButtonMode: OverlayVisibilityMode.editing,
+          ),
+          handlers: [
+            () {
+              if (_nickNameController.text.isNotEmpty) {
+                _bloc.add(
+                    UpdateTeamNickName(nickName: _nickNameController.text));
+              }
+            }
+          ],
+          handlerTexts: [
+            '确定'
+          ]);
     });
   }
 
@@ -283,7 +324,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     }
     List<UserInfo> _ms =
         _members.length > 8 ? _members.sublist(0, 8) : _members.toList();
-    // 插入两个，用来���理加号和减号显示
+    // 插入两个，用来���理加号和减号显��
     _ms.addAll([UserInfo(), UserInfo()]);
 
     return Container(

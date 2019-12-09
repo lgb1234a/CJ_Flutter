@@ -448,6 +448,39 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }
 }
 
+/// 修改成员群昵称
++ (void)updateUserNickName:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager updateUserNick:params[@"userId"]
+                                           newNick:params[@"nickName"]
+                                            inTeam:params[@"teamId"]
+                                        completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"修改昵称失败"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
+    }];
+}
+
+/// 修改群名称
++ (void)updateTeamName:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager updateTeamName:params[@"teamName"]
+                                            teamId:params[@"teamId"]
+                                        completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"修改群名称失败"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type

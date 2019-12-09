@@ -205,10 +205,31 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
           urlParams: {'teamId': session.id}, exts: {'animated': true});
     }
 
-    if(event is TappedTeamAnnouncement) {
+    if (event is TappedTeamAnnouncement) {
       /// 查看群公告
       FlutterBoost.singleton.open('team_announcement',
           urlParams: {'teamId': session.id}, exts: {'animated': true});
+    }
+
+    if (event is UpdateTeamNickName) {
+      /// 修改成员群昵称
+      TeamSessionInfoLoaded p = _previousState;
+      bool success = await NimSdkUtil.updateUserNickName(
+          event.nickName, p.memberInfo.userId, session.id);
+      if (success) {
+        /// 重新获取数据，并刷新页面
+        add(Fetch());
+      }
+    }
+
+    if (event is UpdateTeamName) {
+      /// 修改群名称
+      bool success =
+          await NimSdkUtil.updateTeamName(event.teamName, session.id);
+      if (success) {
+        /// 重新获取数据，并刷新页面
+        add(Fetch());
+      }
     }
   }
 

@@ -119,7 +119,7 @@ class NimSdkUtil {
   static Future<bool> dismissTeam(String teamId) async {
     return await _channel.invokeMethod('dismissTeam:', {'teamId': teamId});
   }
-  
+
   /// 判断用户是否被拉黑
   static Future<bool> isUserBlocked(String userId) async {
     return await _channel.invokeMethod('isUserBlocked:', {'userId': userId});
@@ -138,5 +138,18 @@ class NimSdkUtil {
   /// 获取黑名单成员列表
   static Future<List<String>> blockUserList() async {
     return await _channel.invokeMethod('blockUserList:');
+  }
+
+  /// 更新成员群昵称
+  static Future<bool> updateUserNickName(
+      String nickName, String userId, String teamId) async {
+    return await _channel.invokeMethod('updateUserNickName:',
+        {'nickName': nickName, 'userId': userId, 'teamId': teamId});
+  }
+
+  /// 更新群名称
+  static Future<bool> updateTeamName(String teamName, String teamId) async {
+    return await _channel.invokeMethod(
+        'updateTeamName:', {'teamName': teamName, 'teamId': teamId});
   }
 }

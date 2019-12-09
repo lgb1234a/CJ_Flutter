@@ -51,6 +51,12 @@ class TappedTeamMemberAvatarEvent extends SessioninfoEvent {
   TappedTeamMemberAvatarEvent({@required this.teamId, @required this.memberId});
 }
 
+/// 更新群名称
+class UpdateTeamName extends SessioninfoEvent {
+  final String teamName;
+  UpdateTeamName({@required this.teamName});
+}
+
 class TappedTeamQrCode extends SessioninfoEvent {
   /// 生成二维码的内容
   final String contentStr;
@@ -66,3 +72,9 @@ class TappedTeamQrCode extends SessioninfoEvent {
 
 /// 查看群公告
 class TappedTeamAnnouncement extends SessioninfoEvent {}
+
+/// 更新群昵称
+class UpdateTeamNickName extends SessioninfoEvent {
+  final String nickName;
+  UpdateTeamNickName({@required this.nickName});
+}
