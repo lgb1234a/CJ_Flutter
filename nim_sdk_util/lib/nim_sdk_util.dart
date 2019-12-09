@@ -152,4 +152,11 @@ class NimSdkUtil {
     return await _channel.invokeMethod(
         'updateTeamName:', {'teamName': teamName, 'teamId': teamId});
   }
+
+  /// 更新群公告
+  static Future<bool> updateAnnouncement(
+      String announcement, String teamId) async {
+    return await _channel.invokeMethod('updateAnnouncement:',
+        {'announcement': announcement, 'teamId': teamId});
+  }
 }

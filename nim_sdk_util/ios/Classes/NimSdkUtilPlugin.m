@@ -481,6 +481,23 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+/// 修改群公告
++ (void)updateAnnouncement:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager updateTeamAnnouncement:params[@"announcement"]
+                                                    teamId:params[@"teamId"]
+                                                completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"修改群公告失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"修改群公告成功"];
+            result(@(YES));
+        }
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type

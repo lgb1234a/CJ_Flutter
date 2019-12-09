@@ -71,7 +71,10 @@ class TappedTeamQrCode extends SessioninfoEvent {
 }
 
 /// 查看群公告
-class TappedTeamAnnouncement extends SessioninfoEvent {}
+class TappedTeamAnnouncement extends SessioninfoEvent {
+  final String announcement;
+  TappedTeamAnnouncement({@required this.announcement});
+}
 
 /// 更新群昵称
 class UpdateTeamNickName extends SessioninfoEvent {
