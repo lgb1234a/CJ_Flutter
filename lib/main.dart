@@ -22,6 +22,7 @@ import 'Session/SessionMemberInfo.dart';
 import 'Components/QrCodePage.dart';
 import 'Session/SessionMemberList.dart';
 import 'Session/TeamAnnouncement.dart';
+import 'Session/TeamManage.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -95,6 +96,8 @@ class _MyAppState extends State<MyApp> {
       'member_list': (pageName, params, _) => SessionMemberListPage(params: params),
       /// 群公告
       'team_announcement': (pageName, params, _) => TeamAnnouncementPage(params: params),
+      /// 群管理
+      'team_manage': (pageName, params, _) => TeamManagePage(params: params),
     });
   }
 

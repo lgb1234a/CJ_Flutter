@@ -81,3 +81,6 @@ class UpdateTeamNickName extends SessioninfoEvent {
   final String nickName;
   UpdateTeamNickName({@required this.nickName});
 }
+
+/// 跳转群管理页面
+class TappedTeamManage extends SessioninfoEvent {}

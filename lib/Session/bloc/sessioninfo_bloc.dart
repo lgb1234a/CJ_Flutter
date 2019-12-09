@@ -232,6 +232,12 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         add(Fetch());
       }
     }
+
+    if (event is TappedTeamManage) {
+      /// 跳转群管理页面
+      FlutterBoost.singleton.open('team_manage',
+          urlParams: {'teamId': session.id}, exts: {'animated': true});
+    }
   }
 
   Future<List<UserInfo>> memberInfos() async {

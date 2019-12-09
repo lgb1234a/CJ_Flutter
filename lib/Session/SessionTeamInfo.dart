@@ -136,9 +136,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[Text('点击查看群公告'), Icon(Icons.arrow_forward_ios)],
         ), () {
-      if (_memberInfo.type == 1) {
         _bloc.add(TappedTeamAnnouncement(announcement: _teamInfo.announcement));
-      }
     });
   }
 
@@ -181,11 +179,12 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
         ),
-        () {});
+        () => _bloc.add(TappedTeamManage()));
   }
 
   ///
   Widget _chatHistory() {
+    return Container();
     return _cell(
         Text('查找聊天记录'),
         Row(
