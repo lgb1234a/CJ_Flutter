@@ -498,6 +498,40 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+/// 添加管理员
++ (void)addTeamManagers:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager addManagersToTeam:params[@"teamId"]
+                                                users:params[@"userIds"]
+                                           completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"添加失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"添加成功"];
+            result(@(YES));
+        }
+    }];
+}
+
+/// 移除管理员
++ (void)removeTeamManagers:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager removeManagersFromTeam:params[@"teamId"]
+                                                     users:params[@"userIds"]
+                                                completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"移除失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"移除成功"];
+            result(@(YES));
+        }
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type

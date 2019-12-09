@@ -41,6 +41,7 @@ dependencies:
             git:
                 url: 'https://github.com/alibaba/flutter_boost.git'
                 ref: '0.1.61'
+  webview_flutter: ^0.3.17
   # firebase_storage: ^3.0.4
   
 dev_dependencies:
