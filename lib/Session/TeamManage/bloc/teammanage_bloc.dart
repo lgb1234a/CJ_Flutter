@@ -29,14 +29,19 @@ class TeammanageBloc extends Bloc<TeammanageEvent, TeammanageState> {
           .map((f) => f.userId)
           .toList();
 
-      
       previousState = DataLoaded(managers: managerIds);
       yield previousState;
     }
 
-    if(event is TappedToRobotSetting) {
+    if (event is TappedToRobotSetting) {
+      UserInfo info = await NimSdkUtil.userInfoById();
+      String owner = info.userId;
+      String url =
+          'https://center.youxi2018.cn/#/groupbindrobot?ower=$owner&group_id=$teamId';
+
       /// 群机器人页面
-      FlutterBoost.singleton.open('');
+      FlutterBoost.singleton.open('web_view',
+          urlParams: {'url': url, 'title': '群机器人'}, exts: {'animated': true});
     }
   }
 }

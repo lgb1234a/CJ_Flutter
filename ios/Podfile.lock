@@ -53,6 +53,8 @@ PODS:
     - Flutter
   - Toast (3.1.0)
   - TZImagePickerController (3.0.9)
+  - webview_flutter (0.0.1):
+    - Flutter
   - WechatOpenSDK (1.8.4)
   - wx_sdk (0.0.1):
     - Flutter
@@ -73,6 +75,7 @@ DEPENDENCIES:
   - NIMSDK_LITE
   - Reachability (~> 3.2)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
   - WechatOpenSDK
   - wx_sdk (from `.symlinks/plugins/wx_sdk/ios`)
   - YYModel
@@ -105,6 +108,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/nim_sdk_util/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  webview_flutter:
+    :path: ".symlinks/plugins/webview_flutter/ios"
   wx_sdk:
     :path: ".symlinks/plugins/wx_sdk/ios"
 
@@ -126,6 +131,7 @@ SPEC CHECKSUMS:
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
+  webview_flutter: db3aba222b23e4dc432e0c5882834123dc50ff9f
   WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
   wx_sdk: a363566eb1fefe7d6e6a6d067d055202c3b80fdf
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30

@@ -532,6 +532,24 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+/// 移交群
++ (void)transformTeam:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager transferManagerWithTeam:params[@"teamId"]
+                                                 newOwnerId:params[@"owner"]
+                                                    isLeave:NO
+                                                 completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"移交失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"移交成功"];
+            result(@(YES));
+        }
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type

@@ -46,6 +46,7 @@ class _CJWebViewState extends State<CJWebView> {
         body: Container(
           child: WebView(
             initialUrl: _url,
+            javascriptMode: JavascriptMode.unrestricted,
           ),
         ),
       ),
