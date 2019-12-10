@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Mine/Model/SettingModel.dart';
-class SettingFuncitonCell extends StatelessWidget
-{
+
+class SettingFuncitonCell extends StatelessWidget {
   final SettingModel model;
 
   SettingFuncitonCell(this.model);
@@ -17,12 +17,13 @@ class SettingFuncitonCell extends StatelessWidget
         height: 48,
         color: Colors.white,
         child: Center(
-          child: Text(model.title, style: TextStyle(color: model.titleColor),),
+          child: Text(
+            model.title,
+            style: TextStyle(color: model.titleColor),
+          ),
         ),
       ),
-      onTap: (){
-        model.onTap(model);
-      },
+      onTap: () => model.onTap(model),
     );
   }
 }
@@ -50,20 +51,26 @@ class SettingAccessoryCell extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+            ),
             Text(model.title),
             Spacer(),
-            Text(model.subTitle??''),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 4),),
-            Icon(Icons.arrow_forward_ios, size: 16,),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 6),),
+            Text(model.subTitle ?? ''),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6),
+            ),
           ],
         ),
       ),
-      onTap: (){
-        model.onTap(model);
-      },
+      onTap: () => model.onTap(model),
     );
   }
 }
-

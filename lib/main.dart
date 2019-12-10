@@ -24,6 +24,9 @@ import 'Session/SessionMemberList.dart';
 import 'Session/TeamAnnouncement.dart';
 import 'Session/TeamManage/TeamManage.dart';
 import 'Base/CJWebView.dart';
+import 'Mine/Security.dart';
+import 'Mine/PwdSetting.dart';
+import 'Mine/PwdForgot.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -101,6 +104,12 @@ class _MyAppState extends State<MyApp> {
       'team_manage': (pageName, params, _) => TeamManagePage(params: params),
       /// webView
       'web_view': (pageName, params, _) => CJWebView(params: params),
+      /// 安全
+      'security': (pageName, params, _) => SecurityPage(),
+      /// 设置登录密码
+      'pwd_setting': (pageName, params, _) => PwdSettingPage(),
+      /// 忘记密码
+      'pwd_forgot': (pageName, params, _) => PwdForgotPage(),
     });
   }
 

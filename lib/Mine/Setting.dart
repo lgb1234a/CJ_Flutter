@@ -11,14 +11,12 @@ import 'package:cajian/Mine/View/SettingListCell.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 
 class SettingWidget extends StatefulWidget {
-
   SettingState createState() {
     return SettingState();
   }
 }
 
 class SettingState extends State<SettingWidget> {
-
   @override
   void initState() {
     super.initState();
@@ -42,12 +40,12 @@ class SettingState extends State<SettingWidget> {
     separatorBuilder: (BuildContext context, int index) {
       SettingModel model = settingCellModels[index];
       if (model.needSeparatorLine) {
-        return Container(
-          color: Colors.white,
-          child: Divider(indent: 16.0),
+        return Divider(
+          indent: 16.0,
+          height: 0.5,
         );
       }
-      return const Divider(height: 0);
+      return Container();
     },
   );
 
@@ -55,13 +53,12 @@ class SettingState extends State<SettingWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar
-        (
+        appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () { 
+            onPressed: () {
               FlutterBoost.singleton.closeCurrent();
-               },
+            },
           ),
           title: Text(
             '设置',

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cajian/Login/LoginManager.dart';
 import 'package:cajian/Base/CJUtils.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 enum SettingCellType {
   Function, // 功能按钮
@@ -31,8 +32,11 @@ class SettingModel {
 }
 
 final List<SettingModel> settingCellModels = [
-  SettingModel(
-      SettingCellType.Accessory, '安全', null, null, (SettingModel model) {}),
+  SettingModel(SettingCellType.Accessory, '安全', null, null,
+      (SettingModel model) {
+        print('object');
+    FlutterBoost.singleton.open('security', exts: {'animated': true});
+  }),
   SettingModel(
       SettingCellType.Accessory, '绑定微信', '未绑定', null, (SettingModel model) {},
       needSeparatorLine: false),
@@ -54,7 +58,6 @@ final List<SettingModel> settingCellModels = [
       needSeparatorLine: false),
   SettingModel(SettingCellType.Function, '退出登录', null, Color(0xFFFA5151),
       (SettingModel model) {
-
     cjDialog(model.ctx, '提示',
         content: Text('确定要退出登录吗？'),
         handlerTexts: ['确定'],
