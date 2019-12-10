@@ -34,16 +34,16 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
                                        selectedImage:[UIImage imageNamed:@"bk_media_shoot_pressed"]
                                                title:@"拍摄"]].mutableCopy;
     
-    NIMMediaItem *cajianRP  = [NIMMediaItem item:@"onTapMediaItemCajianRP:onSessionVC:"
-                                      normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
-                                    selectedImage:[UIImage imageNamed:@"icon_redpacket_pressed"]
-                                            title:@"红包"];
-    
-    
-    NIMMediaItem *cloudRP  = [NIMMediaItem item:@"onTapMediaItemCloudRedPacket:onSessionVC:"
-                                     normalImage:[UIImage imageNamed:@"icon_MFRedpacket"]
-                                   selectedImage:[UIImage imageNamed:@"icon_MFRedpacket_pressed"]
-                                           title:@"云红包"];
+//    NIMMediaItem *cajianRP  = [NIMMediaItem item:@"onTapMediaItemCajianRP:onSessionVC:"
+//                                      normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
+//                                    selectedImage:[UIImage imageNamed:@"icon_redpacket_pressed"]
+//                                            title:@"红包"];
+//
+//
+//    NIMMediaItem *cloudRP  = [NIMMediaItem item:@"onTapMediaItemCloudRedPacket:onSessionVC:"
+//                                     normalImage:[UIImage imageNamed:@"icon_MFRedpacket"]
+//                                   selectedImage:[UIImage imageNamed:@"icon_MFRedpacket_pressed"]
+//                                           title:@"云红包"];
     
     NIMMediaItem *yeeRP  = [NIMMediaItem item:@"onTapMediaItemYeePacket:onSessionVC:"
                                      normalImage:[UIImage imageNamed:@"icon_yee_normal"]
@@ -85,7 +85,7 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
                                         selectedImage:[UIImage imageNamed:@"bk_media_position_pressed"]
                                                 title:@"位置"];
     
-    [mediaItems addObjectsFromArray:@[cajianRP, cloudRP, yeeRP, yeeTransfer, profileCard, aliPayCode, personStamp, teamNotice, collection, location]];
+    [mediaItems addObjectsFromArray:@[yeeRP, yeeTransfer, profileCard, aliPayCode, personStamp, teamNotice, collection, location]];
     
     return mediaItems;
 }

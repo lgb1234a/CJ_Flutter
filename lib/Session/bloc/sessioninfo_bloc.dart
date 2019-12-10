@@ -13,7 +13,6 @@ import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import '../../Login/LoginManager.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../Base/CJRequestEngine.dart';
 
 class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   final Session session;

@@ -39,6 +39,39 @@
     }
 }
 
+/// 分享到微信
+/// web:12
++ (void)share:(NSDictionary *)params
+{
+    WXMediaMessage *message = [WXMediaMessage message];
+    NSString *title = params[@"title"];
+    NSString *content = params[@"content"];
+    NSString *url = params[@"url"];
+    NSNumber *type = params[@"type"];
+    if (title == nil) {
+        message.title = @"";
+    }
+    else
+    {
+        message.title = title;
+    }
+    message.description     = content;
+    message.messageExt      = content;
+    message.messageAction   = content;
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = url;
+    
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+    req.bText = NO;
+    req.message = message;
+    req.scene = WXSceneSession;
+    
+    [WXApi sendReq:req];
+}
+
 - (void)onResp:(BaseResp*)resp{
     // 分享成功是否的监听
     if([resp isKindOfClass:[SendMessageToWXResp class]])

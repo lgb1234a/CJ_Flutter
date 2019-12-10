@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:nim_sdk_util/Model/nim_userInfo.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:wx_sdk/wx_sdk.dart';
 
 enum MineCellType {
   Profile, // 用户信息
@@ -60,8 +61,14 @@ final List<MineModel> mineCellModels = [
   MineModel(MineCellType.Others, '收藏', 'images/icon_setting_collect@2x.png',
       (MineModel model) => {},
       needSeparatorLine: true),
-  MineModel(MineCellType.Others, '分享到微信', 'images/icon_setting_wx@2x.png',
-      (MineModel model) => {},
+  MineModel(
+      MineCellType.Others,
+      '分享到微信',
+      'images/icon_setting_wx@2x.png',
+      (MineModel model) => WxSdk.wxShare(12,
+          title: '我们都在使用擦肩，快来加入我们吧！',
+          content: '和好友一起加入擦肩',
+          url: 'https://download.youxi2018.cn'),
       needSeparatorLine: true),
   MineModel(MineCellType.Others, '帮助', 'images/icon_settings_about@2x.png',
       (MineModel model) => {},
