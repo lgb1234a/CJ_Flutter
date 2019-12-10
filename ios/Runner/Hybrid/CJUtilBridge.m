@@ -13,6 +13,7 @@
 #import "CJChatSelectViewController.h"
 #import "CJShareAlertViewController.h"
 #import "CJContactSelectConfig.h"
+#import <YouXiPayUISDK/YouXiPayUISDK.h>
 
 static inline UIWindow *cj_getkeyWindow()
 {
@@ -69,6 +70,10 @@ static inline UIWindow *cj_getkeyWindow()
     [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
         [self setTeamManager:arguments];
     } forName:@"setTeamManager"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self showYeePayWallet:arguments];
+    } forName:@"showYeePayWallet"];
 }
 
 // 跳转聊天
@@ -369,6 +374,12 @@ didFinishSavingWithError:(NSError *)error
     [cj_rootNavigationController() presentViewController:alertVC
                                                 animated:YES
                                               completion:nil];
+}
+
+/// 显示易钱包
+- (void)showYeePayWallet:(NSDictionary *)params
+{
+    [ZZPayUI showMyWallet:cj_rootNavigationController()];
 }
 
 #pragma mark --- delegate ---

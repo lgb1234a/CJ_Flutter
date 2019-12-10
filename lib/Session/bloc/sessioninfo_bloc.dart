@@ -160,7 +160,6 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       if(event.type == 0) {
         /// 拍照
         image = await ImagePicker.pickImage(source: ImageSource.camera);
-
       }else {
         /// 相册
         image = await ImagePicker.pickImage(source: ImageSource.gallery);

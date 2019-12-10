@@ -69,11 +69,16 @@
     [[CJNotificationCenter sharedCenter] start];
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url {
     return  [WXApi handleOpenURL:url delegate:[WxSdkPlugin new]];
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
     return [WXApi handleOpenURL:url delegate:[WxSdkPlugin new]];
 }
 
