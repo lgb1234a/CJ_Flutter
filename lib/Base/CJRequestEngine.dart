@@ -22,15 +22,14 @@ class QueryStringPair {
   QueryStringPair(this.key, this.value);
 
   String uRLEncodedStringValue() {
-    if(value == null || value.length == 0) {
+    if (value == null || value.length == 0) {
       return '';
-    }else if(value is List){
-      return '$key='+value.toString();
-    }else if(value is Map) {
+    } else if (value is List) {
+      return '$key=' + value.toString();
+    } else if (value is Map) {
       QueryStringPair newPair = QueryStringPair(key, value);
       return newPair.uRLEncodedStringValue();
-    }
-    else {
+    } else {
       return '$key=$value';
     }
   }
@@ -66,45 +65,37 @@ class CJRequestEngine {
 
   static final LogicError unknowError = LogicError('-1', "未知异常");
 
-  static Future<Result> getJson<T>(
-      String uri, Map<String, dynamic> paras) =>
+  static Future<Result> getJson<T>(String uri, Map<String, dynamic> paras) =>
       _httpJson("get", uri, data: paras).then(responseHandle);
 
-  static Future<Result> getForm<T>(
-      String uri, Map<String, dynamic> paras) =>
+  static Future<Result> getForm<T>(String uri, Map<String, dynamic> paras) =>
       _httpJson("get", uri, data: paras, dataIsJson: false)
           .then(responseHandle);
 
   /// 表单方式的post
-  static Future<Result> postForm<T>(
-      String uri, Map<String, dynamic> paras) =>
+  static Future<Result> postForm<T>(String uri, Map<String, dynamic> paras) =>
       _httpJson("post", uri, data: paras, dataIsJson: false)
           .then(responseHandle);
 
   /// requestBody (json格式参数) 方式的 post
-  static Future<Result> postJson(
-      String uri, Map<String, dynamic> body) =>
+  static Future<Result> postJson(String uri, Map<String, dynamic> body) =>
       _httpJson("post", uri, data: body).then(responseHandle);
 
-  static Future<Result> deleteJson<T>(
-      String uri, Map<String, dynamic> body) =>
+  static Future<Result> deleteJson<T>(String uri, Map<String, dynamic> body) =>
       _httpJson("delete", uri, data: body).then(responseHandle);
 
   /// requestBody (json格式参数) 方式的 put
-  static Future<Result> putJson<T>(
-      String uri, Map<String, dynamic> body) =>
+  static Future<Result> putJson<T>(String uri, Map<String, dynamic> body) =>
       _httpJson("put", uri, data: body).then(responseHandle);
 
   /// 表单方式的 put
-  static Future<Result> putForm<T>(
-      String uri, Map<String, dynamic> body) =>
-      _httpJson("put", uri, data: body, dataIsJson: false)
-          .then(responseHandle);
+  static Future<Result> putForm<T>(String uri, Map<String, dynamic> body) =>
+      _httpJson("put", uri, data: body, dataIsJson: false).then(responseHandle);
 
   /// 文件上传  返回json数据为字符串
   static Future<Result> putFile<T>(String uri, String filePath) {
     var name =
-    filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length);
+        filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length);
     var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
     FormData formData = new FormData.from({
       "multipartFile": new UploadFileInfo(new File(filePath), name,
@@ -119,22 +110,22 @@ class CJRequestEngine {
 
   // 签名
   static String soltForUrlString(String url) {
-    if(url == '/g1/share/app/get') {
+    if (url == '/g1/share/app/get') {
       return 'e72557eeab0e2ae82eabaf91ecef8315';
-    }else {
+    } else {
       return '74d6de00551d4db6a2a3e4484ba101ae';
     }
   }
 
-  static String signForParams(String solt, Map<String, dynamic>params) {
-    String query = 'solt='+solt;
+  static String signForParams(String solt, Map<String, dynamic> params) {
+    String query = 'solt=' + solt;
     var pairStrings = [];
     for (var key in params.keys) {
       QueryStringPair pair = QueryStringPair(key, params[key]);
       pairStrings.add(pair.uRLEncodedStringValue());
     }
 
-    return pairStrings.join('&')+'&'+query;
+    return pairStrings.join('&') + '&' + query;
   }
 
   // 核心请求封装
@@ -175,11 +166,8 @@ class CJRequestEngine {
     // 开启网络请求日志
     _dio.interceptors.add(LogInterceptor(responseBody: false));
 
-    return _dio.request<Map<String, dynamic>>(
-        uri,
-        data: data,
-        queryParameters: data,
-        options: op);
+    return _dio.request<Map<String, dynamic>>(uri,
+        data: data, queryParameters: data, options: op);
   }
 
   /// 对请求返回的数据进行统一的处理
@@ -212,10 +200,8 @@ class CJRequestEngine {
       }
 
       /// token失效 重新登录  后端定义的code码
-      if (resp.data["errno"] == 10000000) {
-
-      }
-      if(resp.data["errno"] == 80000000){
+      if (resp.data["errno"] == 10000000) {}
+      if (resp.data["errno"] == 80000000) {
         //操作逻辑
       }
     } else {
@@ -230,6 +216,7 @@ class CJRequestEngine {
     return accid;
   }
 }
+
 // 异常
 class LogicError {
   String errorCode;
@@ -237,8 +224,9 @@ class LogicError {
 
   LogicError(this.errorCode, this.msg);
 }
+
 // 回调结果
-class Result <T>{
+class Result<T> {
   bool success;
   T data;
   LogicError error;

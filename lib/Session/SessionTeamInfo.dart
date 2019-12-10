@@ -136,7 +136,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[Text('点击查看群公告'), Icon(Icons.arrow_forward_ios)],
         ), () {
-        _bloc.add(TappedTeamAnnouncement(announcement: _teamInfo.announcement));
+      _bloc.add(TappedTeamAnnouncement(announcement: _teamInfo.announcement));
     });
   }
 
@@ -178,12 +178,11 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Text('群管理'),
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
-        ),
-        () {
-          if(_memberInfo.type == 1) {
-            _bloc.add(TappedTeamManage());
-          }
-        });
+        ), () {
+      if (_memberInfo.type == 1) {
+        _bloc.add(TappedTeamManage());
+      }
+    });
   }
 
   ///
@@ -361,16 +360,30 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     int dt = (_teamInfo.createTime * 1000).ceil();
     DateTime date = DateTime.fromMillisecondsSinceEpoch(dt);
     return ListTile(
-      leading: _teamInfo.avatarUrlString != null
-          ? FadeInImage.assetNetwork(
-              image: _teamInfo.avatarUrlString,
-              width: 44,
-              placeholder: 'images/icon_contact_groupchat@2x.png',
-            )
-          : Image.asset(
-              'images/icon_contact_groupchat@2x.png',
-              width: 44,
-            ),
+      leading: GestureDetector(
+        onTap: () {
+          if (_memberInfo.type == 1) {
+            /// 换头像
+            cjSheet(context, '设置群头像', handlerTexts: [
+              '拍照',
+              '从相册'
+            ], handlers: [
+              () => _bloc.add(TappedTeamAvatar(type: 0)),
+              () => _bloc.add(TappedTeamAvatar(type: 1))
+            ]);
+          }
+        },
+        child: _teamInfo.avatarUrlString != null
+            ? FadeInImage.assetNetwork(
+                image: _teamInfo.avatarUrlString,
+                width: 44,
+                placeholder: 'images/icon_contact_groupchat@2x.png',
+              )
+            : Image.asset(
+                'images/icon_contact_groupchat@2x.png',
+                width: 44,
+              ),
+      ),
       title: Text(_teamInfo.showName == null ? '' : _teamInfo.showName),
       subtitle: Text(
         '于' +

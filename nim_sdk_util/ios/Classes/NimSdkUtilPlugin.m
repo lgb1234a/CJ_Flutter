@@ -550,6 +550,38 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+/// 更新群头像
++ (void)updateTeamAvatar:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].teamManager updateTeamAvatar:params[@"avatarUrl"]
+                                              teamId:params[@"teamId"]
+                                          completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"更新头像失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"更新头像成功"];
+            result(@(YES));
+        }
+    }];
+}
+
+/// 上传文件到云信
++ (void)uploadFileToNim:(NSDictionary *)params
+{
+    FlutterResult result = params[CJResultKey];
+    [[NIMSDK sharedSDK].resourceManager upload:params[@"filePath"]
+                                      progress:^(float progress) {
+        
+    } completion:^(NSString * _Nullable urlString, NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"上传失败"];
+        }
+        result(urlString);
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type

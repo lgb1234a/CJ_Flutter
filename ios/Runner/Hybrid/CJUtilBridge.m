@@ -12,6 +12,7 @@
 #import "CJContactSelectViewController.h"
 #import "CJChatSelectViewController.h"
 #import "CJShareAlertViewController.h"
+#import "CJContactSelectConfig.h"
 
 static inline UIWindow *cj_getkeyWindow()
 {
@@ -140,9 +141,10 @@ static inline UIWindow *cj_getkeyWindow()
 /// @param params 群id
 - (void)addContactsToTeam:(NSDictionary *)params
 {
-    NIMContactFriendSelectConfig *config = [NIMContactFriendSelectConfig new];
+    CJContactFriendSelectConfig *config = [CJContactFriendSelectConfig new];
     config.needMutiSelected = YES;
     config.filterIds = params[@"filter_ids"];
+    config.title = @"邀请进群";
     
     CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
     CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
@@ -180,9 +182,10 @@ static inline UIWindow *cj_getkeyWindow()
 /// @param params 参数
 - (void)kickUserOutTeam:(NSDictionary *)params
 {
-    NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+    CJContactTeamMemberSelectConfig *config = [CJContactTeamMemberSelectConfig new];
     config.needMutiSelected = YES;
     config.teamId = params[@"team_id"];
+    config.title = @"删除群成员";
     
     CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
     CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
@@ -254,9 +257,10 @@ static inline UIWindow *cj_getkeyWindow()
 /// 群转让
 - (void)transformTeam:(NSDictionary *)params
 {
-    NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+    CJContactTeamMemberSelectConfig *config = [CJContactTeamMemberSelectConfig new];
     config.needMutiSelected = NO;
     config.teamId = params[@"teamId"];
+    config.title = @"群转让";
     
     CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
     CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];
@@ -289,10 +293,11 @@ static inline UIWindow *cj_getkeyWindow()
 - (void)setTeamManager:(NSDictionary *)params
 {
     NSArray <NSString *>* managerIds = params[@"managerIds"];
-    NIMContactTeamMemberSelectConfig *config = [NIMContactTeamMemberSelectConfig new];
+    CJContactTeamMemberSelectConfig *config = [CJContactTeamMemberSelectConfig new];
     config.needMutiSelected = YES;
     config.teamId = params[@"teamId"];
     config.alreadySelectedMemberId = managerIds;
+    config.title = @"设置群管理员";
     
     CJContactSelectViewController *selectorVc = [[CJContactSelectViewController alloc] initWithConfig:config];
     CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectorVc];

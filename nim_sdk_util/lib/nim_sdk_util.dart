@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'Model/nim_model.dart';
 
@@ -158,5 +159,17 @@ class NimSdkUtil {
       String announcement, String teamId) async {
     return await _channel.invokeMethod('updateAnnouncement:',
         {'announcement': announcement, 'teamId': teamId});
+  }
+
+  /// 上传文件到云信服务器
+  static Future<String> uploadFileToNim(File file) async {
+    return await _channel
+        .invokeMethod('uploadFileToNim:', {'filePath': file.path});
+  }
+
+  /// 替换群头像
+  static Future<bool> updateTeamAvatar(String teamId, String avatarUrl) async {
+    return await _channel.invokeMethod(
+        'updateTeamAvatar:', {'teamId': teamId, 'avatarUrl': avatarUrl});
   }
 }

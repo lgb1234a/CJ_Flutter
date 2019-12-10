@@ -32,6 +32,13 @@ class ClearChatHistory extends SessioninfoEvent {}
 /* team */
 class FetchMemberInfos extends SessioninfoEvent {}
 
+/// 点击群头像 替换头像
+class TappedTeamAvatar extends SessioninfoEvent {
+  /// 0:拍照，1:从相册选
+  final int type;
+  TappedTeamAvatar({@required this.type});
+}
+
 class OperateMembersEvent extends SessioninfoEvent {
   /// 1:加人进群，2:踢人
   final int type;

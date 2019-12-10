@@ -4,6 +4,7 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_boost/flutter_boost.dart';
@@ -11,6 +12,8 @@ import './bloc.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import '../../Login/LoginManager.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../Base/CJRequestEngine.dart';
 
 class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   final Session session;
@@ -151,6 +154,26 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
       NimSdkUtil.clearChatHistory(session);
     }
 
+    if(event is TappedTeamAvatar) {
+      /// 替换群头像
+      File image;
+      if(event.type == 0) {
+        /// 拍照
+        image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+      }else {
+        /// 相册
+        image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      }
+
+      /// 上传
+      bool success = await updateTeamAvatar(image);
+      if(success) {
+        /// 刷新头像
+        add(Fetch());
+      }
+    }
+
     if (event is OperateMembersEvent) {
       /// 操作群成员
       if (event.type == 0) {
@@ -251,5 +274,15 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
     infos = await Future.wait(mapFutures);
     return infos;
+  }
+
+  /// 更新群头像
+  Future<bool> updateTeamAvatar(File image) async {
+    String imgUrl = await NimSdkUtil.uploadFileToNim(image);
+    if(imgUrl == null || imgUrl.isEmpty) {
+      return false;
+    }else {
+      return await NimSdkUtil.updateTeamAvatar(session.id, imgUrl);
+    }
   }
 }
