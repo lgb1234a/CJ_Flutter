@@ -62,7 +62,9 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
   _loadPwdStatus() async {
     String accid = await LoginManager().getAccid();
     Result r =
-        await CJRequestEngine.postJson('/g2/passwd/exist', {'accid': accid});
+        await CJRequestEngine.postJson('/g2/passwd/exist', {'accid': accid})
+            .catchError((e) => FlutterBoost.singleton.channel
+                .sendEvent('showTip', {'text': '网络开小差了～'}));
 
     if (r == null) {
       return;
@@ -106,7 +108,10 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
   _createPwd(String pwd) async {
     String accid = await LoginManager().getAccid();
     Result r = await CJRequestEngine.postJson(
-        '/g2/passwd/set', {'accid': accid, 'passwd': pwd}).whenComplete(() {
+            '/g2/passwd/set', {'accid': accid, 'passwd': pwd})
+        .catchError((e) => FlutterBoost.singleton.channel
+            .sendEvent('showTip', {'text': '网络开小差了～'}))
+        .whenComplete(() {
       setState(() {
         _loading = false;
       });
@@ -127,11 +132,11 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
   /// 更新密码
   _updatePwd(String originPwd, String newPwd) async {
     String accid = await LoginManager().getAccid();
-    Result r = await CJRequestEngine.postJson('/g2/passwd/update', {
-      'accid': accid,
-      'new_passwd': newPwd,
-      'old_passwd': originPwd
-    }).whenComplete(() {
+    Result r = await CJRequestEngine.postJson('/g2/passwd/update',
+            {'accid': accid, 'new_passwd': newPwd, 'old_passwd': originPwd})
+        .catchError((e) => FlutterBoost.singleton.channel
+            .sendEvent('showTip', {'text': '网络开小差了～'}))
+        .whenComplete(() {
       setState(() {
         _loading = false;
       });
@@ -149,6 +154,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     }
   }
 
+  /// 原密码
   Widget _originPwdInput() {
     return _pwdSetted
         ? Container(
@@ -163,7 +169,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
           )
         : Container();
   }
-
+  /// 新密码
   Widget _newPwdInput() {
     return Container(
       height: 40,
@@ -177,6 +183,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     );
   }
 
+  /// 再次输入新密码
   Widget _repeatPwdInput() {
     return Container(
       height: 40,
