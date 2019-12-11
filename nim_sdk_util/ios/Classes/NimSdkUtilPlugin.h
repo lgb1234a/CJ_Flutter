@@ -20,4 +20,9 @@
 + (void)autoLogin:(NSString *)accid
             token:(NSString *)token;
 
+
+/// 登录
+/// @param params 参数  accid   token
++ (void)doLogin:(NSDictionary *)params;
+
 @end

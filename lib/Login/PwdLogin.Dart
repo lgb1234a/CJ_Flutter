@@ -109,7 +109,6 @@ class PwdLoginState extends State<PwdLoginWidget> {
     Result response =
         await loginByPwd(_phoneController.text, _pwdController.text);
     if (response.success) {
-      bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
     } else {
       FlutterBoost.singleton.channel

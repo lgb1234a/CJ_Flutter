@@ -110,7 +110,6 @@ class RegisterState extends State<RegisterWidget> {
     Result response =
         await register(_phoneController.text, _codeController.text);
     if (response.success) {
-      bindAccidAndToken(response.data['accid'], response.data['token']);
       return await sdkLogin(response.data);
     } else {
       FlutterBoost.singleton.channel

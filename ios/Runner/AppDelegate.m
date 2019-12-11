@@ -33,6 +33,10 @@
                                              selector:@selector(didLogout)
                                                  name:@"didLogout"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLogin)
+                                                 name:@"didLogin"
+                                               object:nil];
     
     /* 登录回调代理 */
     [[NIMSDK sharedSDK].loginManager addDelegate:self];
@@ -97,6 +101,11 @@
     [self showDidLogoutRootVC];
 }
 
+- (void)didLogin
+{
+    [self showDidLoginSuccessRootVC];
+}
+
 // 展示登录成功的页面根视图
 - (void)showDidLoginSuccessRootVC
 {
@@ -133,7 +142,7 @@
             break;
         case NIMLoginStepLoginOK:
             [[CJPayManager sharedManager] didLogin];
-            [self showDidLoginSuccessRootVC];
+            [UIViewController hideHUD];
             break;
         case NIMLoginStepLoginFailed:
             [UIViewController showError:@"登录失败"];

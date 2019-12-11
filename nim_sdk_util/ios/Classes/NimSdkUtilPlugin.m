@@ -79,10 +79,13 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
      {
          if(!error) {
              ZZLog(@"云信登录成功");
-             result(@(YES));
+             [self stashLoginInfo:accid token:token];
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"didLogin"
+                                                                 object:self];
+             if(result) result(@(YES));
          }else {
              ZZLog(@"%@", error);
-             result(@(NO));
+             if(result) result(@(NO));
          }
      }];
 }
@@ -99,6 +102,16 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 {
     [[NIMSDK sharedSDK].loginManager autoLogin:accid
                                          token:token];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didLogin"
+                                                        object:self];
+}
+
++ (void)stashLoginInfo:(NSString *)accid
+                 token:(NSString *)token
+{
+    // 加上前缀flutter. 和flutter插件sp保持一致，可以被flutter端读取
+    [[NSUserDefaults standardUserDefaults] setObject:accid forKey:@"flutter.accid"];
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"flutter.token"];
 }
 
 // 登出
@@ -108,12 +121,18 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         if(error) {
             [UIViewController showError:@"登出失败！"];
         }else {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
+            [self clearLoginInfo];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"didLogout"
                                                                 object:self];
         }
     }];
+}
+
++ (void)clearLoginInfo
+{
+    /// 清除登录信息
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
 }
 
 // 返回用户信息

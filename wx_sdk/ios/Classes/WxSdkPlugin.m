@@ -2,6 +2,7 @@
 #import <CJBase/CJBase.h>
 #import <NIMKit/NIMKit.h>
 #import "FlutterBoost.h"
+#import "NimSdkUtilPlugin.h"
 
 static NSString *wxSDKResultKey = @"flutter_result";
 
@@ -113,19 +114,9 @@ static NSString *wxSDKResultKey = @"flutter_result";
 {
     if (model.success)
     {
-        NSString *account = [model.data objectForKey:@"accid"];
-        NSString *token   = [model.data objectForKey:@"token"];
-        // 直接登录
-        [[NIMSDK sharedSDK].loginManager login:account
-                                         token:token
-                                    completion:^(NSError * _Nullable error)
-         {
-             if(!error) {
-                 [UIViewController showSuccess:@"登录成功"];
-                 // 持久化accid和token
-                 [self stashLoginInfo:account token:token];
-             }
-         }];
+        // 登录
+        [NimSdkUtilPlugin doLogin:model.data];
+        
     }else if ([model.error isEqualToString:@"1"]){
         [UIViewController hideHUD];
         // 显示绑定手机页面
@@ -156,14 +147,6 @@ static NSString *wxSDKResultKey = @"flutter_result";
         [UIViewController hideHUD];
         [UIViewController showError:model.errmsg];
     }
-}
-
-
-- (void)stashLoginInfo:(NSString *)accid token:(NSString *)token
-{
-    // 加上前缀flutter. 和flutter插件sp保持一致，可以被flutter端读取
-    [[NSUserDefaults standardUserDefaults] setValue:accid forKey:@"flutter.accid"];
-    [[NSUserDefaults standardUserDefaults] setValue:token forKey:@"flutter.token"];
 }
 
 + (void)wxBindCode:(NSString *)code
