@@ -18,7 +18,7 @@ class NimSdkUtil {
 
   /// sdk登录
   static Future<bool> doSDKLogin(
-      String accid, String token, String name) async {
+      String accid, String token, {String name}) async {
     bool success = await _channel.invokeMethod(
         'doLogin:', {'accid': accid, 'token': token, 'name': name});
     return success;

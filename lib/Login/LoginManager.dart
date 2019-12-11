@@ -52,7 +52,7 @@ class LoginManager {
     if(token == null || accid == null) {
       return false;
     }
-    return NimSdkUtil.doSDKLogin(accid, token, '');
+    return NimSdkUtil.doSDKLogin(accid, token);
   }
 
   clearTokenAndAccid() {

@@ -45,39 +45,12 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     );
   }
 
-  /// cell
-  Widget _cell(Widget title, Widget accessoryView, Function onTap,
-      {Widget subTitle}) {
-    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
-
-    return new GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: indent),
-        constraints: BoxConstraints(minHeight: 46),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: ws,
-              ),
-            ),
-            Container(child: accessoryView),
-          ],
-        ),
-      ),
-    );
-  }
-
   /// 群聊名字
   Widget _teamName() {
     if (_teamInfo == null) {
       return Container();
     }
-    return _cell(
+    return cell(
         Text('群聊名称'),
         Row(
           children: <Widget>[
@@ -110,7 +83,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_teamInfo == null) {
       return Container();
     }
-    return _cell(
+    return cell(
         Text('群二维码'),
         Row(
           children: <Widget>[
@@ -131,7 +104,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   /// 群公告
   Widget _announce() {
-    return _cell(
+    return cell(
         Text('群公告'),
         Row(
           children: <Widget>[Text('点击查看群公告'), Icon(Icons.arrow_forward_ios)],
@@ -145,7 +118,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_memberInfo == null) {
       return Container();
     }
-    return _cell(
+    return cell(
         Text('我在本群的群昵称'),
         Row(
           children: <Widget>[
@@ -174,7 +147,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _teamManage() {
-    return _cell(
+    return cell(
         Text('群管理'),
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
@@ -188,7 +161,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   ///
   Widget _chatHistory() {
     return Container();
-    // return _cell(
+    // return cell(
     //     Text('查找聊天记录'),
     //     Row(
     //       children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
@@ -198,7 +171,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _msgMute() {
-    return _cell(
+    return cell(
         Text('消息免打扰'),
         CupertinoSwitch(
           value: _msgNotify,
@@ -209,7 +182,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _stickOnTop() {
-    return _cell(
+    return cell(
         Text('聊天置顶'),
         CupertinoSwitch(
           value: _isStickOnTop,
@@ -221,7 +194,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _clearHistory() {
-    return _cell(
+    return cell(
         Text('清空聊天记录'),
         Icon(Icons.arrow_forward_ios),
         () => cjSheet(context, '警告',

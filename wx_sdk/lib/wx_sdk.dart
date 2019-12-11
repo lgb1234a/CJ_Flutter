@@ -24,4 +24,14 @@ class WxSdk {
     await _channel.invokeMethod('share:',
         {'type': type, 'title': title, 'content': content, 'url': url});
   }
+
+  /// 查询微信绑定状态
+  static Future<bool> wxBindStatus() async{
+    return await _channel.invokeMethod('wxBindStatus:');
+  }
+
+  /// 解绑微信
+  static Future<bool> unBindWeChat() async {
+    return await _channel.invokeMethod('unBindWeChat:');
+  }
 }

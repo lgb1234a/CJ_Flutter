@@ -27,6 +27,8 @@ import 'Base/CJWebView.dart';
 import 'Mine/Security.dart';
 import 'Mine/PwdSetting.dart';
 import 'Mine/PwdForgot.dart';
+import 'Mine/BlockList.dart';
+import 'Login/PhoneBind.dart';
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -110,6 +112,10 @@ class _MyAppState extends State<MyApp> {
       'pwd_setting': (pageName, params, _) => PwdSettingPage(),
       /// 忘记密码
       'pwd_forgot': (pageName, params, _) => PwdForgotPage(),
+      /// 黑名单
+      'block_list': (pageName, params, _) => BlockListPage(),
+      /// 手机绑定
+      'phone_bind': (pageName, params, _) => PhoneBindPage(params: params,),
     });
   }
 

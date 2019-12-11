@@ -3,7 +3,7 @@
 #import <CJBase/CJBase.h>
 #import <Foundation/Foundation.h>
 
-static NSString *CJResultKey = @"flutter_result";
+static NSString *nimSDKResultKey = @"flutter_result";
 NSDictionary *JsonStringDecode(NSString *jsonString)
 {
     if (jsonString == nil) {
@@ -40,9 +40,9 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
   else {
       SEL sel = NSSelectorFromString(call.method);
       if([NimSdkUtilPlugin respondsToSelector:sel]) {
-          NSArray *params = call.arguments;
+          NSDictionary *params = call.arguments;
           NSMutableDictionary *p = params?params.mutableCopy : @{}.mutableCopy;
-          [p setObject:result forKey:CJResultKey];
+          [p setObject:result forKey:nimSDKResultKey];
           [NimSdkUtilPlugin performSelector:sel
                                  withObject:p.copy
                                  afterDelay:0];
@@ -72,7 +72,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     NSString *accid = params[@"accid"];
     NSString *token = params[@"token"];
     
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].loginManager login:accid
                                      token:token
                                 completion:^(NSError * _Nullable error)
@@ -119,7 +119,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 返回用户信息
 + (void)userInfo:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSString *accid = [NIMSDK sharedSDK].loginManager.currentAccount;
     if(![params[@"userId"] isKindOfClass:NSNull.class]) {
         accid = params[@"userId"];
@@ -146,7 +146,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)teamInfo:(NSDictionary *)params
 {
     NSString *teamId = params[@"teamId"];
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NIMKitInfo *info = [[NIMKit sharedKit] infoByTeam:teamId
                                                option:nil];
     
@@ -180,7 +180,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 获取好友列表
 + (void)friends:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSMutableArray *contacts = @[].mutableCopy;
     for (NIMUser *user in [NIMSDK sharedSDK].userManager.myFriends) {
         NIMKitInfo *info           = [[NIMKit sharedKit] infoByUser:user.userId option:nil];
@@ -197,7 +197,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 群聊列表
 + (void)allMyTeams:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSMutableArray *teamInfos = @[].mutableCopy;
     for (NIMTeam *team in [NIMSDK sharedSDK].teamManager.allMyTeams) {
         [teamInfos addObject:@{
@@ -212,7 +212,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 群成员信息
 + (void)teamMemberInfos:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSMutableArray *teamMemberInfos = @[].mutableCopy;
     NSString *teamId = params[@"teamId"];
     [[NIMSDK sharedSDK].teamManager fetchTeamMembers:teamId
@@ -244,7 +244,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 获取单个群成员信息
 + (void)teamMemberInfo:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSString *teamId = params[@"teamId"];
     NSString *userId = params[@"userId"];
     NIMTeamMember *member = [[NIMSDK sharedSDK].teamManager teamMember:userId inTeam:teamId];
@@ -264,7 +264,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 获取会话置顶状态
 + (void)isStickedOnTop:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSString *sessionId = params[@"id"];
     NSNumber *type = params[@"type"];
     NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:[NIMSession session:sessionId type:type.integerValue]];
@@ -277,7 +277,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 获取会话是否开启消息提醒
 + (void)isNotifyForNewMsg:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSString *sessionId = params[@"id"];
     NSNumber *type = params[@"type"];
     
@@ -323,7 +323,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 // 开关消息通知
 + (void)changeNotifyStatus:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSString *sessionId = params[@"id"];
     NSNumber *type = params[@"type"];
     BOOL needMsgNotify = [params[@"needNotify"] boolValue];
@@ -356,7 +356,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)quitTeam:(NSDictionary *)params
 {
     NSString *teamId = params[@"teamId"];
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager quitTeam:teamId
                                   completion:^(NSError * _Nullable error) {
         if(error) {
@@ -374,7 +374,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)dismissTeam:(NSDictionary *)params
 {
     NSString *teamId = params[@"teamId"];
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager dismissTeam:teamId
                                      completion:^(NSError * _Nullable error) {
         if(error) {
@@ -391,7 +391,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// @param params 用户id
 + (void)isUserBlocked:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     BOOL isBlocked = [[NIMSDK sharedSDK].userManager isUserInBlackList:params[@"userId"]];
     result(@(isBlocked));
 }
@@ -401,7 +401,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// @param params 用户ID
 + (void)blockUser:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].userManager addToBlackList:params[@"userId"]
                                         completion:^(NSError * _Nullable error) {
         if(!error) {
@@ -418,7 +418,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// @param params 用户ID
 + (void)cancelBlockUser:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].userManager removeFromBlackBlackList:params[@"userId"] completion:^(NSError * _Nullable error) {
         if(!error) {
             result(@(YES));
@@ -434,7 +434,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// @param params 回调
 + (void)blockUserList:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     NSArray<NIMUser *> *users = [[NIMSDK sharedSDK].userManager myBlackList];
     if(cj_empty_array(users)) {
         // 返回空列表
@@ -451,7 +451,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 修改成员群昵称
 + (void)updateUserNickName:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager updateUserNick:params[@"userId"]
                                            newNick:params[@"nickName"]
                                             inTeam:params[@"teamId"]
@@ -468,7 +468,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 修改群名称
 + (void)updateTeamName:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager updateTeamName:params[@"teamName"]
                                             teamId:params[@"teamId"]
                                         completion:^(NSError * _Nullable error) {
@@ -484,7 +484,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 修改群公告
 + (void)updateAnnouncement:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager updateTeamAnnouncement:params[@"announcement"]
                                                     teamId:params[@"teamId"]
                                                 completion:^(NSError * _Nullable error) {
@@ -501,7 +501,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 添加管理员
 + (void)addTeamManagers:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager addManagersToTeam:params[@"teamId"]
                                                 users:params[@"userIds"]
                                            completion:^(NSError * _Nullable error) {
@@ -518,7 +518,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 移除管理员
 + (void)removeTeamManagers:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager removeManagersFromTeam:params[@"teamId"]
                                                      users:params[@"userIds"]
                                                 completion:^(NSError * _Nullable error) {
@@ -535,7 +535,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 移交群
 + (void)transformTeam:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager transferManagerWithTeam:params[@"teamId"]
                                                  newOwnerId:params[@"owner"]
                                                     isLeave:NO
@@ -553,7 +553,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 更新群头像
 + (void)updateTeamAvatar:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].teamManager updateTeamAvatar:params[@"avatarUrl"]
                                               teamId:params[@"teamId"]
                                           completion:^(NSError * _Nullable error) {
@@ -570,7 +570,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 /// 上传文件到云信
 + (void)uploadFileToNim:(NSDictionary *)params
 {
-    FlutterResult result = params[CJResultKey];
+    FlutterResult result = params[nimSDKResultKey];
     [[NIMSDK sharedSDK].resourceManager upload:params[@"filePath"]
                                       progress:^(float progress) {
         

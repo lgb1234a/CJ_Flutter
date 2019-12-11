@@ -8,43 +8,15 @@ import '../Base/CJUtils.dart';
 class SecurityPage extends StatelessWidget {
   const SecurityPage({Key key}) : super(key: key);
 
-  /// cell
-  Widget _cell(Widget title, Widget accessoryView, Function onTap,
-      {Widget subTitle}) {
-    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
-
-    double indent = 12;
-    return new GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: indent),
-        constraints: BoxConstraints(minHeight: 46),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: ws,
-              ),
-            ),
-            Container(child: accessoryView),
-          ],
-        ),
-      ),
-    );
-  }
-
   /// 密码设置
   Widget _pwdSetting() {
-    return _cell(Text('设置登录密码'), Icon(Icons.arrow_forward_ios),
+    return cell(Text('设置登录密码'), Icon(Icons.arrow_forward_ios),
         () => FlutterBoost.singleton.open('pwd_setting', exts: {'animated': true}));
   }
 
   /// 忘记密码
   Widget _pwdForgot() {
-    return _cell(Text('找回密码'), Icon(Icons.arrow_forward_ios),
+    return cell(Text('找回密码'), Icon(Icons.arrow_forward_ios),
         () => FlutterBoost.singleton.open('pwd_forgot', exts: {'animated': true}));
   }
 

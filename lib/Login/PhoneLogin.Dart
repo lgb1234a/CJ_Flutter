@@ -57,8 +57,8 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
   // 文本变化监听
   _textChange() {
-    _confirmBtnStatus(_phoneController.text.trim().length > 0 &&
-        _codeController.text.trim().length > 0);
+    _confirmBtnStatus(_phoneController.text.trim().isNotEmpty &&
+        _codeController.text.trim().isNotEmpty);
   }
 
   // 刷新登录按钮状态
@@ -86,10 +86,26 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
     _timer = Timer.periodic(oneSec, callback);
   }
 
+  /// 发送验证码
+  _sendCode() {
+    String phone = _phoneController.text.trim();
+    sendAuthCode(phone).then((data) {
+      if (data.success) {
+        FlutterBoost.singleton.channel
+            .sendEvent('showTip', {'text': '验证码发送成功'});
+      } else {
+        FlutterBoost.singleton.channel
+            .sendEvent('showTip', {'text': '发送失败:' + data.error.msg});
+      }
+    }).catchError(() {
+      FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '网络开小差了～'});
+    });
+  }
+
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
     return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], response['name']);
+        response['accid'], response['token'], name: response['name']);
   }
 
   // 登录
@@ -198,8 +214,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                             _countdownTime == 0
                                 ? '获取验证码'
                                 : '$_countdownTime' + 's后重新获取',
-                            style:
-                                TextStyle(fontSize: 16, color: blueColor),
+                            style: TextStyle(fontSize: 16, color: blueColor),
                           ),
                           onPressed: _countdownTime == 0
                               ? () {
@@ -217,24 +232,8 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                                     //开始倒计时
                                     startCountdownTimer();
                                   }
-                                  if (_phoneController.text.trim().length > 0) {
-                                    String phone = _phoneController.text.trim();
-                                    sendAuthCode(phone).then((data) {
-                                      if (data.success) {
-                                        FlutterBoost.singleton.channel
-                                            .sendEvent(
-                                                'showTip', {'text': '验证码发送成功'});
-                                      } else {
-                                        FlutterBoost.singleton.channel
-                                            .sendEvent('showTip', {
-                                          'text': '发送失败:' + data.error.msg
-                                        });
-                                      }
-                                    }).catchError(() {
-                                      FlutterBoost.singleton.channel.sendEvent(
-                                          'showTip', {'text': '网络开小差了～'});
-                                    });
-                                  }
+
+                                  _sendCode();
                                 }
                               : null,
                         ),
@@ -285,7 +284,7 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                                 login().then((success) {
                                   loading(false);
                                   if (success) {
-                                    Navigator.pop(context);
+                                    FlutterBoost.singleton.closeCurrent();
                                   }
                                 }).catchError(() {
                                   loading(false);

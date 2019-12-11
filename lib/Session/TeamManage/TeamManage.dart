@@ -17,7 +17,6 @@ class TeamManagePage extends StatefulWidget {
 }
 
 class _TeamManagePageState extends State<TeamManagePage> {
-  double indent = 12;
   TeammanageBloc _bloc;
   List _managers = [];
 
@@ -26,36 +25,9 @@ class _TeamManagePageState extends State<TeamManagePage> {
     super.initState();
   }
 
-  /// cell
-  Widget _cell(Widget title, Widget accessoryView, Function onTap,
-      {Widget subTitle}) {
-    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
-
-    return new GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: indent),
-        constraints: BoxConstraints(minHeight: 46),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: ws,
-              ),
-            ),
-            Container(child: accessoryView),
-          ],
-        ),
-      ),
-    );
-  }
-
   /// 设置管理员
   Widget _managerSetting() {
-    return _cell(
+    return cell(
         Text('设置管理员'),
         Row(
           children: <Widget>[
@@ -68,7 +40,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
 
   ///  群机器人
   Widget _teamRobots() {
-    return _cell(
+    return cell(
         Text('群机器人'),
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
@@ -78,7 +50,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
 
   /// 群转让
   Widget _teamTransform() {
-    return _cell(
+    return cell(
         Text('群转让'),
         Row(
           children: <Widget>[Text('点击设置'), Icon(Icons.arrow_forward_ios)],
@@ -120,7 +92,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
                     Container(height: 8),
                     _teamRobots(),
                     Divider(
-                      indent: indent,
+                      indent: 12,
                       height: 0.5,
                     ),
                     _teamTransform()

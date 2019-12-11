@@ -89,7 +89,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
     return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], response['name']);
+        response['accid'], response['token'], name: response['name']);
   }
 
   // 登录
@@ -227,7 +227,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
                                 login().then((success) {
                                   loading(false);
                                   if (success) {
-                                    Navigator.pop(context);
+                                    FlutterBoost.singleton.closeCurrent();
                                   }
                                 }).catchError((e) {
                                   loading(false);

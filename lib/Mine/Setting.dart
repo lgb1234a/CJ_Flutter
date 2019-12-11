@@ -1,14 +1,13 @@
-/**
- *  Created by chenyn on 2019-07-23
- *  设置
- */
+///
+///  Created by chenyn on 2019-07-23
+///  设置
 
+import 'package:cajian/Login/LoginManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
-import 'package:cajian/Mine/Model/SettingModel.dart';
-import 'package:cajian/Mine/View/SettingListCell.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:wx_sdk/wx_sdk.dart';
 
 class SettingWidget extends StatefulWidget {
   SettingState createState() {
@@ -17,37 +16,78 @@ class SettingWidget extends StatefulWidget {
 }
 
 class SettingState extends State<SettingWidget> {
+  bool _loading = true;
+  bool _bind = false;
   @override
   void initState() {
     super.initState();
+
+    _load();
   }
 
-  ListView settingTable = ListView.separated(
-    itemCount: settingCellModels.length,
-    itemBuilder: (BuildContext ctx, int index) {
-      SettingModel model = settingCellModels[index];
-      model.ctx = ctx;
-      if (model.cellType == SettingCellType.Function) {
-        return SettingFuncitonCell(model);
-      } else if (model.cellType == SettingCellType.Separator) {
-        return SettingSeparatorCell();
-      } else if (model.cellType == SettingCellType.Accessory) {
-        return SettingAccessoryCell(model);
-      }
+  void _load() async {
+    _bind = await WxSdk.wxBindStatus();
 
-      return null;
-    },
-    separatorBuilder: (BuildContext context, int index) {
-      SettingModel model = settingCellModels[index];
-      if (model.needSeparatorLine) {
-        return Divider(
-          indent: 16.0,
-          height: 0.5,
-        );
-      }
-      return Container();
-    },
-  );
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  /// 安全
+  Widget _security() {
+    return cell(
+        Text('安全'),
+        Icon(Icons.arrow_forward_ios),
+        () =>
+            FlutterBoost.singleton.open('security', exts: {'animated': true}));
+  }
+
+  ///
+  Widget _wxBind() {
+    return cell(
+        Text('绑定微信'),
+        Row(children: [
+          _loading ? CupertinoActivityIndicator() : Text(_bind ? '已绑定' : '未绑定'),
+          Icon(Icons.arrow_forward_ios)
+        ]),
+        () {
+          if(_loading || !_bind) {
+            return;
+          }
+          cjDialog(context, '确定要解绑吗？', handlerTexts: [
+              '确定'
+            ], handlers: [
+              () async {
+                bool success = await WxSdk.unBindWeChat();
+                if (success) {
+                  setState(() {
+                    _bind = false;
+                  });
+                }
+              }
+            ]);
+        });
+  }
+
+  ///
+  Widget _blockedList() {
+    return cell(
+        Text('黑名单'),
+        Icon(Icons.arrow_forward_ios),
+        () => FlutterBoost.singleton
+            .open('block_list', exts: {'animated': true}));
+  }
+
+  ///
+  Widget _logout() {
+    return CupertinoButton(
+      child: Text('退出登录'),
+      onPressed: () => cjDialog(context, '提示',
+          content: Text('确定要退出登录吗？'),
+          handlerTexts: ['确定'],
+          handlers: [() => LoginManager().logout()]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +108,23 @@ class SettingState extends State<SettingWidget> {
           elevation: 0.01,
           iconTheme: IconThemeData.fallback(),
         ),
-        body: Container(
-          color: mainBgColor,
-          child: settingTable,
+        body: ListView(
+          children: <Widget>[
+            _security(),
+            Divider(
+              indent: 12,
+              height: 0.5,
+            ),
+            _wxBind(),
+            Container(
+              height: 8,
+            ),
+            _blockedList(),
+            Container(
+              height: 8,
+            ),
+            _logout()
+          ],
         ),
       ),
     );

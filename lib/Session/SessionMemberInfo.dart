@@ -81,35 +81,9 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
     );
   }
 
-  Widget _cell(Widget title, Widget accessoryView, Function onTap,
-      {Widget subTitle}) {
-    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: indent),
-        constraints: BoxConstraints(minHeight: 46),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: ws,
-              ),
-            ),
-            Container(child: accessoryView),
-          ],
-        ),
-      ),
-    );
-  }
-
   /// 昵称
   Widget _nickName() {
-    return _cell(
+    return cell(
         Text('群昵称'),
         Text(_memberInfo.nickName == null ? '未设置' : _memberInfo.nickName),
         () {});
@@ -117,19 +91,19 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
 
   /// 群成员身份类型
   Widget _memberType() {
-    return _cell(Text('身份'), Text(_memberInfo.typeDesc), () {});
+    return cell(Text('身份'), Text(_memberInfo.typeDesc), () {});
   }
 
   ///
   Widget _joinTime() {
     int dt = (_memberInfo.createTime * 1000).ceil();
     DateTime date = DateTime.fromMillisecondsSinceEpoch(dt);
-    return _cell(Text('进群时间'), Text(date.toString()), () {});
+    return cell(Text('进群时间'), Text(date.toString()), () {});
   }
 
   /// 加入黑名单
   Widget _addBlockList() {
-    return _cell(
+    return cell(
         Text('加入黑名单'),
         CupertinoSwitch(
           value: _isBlocked,

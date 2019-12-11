@@ -59,7 +59,7 @@ cjDialog(BuildContext context, String title,
                 },
                 child: Text(
                   f,
-                  style: TextStyle(color: Colors.blue),
+                  style: TextStyle(color: Colors.red),
                 ),
               );
             }).toList()
@@ -70,7 +70,6 @@ cjDialog(BuildContext context, String title,
                 },
                 isDefaultAction: true,
                 child: Text(cancelText),
-                textStyle: TextStyle(color: Colors.red),
               )),
           ));
 }
@@ -120,42 +119,31 @@ cjSheet(BuildContext context, String title,
           ));
 }
 
-class CJAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final Color titleColor;
-  final Color backgroundColor;
-  final Widget leading;
-  final List<Widget> actions;
-  final Widget flexibleSpace;
-  final PreferredSizeWidget bottom;
+  /// cell
+  /// 绘制通用样式的列表cell
+  Widget cell(Widget title, Widget accessoryView, Function onTap,
+      {Widget subTitle}) {
+    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
 
-  CJAppBar(
-    this.title, {
-    this.titleColor = const Color(0xFF141414),
-    this.leading,
-    this.backgroundColor = const Color(0xFFFCFCFC),
-    this.actions,
-    this.flexibleSpace,
-    this.bottom,
-  }) : preferredSize = Size.fromHeight(
-            kToolbarHeight + bottom?.preferredSize?.height ?? 0.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      leading: leading,
-      title: Text(
-        title,
-        style: TextStyle(color: titleColor),
+    double indent = 12;
+    return new GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: indent),
+        constraints: BoxConstraints(minHeight: 46),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: ws,
+              ),
+            ),
+            Container(child: accessoryView),
+          ],
+        ),
       ),
-      actions: actions,
-      flexibleSpace: flexibleSpace,
-      bottom: bottom,
-      backgroundColor: backgroundColor,
-      elevation: 0.01,
     );
   }
-
-  @override
-  final Size preferredSize;
-}

@@ -1,6 +1,9 @@
 #import "WxSdkPlugin.h"
 #import <CJBase/CJBase.h>
 #import <NIMKit/NIMKit.h>
+#import "FlutterBoost.h"
+
+static NSString *wxSDKResultKey = @"flutter_result";
 
 @implementation WxSdkPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -17,9 +20,9 @@
   } else {
       SEL sel = NSSelectorFromString(call.method);
       if([WxSdkPlugin respondsToSelector:sel]) {
-          NSArray *params = call.arguments;
-          NSMutableArray *p = params?params.mutableCopy : @[].mutableCopy;
-          [p addObject:result];
+          NSDictionary *params = call.arguments;
+          NSMutableDictionary *p = params?params.mutableCopy : @{}.mutableCopy;
+          [p setObject:result forKey:wxSDKResultKey];
           [WxSdkPlugin performSelector:sel
                             withObject:p
                             afterDelay:0];
@@ -85,17 +88,17 @@
     {
         if (resp.errCode == 0) {
             SendAuthResp *_resp = (SendAuthResp*)resp;
-            NSString* accessToekn =  _resp.code;
-            ZZLog(@"WetChat AccessToken %@", accessToekn);
+            NSString* accessToken =  _resp.code;
+            ZZLog(@"WetChat AccessToken =======> %@", accessToken);
             // 拿到TOKEN后去服务端认证下
             if ([_resp.state isEqualToString:@"get_access_token_bind"]) {
-                [WxSdkPlugin wxBindCode:accessToekn];
+                [WxSdkPlugin wxBindCode:accessToken];
             }else{
                 // 拿到TOKEN后去服务端认证下
-                [WxSdkPlugin sendLoginAuth:accessToekn
+                [WxSdkPlugin sendLoginAuth:accessToken
                                     result:^(BaseModel *model)
                 {
-                    [self onWxLoginResp:model code:accessToekn];
+                    [self onWxLoginResp:model code:accessToken];
                 }];
             }
         }
@@ -126,19 +129,23 @@
     }else if ([model.error isEqualToString:@"1"]){
         [UIViewController hideHUD];
         // 显示绑定手机页面
-        // 保存下unionid headimage nickname 保存到WeChatManager上面吧
-        NSDictionary* strData = model.data;
-        if (strData != nil) {
-            //            NSString* str_union_id  = [strData objectForKey:@"union_id"];
-            //            NSString* str_headimg   = [strData objectForKey:@"head_img"];
-            //            NSString* str_nick_name = [strData objectForKey:@"nick_name"];
-            //            [WeChatManager sharedManager].code = code;
-            //            [WeChatManager sharedManager].union_id = str_union_id;
-            //            [WeChatManager sharedManager].headimage = str_headimg;
-            //            [WeChatManager sharedManager].nickname = str_nick_name;
+        NSDictionary* data = model.data;
+        if (data != nil) {
+            NSString *union_id  = [data objectForKey:@"union_id"];
+            NSString *headimg   = [data objectForKey:@"head_img"];
+            NSString *nick_name = [data objectForKey:@"nick_name"];
+            
+            [FlutterBoostPlugin open:@"phone_bind" urlParams:@{
+                @"union_id": union_id?:[NSNull null],
+                @"headimg": headimg?:[NSNull null],
+                @"nick_name": nick_name?:[NSNull null],
+                @"code": code?:[NSNull null]
+            } exts:@{@"animated": @(YES)} onPageFinished:^(NSDictionary *d) {
+                
+            } completion:^(BOOL success) {
+                
+            }];
         }
-        //        BindPhoneViewController *vc = [BindPhoneViewController new];
-        //        [_mainViewController.navigationController pushViewController:vc animated:YES];
     }else if([model.error isEqualToString:@"8"])
     {
         [UIViewController hideHUD];
@@ -201,6 +208,57 @@
             [UIViewController showError:CJ_net_err_msg];
         }else if(result) {
             result(model);
+        }
+    });
+}
+
+/// 查询微信绑定状态
++ (void)wxBindStatus:(NSDictionary *)params
+{
+    FlutterResult result = params[wxSDKResultKey];
+    NSString *url =  [NSString stringWithFormat:@"%@/g2/user/wx/bind/exist",kBaseUrl];
+    NSString *accid = [[[NIMSDK sharedSDK] loginManager] currentAccount];
+    NSDictionary *p = @{@"accid":accid ? : @"",
+                         @"app_key":@"wx0f56e7c5e6daa01a"};
+    
+    co_launch(^{
+        BaseModel *model = await([HttpHelper post:url params:p]);
+        
+        if(co_getError()) {
+            result(@(NO));
+            [UIViewController showError:CJ_net_err_msg];
+        }else {
+            if (model.success && !cj_nil_object(model.data)) {
+                result(@(YES));
+            }else{
+                result(@(NO));
+            }
+        }
+    });
+}
+
+/// 解绑微信
++ (void)unBindWeChat:(NSDictionary *)params
+{
+    FlutterResult result = params[wxSDKResultKey];
+    NSString *url =  [NSString stringWithFormat:@"%@/g2/user/wx/untying",kBaseUrl];
+    NSString *accid = [[[NIMSDK sharedSDK] loginManager] currentAccount];
+    NSDictionary *p = @{@"accid":accid ? : @"",
+                             @"app_key":@"wx0f56e7c5e6daa01a"};
+    
+    co_launch(^{
+        BaseModel *model = await([HttpHelper post:url params:p]);
+        if(co_getError()) {
+            result(@(NO));
+            [UIViewController showError:CJ_net_err_msg];
+        }else {
+            if (model.success) {
+                result(@(YES));
+                [UIViewController showSuccess:@"解绑成功"];
+            }else{
+                result(@(NO));
+                [UIViewController showError:model.errmsg];
+            }
         }
     });
 }

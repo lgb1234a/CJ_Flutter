@@ -89,7 +89,7 @@ class RegisterState extends State<RegisterWidget> {
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
     return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], response['name']);
+        response['accid'], response['token'], name: response['name']);
   }
 
   // 登录
