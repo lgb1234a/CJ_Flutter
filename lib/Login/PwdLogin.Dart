@@ -192,7 +192,8 @@ class PwdLoginState extends State<PwdLoginWidget> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       height: 40,
-                      child: FlatButton(
+                      child: CupertinoButton.filled(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -213,13 +214,6 @@ class PwdLoginState extends State<PwdLoginWidget> {
                                 : SizedBox()
                           ],
                         ),
-                        textColor: Colors.white,
-                        color: blueColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        highlightColor: Colors.blue[700],
-                        disabledColor: Colors.blueGrey,
-                        splashColor: Colors.grey,
                         onPressed: _confirmAvailabe && !_loading
                             ? () {
                                 login().then((success) {

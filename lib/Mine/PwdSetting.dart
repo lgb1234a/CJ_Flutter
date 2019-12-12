@@ -273,10 +273,11 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
               ),
               _repeatPwdInput(),
               Container(
-                  height: 50,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  height: 44,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   margin: EdgeInsets.only(top: 15),
                   child: CupertinoButton.filled(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     onPressed: _confirmAvailabe ? _setPwd : null,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

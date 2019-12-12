@@ -16,7 +16,7 @@ class PwdForgotPage extends StatefulWidget {
   PwdForgotPage({Key key, this.params}) : super(key: key);
 
   @override
-  _PwdForgotPageState createState() => _PwdForgotPageState(params['type']??0);
+  _PwdForgotPageState createState() => _PwdForgotPageState(params['type'] ?? 0);
 }
 
 class _PwdForgotPageState extends State<PwdForgotPage> {
@@ -222,12 +222,24 @@ class _PwdForgotPageState extends State<PwdForgotPage> {
           child: ListView(
             children: <Widget>[
               _needPhoneInput ? _phoneInput() : _inputTip(),
-              _needPhoneInput ? Divider(indent: 12, height: 0.5,) : Container(),
+              _needPhoneInput
+                  ? Divider(
+                      indent: 12,
+                      height: 0.5,
+                    )
+                  : Container(),
               _verifyInput(),
-              CupertinoButton(
-                onPressed: () => _confirm(),
-                child: Text('下一步'),
-              )
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CupertinoButton.filled(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    onPressed: () => _confirm(),
+                    child: Text(
+                      '下一步',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )),
             ],
           ),
         ),
