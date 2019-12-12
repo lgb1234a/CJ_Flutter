@@ -603,6 +603,38 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+/// 删除好友
++ (void)deleteContact:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    
+    [[NIMSDK sharedSDK].userManager deleteFriend:params[@"userId"] removeAlias:YES completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"删除失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"删除成功"];
+            result(@(YES));
+        }
+    }];
+}
+
+/// 允许用户新消息通知
++ (void)allowUserMsgNotify:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    bool state = params[@"allowNotify"];
+    NSString *userId = params[@"userId"];
+    [[NIMSDK sharedSDK].userManager updateNotifyState:state forUser:userId completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"修改失败"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type

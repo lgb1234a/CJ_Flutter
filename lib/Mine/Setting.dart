@@ -35,7 +35,7 @@ class SettingState extends State<SettingWidget> {
 
   /// 安全
   Widget _security() {
-    return cell(
+    return Cell(
         Text('安全'),
         Icon(Icons.arrow_forward_ios),
         () =>
@@ -44,7 +44,7 @@ class SettingState extends State<SettingWidget> {
 
   ///
   Widget _wxBind() {
-    return cell(
+    return Cell(
         Text('绑定微信'),
         Row(children: [
           _loading ? CupertinoActivityIndicator() : Text(_bind ? '已绑定' : '未绑定'),
@@ -70,7 +70,7 @@ class SettingState extends State<SettingWidget> {
 
   ///
   Widget _blockedList() {
-    return cell(
+    return Cell(
         Text('黑名单'),
         Icon(Icons.arrow_forward_ios),
         () => FlutterBoost.singleton

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 import 'bloc/bloc.dart';
 
@@ -31,6 +32,13 @@ class ContactsWidgetState extends State<ContactsWidget> {
   @override
   void initState() {
     super.initState();
+
+    FlutterBoost.singleton.channel.addEventListener('refreshContacts', (name, notify) {
+      /// TODO:
+      print('接受到了通知 ========================||||||');
+      _bloc.add(ContactsFetchEvent());
+      return Future.value(true);
+    });
   }
 
   /* 置顶section header */

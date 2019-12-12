@@ -38,7 +38,7 @@ cjDialog(BuildContext context, String title,
     List<Function> handlers}) {
   if (handlers != null && handlerTexts != null) {
     assert(handlers.length == handlerTexts.length);
-  }else {
+  } else {
     handlerTexts = [];
     handlers = [];
   }
@@ -83,7 +83,7 @@ cjSheet(BuildContext context, String title,
     List<Function> handlers}) {
   if (handlers != null && handlerTexts != null) {
     assert(handlers.length == handlerTexts.length);
-  }else {
+  } else {
     handlerTexts = [];
     handlers = [];
   }
@@ -119,19 +119,25 @@ cjSheet(BuildContext context, String title,
           ));
 }
 
-  /// cell
-  /// 绘制通用样式的列表cell
-  Widget cell(Widget title, Widget accessoryView, Function onTap,
-      {Widget subTitle}) {
-    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
+class Cell extends StatelessWidget {
+  Cell(this.title, this.accessoryView, this.onTap,
+      {this.subTitle, this.backgroundColor = Colors.white});
 
-    double indent = 12;
+  final Widget title;
+  final Widget accessoryView;
+  final Function onTap;
+  final Widget subTitle;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> ws = subTitle == null ? [title] : [title, subTitle];
     return new GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: indent),
+        padding: EdgeInsets.symmetric(horizontal: 12),
         constraints: BoxConstraints(minHeight: 46),
-        color: Colors.white,
+        color: backgroundColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -147,3 +153,4 @@ cjSheet(BuildContext context, String title,
       ),
     );
   }
+}
