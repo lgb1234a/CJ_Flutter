@@ -11,12 +11,12 @@ class LoginManager {
 
   Future<String> getAccid() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    return sp.get('accid');
+    return sp.getString('accid');
   }
 
   Future<String> getToken() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    return sp.get('token');
+    return sp.getString('token');
   }
 
   String get accid {

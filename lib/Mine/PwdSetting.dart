@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 import '../Base/CJUtils.dart';
 import '../Base/CJRequestEngine.dart';
 import '../Login/LoginManager.dart';
@@ -14,13 +15,13 @@ class PwdSettingPage extends StatefulWidget {
 
   @override
   _PwdSettingPageState createState() =>
-      _PwdSettingPageState(params ?? {'type': 0});
+      _PwdSettingPageState(params['type'] != null ? params : {'type': 0});
 }
 
 class _PwdSettingPageState extends State<PwdSettingPage> {
   final String accid;
 
-  /// 0:设置/修改密码  1:忘记密码(未登录状态)
+  /// 0:修改密码   1:找回密码（已登录）  2:找回密码(未登录状态)
   int type = 0;
 
   /// 手机号，为null则需要用户手动输入
@@ -51,7 +52,9 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
   @override
   void initState() {
     super.initState();
+
     print('type =============> $type');
+
     if (type == 0) {
       /// 修改密码
       _loadPwdStatus();
@@ -112,7 +115,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     }
   }
 
-  /// 设置新密码
+  /// 设置密码
   _setPwd() {
     String originInputPwd = _originController.text.trim();
     String newInputPwd = _newController.text.trim();
@@ -138,8 +141,8 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
 
   /// 创建密码请求
   _createPwd(String pwd) async {
-    String _a;
-    if (accid == null || accid.isEmpty) {
+    String _a = accid;
+    if (type == 0) {
       _a = await LoginManager().getAccid();
     }
     Result r = await CJRequestEngine.postJson(
@@ -157,7 +160,13 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     }
 
     if (r.success) {
-      FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '密码设置成功'});
+      if(type == 0 || type == 1) {
+        FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '密码重置成功，为了账号安全，请重新登录！'});
+        NimSdkUtil.logout();
+      }else{
+        FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '密码设置成功'});
+        FlutterBoost.singleton.channel.sendEvent('popToRootPage', {});
+      }
     } else {
       FlutterBoost.singleton.channel
           .sendEvent('showTip', {'text': r.error.msg});

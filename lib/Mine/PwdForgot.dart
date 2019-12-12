@@ -16,14 +16,15 @@ class PwdForgotPage extends StatefulWidget {
   PwdForgotPage({Key key, this.params}) : super(key: key);
 
   @override
-  _PwdForgotPageState createState() => _PwdForgotPageState(params['type'] ?? 0);
+  _PwdForgotPageState createState() =>
+      _PwdForgotPageState(params['type'] != null ? params['type'] : 1);
 }
 
 class _PwdForgotPageState extends State<PwdForgotPage> {
   _PwdForgotPageState(this.type);
 
-  /// 0: 已登录状态  1: 未登录状态
-  int type = 0;
+  /// 1:找回密码（已登录）  2:找回密码(未登录状态)
+  int type = 1;
 
   String _phone = '';
   TextEditingController _verifyInputController = TextEditingController();
@@ -50,13 +51,17 @@ class _PwdForgotPageState extends State<PwdForgotPage> {
 
     print('type =============> $type');
 
-    if (type == 0) {
+    if (type == 0 || type == 1) {
       _fetchPhoneNumber();
     } else {
       setState(() {
         _needPhoneInput = true;
       });
     }
+
+    _phoneController.addListener((){
+      _phone = _phoneController.text.trim();
+    });
   }
 
   /// 倒计时
@@ -164,7 +169,7 @@ class _PwdForgotPageState extends State<PwdForgotPage> {
 
     if (r.success) {
       FlutterBoost.singleton.open('pwd_setting',
-          urlParams: {'accid': r.data['accid'], 'type': 1, 'phone': _phone},
+          urlParams: {'accid': r.data['accid'], 'type': type, 'phone': _phone},
           exts: {'animated': true});
     } else {
       FlutterBoost.singleton.channel

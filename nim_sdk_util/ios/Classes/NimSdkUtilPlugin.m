@@ -112,6 +112,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     // 加上前缀flutter. 和flutter插件sp保持一致，可以被flutter端读取
     [[NSUserDefaults standardUserDefaults] setObject:accid forKey:@"flutter.accid"];
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"flutter.token"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // 登出
@@ -133,6 +134,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     /// 清除登录信息
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // 返回用户信息

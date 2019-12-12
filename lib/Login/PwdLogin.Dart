@@ -144,98 +144,92 @@ class PwdLoginState extends State<PwdLoginWidget> {
                 )
               ],
             ),
-            body: Form(
-                key: _formKey,
-                autovalidate: true,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+            body: ListView(
+              children: <Widget>[
+                SizedBox(
+                  height: 44,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    placeholder: "手机号（仅支持大陆手机）",
+                    autofocus: true,
+                    controller: _phoneController,
+                    decoration: BoxDecoration(border: null),
+                  ),
+                ),
+                Divider(
+                  height: 0.5,
+                  indent: 16,
+                  endIndent: 16,
+                  color: Colors.black12,
+                ),
+                SizedBox(
+                  height: 44,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    placeholder: '输入登录密码',
+                    controller: _pwdController,
+                    obscureText: true,
+                    decoration: BoxDecoration(
+                      border: null,
                     ),
-                    SizedBox(
-                      height: 40,
-                      child: CupertinoTextField(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        placeholder: "手机号（仅支持大陆手机）",
-                        autofocus: true,
-                        controller: _phoneController,
-                        decoration: BoxDecoration(border: null),
-                      ),
-                    ),
-                    Divider(
-                      height: 0.5,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.black12,
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: CupertinoTextField(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        placeholder: '输入登录密码',
-                        controller: _pwdController,
-                        obscureText: true,
-                        decoration: BoxDecoration(
-                          border: null,
+                  ),
+                ),
+                Divider(
+                  height: 0.5,
+                  indent: 16,
+                  endIndent: 16,
+                  color: Colors.black12,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  height: 40,
+                  child: CupertinoButton.filled(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '登录',
+                          style: TextStyle(fontSize: 16),
                         ),
-                      ),
-                    ),
-                    Divider(
-                      height: 0.5,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.black12,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      height: 40,
-                      child: CupertinoButton.filled(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '登录',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: _loading ? 5 : 0),
-                            ),
-                            _loading
-                                ? CupertinoActivityIndicator(
-                                    animating: _loading,
-                                    radius: 10,
-                                  )
-                                : SizedBox()
-                          ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _loading ? 5 : 0),
                         ),
-                        onPressed: _confirmAvailabe && !_loading
-                            ? () {
-                                login().then((success) {
-                                  loading(false);
-                                  if (success) {
-                                    FlutterBoost.singleton.closeCurrent();
-                                  }
-                                }).catchError((e) {
-                                  loading(false);
-                                  FlutterBoost.singleton.channel.sendEvent(
-                                      'showTip', {'text': '网络开小差了～'});
-                                }).whenComplete(() => loading(false));
+                        _loading
+                            ? CupertinoActivityIndicator(
+                                animating: _loading,
+                                radius: 10,
+                              )
+                            : SizedBox()
+                      ],
+                    ),
+                    onPressed: _confirmAvailabe && !_loading
+                        ? () {
+                            login().then((success) {
+                              loading(false);
+                              if (success) {
+                                FlutterBoost.singleton.closeCurrent();
                               }
-                            : null,
-                      ),
-                    ),
-                    CupertinoButton(
-                      child: Text('忘记密码'),
-                      onPressed: () => FlutterBoost.singleton.open('pwd_forgot',
-                          urlParams: {'type': 1}, exts: {'animated': true}),
-                    )
-                  ],
-                ))));
+                            }).catchError((e) {
+                              loading(false);
+                              FlutterBoost.singleton.channel
+                                  .sendEvent('showTip', {'text': '网络开小差了～'});
+                            }).whenComplete(() => loading(false));
+                          }
+                        : null,
+                  ),
+                ),
+                CupertinoButton(
+                  child: Text('忘记密码'),
+                  onPressed: () => FlutterBoost.singleton.open('pwd_forgot',
+                      urlParams: {'type': 2}, exts: {'animated': true}),
+                )
+              ],
+            )));
   }
 }
