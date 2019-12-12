@@ -21,7 +21,6 @@ class PhoneBindPage extends StatefulWidget {
 class _PhoneBindPageState extends State<PhoneBindPage> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _verifyController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
   int _countdownTime = 0;
   Timer _timer;
   bool _loading = false;
@@ -34,7 +33,6 @@ class _PhoneBindPageState extends State<PhoneBindPage> {
     }
     _phoneController.dispose();
     _verifyController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -49,10 +47,6 @@ class _PhoneBindPageState extends State<PhoneBindPage> {
     _phoneController.addListener(() {
       _confirmBtnIsEnabled(_verifyController.text.trim().isNotEmpty &&
           _phoneController.text.trim().isNotEmpty);
-    });
-
-    _scrollController.addListener(() {
-      FocusScope.of(context).requestFocus(FocusNode());
     });
   }
 
@@ -98,11 +92,26 @@ class _PhoneBindPageState extends State<PhoneBindPage> {
   /// 发送验证码
   _sendCode() async {
     String phone = _phoneController.text.trim();
+
+    if (phone.length != 11) {
+      FlutterBoost.singleton.channel
+          .sendEvent('showTip', {'text': '请输入正确的手机号'});
+      return;
+    }
+
+    if (_countdownTime == 0) {
+      setState(() {
+        _countdownTime = 60;
+      });
+      //开始倒计时
+      startCountdownTimer();
+    }
+
     Result r = await sendAuthCode(phone).catchError((error) {
       FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '网络开小差了～'});
     });
 
-    if(r == null) {
+    if (r == null) {
       return;
     }
 
@@ -144,7 +153,7 @@ class _PhoneBindPageState extends State<PhoneBindPage> {
       });
     });
 
-    if(r == null) {
+    if (r == null) {
       return;
     }
 
@@ -172,28 +181,13 @@ class _PhoneBindPageState extends State<PhoneBindPage> {
             ),
           ),
           VerticalDivider(
+            indent: 10,
+            endIndent: 10,
+            thickness: 1,
             width: 0.5,
           ),
           CupertinoButton(
-            onPressed: _countdownTime > 0
-                ? null
-                : () {
-                    if (_phoneController.text.trim().length != 11) {
-                      FlutterBoost.singleton.channel
-                          .sendEvent('showTip', {'text': '请输入正确的手机号'});
-                      return;
-                    }
-
-                    if (_countdownTime == 0) {
-                      setState(() {
-                        _countdownTime = 60;
-                      });
-                      //开始倒计时
-                      startCountdownTimer();
-                    }
-
-                    _sendCode();
-                  },
+            onPressed: _countdownTime > 0 ? null : () => _sendCode(),
             child: _countdownTime > 0
                 ? Text('$_countdownTime s后获取')
                 : Text('获取验证码'),
@@ -223,7 +217,6 @@ class _PhoneBindPageState extends State<PhoneBindPage> {
           iconTheme: IconThemeData.fallback(),
         ),
         body: ListView(
-          controller: _scrollController,
           children: <Widget>[
             _phoneInput(),
             Divider(

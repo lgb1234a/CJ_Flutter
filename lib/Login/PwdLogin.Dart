@@ -3,7 +3,6 @@
  *  密码登录
  */
 
-import 'package:cajian/Login/LoginManager.dart';
 import 'package:flutter/material.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:cajian/Base/CJRequestEngine.dart';
@@ -88,8 +87,8 @@ class PwdLoginState extends State<PwdLoginWidget> {
 
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], name: response['name']);
+    return await NimSdkUtil.doSDKLogin(response['accid'], response['token'],
+        name: response['name']);
   }
 
   // 登录
@@ -131,7 +130,7 @@ class PwdLoginState extends State<PwdLoginWidget> {
                 onPressed: () => FlutterBoost.singleton.closeCurrent(),
               ),
               title: Text(
-                '手机登录',
+                '密码登录',
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: mainBgColor,
@@ -155,13 +154,12 @@ class PwdLoginState extends State<PwdLoginWidget> {
                     ),
                     SizedBox(
                       height: 40,
-                      child: TextFormField(
+                      child: CupertinoTextField(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        placeholder: "手机号（仅支持大陆手机）",
                         autofocus: true,
                         controller: _phoneController,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                            hintText: "手机号（仅支持大陆手机）",
-                            border: InputBorder.none),
+                        decoration: BoxDecoration(border: null),
                       ),
                     ),
                     Divider(
@@ -172,13 +170,14 @@ class PwdLoginState extends State<PwdLoginWidget> {
                     ),
                     SizedBox(
                       height: 40,
-                      child: TextFormField(
+                      child: CupertinoTextField(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        placeholder: '输入登录密码',
                         controller: _pwdController,
                         obscureText: true,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                            border: InputBorder.none,
-                            hintText: '输入登录密码'),
+                        decoration: BoxDecoration(
+                          border: null,
+                        ),
                       ),
                     ),
                     Divider(
@@ -237,6 +236,11 @@ class PwdLoginState extends State<PwdLoginWidget> {
                             : null,
                       ),
                     ),
+                    CupertinoButton(
+                      child: Text('忘记密码'),
+                      onPressed: () => FlutterBoost.singleton.open('pwd_forgot',
+                          urlParams: {'type': 1}, exts: {'animated': true}),
+                    )
                   ],
                 ))));
   }

@@ -16,7 +16,7 @@ class SecurityPage extends StatelessWidget {
 
   /// 忘记密码
   Widget _pwdForgot() {
-    return cell(Text('找回密码'), Icon(Icons.arrow_forward_ios),
+    return cell(Text('找回登录密码'), Icon(Icons.arrow_forward_ios),
         () => FlutterBoost.singleton.open('pwd_forgot', exts: {'animated': true}));
   }
 

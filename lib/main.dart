@@ -109,9 +109,9 @@ class _MyAppState extends State<MyApp> {
       /// 安全
       'security': (pageName, params, _) => SecurityPage(),
       /// 设置登录密码
-      'pwd_setting': (pageName, params, _) => PwdSettingPage(),
+      'pwd_setting': (pageName, params, _) => PwdSettingPage(params: params,),
       /// 忘记密码
-      'pwd_forgot': (pageName, params, _) => PwdForgotPage(),
+      'pwd_forgot': (pageName, params, _) => PwdForgotPage(params: params,),
       /// 黑名单
       'block_list': (pageName, params, _) => BlockListPage(),
       /// 手机绑定

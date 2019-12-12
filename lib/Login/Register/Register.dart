@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
-import '../LoginManager.dart';
 
 class RegisterWidget extends StatefulWidget {
   RegisterState createState() {

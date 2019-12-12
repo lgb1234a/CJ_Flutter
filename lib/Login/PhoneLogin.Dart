@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
-import 'LoginManager.dart';
 
 class PhoneLoginWidget extends StatefulWidget {
   PhoneLoginState createState() {
@@ -104,8 +103,8 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], name: response['name']);
+    return await NimSdkUtil.doSDKLogin(response['accid'], response['token'],
+        name: response['name']);
   }
 
   // 登录
@@ -172,13 +171,12 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                     ),
                     SizedBox(
                       height: 40,
-                      child: TextFormField(
+                      child: CupertinoTextField(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        placeholder: "手机号（仅支持大陆手机）",
                         autofocus: true,
                         controller: _phoneController,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                            hintText: "手机号（仅支持大陆手机）",
-                            border: InputBorder.none),
+                        decoration: BoxDecoration(border: null),
                       ),
                     ),
                     Divider(
@@ -187,56 +185,60 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                       endIndent: 16,
                       color: Colors.black12,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                            width: 200,
-                            height: 40,
-                            child: TextFormField(
-                              controller: _codeController,
-                              decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(20, 10, 20, 0),
-                                  border: InputBorder.none,
-                                  hintText: '输入验证码'),
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                        ),
-                        VerticalDivider(
-                          width: 0.5,
-                          color: Colors.black,
-                        ),
-                        FlatButton(
-                          child: Text(
-                            _countdownTime == 0
-                                ? '获取验证码'
-                                : '$_countdownTime' + 's后重新获取',
-                            style: TextStyle(fontSize: 16, color: blueColor),
+                    Container(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                              width: 200,
+                              child: CupertinoTextField(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                controller: _codeController,
+                                placeholder: '输入验证码',
+                                decoration: BoxDecoration(border: null),
+                              )),
+                          CupertinoButton(
+                            padding: EdgeInsets.all(10),
+                            child: Row(children: <Widget>[
+                              VerticalDivider(
+                                width: 0.5,
+                                indent: 0,
+                                endIndent: 0,
+                                thickness: 1,
+                              ),
+                              Padding(padding: EdgeInsets.symmetric(horizontal: 5),),
+                              Text(
+                                _countdownTime == 0
+                                    ? '获取验证码'
+                                    : '$_countdownTime' + 's后重新获取',
+                                style:
+                                    TextStyle(fontSize: 16, color: blueColor),
+                              )
+                            ]),
+                            onPressed: _countdownTime == 0
+                                ? () {
+                                    if (_phoneController.text.trim().length !=
+                                        11) {
+                                      FlutterBoost.singleton.channel.sendEvent(
+                                          'showTip', {'text': '请输入正确的手机号'});
+                                      return;
+                                    }
+
+                                    if (_countdownTime == 0) {
+                                      setState(() {
+                                        _countdownTime = 60;
+                                      });
+                                      //开始倒计时
+                                      startCountdownTimer();
+                                    }
+
+                                    _sendCode();
+                                  }
+                                : null,
                           ),
-                          onPressed: _countdownTime == 0
-                              ? () {
-                                  if (_phoneController.text.trim().length !=
-                                      11) {
-                                    FlutterBoost.singleton.channel.sendEvent(
-                                        'showTip', {'text': '请输入正确的手机号'});
-                                    return;
-                                  }
-
-                                  if (_countdownTime == 0) {
-                                    setState(() {
-                                      _countdownTime = 60;
-                                    });
-                                    //开始倒计时
-                                    startCountdownTimer();
-                                  }
-
-                                  _sendCode();
-                                }
-                              : null,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Divider(
                       height: 0.5,
