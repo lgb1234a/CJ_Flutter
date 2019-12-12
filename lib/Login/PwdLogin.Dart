@@ -21,7 +21,6 @@ class PwdLoginWidget extends StatefulWidget {
 class PwdLoginState extends State<PwdLoginWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _pwdController = TextEditingController();
-  GlobalKey _formKey = GlobalKey<FormState>();
   bool _loading = false;
   Timer _timer;
   int _countdownTime = 0;

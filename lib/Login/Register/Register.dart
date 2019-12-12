@@ -53,13 +53,13 @@ class RegisterState extends State<RegisterWidget> {
     });
   }
 
-  // 文本变化监听
+  /// 文本变化监听
   _textChange() {
     _confirmBtnStatus(_phoneController.text.trim().length > 0 &&
         _codeController.text.trim().length > 0);
   }
 
-  // 刷新登录按钮状态
+  /// 刷新登录按钮状态
   _confirmBtnStatus(bool valid) {
     if (valid != _confirmAvailabe) {
       setState(() {
@@ -84,13 +84,13 @@ class RegisterState extends State<RegisterWidget> {
     _timer = Timer.periodic(oneSec, callback);
   }
 
-  // 云信sdk登录
+  /// 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
     return await NimSdkUtil.doSDKLogin(response['accid'], response['token'],
         name: response['name']);
   }
 
-  // 登录
+  /// 登录
   Future<bool> _register() async {
     if (_phoneController.text.trim().length != 11) {
       FlutterBoost.singleton.channel

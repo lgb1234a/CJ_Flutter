@@ -21,7 +21,6 @@ class PhoneLoginWidget extends StatefulWidget {
 class PhoneLoginState extends State<PhoneLoginWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _codeController = TextEditingController();
-  GlobalKey _formKey = GlobalKey<FormState>();
   bool _loading = false;
   Timer _timer;
   int _countdownTime = 0;

@@ -137,7 +137,7 @@ class NimSdkUtil {
   }
 
   /// 获取黑名单成员列表
-  static Future<List<String>> blockUserList() async {
+  static Future<List<dynamic>> blockUserList() async {
     return await _channel.invokeMethod('blockUserList:');
   }
 

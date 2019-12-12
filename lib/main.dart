@@ -25,8 +25,8 @@ import 'Session/TeamAnnouncement.dart';
 import 'Session/TeamManage/TeamManage.dart';
 import 'Base/CJWebView.dart';
 import 'Mine/Security.dart';
-import 'Mine/PwdSetting.dart';
-import 'Mine/PwdForgot.dart';
+import 'Login/PwdSetting.dart';
+import 'Login/PwdForgot.dart';
 import 'Mine/BlockList.dart';
 import 'Login/PhoneBind.dart';
 
