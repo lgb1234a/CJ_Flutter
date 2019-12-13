@@ -1,0 +1,12 @@
+{
+  "BusUtilsClass": "com.blankj.utilcode.util.BusUtils",
+  "rightBus": {
+    "didLogin": [
+      "{ desc: com.youxi.chat.module.login.LoginHelper#didLogin(java.util.Map params) }"
+    ],
+    "didLogout": [
+      "{ desc: com.youxi.chat.module.login.LoginHelper#didLogout() }"
+    ]
+  },
+  "wrongBus": {}
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/skin_global_bg"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_titlebar_bg"
+            app:titleTextAppearance="@style/Toolbar.TitleText" >
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_line1"
+        android:layout_width="match_parent"
+        android:layout_height="0.005dip"
+        android:layout_below="@id/app_bar_layout"
+        android:background="#bebebe"
+        android:visibility="gone" />
+
+    <com.youxi.chat.widget.viewpager.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pager_sliding_tab_strip_height"
+        android:layout_alignParentBottom="true"
+        android:background="#F8F8F8" />
+
+    <RelativeLayout
+        android:id="@+id/main_line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.05dip"
+        android:layout_above="@id/tabs"
+        android:background="@color/line_color" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_tab_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/main_line2"
+        android:layout_below="@id/main_line1" />
+
+    <com.netease.nim.uikit.common.ui.drop.DropCover
+        android:id="@+id/unread_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</RelativeLayout>

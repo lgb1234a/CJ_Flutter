@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':base', ':uikit', ':avchatkit', ':faceunity', ':rtskit'
 
 def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
 

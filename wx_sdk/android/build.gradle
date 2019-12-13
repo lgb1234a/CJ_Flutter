@@ -20,6 +20,9 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 28
@@ -31,4 +34,11 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
+    implementation project(path: ':base')
+    implementation project(path: ':uikit')
 }
