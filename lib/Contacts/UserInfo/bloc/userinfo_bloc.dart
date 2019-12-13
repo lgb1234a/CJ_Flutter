@@ -21,12 +21,12 @@ class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
 
     if (event is TouchedUserAvatar) {
       /* 点击查看头像 */
-
+      /// TODO:
     }
 
     if (event is TouchedAlias) {
       /* 跳转修改备注页面 */
-
+      /// TODO:
     }
 
     if (event is TouchedSendMsg) {
@@ -41,7 +41,7 @@ class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
       String userId = event.userId;
       /* 跳转个人信息设置页 */
       FlutterBoost.singleton.open('contact_setting',
-          urlParams: {'user_id': userId}, exts: {'animated': true});
+          urlParams: {'userId': userId}, exts: {'animated': true});
     }
   }
 }

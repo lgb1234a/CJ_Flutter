@@ -10,14 +10,20 @@ class SecurityPage extends StatelessWidget {
 
   /// 密码设置
   Widget _pwdSetting() {
-    return cell(Text('设置登录密码'), Icon(Icons.arrow_forward_ios),
-        () => FlutterBoost.singleton.open('pwd_setting', exts: {'animated': true}));
+    return Cell(
+        Text('设置登录密码'),
+        Icon(Icons.arrow_forward_ios),
+        () => FlutterBoost.singleton.open('pwd_setting',
+            urlParams: {'type': 0}, exts: {'animated': true}));
   }
 
   /// 忘记密码
   Widget _pwdForgot() {
-    return cell(Text('找回密码'), Icon(Icons.arrow_forward_ios),
-        () => FlutterBoost.singleton.open('pwd_forgot', exts: {'animated': true}));
+    return Cell(
+        Text('找回登录密码'),
+        Icon(Icons.arrow_forward_ios),
+        () => FlutterBoost.singleton.open('pwd_forgot',
+            urlParams: {'type': 1}, exts: {'animated': true}));
   }
 
   @override

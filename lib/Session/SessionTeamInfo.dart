@@ -50,7 +50,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_teamInfo == null) {
       return Container();
     }
-    return cell(
+    return Cell(
         Text('群聊名称'),
         Row(
           children: <Widget>[
@@ -83,7 +83,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_teamInfo == null) {
       return Container();
     }
-    return cell(
+    return Cell(
         Text('群二维码'),
         Row(
           children: <Widget>[
@@ -104,7 +104,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   /// 群公告
   Widget _announce() {
-    return cell(
+    return Cell(
         Text('群公告'),
         Row(
           children: <Widget>[Text('点击查看群公告'), Icon(Icons.arrow_forward_ios)],
@@ -118,7 +118,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_memberInfo == null) {
       return Container();
     }
-    return cell(
+    return Cell(
         Text('我在本群的群昵称'),
         Row(
           children: <Widget>[
@@ -147,7 +147,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _teamManage() {
-    return cell(
+    return Cell(
         Text('群管理'),
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
@@ -171,7 +171,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _msgMute() {
-    return cell(
+    return Cell(
         Text('消息免打扰'),
         CupertinoSwitch(
           value: _msgNotify,
@@ -182,7 +182,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _stickOnTop() {
-    return cell(
+    return Cell(
         Text('聊天置顶'),
         CupertinoSwitch(
           value: _isStickOnTop,
@@ -194,7 +194,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
 
   ///
   Widget _clearHistory() {
-    return cell(
+    return Cell(
         Text('清空聊天记录'),
         Icon(Icons.arrow_forward_ios),
         () => cjSheet(context, '警告',

@@ -3,29 +3,62 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 import '../Base/CJUtils.dart';
 import '../Base/CJRequestEngine.dart';
 import '../Login/LoginManager.dart';
 import 'package:flutter/cupertino.dart';
 
 class PwdSettingPage extends StatefulWidget {
-  PwdSettingPage({Key key}) : super(key: key);
+  final Map params;
+  PwdSettingPage({Key key, this.params}) : super(key: key);
 
   @override
-  _PwdSettingPageState createState() => _PwdSettingPageState();
+  _PwdSettingPageState createState() =>
+      _PwdSettingPageState(params['type'] != null ? params : {'type': 0});
 }
 
 class _PwdSettingPageState extends State<PwdSettingPage> {
+  final String accid;
+
+  /// 0:修改密码   1:找回密码（已登录）  2:找回密码(未登录状态)
+  int type = 0;
+
+  /// 手机号，为null则需要用户手动输入
+  final String phone;
+
   bool _pwdSetted = false;
   bool _confirmAvailabe = false;
   bool _loading = false;
   TextEditingController _originController = TextEditingController();
   TextEditingController _newController = TextEditingController();
   TextEditingController _repeatController = TextEditingController();
+
+  factory _PwdSettingPageState(Map params) {
+    return _PwdSettingPageState._a(
+        params['accid'], params['type'], params['phone']);
+  }
+
+  _PwdSettingPageState._a(this.accid, this.type, this.phone);
+
+  @override
+  void dispose() {
+    _originController.dispose();
+    _newController.dispose();
+    _repeatController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
-    _loadPwdStatus();
+
+    print('type =============> $type');
+
+    if (type == 0) {
+      /// 修改密码
+      _loadPwdStatus();
+    }
 
     _originController.addListener(() {
       _confirmBtnEnable(_verify());
@@ -40,6 +73,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     });
   }
 
+  /// 验证输入是否可用
   bool _verify() {
     if (_pwdSetted) {
       return _originController.text.trim().isNotEmpty &&
@@ -50,6 +84,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
         _repeatController.text.trim().isNotEmpty;
   }
 
+  /// 确定按钮是否可点击
   _confirmBtnEnable(bool newValue) {
     if (newValue != _confirmAvailabe) {
       setState(() {
@@ -60,11 +95,11 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
 
   /// 是否设置过密码
   _loadPwdStatus() async {
-    String accid = await LoginManager().getAccid();
-    Result r =
-        await CJRequestEngine.postJson('/g2/passwd/exist', {'accid': accid})
-            .catchError((e) => FlutterBoost.singleton.channel
-                .sendEvent('showTip', {'text': '网络开小差了～'}));
+    String _a = await LoginManager().getAccid();
+
+    Result r = await CJRequestEngine.postJson('/g2/passwd/exist', {'accid': _a})
+        .catchError((e) => FlutterBoost.singleton.channel
+            .sendEvent('showTip', {'text': '网络开小差了～'}));
 
     if (r == null) {
       return;
@@ -80,7 +115,7 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     }
   }
 
-  /// 设置新密码
+  /// 设置密码
   _setPwd() {
     String originInputPwd = _originController.text.trim();
     String newInputPwd = _newController.text.trim();
@@ -106,9 +141,12 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
 
   /// 创建密码请求
   _createPwd(String pwd) async {
-    String accid = await LoginManager().getAccid();
+    String _a = accid;
+    if (type == 0) {
+      _a = await LoginManager().getAccid();
+    }
     Result r = await CJRequestEngine.postJson(
-            '/g2/passwd/set', {'accid': accid, 'passwd': pwd})
+            '/g2/passwd/set', {'accid': _a, 'passwd': pwd})
         .catchError((e) => FlutterBoost.singleton.channel
             .sendEvent('showTip', {'text': '网络开小差了～'}))
         .whenComplete(() {
@@ -122,7 +160,13 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
     }
 
     if (r.success) {
-      FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '密码设置成功'});
+      if(type == 0 || type == 1) {
+        FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '密码重置成功，为了账号安全，请重新登录！'});
+        NimSdkUtil.logout();
+      }else{
+        FlutterBoost.singleton.channel.sendEvent('showTip', {'text': '密码设置成功'});
+        FlutterBoost.singleton.channel.sendEvent('popToRootPage', {});
+      }
     } else {
       FlutterBoost.singleton.channel
           .sendEvent('showTip', {'text': r.error.msg});
@@ -158,7 +202,8 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
   Widget _originPwdInput() {
     return _pwdSetted
         ? Container(
-            height: 40,
+            height: 44,
+            color: Colors.white,
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: CupertinoTextField(
               obscureText: true,
@@ -169,10 +214,12 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
           )
         : Container();
   }
+
   /// 新密码
   Widget _newPwdInput() {
     return Container(
-      height: 40,
+      height: 44,
+      color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: CupertinoTextField(
         obscureText: true,
@@ -186,7 +233,8 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
   /// 再次输入新密码
   Widget _repeatPwdInput() {
     return Container(
-      height: 40,
+      height: 44,
+      color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: CupertinoTextField(
         obscureText: true,
@@ -216,49 +264,53 @@ class _PwdSettingPageState extends State<PwdSettingPage> {
           elevation: 0.01,
           iconTheme: IconThemeData.fallback(),
         ),
-        body: ListView(
-          children: <Widget>[
-            _originPwdInput(),
-            _pwdSetted
-                ? Divider(
-                    indent: 12,
-                    height: 0.5,
-                  )
-                : Container(),
-            _newPwdInput(),
-            Divider(
-              indent: 12,
-              height: 0.5,
-            ),
-            _repeatPwdInput(),
-            Container(
-                height: 50,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                margin: EdgeInsets.only(top: 15),
-                child: CupertinoButton.filled(
-                  onPressed: _confirmAvailabe ? _setPwd : null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('确定'),
-                      _loading
-                          ? Container(
-                              padding: EdgeInsets.all(5),
-                              child: Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 4),
-                                  ),
-                                  CupertinoActivityIndicator()
-                                ],
-                              ),
-                            )
-                          : Container()
-                    ],
-                  ),
-                ))
-          ],
+        body: Container(
+          color: mainBgColor,
+          child: ListView(
+            children: <Widget>[
+              _originPwdInput(),
+              _pwdSetted
+                  ? Divider(
+                      indent: 12,
+                      height: 0.5,
+                    )
+                  : Container(),
+              _newPwdInput(),
+              Divider(
+                indent: 12,
+                height: 0.5,
+              ),
+              _repeatPwdInput(),
+              Container(
+                  height: 44,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  margin: EdgeInsets.only(top: 15),
+                  child: CupertinoButton.filled(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    onPressed: _confirmAvailabe ? _setPwd : null,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('确定'),
+                        _loading
+                            ? Container(
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 4),
+                                    ),
+                                    CupertinoActivityIndicator()
+                                  ],
+                                ),
+                              )
+                            : Container()
+                      ],
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
     );

@@ -27,7 +27,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
 
   /// 设置管理员
   Widget _managerSetting() {
-    return cell(
+    return Cell(
         Text('设置管理员'),
         Row(
           children: <Widget>[
@@ -40,7 +40,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
 
   ///  群机器人
   Widget _teamRobots() {
-    return cell(
+    return Cell(
         Text('群机器人'),
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
@@ -50,7 +50,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
 
   /// 群转让
   Widget _teamTransform() {
-    return cell(
+    return Cell(
         Text('群转让'),
         Row(
           children: <Widget>[Text('点击设置'), Icon(Icons.arrow_forward_ios)],

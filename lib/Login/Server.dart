@@ -46,3 +46,10 @@ Future<Result> bindPhone(String phone, String vecode, String code,
   });
   return response;
 }
+
+/// 忘记密码
+Future<Result> forgotPwd(String phone, String vecode) async {
+  Result response = await CJRequestEngine.postJson(
+      '/g2/passwd/forget', {'phone': phone, 'vecode': vecode});
+  return response;
+}

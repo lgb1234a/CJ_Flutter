@@ -142,7 +142,7 @@
             break;
         case NIMLoginStepLoginOK:
             [[CJPayManager sharedManager] didLogin];
-            [UIViewController hideHUD];
+            [UIViewController showSuccess:@"登录成功"];
             break;
         case NIMLoginStepLoginFailed:
             [UIViewController showError:@"登录失败"];

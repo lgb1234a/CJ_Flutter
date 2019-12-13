@@ -17,8 +17,8 @@ class NimSdkUtil {
   }
 
   /// sdk登录
-  static Future<bool> doSDKLogin(
-      String accid, String token, {String name}) async {
+  static Future<bool> doSDKLogin(String accid, String token,
+      {String name}) async {
     bool success = await _channel.invokeMethod(
         'doLogin:', {'accid': accid, 'token': token, 'name': name});
     return success;
@@ -137,7 +137,7 @@ class NimSdkUtil {
   }
 
   /// 获取黑名单成员列表
-  static Future<List<String>> blockUserList() async {
+  static Future<List<dynamic>> blockUserList() async {
     return await _channel.invokeMethod('blockUserList:');
   }
 
@@ -171,5 +171,17 @@ class NimSdkUtil {
   static Future<bool> updateTeamAvatar(String teamId, String avatarUrl) async {
     return await _channel.invokeMethod(
         'updateTeamAvatar:', {'teamId': teamId, 'avatarUrl': avatarUrl});
+  }
+
+  /// 删除好友
+  static Future<bool> deleteContact(String userId) async {
+    return await _channel.invokeMethod('deleteContact:', {'userId': userId});
+  }
+
+  /// 设置是否允许该用户消息的通知
+  static Future<bool> allowUserMsgNotify(
+      String userId, bool allowNotify) async {
+    return await _channel.invokeMethod(
+        'allowUserMsgNotify:', {'userId': userId, 'allowNotify': allowNotify});
   }
 }

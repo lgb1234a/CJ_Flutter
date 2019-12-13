@@ -35,7 +35,7 @@ class SettingState extends State<SettingWidget> {
 
   /// 安全
   Widget _security() {
-    return cell(
+    return Cell(
         Text('安全'),
         Icon(Icons.arrow_forward_ios),
         () =>
@@ -44,34 +44,33 @@ class SettingState extends State<SettingWidget> {
 
   ///
   Widget _wxBind() {
-    return cell(
+    return Cell(
         Text('绑定微信'),
         Row(children: [
           _loading ? CupertinoActivityIndicator() : Text(_bind ? '已绑定' : '未绑定'),
           Icon(Icons.arrow_forward_ios)
-        ]),
-        () {
-          if(_loading || !_bind) {
-            return;
+        ]), () {
+      if (_loading || !_bind) {
+        return;
+      }
+      cjDialog(context, '确定要解绑吗？', handlerTexts: [
+        '确定'
+      ], handlers: [
+        () async {
+          bool success = await WxSdk.unBindWeChat();
+          if (success) {
+            setState(() {
+              _bind = false;
+            });
           }
-          cjDialog(context, '确定要解绑吗？', handlerTexts: [
-              '确定'
-            ], handlers: [
-              () async {
-                bool success = await WxSdk.unBindWeChat();
-                if (success) {
-                  setState(() {
-                    _bind = false;
-                  });
-                }
-              }
-            ]);
-        });
+        }
+      ]);
+    });
   }
 
   ///
   Widget _blockedList() {
-    return cell(
+    return Cell(
         Text('黑名单'),
         Icon(Icons.arrow_forward_ios),
         () => FlutterBoost.singleton
@@ -80,12 +79,19 @@ class SettingState extends State<SettingWidget> {
 
   ///
   Widget _logout() {
-    return CupertinoButton(
-      child: Text('退出登录'),
-      onPressed: () => cjDialog(context, '提示',
-          content: Text('确定要退出登录吗？'),
-          handlerTexts: ['确定'],
-          handlers: [() => LoginManager().logout()]),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: CupertinoButton.filled(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Text(
+          '退出登录',
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () => cjDialog(context, '提示',
+            content: Text('确定要退出登录吗？'),
+            handlerTexts: ['确定'],
+            handlers: [() => LoginManager().logout()]),
+      ),
     );
   }
 

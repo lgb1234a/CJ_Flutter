@@ -83,7 +83,7 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
 
   /// 昵称
   Widget _nickName() {
-    return cell(
+    return Cell(
         Text('群昵称'),
         Text(_memberInfo.nickName == null ? '未设置' : _memberInfo.nickName),
         () {});
@@ -91,19 +91,19 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
 
   /// 群成员身份类型
   Widget _memberType() {
-    return cell(Text('身份'), Text(_memberInfo.typeDesc), () {});
+    return Cell(Text('身份'), Text(_memberInfo.typeDesc), () {});
   }
 
   ///
   Widget _joinTime() {
     int dt = (_memberInfo.createTime * 1000).ceil();
     DateTime date = DateTime.fromMillisecondsSinceEpoch(dt);
-    return cell(Text('进群时间'), Text(date.toString()), () {});
+    return Cell(Text('进群时间'), Text(date.toString()), () {});
   }
 
   /// 加入黑名单
   Widget _addBlockList() {
-    return cell(
+    return Cell(
         Text('加入黑名单'),
         CupertinoSwitch(
           value: _isBlocked,

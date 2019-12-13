@@ -5,24 +5,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 
-bindAccidAndToken(String accid, String token) {
-  LoginManager().accid = accid;
-  LoginManager().token = token;
-}
-
 class LoginManager {
-
   String _accid;
   String _token;
 
   Future<String> getAccid() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    return sp.get('accid');
+    return sp.getString('accid');
   }
 
   Future<String> getToken() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    return sp.get('token');
+    return sp.getString('token');
   }
 
   String get accid {
@@ -31,7 +25,7 @@ class LoginManager {
 
   set accid(String a) {
     _accid = a;
-    SharedPreferences.getInstance().then((sp){
+    SharedPreferences.getInstance().then((sp) {
       sp.setString('accid', a);
     });
   }
@@ -42,14 +36,14 @@ class LoginManager {
 
   set token(String t) {
     _token = t;
-    SharedPreferences.getInstance().then((sp){
+    SharedPreferences.getInstance().then((sp) {
       sp.setString('token', t);
     });
   }
 
   // 用本地accid和token登录云信
   Future<bool> login(String accid, String token) async {
-    if(token == null || accid == null) {
+    if (token == null || accid == null) {
       return false;
     }
     return NimSdkUtil.doSDKLogin(accid, token);
@@ -58,12 +52,17 @@ class LoginManager {
   clearTokenAndAccid() {
     _accid = null;
     _token = null;
-    SharedPreferences.getInstance().then((sp){
+    SharedPreferences.getInstance().then((sp) {
       sp.setString('token', null);
       sp.setString('accid', null);
-    }).whenComplete((){
+    }).whenComplete(() {
       NimSdkUtil.logout();
     });
+  }
+
+  bindAccidAndToken(String accid, String token) {
+    LoginManager().accid = accid;
+    LoginManager().token = token;
   }
 
   // 登出
@@ -72,15 +71,15 @@ class LoginManager {
   }
 
   // 单例公开访问点
-  factory LoginManager() =>_sharedInstance();
-  
+  factory LoginManager() => _sharedInstance();
+
   // 静态私有成员，没有初始化
   static LoginManager _instance = LoginManager._();
-  
+
   // 私有构造函数
   LoginManager._() {
     // 具体初始化代码
-    SharedPreferences.getInstance().then((sp){
+    SharedPreferences.getInstance().then((sp) {
       _accid = sp.getString('accid');
       _token = sp.getString('token');
     });
@@ -90,14 +89,4 @@ class LoginManager {
   static LoginManager _sharedInstance() {
     return _instance;
   }
-
-  // 注册微信
-  registerWeChat(appid) {
-  }
-
-  // 获取登录token
-  getAccessWeChatToken() {
-    // Map<String, String> arguments = {'scope':'snsapi_userinfo', 'state': 'get_access_token_bind'};
-  }
 }
-

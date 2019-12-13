@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
-import 'LoginManager.dart';
 
 class PhoneLoginWidget extends StatefulWidget {
   PhoneLoginState createState() {
@@ -22,7 +21,6 @@ class PhoneLoginWidget extends StatefulWidget {
 class PhoneLoginState extends State<PhoneLoginWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _codeController = TextEditingController();
-  GlobalKey _formKey = GlobalKey<FormState>();
   bool _loading = false;
   Timer _timer;
   int _countdownTime = 0;
@@ -89,6 +87,21 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   /// 发送验证码
   _sendCode() {
     String phone = _phoneController.text.trim();
+
+    if (phone.length != 11) {
+      FlutterBoost.singleton.channel
+          .sendEvent('showTip', {'text': '请输入正确的手机号'});
+      return;
+    }
+
+    if (_countdownTime == 0) {
+      setState(() {
+        _countdownTime = 60;
+      });
+      //开始倒计时
+      startCountdownTimer();
+    }
+
     sendAuthCode(phone).then((data) {
       if (data.success) {
         FlutterBoost.singleton.channel
@@ -104,8 +117,8 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
 
   // 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], name: response['name']);
+    return await NimSdkUtil.doSDKLogin(response['accid'], response['token'],
+        name: response['name']);
   }
 
   // 登录
@@ -162,139 +175,112 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
                 )
               ],
             ),
-            body: Form(
-                key: _formKey,
-                autovalidate: true,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        autofocus: true,
-                        controller: _phoneController,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                            hintText: "手机号（仅支持大陆手机）",
-                            border: InputBorder.none),
-                      ),
-                    ),
-                    Divider(
-                      height: 0.5,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.black12,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                            width: 200,
-                            height: 40,
-                            child: TextFormField(
-                              controller: _codeController,
-                              decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(20, 10, 20, 0),
-                                  border: InputBorder.none,
-                                  hintText: '输入验证码'),
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                        ),
-                        VerticalDivider(
-                          width: 0.5,
-                          color: Colors.black,
-                        ),
-                        FlatButton(
-                          child: Text(
+            body: ListView(
+              children: <Widget>[
+                SizedBox(
+                  height: 44,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    placeholder: "手机号（仅支持大陆手机）",
+                    autofocus: true,
+                    controller: _phoneController,
+                    decoration: BoxDecoration(border: null),
+                  ),
+                ),
+                Divider(
+                  height: 0.5,
+                  indent: 16,
+                  endIndent: 16,
+                  color: Colors.black12,
+                ),
+                Container(
+                  height: 44,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      SizedBox(
+                          width: 200,
+                          child: CupertinoTextField(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            controller: _codeController,
+                            placeholder: '输入验证码',
+                            decoration: BoxDecoration(border: null),
+                          )),
+                      CupertinoButton(
+                        padding: EdgeInsets.all(10),
+                        child: Row(children: <Widget>[
+                          VerticalDivider(
+                            width: 0.5,
+                            indent: 0,
+                            endIndent: 0,
+                            thickness: 1,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                          ),
+                          Text(
                             _countdownTime == 0
                                 ? '获取验证码'
                                 : '$_countdownTime' + 's后重新获取',
                             style: TextStyle(fontSize: 16, color: blueColor),
-                          ),
-                          onPressed: _countdownTime == 0
-                              ? () {
-                                  if (_phoneController.text.trim().length !=
-                                      11) {
-                                    FlutterBoost.singleton.channel.sendEvent(
-                                        'showTip', {'text': '请输入正确的手机号'});
-                                    return;
-                                  }
-
-                                  if (_countdownTime == 0) {
-                                    setState(() {
-                                      _countdownTime = 60;
-                                    });
-                                    //开始倒计时
-                                    startCountdownTimer();
-                                  }
-
-                                  _sendCode();
-                                }
-                              : null,
+                          )
+                        ]),
+                        onPressed: _countdownTime == 0 ? _sendCode : null,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: 0.5,
+                  indent: 16,
+                  endIndent: 16,
+                  color: Colors.black12,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  height: 40,
+                  child: CupertinoButton.filled(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '登录',
+                          style: TextStyle(fontSize: 16),
                         ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _loading ? 5 : 0),
+                        ),
+                        _loading
+                            ? CupertinoActivityIndicator(
+                                animating: _loading,
+                                radius: 10,
+                              )
+                            : SizedBox()
                       ],
                     ),
-                    Divider(
-                      height: 0.5,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.black12,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      height: 40,
-                      child: FlatButton(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '登录',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: _loading ? 5 : 0),
-                            ),
-                            _loading
-                                ? CupertinoActivityIndicator(
-                                    animating: _loading,
-                                    radius: 10,
-                                  )
-                                : SizedBox()
-                          ],
-                        ),
-                        textColor: Colors.white,
-                        color: blueColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        highlightColor: Colors.blue[700],
-                        disabledColor: Colors.blueGrey,
-                        splashColor: Colors.grey,
-                        onPressed: _confirmAvailabe && !_loading
-                            ? () {
-                                login().then((success) {
-                                  loading(false);
-                                  if (success) {
-                                    FlutterBoost.singleton.closeCurrent();
-                                  }
-                                }).catchError(() {
-                                  loading(false);
-                                  FlutterBoost.singleton.channel.sendEvent(
-                                      'showTip', {'text': '网络开小差了～'});
-                                }).whenComplete(() => loading(false));
+                    onPressed: _confirmAvailabe && !_loading
+                        ? () {
+                            login().then((success) {
+                              loading(false);
+                              if (success) {
+                                FlutterBoost.singleton.closeCurrent();
                               }
-                            : null,
-                      ),
-                    ),
-                  ],
-                ))));
+                            }).catchError(() {
+                              loading(false);
+                              FlutterBoost.singleton.channel
+                                  .sendEvent('showTip', {'text': '网络开小差了～'});
+                            }).whenComplete(() => loading(false));
+                          }
+                        : null,
+                  ),
+                ),
+              ],
+            )));
   }
 }

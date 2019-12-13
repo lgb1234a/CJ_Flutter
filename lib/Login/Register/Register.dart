@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'dart:async';
-import '../LoginManager.dart';
 
 class RegisterWidget extends StatefulWidget {
   RegisterState createState() {
@@ -22,7 +21,6 @@ class RegisterWidget extends StatefulWidget {
 class RegisterState extends State<RegisterWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _codeController = TextEditingController();
-  GlobalKey _formKey = GlobalKey<FormState>();
   bool _loading = false;
   Timer _timer;
   int _countdownTime = 0;
@@ -55,13 +53,13 @@ class RegisterState extends State<RegisterWidget> {
     });
   }
 
-  // 文本变化监听
+  /// 文本变化监听
   _textChange() {
     _confirmBtnStatus(_phoneController.text.trim().length > 0 &&
         _codeController.text.trim().length > 0);
   }
 
-  // 刷新登录按钮状态
+  /// 刷新登录按钮状态
   _confirmBtnStatus(bool valid) {
     if (valid != _confirmAvailabe) {
       setState(() {
@@ -86,13 +84,13 @@ class RegisterState extends State<RegisterWidget> {
     _timer = Timer.periodic(oneSec, callback);
   }
 
-  // 云信sdk登录
+  /// 云信sdk登录
   Future<bool> sdkLogin(Map<String, dynamic> response) async {
-    return await NimSdkUtil.doSDKLogin(
-        response['accid'], response['token'], name: response['name']);
+    return await NimSdkUtil.doSDKLogin(response['accid'], response['token'],
+        name: response['name']);
   }
 
-  // 登录
+  /// 登录
   Future<bool> _register() async {
     if (_phoneController.text.trim().length != 11) {
       FlutterBoost.singleton.channel
@@ -118,6 +116,38 @@ class RegisterState extends State<RegisterWidget> {
     }
   }
 
+  /// 验证码按钮点击
+  _codeSendBtnHandler() {
+    if (_phoneController.text.trim().length != 11) {
+      FlutterBoost.singleton.channel
+          .sendEvent('showTip', {'text': '请输入正确的手机号'});
+      return;
+    }
+
+    if (_countdownTime == 0) {
+      setState(() {
+        _countdownTime = 60;
+      });
+      //开始倒计时
+      startCountdownTimer();
+    }
+    if (_phoneController.text.trim().length > 0) {
+      String phone = _phoneController.text.trim();
+      sendAuthCode(phone).then((data) {
+        if (data.success) {
+          FlutterBoost.singleton.channel
+              .sendEvent('showTip', {'text': '验证码发送成功'});
+        } else {
+          FlutterBoost.singleton.channel
+              .sendEvent('showTip', {'text': '发送失败:' + data.error.msg});
+        }
+      }).catchError(() {
+        FlutterBoost.singleton.channel
+            .sendEvent('showTip', {'text': '网络开小差了～'});
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -139,156 +169,104 @@ class RegisterState extends State<RegisterWidget> {
               elevation: 0.01,
               iconTheme: IconThemeData.fallback(),
             ),
-            body: Form(
-                key: _formKey,
-                autovalidate: true,
-                child: Column(
+            body: ListView(
+              children: <Widget>[
+                SizedBox(
+                  height: 44,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    placeholder: '手机号（仅支持大陆手机）',
+                    autofocus: true,
+                    controller: _phoneController,
+                    decoration: BoxDecoration(border: null),
+                  ),
+                ),
+                Divider(
+                  height: 0.5,
+                  indent: 12,
+                  endIndent: 12,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                    ),
                     SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        autofocus: true,
-                        controller: _phoneController,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                            hintText: "手机号（仅支持大陆手机）",
-                            border: InputBorder.none),
-                      ),
-                    ),
-                    Divider(
-                      height: 0.5,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.black12,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                            width: 200,
-                            height: 40,
-                            child: TextFormField(
-                              controller: _codeController,
-                              decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(20, 10, 20, 0),
-                                  border: InputBorder.none,
-                                  hintText: '输入验证码'),
-                            )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                        ),
-                        VerticalDivider(
-                          width: 0.5,
-                          color: Colors.black,
-                        ),
-                        FlatButton(
-                          child: Text(
+                        width: 200,
+                        height: 44,
+                        child: CupertinoTextField(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          placeholder: '输入验证码',
+                          controller: _codeController,
+                          decoration: BoxDecoration(border: null),
+                        )),
+                    CupertinoButton(
+                      child: Row(
+                        children: <Widget>[
+                          VerticalDivider(
+                            width: 0.5,
+                            indent: 2,
+                            endIndent: 2,
+                            thickness: 1,
+                          ),
+                          Text(
                             _countdownTime == 0
                                 ? '获取验证码'
                                 : '$_countdownTime' + 's后重新获取',
-                            style:
-                                TextStyle(fontSize: 16, color: blueColor),
-                          ),
-                          onPressed: _countdownTime == 0
-                              ? () {
-                                  if (_phoneController.text.trim().length !=
-                                      11) {
-                                    FlutterBoost.singleton.channel.sendEvent(
-                                        'showTip', {'text': '请输入正确的手机号'});
-                                    return;
-                                  }
-
-                                  if (_countdownTime == 0) {
-                                    setState(() {
-                                      _countdownTime = 60;
-                                    });
-                                    //开始倒计时
-                                    startCountdownTimer();
-                                  }
-                                  if (_phoneController.text.trim().length > 0) {
-                                    String phone = _phoneController.text.trim();
-                                    sendAuthCode(phone).then((data) {
-                                      if (data.success) {
-                                        FlutterBoost.singleton.channel
-                                            .sendEvent(
-                                                'showTip', {'text': '验证码发送成功'});
-                                      } else {
-                                        FlutterBoost.singleton.channel
-                                            .sendEvent('showTip', {
-                                          'text': '发送失败:' + data.error.msg
-                                        });
-                                      }
-                                    }).catchError(() {
-                                      FlutterBoost.singleton.channel.sendEvent(
-                                          'showTip', {'text': '网络开小差了～'});
-                                    });
-                                  }
-                                }
-                              : null,
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      height: 0.5,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.black12,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      height: 40,
-                      child: FlatButton(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '注册',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: _loading ? 5 : 0),
-                            ),
-                            _loading
-                                ? CupertinoActivityIndicator(
-                                    animating: _loading,
-                                    radius: 10,
-                                  )
-                                : SizedBox()
-                          ],
-                        ),
-                        textColor: Colors.white,
-                        color: blueColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        highlightColor: Colors.blue[700],
-                        disabledColor: Colors.blueGrey,
-                        splashColor: Colors.grey,
-                        onPressed: _confirmAvailabe && !_loading
-                            ? () {
-                                _register().then((success) {
-                                  loading(false);
-                                  if (success) {
-                                    Navigator.pop(context);
-                                  }
-                                }).catchError(() {
-                                  loading(false);
-                                  FlutterBoost.singleton.channel.sendEvent(
-                                      'showTip', {'text': '网络开小差了～'});
-                                }).whenComplete(() => loading(false));
-                              }
-                            : null,
+                          )
+                        ],
                       ),
+                      onPressed:
+                          _countdownTime == 0 ? _codeSendBtnHandler : null,
                     ),
                   ],
-                ))));
+                ),
+                Divider(
+                  height: 0.5,
+                  indent: 12,
+                  endIndent: 12,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  height: 44,
+                  child: CupertinoButton.filled(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '注册',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _loading ? 5 : 0),
+                        ),
+                        _loading
+                            ? CupertinoActivityIndicator(
+                                animating: _loading,
+                                radius: 10,
+                              )
+                            : SizedBox()
+                      ],
+                    ),
+                    onPressed: _confirmAvailabe && !_loading
+                        ? () {
+                            _register().then((success) {
+                              loading(false);
+                              if (success) {
+                                FlutterBoost.singleton.closeCurrent();
+                              }
+                            }).catchError(() {
+                              loading(false);
+                              FlutterBoost.singleton.channel
+                                  .sendEvent('showTip', {'text': '网络开小差了～'});
+                            }).whenComplete(() => loading(false));
+                          }
+                        : null,
+                  ),
+                ),
+              ],
+            )));
   }
 }

@@ -112,6 +112,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     // 加上前缀flutter. 和flutter插件sp保持一致，可以被flutter端读取
     [[NSUserDefaults standardUserDefaults] setObject:accid forKey:@"flutter.accid"];
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"flutter.token"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // 登出
@@ -133,6 +134,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     /// 清除登录信息
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.accid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"flutter.token"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // 返回用户信息
@@ -598,6 +600,38 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
             [UIViewController showError:@"上传失败"];
         }
         result(urlString);
+    }];
+}
+
+/// 删除好友
++ (void)deleteContact:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    
+    [[NIMSDK sharedSDK].userManager deleteFriend:params[@"userId"] removeAlias:YES completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"删除失败"];
+            result(@(NO));
+        }else {
+            [UIViewController showSuccess:@"删除成功"];
+            result(@(YES));
+        }
+    }];
+}
+
+/// 允许用户新消息通知
++ (void)allowUserMsgNotify:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    bool state = params[@"allowNotify"];
+    NSString *userId = params[@"userId"];
+    [[NIMSDK sharedSDK].userManager updateNotifyState:state forUser:userId completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:@"修改失败"];
+            result(@(NO));
+        }else {
+            result(@(YES));
+        }
     }];
 }
 
