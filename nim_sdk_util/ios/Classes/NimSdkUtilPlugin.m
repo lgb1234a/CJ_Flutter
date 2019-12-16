@@ -55,14 +55,13 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)registerSDK
 {
 #ifdef DEBUG
-    static NSString *ApnsCername = @"cajiandev";
+    static NSString *ApnsCername = @"cajianflutterdev";
 #else
-    static NSString *ApnsCername = @"cajiandis";
+    static NSString *ApnsCername = @"cajianflutterdis";
 #endif
     NSString *appKey        = @"0cc61ff22dda75b52c0e922e59d1077e";
     NIMSDKOption *option    = [NIMSDKOption optionWithAppKey:appKey];
     option.apnsCername      = ApnsCername;
-    option.pkCername        = @"DEMO_PUSH_KIT";
     [[NIMSDK sharedSDK] registerWithOption:option];
 }
 

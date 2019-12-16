@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>擦肩-易红包版</string>
+	<string>擦肩易宝版</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -92,6 +92,10 @@
 	<string>如果不允许，你将无法发送系统相机里的照片给朋友</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>如果不允许，你将无法发送系统相机里的照片给朋友</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

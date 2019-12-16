@@ -29,6 +29,8 @@ import 'Login/PwdSetting.dart';
 import 'Login/PwdForgot.dart';
 import 'Mine/BlockList.dart';
 import 'Login/PhoneBind.dart';
+import 'Mine/QrScan.dart';
+
 
 /* 检测擦肩bloc数据流向 */
 class CJBlocDelegate extends BlocDelegate {
@@ -116,6 +118,9 @@ class _MyAppState extends State<MyApp> {
       'block_list': (pageName, params, _) => BlockListPage(),
       /// 手机绑定
       'phone_bind': (pageName, params, _) => PhoneBindPage(params: params,),
+      /// 扫一扫
+      'qr_scan': (pageName, params, _) => QrScanPage(),
+
     });
   }
 

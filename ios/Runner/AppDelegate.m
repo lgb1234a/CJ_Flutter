@@ -28,6 +28,8 @@
     [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
     // 配置云信服务
     [self configNIMServices];
+    // 注册推送服务
+    [self registerPushService];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didLogout)
@@ -89,6 +91,37 @@
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
     return [WXApi handleOpenURL:url delegate:[WxSdkPlugin new]];
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [[NIMSDK sharedSDK] updateApnsToken:deviceToken];
+}
+
+/// 注册推送服务
+- (void)registerPushService
+{
+    if (@available(iOS 11.0, *))
+    {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (!granted)
+            {
+                cj_dispatch_async_main_safe(^{
+                    [UIViewController showMessage:@"请开启推送功能否则无法收到推送通知" afterDelay:2.0f];
+                })
+            }
+        }];
+    }
+    else
+    {
+        UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types
+                                                                                 categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }
+    
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 #pragma mark - 登录，这里只做UI和第三方库处理

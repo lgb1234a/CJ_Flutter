@@ -41,9 +41,8 @@ class PhoneLoginState extends State<PhoneLoginWidget> {
   void dispose() {
     _phoneController.dispose();
     _codeController.dispose();
-    if (_timer != null) {
-      _timer.cancel();
-    }
+    _timer?.cancel();
+    
     super.dispose();
   }
 
