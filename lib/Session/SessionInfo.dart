@@ -45,7 +45,7 @@ class SessionInfoState extends State<SessionInfoWidget> {
   // 点对点聊天的会话信息页
   Widget p2pSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
-      builder: (context) {
+      create: (context) {
         _bloc = SessioninfoBloc(session: _session)..add(Fetch());
         return _bloc;
       },
@@ -56,7 +56,7 @@ class SessionInfoState extends State<SessionInfoWidget> {
   // 群聊天的会话信息页
   Widget teamSessionInfo() {
     return BlocProvider<SessioninfoBloc>(
-      builder: (context) {
+      create: (context) {
         _bloc = SessioninfoBloc(session: _session)
           ..add(Fetch())
           ..add(FetchMemberInfos());

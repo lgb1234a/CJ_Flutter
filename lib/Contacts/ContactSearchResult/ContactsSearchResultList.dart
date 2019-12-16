@@ -193,7 +193,7 @@ class ContactsSearchResultListState
   Widget build(BuildContext context) {
     return MaterialApp(
         home: BlocProvider<ContactsearchresultBloc>(
-      builder: (context) {
+      create: (context) {
         _bloc = ContactsearchresultBloc();
         return _bloc;
       },

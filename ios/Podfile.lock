@@ -69,7 +69,7 @@ DEPENDENCIES:
   - CJBase (from `CJBase`)
   - cokit
   - coobjc
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_boost (from `.symlinks/plugins/flutter_boost/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - MBProgressHUD
@@ -104,7 +104,7 @@ EXTERNAL SOURCES:
   CJBase:
     :path: CJBase
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_boost:
     :path: ".symlinks/plugins/flutter_boost/ios"
   image_picker:

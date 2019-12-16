@@ -270,7 +270,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home:
-            BlocProvider<ContactsearchingBloc>(builder: (BuildContext context) {
+            BlocProvider<ContactsearchingBloc>(create: (BuildContext context) {
       _bloc = ContactsearchingBloc();
       return _bloc;
     }, child: Scaffold(
