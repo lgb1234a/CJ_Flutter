@@ -43,6 +43,7 @@ class ContactsSearchingState extends State<ContactsSearchingWidget> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
