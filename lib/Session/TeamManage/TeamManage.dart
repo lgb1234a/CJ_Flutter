@@ -61,7 +61,7 @@ class _TeamManagePageState extends State<TeamManagePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TeammanageBloc>(
-        builder: (context) {
+        create: (context) {
           _bloc = TeammanageBloc(teamId: widget.params['teamId'])..add(Fetch());
           return _bloc;
         },

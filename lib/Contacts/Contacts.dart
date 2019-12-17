@@ -38,7 +38,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
       print('接受到了通知 ========================||||||');
       _bloc.add(ContactsFetchEvent());
       return Future.value(true);
-    });
+    }); 
   }
 
   /* 置顶section header */
@@ -160,7 +160,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
 
     return MaterialApp(
         home: BlocProvider<ContactsBloc>(
-      builder: (BuildContext context) {
+      create: (BuildContext context) {
         _bloc = ContactsBloc()..add(ContactsFetchEvent());
         return _bloc;
       },

@@ -170,7 +170,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: BlocProvider<UserinfoBloc>(
-      builder: (context) {
+      create: (context) {
         _bloc = UserinfoBloc()..add(FetchUserInfo(userId: _userId));
         return _bloc;
       },

@@ -41,8 +41,12 @@ final List<MineModel> mineCellModels = [
         .open('mine_info', exts: {'animated': true}).then((Map value) {});
   }),
   MineModel(MineCellType.Separator, null, null, null),
-  MineModel(MineCellType.Others, '扫一扫', 'images/icon_settings_scan@2x.png',
-      (MineModel model) => {}),
+  MineModel(
+      MineCellType.Others,
+      '扫一扫',
+      'images/icon_settings_scan@2x.png',
+      (MineModel model) =>
+          FlutterBoost.singleton.open('qr_scan', exts: {'animated': true})),
   MineModel(MineCellType.Separator, null, null, null),
   MineModel(
       MineCellType.Others,

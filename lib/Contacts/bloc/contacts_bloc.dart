@@ -17,10 +17,10 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       'showName': '群聊',
       'avatarUrlString': 'images/icon_contact_groupchat@2x.png'
     }),
-    ContactInfo.fromJson({
-      'showName': '手机通讯录好友',
-      'avatarUrlString': 'images/icon_contact_phone@2x.png'
-    })
+    // ContactInfo.fromJson({
+    //   'showName': '手机通讯录好友',
+    //   'avatarUrlString': 'images/icon_contact_phone@2x.png'
+    // })
   ];
 
   @override
@@ -52,15 +52,18 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       if (userId != null) {
         FlutterBoost.singleton.open('user_info',
             urlParams: {'user_id': userId},
-            exts: {'animated': true}).then((Map value) {});
+            exts: {'animated': true});
       } else {
         if (contactFunctions.contains(info)) {
           if (contactFunctions.indexOf(info) == 0) {
-            /* 跳转新朋友申请页面 */
+            /// 跳转新朋友申请页面
+            FlutterBoost.singleton.open('new_friend', exts: {'animated': true});
           } else if (contactFunctions.indexOf(info) == 1) {
-            /* 跳转群聊列表 */
+            /// 跳转群聊列表
+            FlutterBoost.singleton.open('group_chat', exts: {'animated': true});
           } else if (contactFunctions.indexOf(info) == 2) {
-            /* 跳转手机通讯录好友 */
+            /// 跳转手机通讯录好友
+            // FlutterBoost.singleton.open('', exts: {'animated': true});
           }
         }
       }
