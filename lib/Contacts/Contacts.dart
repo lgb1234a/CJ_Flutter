@@ -34,13 +34,13 @@ class ContactsWidgetState extends State<ContactsWidget> {
   void initState() {
     super.initState();
 
-    eventBus.on<DeletedContact>().listen((e){
+    eventBus.on<DeletedContact>().listen((e) {
       _bloc.add(ContactsFetchEvent());
     });
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     _eventListen.cancel();
     super.dispose();
   }

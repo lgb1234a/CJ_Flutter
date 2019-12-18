@@ -52,7 +52,7 @@ class _NewFriendsPageState extends State<NewFriendsPage> {
     });
   }
 
-  /// 通知native，刷新通知状态
+  /// 通知native，刷新通知状态,同步状态到云信
   _handledNotification(int notificationId, int handleStatus) {
     FlutterBoost.singleton.channel.sendEvent('handledNotification',
         {'notificationId': notificationId, 'handleStatus': handleStatus});

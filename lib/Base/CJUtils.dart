@@ -121,13 +121,18 @@ cjSheet(BuildContext context, String title,
 
 class Cell extends StatelessWidget {
   Cell(this.title, this.accessoryView, this.onTap,
-      {this.subTitle, this.backgroundColor = Colors.white});
+      {this.subTitle,
+      this.backgroundColor = Colors.white,
+      this.height,
+      this.minHeight = 46});
 
   final Widget title;
   final Widget accessoryView;
   final Function onTap;
   final Widget subTitle;
   final Color backgroundColor;
+  final double height;
+  final double minHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +140,9 @@ class Cell extends StatelessWidget {
     return new GestureDetector(
       onTap: onTap,
       child: Container(
+        height: height,
         padding: EdgeInsets.symmetric(horizontal: 12),
-        constraints: BoxConstraints(minHeight: 46),
+        constraints: BoxConstraints(minHeight: minHeight),
         color: backgroundColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
