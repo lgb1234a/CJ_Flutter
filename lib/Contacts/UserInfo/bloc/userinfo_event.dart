@@ -10,7 +10,7 @@ class TouchedUserAvatar extends UserinfoEvent {}
 /// 点击备注
 class TouchedAlias extends UserinfoEvent {
   final String alias;
-  TouchedAlias({this.alias});
+  TouchedAlias({@required this.alias});
 }
 
 /// 点击发送消息 

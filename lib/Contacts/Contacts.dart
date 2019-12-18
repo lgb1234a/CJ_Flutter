@@ -33,12 +33,13 @@ class ContactsWidgetState extends State<ContactsWidget> {
   void initState() {
     super.initState();
 
-    FlutterBoost.singleton.channel.addEventListener('refreshContacts', (name, notify) {
+    FlutterBoost.singleton.channel.addEventListener('refreshContacts',
+        (name, notify) {
       /// TODO:
       print('接受到了通知 ========================||||||');
       _bloc.add(ContactsFetchEvent());
       return Future.value(true);
-    }); 
+    });
   }
 
   /* 置顶section header */
@@ -145,7 +146,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                   ),
-                  Text(model.showName),
+                  Text(model.alias ?? model?.showName),
                   Spacer(),
                 ],
               ),

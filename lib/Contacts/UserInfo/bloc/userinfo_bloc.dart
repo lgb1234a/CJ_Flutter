@@ -7,7 +7,6 @@ import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 
 class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
-
   final String userId;
   UserinfoBloc({@required this.userId});
 
@@ -30,8 +29,9 @@ class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
     }
 
     if (event is TouchedAlias) {
-      /* 跳转修改备注页面 */
-      /// TODO:
+      /// 修改备注
+      bool success = await NimSdkUtil.updateUser(userId, alias: event.alias);
+      if(success) add(FetchUserInfo());
     }
 
     if (event is TouchedSendMsg) {

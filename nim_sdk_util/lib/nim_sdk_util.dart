@@ -250,4 +250,11 @@ class NimSdkUtil {
         await _channel.invokeMethod('isMyFriend:', {'userId': userId});
     return isMyFriend;
   }
+
+  /// 更新用户
+  static Future<bool> updateUser(String userId, {String alias}) async {
+    bool success = await _channel
+        .invokeMethod('updateUser:', {'userId': userId, 'alias': alias});
+    return success;
+  }
 }

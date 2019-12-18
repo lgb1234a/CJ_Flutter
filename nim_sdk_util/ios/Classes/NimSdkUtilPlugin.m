@@ -208,6 +208,8 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         NSDictionary *contact = @{
                                   @"infoId": info.infoId?:[NSNull null],
                                   @"showName": info.showName?:[NSNull null],
+                                  @"alias": user.alias?:[NSNull null],
+                                  @"ext": user.ext?:[NSNull null],
                                   @"avatarUrlString": info.avatarUrlString ?:[NSNull null]
                                   };
         [contacts addObject:contact];
@@ -826,6 +828,23 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     NSString *userId = params[@"userId"];
     bool isMyFriend = [[NIMSDK sharedSDK].userManager isMyFriend:userId];
     result(@(isMyFriend));
+}
+
+/// 修改好友信息 目前支持修改备注
++ (void)updateUser:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NIMUser *user = [[NIMSDK sharedSDK].userManager userInfo:params[@"userId"]];
+    user.alias = params[@"alias"];
+    [[NIMSDK sharedSDK].userManager updateUser:user completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:[NSString stringWithFormat:@"修改失败:%@", error.description]];
+            result(@(NO));
+        }else {
+            [UIViewController showError:@"修改成功"];
+            result(@(YES));
+        }
+    }];
 }
 
 #pragma mark ----- private --------

@@ -133,9 +133,9 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
           ),
           handlers: [
             () {
-              if (_nickNameController.text.isNotEmpty) {
+              if (_nickNameController.text.trim().isNotEmpty) {
                 _bloc.add(
-                    UpdateTeamNickName(nickName: _nickNameController.text));
+                    UpdateTeamNickName(nickName: _nickNameController.text.trim()));
               }
             }
           ],

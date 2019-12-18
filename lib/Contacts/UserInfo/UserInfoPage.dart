@@ -29,6 +29,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   UserinfoBloc _bloc;
   bool _isMe = false;
   bool _isMyFriend = false;
+  TextEditingController _aliasController = TextEditingController();
 
   @override
   void initState() {
@@ -61,13 +62,13 @@ class UserInfoPageState extends State<UserInfoPage> {
 
   _requestFriend() async {
     /// 添加好友
-      NotificationHandleType type = await NimSdkUtil.requestFriend(_userId);
-      if(type == NotificationHandleType.NotificationHandleTypeOk) {
-        // 添加成功 刷新页面
-        setState(() {
-          _isMyFriend = true;
-        });
-      }
+    NotificationHandleType type = await NimSdkUtil.requestFriend(_userId);
+    if (type == NotificationHandleType.NotificationHandleTypeOk) {
+      // 添加成功 刷新页面
+      setState(() {
+        _isMyFriend = true;
+      });
+    }
   }
 
   /* 备注 */
@@ -93,7 +94,23 @@ class UserInfoPageState extends State<UserInfoPage> {
           ],
         ),
       ),
-      onTap: () => _bloc.add(TouchedAlias(alias: info.alias)),
+      onTap: () {
+        cjDialog(context, '设置备注',
+            content: CupertinoTextField(
+              controller: _aliasController,
+              clearButtonMode: OverlayVisibilityMode.editing,
+            ),
+            handlers: [
+              () {
+                if (_aliasController.text.trim().isNotEmpty) {
+                  _bloc.add(TouchedAlias(alias: _aliasController.text.trim()));
+                }
+              }
+            ],
+            handlerTexts: [
+              '确定'
+            ]);
+      },
     );
   }
 

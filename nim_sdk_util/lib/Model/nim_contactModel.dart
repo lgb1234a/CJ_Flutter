@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 /// 通讯录成员model
 class ContactInfo extends ISuspensionBean implements NimSearchContactViewModel {
   String showName;
+  String alias;
+  String ext;
   String avatarUrlString;
   String infoId;
   String tagIndex;
@@ -22,7 +24,9 @@ class ContactInfo extends ISuspensionBean implements NimSearchContactViewModel {
         infoId = json['infoId'],
         tagIndex = json['tagIndex'],
         namePinyin = json['namePinyin'],
-        keyword = json['keyword'];
+        keyword = json['keyword'],
+        alias = json['alias'],
+        ext = json['ext'];
 
   @override
   String getSuspensionTag() => tagIndex;
