@@ -785,12 +785,12 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
              NSString *messageContent = [NSString stringWithFormat:@"你好，我们已加为好友!"];
              NIMMessage *message = [NIMMessageMaker msgWithText:messageContent];
             [[NIMSDK sharedSDK].chatManager sendMessage:message toSession:session error:nil];
-             [UIViewController showSuccess:@"验证成功"];
+             [UIViewController showSuccess:@"添加成功"];
              result(@(1));
          }
          else
          {
-             [UIViewController showError:@"验证失败,请重试"];
+             [UIViewController showError:@"添加失败,请重试"];
              result(@0);
          }
      }];
@@ -817,6 +817,15 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                                                  result(@0);
                                              }
                                          }];
+}
+
+/// 是否是我的好友
++ (void)isMyFriend:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *userId = params[@"userId"];
+    bool isMyFriend = [[NIMSDK sharedSDK].userManager isMyFriend:userId];
+    result(@(isMyFriend));
 }
 
 #pragma mark ----- private --------

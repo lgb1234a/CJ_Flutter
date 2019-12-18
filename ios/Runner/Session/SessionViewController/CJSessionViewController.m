@@ -54,13 +54,16 @@
 {
     [super viewWillAppear:animated];
     
-    NSString *accid = [[NIMSDK sharedSDK].loginManager currentAccount];
-    bool isMyTeam = [[NIMSDK sharedSDK].teamManager isMyTeam:accid];
-    if(!isMyTeam) {
-        self.navigationItem.rightBarButtonItems = @[];
+    // 判断我是否还在这个群
+    if(self.session.sessionType != 0) {
+        bool isMyTeam = [[NIMSDK sharedSDK].teamManager isMyTeam:self.session.sessionId];
+        if(!isMyTeam) {
+            self.navigationItem.rightBarButtonItems = @[];
+        }
     }
 }
 
+/// 处理分享数据
 - (void)handleShareData
 {
     if(self.shareModel) {

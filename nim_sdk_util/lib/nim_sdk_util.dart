@@ -243,4 +243,11 @@ class NimSdkUtil {
         .invokeMethod('rejectFriendRequest:', {'sourceID': sourceID});
     return NotificationHandleType.values[resultType];
   }
+
+  /// 是否是我的好友
+  static Future<bool> isMyFriend(String userId) async {
+    bool isMyFriend =
+        await _channel.invokeMethod('isMyFriend:', {'userId': userId});
+    return isMyFriend;
+  }
 }
