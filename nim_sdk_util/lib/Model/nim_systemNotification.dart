@@ -1,7 +1,6 @@
 /// Created by Chenyn 2019-12-17
 /// 系统通知model
 /// 
-import 'dart:ffi';
 
 enum NotificationHandleType {
     /// 0:默认

@@ -1,8 +1,8 @@
-/**
- *  Created by chenyn on 2019-07-10
- *  登录
- */
-
+///
+///  Created by chenyn on 2019-07-10
+///  登录
+///
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wx_sdk/wx_sdk.dart';
 import 'package:flutter_boost/flutter_boost.dart';
@@ -37,7 +37,7 @@ class LoginState extends State<LoginWidget> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              FlatButton(
+              CupertinoButton(
                 child: Image.asset('images/login_with_wechat@2x.png'),
                 onPressed: () {
                   // 微信登录
@@ -45,7 +45,7 @@ class LoginState extends State<LoginWidget> {
                 },
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 10),
               ),
               Text('其他方式登录',
                   style: TextStyle(color: Colors.white, fontSize: 12)),
@@ -86,11 +86,11 @@ class LoginState extends State<LoginWidget> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 44),
+                padding: EdgeInsets.symmetric(vertical: 24),
               ),
               Text('点击登录并继续表示已阅读并同意',
                   style: TextStyle(color: Colors.white, fontSize: 12)),
-              MaterialButton(
+              CupertinoButton(
                 child: Text('《用户使用协议》',
                     style: TextStyle(color: Colors.blueGrey, fontSize: 12)),
                 onPressed: () {},

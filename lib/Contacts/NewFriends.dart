@@ -32,6 +32,9 @@ class _NewFriendsPageState extends State<NewFriendsPage> {
     _removeListener = FlutterBoost.singleton.channel
         .addEventListener('newNotification', (name, param) {
       /// 接收新的通知
+      _notifications.add(SystemNotification.fromJson(param));
+      setState(() {});
+      return;
     });
 
     _fetchAllNotifications();
@@ -110,7 +113,7 @@ class _NewFriendsPageState extends State<NewFriendsPage> {
       return Container(
         width: 132,
         child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             CupertinoButton(
               child: Text(

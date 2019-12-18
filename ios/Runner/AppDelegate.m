@@ -25,7 +25,7 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // 注册微信sdk
-    [WXApi registerApp:@"wx0f56e7c5e6daa01a"];
+    [WXApi registerApp:CJWxAppKey];
     // 配置云信服务
     [self configNIMServices];
     // 注册推送服务

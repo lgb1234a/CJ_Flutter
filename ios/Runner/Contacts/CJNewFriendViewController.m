@@ -16,6 +16,11 @@
 
 @implementation CJNewFriendViewController
 
+- (void)dealloc
+{
+    [[NIMSDK sharedSDK].systemNotificationManager removeDelegate:self];
+}
+
 - (instancetype)initWithBoostParams:(NSDictionary *)boost_params
 {
     self = [super init];

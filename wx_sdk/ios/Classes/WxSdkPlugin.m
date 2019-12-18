@@ -180,7 +180,7 @@ static NSString *wxSDKResultKey = @"flutter_result";
     //加入参数
     NSMutableDictionary *params = [NSMutableDictionary new];
     [params setValue:accessToken forKey:@"code"];
-    [params setValue:@"wx0f56e7c5e6daa01a" forKey:@"app_key"];
+    [params setValue:CJWxAppKey forKey:@"app_key"];
     [UIViewController showLoadingWithMessage:@"登录中..."];
     
     co_launch(^{
