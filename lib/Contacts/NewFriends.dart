@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
-
 /// Created by Chenyn 2019-12-16
 /// 新朋友页面
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import '../Base/CJUtils.dart';
+import '../Base/CJEventBus.dart';
 
 class NewFriendsPage extends StatefulWidget {
   NewFriendsPage({Key key}) : super(key: key);
@@ -79,6 +78,10 @@ class _NewFriendsPageState extends State<NewFriendsPage> {
     } else if (notification.type == 5) {
       /// 同意加好友请求
       NimSdkUtil.requestFriend(notification.sourceID).then((status) {
+        if(status == NotificationHandleType.NotificationHandleTypeOk) {
+          /// 发送消息
+          eventBus.fire(DeletedContact());
+        }
         _handledNotification(notification.notificationId,
             NotificationHandleType.values.indexOf(status));
       });
