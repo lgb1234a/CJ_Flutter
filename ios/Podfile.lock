@@ -33,8 +33,7 @@ PODS:
     - Flutter
   - M80AttributedLabel (1.6.3)
   - MBProgressHUD (1.1.0)
-  - nim_sdk_util (0.0.2):
-    - CJBase
+  - nim_sdk_util (0.0.1):
     - Flutter
     - NIMKit
   - NIMKit (2.11.11):
@@ -59,8 +58,7 @@ PODS:
   - webview_flutter (0.0.1):
     - Flutter
   - WechatOpenSDK (1.8.4)
-  - wx_sdk (0.0.2):
-    - CJBase
+  - wx_sdk (0.0.1):
     - Flutter
     - NIMKit
     - WechatOpenSDK
@@ -131,7 +129,7 @@ SPEC CHECKSUMS:
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  nim_sdk_util: 8b6cc7de295885bddea9573a384ca820a3bc1edd
+  nim_sdk_util: 98a3316d5fbab472afc31a2cea4061b4a8f6bdd8
   NIMKit: 6c1d0d9d811fdf1c3280a033a194506dcdfd45ce
   NIMSDK_LITE: 8af68f798030906861a61459f93dba2d4fd2631d
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
@@ -141,7 +139,7 @@ SPEC CHECKSUMS:
   TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
   webview_flutter: db3aba222b23e4dc432e0c5882834123dc50ff9f
   WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
-  wx_sdk: 747997fd5700dbd5d09a86d102a76856ed762ea7
+  wx_sdk: a363566eb1fefe7d6e6a6d067d055202c3b80fdf
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
 PODFILE CHECKSUM: 0dc1a23b958f997415ec9538b91077afd613adca

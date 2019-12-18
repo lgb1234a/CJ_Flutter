@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'nim_sdk_util'
-  s.version          = '0.0.2'
+  s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -16,7 +16,6 @@ A new flutter plugin project.
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'NIMKit'
-  s.dependency 'CJBase'
 
   s.ios.deployment_target = '8.0'
 end
