@@ -9,6 +9,7 @@ import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import '../../Base/CJUtils.dart';
+import '../../Base/CJEventBus.dart';
 
 class ContactSetting extends StatefulWidget {
   final Map params;
@@ -102,8 +103,9 @@ class ContactSettingState extends State<ContactSetting> {
   _deleteContact() async {
     bool success = await NimSdkUtil.deleteContact(_userId);
     if (success) {
+      /// 发送消息
+      eventBus.fire(DeletedContact());
       FlutterBoost.singleton.channel.sendEvent('popToRootPage', {});
-      // FlutterBoost.singleton.channel.sendEvent('refreshContacts', {});
     }
   }
 

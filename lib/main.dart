@@ -23,7 +23,7 @@ import 'Components/QrCodePage.dart';
 import 'Session/SessionMemberList.dart';
 import 'Session/TeamAnnouncement.dart';
 import 'Session/TeamManage/TeamManage.dart';
-import 'Base/CJWebView.dart';
+import 'Components/CJWebView.dart';
 import 'Mine/Security.dart';
 import 'Login/PwdSetting.dart';
 import 'Login/PwdForgot.dart';

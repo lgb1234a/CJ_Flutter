@@ -8,9 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
-import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 import 'bloc/bloc.dart';
+import '../Base/CJEventBus.dart';
+import 'dart:async';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
@@ -26,20 +27,22 @@ class ContactsWidgetState extends State<ContactsWidget> {
   int _itemHeight = 60;
   int _searchBarHeight = 60;
   String _suspensionTag = "";
-
+  StreamSubscription _eventListen;
   ContactsBloc _bloc;
 
   @override
   void initState() {
     super.initState();
 
-    FlutterBoost.singleton.channel.addEventListener('refreshContacts',
-        (name, notify) {
-      /// TODO:
-      print('接受到了通知 ========================||||||');
+    eventBus.on<DeletedContact>().listen((e){
       _bloc.add(ContactsFetchEvent());
-      return Future.value(true);
     });
+  }
+
+  @override
+  void dispose() { 
+    _eventListen.cancel();
+    super.dispose();
   }
 
   /* 置顶section header */
