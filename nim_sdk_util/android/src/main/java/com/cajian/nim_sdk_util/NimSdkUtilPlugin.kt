@@ -155,9 +155,16 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
      */
     private fun logout(params: Map<*, *>, result: MethodChannel.Result) {
         NIMSDK.getAuthService().logout()
+        clearLoginInfo()
+        // TODO 发送didLogout通知
+    }
+
+    /**
+     * 清除登录信息
+     */
+    private fun clearLoginInfo() {
         SPUtils.getInstance().remove("flutter.accid")
         SPUtils.getInstance().remove("flutter.token")
-        // TODO 发送didLogout通知
     }
 
     /**
@@ -462,6 +469,236 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 })
     }
 
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun isUserBlocked(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 把用户加入黑名单
+     */
+    private fun blockUser(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        NIMSDK.getFriendService().addToBlackList(userId)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("加入黑名单失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("加入黑名单失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 移出黑名单
+     */
+    private fun cancelBlockUser(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        NIMSDK.getFriendService().removeFromBlackList(userId)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("移出黑名单失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("移出黑名单失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 返回黑名单列表
+     */
+    private fun blockUserList(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val blackList = NIMSDK.getFriendService().blackList
+        result.success(blackList)
+    }
+
+    /**
+     * 修改成员群昵称
+     */
+    private fun updateUserNickName(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val nickName = params["nickName"] as String
+        val teamId = params["teamId"] as String
+
+
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun updateTeamName(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun updateAnnouncement(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun addTeamManagers(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun removeTeamManagers(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun transformTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun updateTeamAvatar(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun uploadFileToNim(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun deleteContact(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun allowUserMsgNotify(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun fetchSystemNotifications(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun deleteAllNotifications(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun passApplyToTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun rejectApplyToTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun acceptInviteWithTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun rejectInviteWithTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun requestFriend(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun rejectFriendRequest(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
     private fun addRecentSessionMark(sessionId: String, sessionType: Int, type: Int) {
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(sessionType))
         recent?.let {
@@ -478,7 +715,7 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
         }
     }
 
-    private fun recentSessionIsMark(recent: RecentContact, type: Int) : Boolean{
+    private fun recentSessionIsMark(recent: RecentContact, type: Int): Boolean {
         return recent.extension.get(keyForMarkType(type)) as Boolean
     }
 
