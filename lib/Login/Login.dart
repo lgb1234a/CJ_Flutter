@@ -93,7 +93,14 @@ class LoginState extends State<LoginWidget> {
               CupertinoButton(
                 child: Text('《用户使用协议》',
                     style: TextStyle(color: Colors.blueGrey, fontSize: 12)),
-                onPressed: () {},
+                onPressed: () => FlutterBoost.singleton.open('web_view',
+                    urlParams: {
+                      'url': 'https://help.youxi2018.cn/agreement/user.html',
+                      'title': '用户使用协议'
+                    },
+                    exts: {
+                      'animated': true
+                    }),
               )
             ],
           )
