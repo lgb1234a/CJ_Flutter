@@ -56,7 +56,6 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
 
         ///
         List<UserInfo> infos = await memberInfos();
-
         _previousState = TeamSessionInfoLoaded(
             info: teamInfo,
             members: infos,

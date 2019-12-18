@@ -27,6 +27,7 @@
 		EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */; };
 		EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1422EE23055BF500AEAA55 /* CJMineViewController.m */; };
 		EF42BB4D2385316200DAA191 /* CJTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42BB4C2385316200DAA191 /* CJTabbarController.m */; };
+		EF53F6E823A8762A004EB4B4 /* CJNewFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF53F6E723A8762A004EB4B4 /* CJNewFriendViewController.m */; };
 		EF5FD2D22399E9D6006A664D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5FD2D12399E9D6006A664D /* libz.tbd */; };
 		EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */; };
 		EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6C552F237BDAB200EE1E35 /* CJLoginViewController.m */; };
@@ -109,6 +110,8 @@
 		EF42BB4B2385316200DAA191 /* CJTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJTabbarController.h; sourceTree = "<group>"; };
 		EF42BB4C2385316200DAA191 /* CJTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJTabbarController.m; sourceTree = "<group>"; };
 		EF53F6E023A754F3004EB4B4 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		EF53F6E623A8762A004EB4B4 /* CJNewFriendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJNewFriendViewController.h; sourceTree = "<group>"; };
+		EF53F6E723A8762A004EB4B4 /* CJNewFriendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJNewFriendViewController.m; sourceTree = "<group>"; };
 		EF5FD2D12399E9D6006A664D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EF6C552B237AAC8600EE1E35 /* PlatformRouterImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformRouterImp.h; sourceTree = "<group>"; };
 		EF6C552C237AAC8600EE1E35 /* PlatformRouterImp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlatformRouterImp.m; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 			children = (
 				EF11BE7A22FAC74300CAD319 /* CJContactsViewController.h */,
 				EF11BE7B22FAC74300CAD319 /* CJContactsViewController.m */,
+				EF53F6E623A8762A004EB4B4 /* CJNewFriendViewController.h */,
+				EF53F6E723A8762A004EB4B4 /* CJNewFriendViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -689,6 +694,7 @@
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
 				EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */,
 				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
+				EF53F6E823A8762A004EB4B4 /* CJNewFriendViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				EF8A412A2338733700AF697E /* CJSessionCustomContentConfig.m in Sources */,

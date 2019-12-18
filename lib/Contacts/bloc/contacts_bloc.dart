@@ -51,13 +51,14 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       String userId = info.infoId;
       if (userId != null) {
         FlutterBoost.singleton.open('user_info',
-            urlParams: {'user_id': userId},
-            exts: {'animated': true});
+            urlParams: {'user_id': userId}, exts: {'animated': true});
       } else {
         if (contactFunctions.contains(info)) {
           if (contactFunctions.indexOf(info) == 0) {
             /// 跳转新朋友申请页面
-            FlutterBoost.singleton.open('new_friend', exts: {'animated': true});
+            FlutterBoost.singleton.open(
+                'nativePage://android&iosPageName=CJNewFriendViewController',
+                exts: {'animated': true});
           } else if (contactFunctions.indexOf(info) == 1) {
             /// 跳转群聊列表
             FlutterBoost.singleton.open('group_chat', exts: {'animated': true});
@@ -70,7 +71,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
     }
 
     /* 点击了索引 */
-    if(event is SusTagChangedEvent) {
+    if (event is SusTagChangedEvent) {
       yield ContactsTagChanged(event.tag);
     }
   }

@@ -2,6 +2,7 @@
 #import <NIMKit.h>
 #import <CJBase/CJBase.h>
 #import <Foundation/Foundation.h>
+#import "NIMMessageMaker.h"
 
 static NSString *nimSDKResultKey = @"flutter_result";
 NSDictionary *JsonStringDecode(NSString *jsonString)
@@ -632,6 +633,190 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
             result(@(YES));
         }
     }];
+}
+
+/// 获取系统通知
++ (void)fetchSystemNotifications:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSArray <NIMSystemNotification *>*notifications = [[NIMSDK sharedSDK].systemNotificationManager fetchSystemNotifications:nil limit:MAXFLOAT];
+    
+    NSArray *notis = [notifications cj_map:^id _Nonnull(NIMSystemNotification *notification) {
+        id attachment = notification.attachment;
+        if([attachment isKindOfClass:NIMUserAddAttachment.class]) {
+            attachment = @(((NIMUserAddAttachment *)notification.attachment).operationType);
+        }
+        return @{
+            @"notificationId": @(notification.notificationId),
+            @"type": @(notification.type),
+            @"timestamp": @(notification.timestamp),
+            @"sourceID": notification.sourceID?:[NSNull null],
+            @"targetID": notification.targetID?:[NSNull null],
+            @"postscript": notification.postscript?:[NSNull null],
+            @"read": @(notification.read),
+            @"handleStatus": @(notification.handleStatus),
+            @"notifyExt": notification.notifyExt?:[NSNull null],
+            @"attachment": attachment?:[NSNull null]
+        };
+    }];
+    
+    result(notis);
+}
+
+/// 删除所有通知
++ (void)deleteAllNotifications
+{
+    [[[NIMSDK sharedSDK] systemNotificationManager] deleteAllNotifications];
+}
+
+/// 同意入群申请
++ (void)passApplyToTeam:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *targetID = params[@"targetID"];
+    NSString *sourceID = params[@"sourceID"];
+    [[NIMSDK sharedSDK].teamManager passApplyToTeam:targetID userId:sourceID completion:^(NSError * _Nullable error, NIMTeamApplyStatus applyStatus) {
+        if (!error) {
+            [UIViewController showSuccess:@"同意成功"];
+            result(@(1));
+        }else {
+            if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                [UIViewController showError:@"网络问题，请重试"];
+                result(@(0));
+            } else {
+                [UIViewController showError:@"请求已失效"];
+                result(@(3));
+            }
+        }
+    }];
+}
+
+/// 拒绝入群申请
++ (void)rejectApplyToTeam:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *sourceID = params[@"sourceID"];
+    NSString *targetID = params[@"targetID"];
+    [[NIMSDK sharedSDK].teamManager rejectApplyToTeam:targetID userId:sourceID rejectReason:@"" completion:^(NSError * _Nullable error) {
+        if (!error) {
+            [UIViewController showSuccess:@"拒绝成功"];
+            result(@2);
+        }else {
+            if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                [UIViewController showError:@"网络问题，请重试"];
+                result(@(0));
+            } else {
+                [UIViewController showError:@"请求已失效"];
+                result(@(3));
+            }
+        }
+    }];
+}
+
+/// 接受入群邀请
++ (void)acceptInviteWithTeam:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *sourceID = params[@"sourceID"];
+    NSString *targetID = params[@"targetID"];
+    [[NIMSDK sharedSDK].teamManager acceptInviteWithTeam:targetID invitorId:sourceID completion:^(NSError * _Nullable error) {
+        if (!error) {
+            [UIViewController showSuccess:@"接受成功"];
+            result(@(1));
+        }else {
+            if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                [UIViewController showError:@"网络问题，请重试"];
+                result(@(0));
+            }
+            else if (error.code == NIMRemoteErrorCodeTeamNotExists) {
+                [UIViewController showError:@"群不存在"];
+                result(@(3));
+            }
+            else {
+                [UIViewController showError:@"请求已失效"];
+                result(@(3));
+            }
+        }
+    }];
+}
+
+/// 拒绝入群邀请
++ (void)rejectInviteWithTeam:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *sourceID = params[@"sourceID"];
+    NSString *targetID = params[@"targetID"];
+    [[NIMSDK sharedSDK].teamManager rejectInviteWithTeam:targetID invitorId:sourceID rejectReason:@"" completion:^(NSError * _Nullable error) {
+        if (!error) {
+            [UIViewController showSuccess:@"拒绝成功"];
+            result(@2);
+        }else {
+            if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                [UIViewController showError:@"网络问题，请重试"];
+                result(@(0));
+            }
+            else if (error.code == NIMRemoteErrorCodeTeamNotExists) {
+                [UIViewController showError:@"群不存在"];
+                result(@(3));
+            }
+            else {
+                [UIViewController showError:@"请求已失效"];
+                result(@(3));
+            }
+        }
+    }];
+}
+
+/// 通过添加好友请求
++ (void)requestFriend:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *sourceID = params[@"sourceID"];
+    NIMUserRequest *request = [[NIMUserRequest alloc] init];
+    request.userId = sourceID;
+    request.operation = NIMUserOperationVerify;
+        
+    [[[NIMSDK sharedSDK] userManager] requestFriend:request
+                                         completion:^(NSError *error)
+    {
+         if (!error) {
+              NIMSession *session = [NIMSession session:sourceID type:NIMSessionTypeP2P];
+            
+             NSString *messageContent = [NSString stringWithFormat:@"你好，我们已加为好友!"];
+             NIMMessage *message = [NIMMessageMaker msgWithText:messageContent];
+            [[NIMSDK sharedSDK].chatManager sendMessage:message toSession:session error:nil];
+             [UIViewController showSuccess:@"验证成功"];
+             result(@(1));
+         }
+         else
+         {
+             [UIViewController showError:@"验证失败,请重试"];
+             result(@0);
+         }
+     }];
+}
+
+/// 拒绝好友添加申请
++ (void)rejectFriendRequest:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *sourceID = params[@"sourceID"];
+    NIMUserRequest *request = [[NIMUserRequest alloc] init];
+    request.userId = sourceID;
+    request.operation = NIMUserOperationReject;
+    
+    [[[NIMSDK sharedSDK] userManager] requestFriend:request
+                                         completion:^(NSError *error) {
+                                             if (!error) {
+                                                 [UIViewController showSuccess:@"拒绝成功"];
+                                                 result(@2);
+                                             }
+                                             else
+                                             {
+                                                 [UIViewController showError:@"验证失败,请重试"];
+                                                 result(@0);
+                                             }
+                                         }];
 }
 
 #pragma mark ----- private --------

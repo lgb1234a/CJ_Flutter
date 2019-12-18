@@ -22,7 +22,7 @@ class SessionTeamInfoWidget extends StatefulWidget {
 class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   SessioninfoBloc _bloc;
   TeamInfo _teamInfo;
-  List<UserInfo> _members;
+  List<UserInfo> _members = [];
   TeamMemberInfo _memberInfo;
   TextEditingController _nickNameController = TextEditingController();
   TextEditingController _teamNameController = TextEditingController();
@@ -152,6 +152,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
         ), () {
+          print(_memberInfo.type);
       if (_memberInfo.type == 1) {
         _bloc.add(TappedTeamManage());
       }
@@ -300,7 +301,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       return _sectionLoading();
     }
     List<UserInfo> _ms =
-        _members.length > 8 ? _members.sublist(0, 8) : _members.toList();
+        _members.length > 8 ? _members.sublist(0, 8) : _members;
     // 插入两个，用来���理加号和减号显��
     _ms.addAll([UserInfo(), UserInfo()]);
 

@@ -184,4 +184,63 @@ class NimSdkUtil {
     return await _channel.invokeMethod(
         'allowUserMsgNotify:', {'userId': userId, 'allowNotify': allowNotify});
   }
+
+  /// 获取系统消息通知
+  static Future<List<SystemNotification>> fetchSystemNotifications() async {
+    List<dynamic> notifications =
+        await _channel.invokeMethod('fetchSystemNotifications:');
+    return notifications.map((f) => SystemNotification.fromJson(f)).toList();
+  }
+
+  /// 删除所有的系统消息通知
+  static Future<void> deleteAllNotifications() async {
+    await _channel.invokeMethod('deleteAllNotifications');
+  }
+
+  /// 同意入群申请
+  static Future<NotificationHandleType> passApplyToTeam(
+      String targetID, String sourceID) async {
+    int resultType = await _channel.invokeMethod(
+        'passApplyToTeam:', {'targetID': targetID, 'sourceID': sourceID});
+    return NotificationHandleType.values[resultType];
+  }
+
+  /// 拒绝入群申请
+  static Future<NotificationHandleType> rejectApplyToTeam(
+      String targetID, String sourceID) async {
+    int resultType = await _channel.invokeMethod(
+        'rejectApplyToTeam:', {'targetID': targetID, 'sourceID': sourceID});
+    return NotificationHandleType.values[resultType];
+  }
+
+  /// 接受入群邀请
+  static Future<NotificationHandleType> acceptInviteWithTeam(
+      String targetID, String sourceID) async {
+    int resultType = await _channel.invokeMethod(
+        'acceptInviteWithTeam:', {'targetID': targetID, 'sourceID': sourceID});
+    return NotificationHandleType.values[resultType];
+  }
+
+  /// 拒绝入群邀请
+  static Future<NotificationHandleType> rejectInviteWithTeam(
+      String targetID, String sourceID) async {
+    int resultType = await _channel.invokeMethod(
+        'rejectInviteWithTeam:', {'targetID': targetID, 'sourceID': sourceID});
+    return NotificationHandleType.values[resultType];
+  }
+
+  /// 通过添加好友请求
+  static Future<NotificationHandleType> requestFriend(String sourceID) async {
+    int resultType =
+        await _channel.invokeMethod('requestFriend:', {'sourceID': sourceID});
+    return NotificationHandleType.values[resultType];
+  }
+
+  /// 拒绝好友添加申请
+  static Future<NotificationHandleType> rejectFriendRequest(
+      String sourceID) async {
+    int resultType = await _channel
+        .invokeMethod('rejectFriendRequest:', {'sourceID': sourceID});
+    return NotificationHandleType.values[resultType];
+  }
 }

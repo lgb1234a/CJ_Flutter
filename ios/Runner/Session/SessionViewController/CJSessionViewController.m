@@ -50,6 +50,17 @@
     [self handleShareData];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSString *accid = [[NIMSDK sharedSDK].loginManager currentAccount];
+    bool isMyTeam = [[NIMSDK sharedSDK].teamManager isMyTeam:accid];
+    if(!isMyTeam) {
+        self.navigationItem.rightBarButtonItems = @[];
+    }
+}
+
 - (void)handleShareData
 {
     if(self.shareModel) {
@@ -92,7 +103,7 @@
     
     UIBarButtonItem *enterTeamCardItem = [[UIBarButtonItem alloc] initWithCustomView:enterTeamCard];
     
-    self.navigationItem.rightBarButtonItems  = @[enterTeamCardItem];
+    self.navigationItem.rightBarButtonItems = @[enterTeamCardItem];
 }
 
 #pragma mark - override

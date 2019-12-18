@@ -3,3 +3,4 @@ export 'nim_userInfo.dart';
 export 'nim_session.dart';
 export 'nim_contactModel.dart';
 export 'nim_modelView.dart';
+export 'nim_systemNotification.dart';
