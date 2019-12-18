@@ -3,7 +3,6 @@
 #import <CJBase/CJBase.h>
 #import <Foundation/Foundation.h>
 #import "NIMMessageMaker.h"
-#import "CJBaseMacro.h"
 
 static NSString *nimSDKResultKey = @"flutter_result";
 NSDictionary *JsonStringDecode(NSString *jsonString)

@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'wx_sdk'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -17,6 +17,7 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   s.dependency 'WechatOpenSDK'
   s.dependency 'NIMKit'
+  s.dependency 'CJBase'
 
   s.ios.deployment_target = '8.0'
 end
