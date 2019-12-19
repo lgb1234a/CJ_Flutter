@@ -32,7 +32,10 @@ class _TeamManagePageState extends State<TeamManagePage> {
         Row(
           children: <Widget>[
             Text(_managers.length.toString() + '人'),
-            Icon(Icons.arrow_forward_ios)
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
           ],
         ),
         () => _bloc.add(TeamManagerSetting()));
@@ -43,7 +46,13 @@ class _TeamManagePageState extends State<TeamManagePage> {
     return Cell(
         Text('群机器人'),
         Row(
-          children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Text('点击查看'),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
+          ],
         ),
         () => _bloc.add(TappedToRobotSetting()));
   }
@@ -53,7 +62,13 @@ class _TeamManagePageState extends State<TeamManagePage> {
     return Cell(
         Text('群转让'),
         Row(
-          children: <Widget>[Text('点击设置'), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Text('点击设置'),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
+          ],
         ),
         () => _bloc.add(TeamTransform()));
   }

@@ -208,6 +208,8 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         NSDictionary *contact = @{
                                   @"infoId": info.infoId?:[NSNull null],
                                   @"showName": info.showName?:[NSNull null],
+                                  @"alias": user.alias?:[NSNull null],
+                                  @"ext": user.ext?:[NSNull null],
                                   @"avatarUrlString": info.avatarUrlString ?:[NSNull null]
                                   };
         [contacts addObject:contact];
@@ -785,12 +787,12 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
              NSString *messageContent = [NSString stringWithFormat:@"你好，我们已加为好友!"];
              NIMMessage *message = [NIMMessageMaker msgWithText:messageContent];
             [[NIMSDK sharedSDK].chatManager sendMessage:message toSession:session error:nil];
-             [UIViewController showSuccess:@"验证成功"];
+             [UIViewController showSuccess:@"添加成功"];
              result(@(1));
          }
          else
          {
-             [UIViewController showError:@"验证失败,请重试"];
+             [UIViewController showError:@"添加失败,请重试"];
              result(@0);
          }
      }];
@@ -817,6 +819,67 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                                                  result(@0);
                                              }
                                          }];
+}
+
+/// 是否是我的好友
++ (void)isMyFriend:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NSString *userId = params[@"userId"];
+    bool isMyFriend = [[NIMSDK sharedSDK].userManager isMyFriend:userId];
+    result(@(isMyFriend));
+}
+
+/// 修改好友信息 目前支持修改备注
++ (void)updateUser:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NIMUser *user = [[NIMSDK sharedSDK].userManager userInfo:params[@"userId"]];
+    user.alias = params[@"alias"];
+    [[NIMSDK sharedSDK].userManager updateUser:user completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:[NSString stringWithFormat:@"修改失败:%@", error.description]];
+            result(@(NO));
+        }else {
+            [UIViewController showError:@"修改成功"];
+            result(@(YES));
+        }
+    }];
+}
+
+/// 修改个人资料
++ (void)updateMyInfo:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NIMUserInfoUpdateTag tag = [params[@"tag"] integerValue];
+    NSString *avatarUrl = params[@"avatarUrl"];
+    NSString *nickName = params[@"nickName"];
+    NSNumber *gender = params[@"gender"];
+    NSString *birth = params[@"birth"];
+    NSString *email = params[@"email"];
+    NSString *sign = params[@"sign"];
+    NSString *phone = params[@"phone"];
+    NSString *ext = params[@"ext"];
+    
+    id p = [NSNull null];
+    if(tag == NIMUserInfoUpdateTagNick) p = nickName;
+    if(tag == NIMUserInfoUpdateTagAvatar) p = avatarUrl;
+    if(tag == NIMUserInfoUpdateTagGender) p = gender;
+    if(tag == NIMUserInfoUpdateTagBirth) p = birth;
+    if(tag == NIMUserInfoUpdateTagEmail) p = email;
+    if(tag == NIMUserInfoUpdateTagSign) p = sign;
+    if(tag == NIMUserInfoUpdateTagMobile) p = phone;
+    if(tag == NIMUserInfoUpdateTagExt) p = ext;
+    [[NIMSDK sharedSDK].userManager updateMyUserInfo:@{@(tag) : p}
+                                          completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:[NSString stringWithFormat:@"修改失败:%@", error.description]];
+            result(@(NO));
+        }else {
+            [UIViewController showError:@"修改成功"];
+            result(@(YES));
+        }
+    }];
 }
 
 #pragma mark ----- private --------

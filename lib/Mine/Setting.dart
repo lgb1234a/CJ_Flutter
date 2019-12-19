@@ -37,7 +37,10 @@ class SettingState extends State<SettingWidget> {
   Widget _security() {
     return Cell(
         Text('安全'),
-        Icon(Icons.arrow_forward_ios),
+        Icon(
+          Icons.arrow_forward_ios,
+          size: 14,
+        ),
         () =>
             FlutterBoost.singleton.open('security', exts: {'animated': true}));
   }
@@ -48,7 +51,10 @@ class SettingState extends State<SettingWidget> {
         Text('绑定微信'),
         Row(children: [
           _loading ? CupertinoActivityIndicator() : Text(_bind ? '已绑定' : '未绑定'),
-          Icon(Icons.arrow_forward_ios)
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 14,
+          )
         ]), () {
       if (_loading || !_bind) {
         return;
@@ -72,7 +78,10 @@ class SettingState extends State<SettingWidget> {
   Widget _blockedList() {
     return Cell(
         Text('黑名单'),
-        Icon(Icons.arrow_forward_ios),
+        Icon(
+          Icons.arrow_forward_ios,
+          size: 14,
+        ),
         () => FlutterBoost.singleton
             .open('block_list', exts: {'animated': true}));
   }

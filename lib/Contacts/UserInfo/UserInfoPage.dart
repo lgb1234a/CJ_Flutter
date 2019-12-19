@@ -4,12 +4,14 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nim_sdk_util/nim_sdk_util.dart';
 import './bloc/bloc.dart';
 import './bloc/userinfo_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import '../../Base/CJUtils.dart';
+import 'package:cajian/Login/LoginManager.dart';
 
 class UserInfoPage extends StatefulWidget {
   final Map params;
@@ -25,16 +27,55 @@ class UserInfoPageState extends State<UserInfoPage> {
   String _userId;
   double _cellH = 44;
   UserinfoBloc _bloc;
+  bool _isMe = false;
+  bool _isMyFriend = false;
+  TextEditingController _aliasController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
     _userId = widget.params['user_id'];
+    _initialStatus();
+  }
+
+  /// 初始化
+  _initialStatus() async {
+    String me = await LoginManager().getAccid();
+    _isMe = _userId == me;
+
+    /// 由于bloc无法管理appBar的状态，所以在这里刷新状态
+    bool isMyFriend = await NimSdkUtil.isMyFriend(_userId);
+    setState(() {
+      _isMyFriend = isMyFriend;
+    });
+
+    print('===========> me:');
+    print(me);
+    print('===========> _userId:');
+    print(_userId);
+    print('===========> _isMe:');
+    print(_isMe);
+    print('===========> isMyFriend:');
+    print(isMyFriend);
+  }
+
+  _requestFriend() async {
+    /// 添加好友
+    NotificationHandleType type = await NimSdkUtil.requestFriend(_userId);
+    if (type == NotificationHandleType.NotificationHandleTypeOk) {
+      // 添加成功 刷新页面
+      setState(() {
+        _isMyFriend = true;
+      });
+    }
   }
 
   /* 备注 */
   Widget _aliasSection(UserInfo info) {
+    if (_isMe || !_isMyFriend) {
+      return Container();
+    }
     return GestureDetector(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
@@ -48,12 +89,28 @@ class UserInfoPageState extends State<UserInfoPage> {
             info.alias != null ? Text(info.alias) : SizedBox(),
             Icon(
               Icons.arrow_forward_ios,
-              size: 16,
+              size: 14,
             )
           ],
         ),
       ),
-      onTap: () => _bloc.add(TouchedAlias(alias: info.alias)),
+      onTap: () {
+        cjDialog(context, '设置备注',
+            content: CupertinoTextField(
+              controller: _aliasController,
+              clearButtonMode: OverlayVisibilityMode.editing,
+            ),
+            handlers: [
+              () {
+                if (_aliasController.text.trim().isNotEmpty) {
+                  _bloc.add(TouchedAlias(alias: _aliasController.text.trim()));
+                }
+              }
+            ],
+            handlerTexts: [
+              '确定'
+            ]);
+      },
     );
   }
 
@@ -153,6 +210,19 @@ class UserInfoPageState extends State<UserInfoPage> {
 
   /* 发送消息按钮 */
   Widget _sendMsgSection(UserInfo info) {
+    if (_isMe) return Container();
+
+    if (!_isMyFriend) {
+      /// 不是朋友，显示添加添加好友
+      return Container(
+        padding: EdgeInsets.all(22),
+        child: CupertinoButton.filled(
+          padding: EdgeInsets.all(10),
+          child: Text('添加到通讯录'),
+          onPressed: _requestFriend,
+        ),
+      );
+    }
     return GestureDetector(
       child: Container(
         height: _cellH,
@@ -162,7 +232,7 @@ class UserInfoPageState extends State<UserInfoPage> {
           children: <Widget>[Icon(Icons.send), Text('发消息')],
         ),
       ),
-      onTap: () => _bloc.add(TouchedSendMsg(userId: info.userId)),
+      onTap: () => _bloc.add(TouchedSendMsg()),
     );
   }
 
@@ -171,7 +241,7 @@ class UserInfoPageState extends State<UserInfoPage> {
     return MaterialApp(
         home: BlocProvider<UserinfoBloc>(
       create: (context) {
-        _bloc = UserinfoBloc()..add(FetchUserInfo(userId: _userId));
+        _bloc = UserinfoBloc(userId: _userId)..add(FetchUserInfo());
         return _bloc;
       },
       child: Scaffold(
@@ -187,13 +257,15 @@ class UserInfoPageState extends State<UserInfoPage> {
             style: TextStyle(color: blackColor),
           ),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.more_horiz,
-                size: 33,
-              ),
-              onPressed: () => _bloc.add(TouchedMore(userId: _userId)),
-            )
+            (_isMe || !_isMyFriend)
+                ? Container()
+                : IconButton(
+                    icon: Icon(
+                      Icons.more_horiz,
+                      size: 33,
+                    ),
+                    onPressed: () => _bloc.add(TouchedMore()),
+                  )
           ],
           backgroundColor: mainBgColor,
           elevation: 0.01,
@@ -215,7 +287,7 @@ class UserInfoPageState extends State<UserInfoPage> {
                   ),
                   _aliasSection(state.info),
                   Container(
-                    height: 9,
+                    height: (_isMe || !_isMyFriend) ? 0 : 9,
                   ),
                   _infoSection(state.info),
                   Container(

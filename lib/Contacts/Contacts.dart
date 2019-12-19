@@ -8,9 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:azlistview/azlistview.dart';
-import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/Model/nim_contactModel.dart';
 import 'bloc/bloc.dart';
+import '../Base/CJEventBus.dart';
+import 'dart:async';
 
 class ContactsWidget extends StatefulWidget {
   final Map params;
@@ -26,19 +27,24 @@ class ContactsWidgetState extends State<ContactsWidget> {
   int _itemHeight = 60;
   int _searchBarHeight = 60;
   String _suspensionTag = "";
-
+  StreamSubscription _eventListen;
+  StreamSubscription _deleteSubscription;
   ContactsBloc _bloc;
 
   @override
   void initState() {
     super.initState();
 
-    FlutterBoost.singleton.channel.addEventListener('refreshContacts', (name, notify) {
-      /// TODO:
-      print('接受到了通知 ========================||||||');
+    _deleteSubscription = eventBus.on<DeletedContact>().listen((e) {
       _bloc.add(ContactsFetchEvent());
-      return Future.value(true);
-    }); 
+    });
+  }
+
+  @override
+  void dispose() {
+    _eventListen.cancel();
+    _deleteSubscription.cancel();
+    super.dispose();
   }
 
   /* 置顶section header */
@@ -145,7 +151,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                   ),
-                  Text(model.showName),
+                  Text(model.alias ?? model?.showName),
                   Spacer(),
                 ],
               ),
@@ -156,7 +162,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
 
   // 非搜索状态下的通讯录
   Widget _buildContacts() {
-    double bp = widget.params['bottom_padding'];
+    double bp = widget.params['bottom_padding']??0;
 
     return MaterialApp(
         home: BlocProvider<ContactsBloc>(

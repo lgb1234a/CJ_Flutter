@@ -9,6 +9,7 @@ import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import '../../Base/CJUtils.dart';
+import '../../Base/CJEventBus.dart';
 
 class ContactSetting extends StatefulWidget {
   final Map params;
@@ -49,6 +50,7 @@ class ContactSettingState extends State<ContactSetting> {
         Text('把TA推荐给朋友'),
         Icon(
           Icons.arrow_forward_ios,
+          size: 14,
         ), () {
       /// TODO:
     });
@@ -102,8 +104,9 @@ class ContactSettingState extends State<ContactSetting> {
   _deleteContact() async {
     bool success = await NimSdkUtil.deleteContact(_userId);
     if (success) {
+      /// 发送消息
+      eventBus.fire(DeletedContact());
       FlutterBoost.singleton.channel.sendEvent('popToRootPage', {});
-      // FlutterBoost.singleton.channel.sendEvent('refreshContacts', {});
     }
   }
 
@@ -138,10 +141,9 @@ class ContactSettingState extends State<ContactSetting> {
               height: 0.5,
             ),
             _msgNotify(),
-            Divider(
-              height: 20,
-            ),
+            
             Container(
+              margin: EdgeInsets.only(top: 20),
               padding: EdgeInsets.symmetric(horizontal: 20),
               height: 40,
               child: CupertinoButton.filled(

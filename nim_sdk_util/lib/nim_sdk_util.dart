@@ -243,4 +243,36 @@ class NimSdkUtil {
         .invokeMethod('rejectFriendRequest:', {'sourceID': sourceID});
     return NotificationHandleType.values[resultType];
   }
+
+  /// 是否是我的好友
+  static Future<bool> isMyFriend(String userId) async {
+    bool isMyFriend =
+        await _channel.invokeMethod('isMyFriend:', {'userId': userId});
+    return isMyFriend;
+  }
+
+  /// 更新用户
+  static Future<bool> updateUser(String userId, {String alias}) async {
+    bool success = await _channel
+        .invokeMethod('updateUser:', {'userId': userId, 'alias': alias});
+    return success;
+  }
+
+  /// 修改个人资料
+  /// 3:昵称 4:头像 5:签名 6:性别 7:邮箱 8:生日 具体格式为yyyy-MM-dd 9:手机号 10:扩展字段
+  static Future<bool> updateMyInfo(int type, dynamic content) async {
+    Map keyMap = {
+      3: 'nickName',
+      4: 'avatarUrl',
+      5: 'sign',
+      6: 'gender',
+      7: 'email',
+      8: 'birth',
+      9: 'phone',
+      10: 'ext'
+    };
+    bool success = await _channel
+        .invokeMethod('updateMyInfo:', {'tag': type, keyMap[type]: content});
+    return success;
+  }
 }
