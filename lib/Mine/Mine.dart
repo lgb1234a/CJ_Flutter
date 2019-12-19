@@ -176,8 +176,9 @@ class MineState extends State<MineWidget> {
         _cell(
             'images/icon_settings_scan@2x.png',
             '扫一扫',
-            () => FlutterBoost.singleton
-                .open('qr_scan', exts: {'animated': true}),
+            () => FlutterBoost.singleton.open(
+                'nativePage://android&iosPageName=CJScanViewController',
+                exts: {'animated': true}),
             tipIcon: null),
         Container(
           height: 8,
@@ -212,7 +213,8 @@ class MineState extends State<MineWidget> {
             'images/icon_settings_about@2x.png',
             '帮助',
             () => FlutterBoost.singleton.open('web_view', urlParams: {
-                  'url': 'https://help.youxi2018.cn/app/help/index.html', 'title': '擦肩帮助文档'
+                  'url': 'https://help.youxi2018.cn/app/help/index.html',
+                  'title': '擦肩帮助文档'
                 })),
         Divider(
           indent: 16.0,

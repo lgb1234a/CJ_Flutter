@@ -1,15 +1,15 @@
 //
-//  CJYeeRedPacketContentView.m
+//  CJMFRedPacketContentView.m
 //  Runner
 //
-//  Created by chenyn on 2019/9/23.
+//  Created by chenyn on 2019/12/19.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJYeeRedPacketContentView.h"
-#import "CJYeePayRedPacketAtachment.h"
+#import "CJMFRedPacketContentView.h"
+#import "CJMFRedPacketAttachment.h"
 
-@interface CJYeeRedPacketContentView ()
+@interface CJMFRedPacketContentView()
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -17,10 +17,12 @@
 
 @property (nonatomic, strong) UILabel *descLabel;
 
-@property (nonatomic, strong) CJYeePayRedPacketAtachment *attachment;
+@property (nonatomic, strong) CJMFRedPacketAttachment *attachment;
 
 @end
-@implementation CJYeeRedPacketContentView
+
+@implementation CJMFRedPacketContentView
+
 // 初始化UI
 - (instancetype)initSessionMessageContentView{
     self = [super initSessionMessageContentView];
@@ -57,7 +59,7 @@
     [super refresh:data];
     
     NIMCustomObject *object = (NIMCustomObject *)data.message.messageObject;
-    _attachment = (CJYeePayRedPacketAtachment *)object.attachment;
+    _attachment = (CJMFRedPacketAttachment *)object.attachment;
     
     self.titleLabel.text = _attachment.title;
     self.descLabel.text  = _attachment.content;
@@ -73,19 +75,20 @@
         rect.size.width = self.bounds.size.width - rect.origin.x - 20;
         self.titleLabel.frame = rect;
     }
-    if (_attachment.status == CJYeeRedPacketStatusGot) {
+    if (_attachment.status == MFRedPacketStatusGot) {
         self.subTitleLabel.text = @"已被领取";
     }
-    else if (_attachment.status == CJYeeRedPacketStatusNull)
+    else if (_attachment.status == MFRedPacketStatusNull)
     {
         self.subTitleLabel.text = @"已被领取";
     }
-    else if(_attachment.status == CJYeeRedPacketStatusDue)
+    else if(_attachment.status == MFRedPacketStatusDue)
     {
         self.subTitleLabel.text = @"红包已过期";
     }
-    else
+    else {
         self.subTitleLabel.text = self.model.message.isOutgoingMsg? @"查看红包" : @"领取红包";
+    }
     [self.bubbleImageView setImage:[self chatBubbleImageForState:UIControlStateNormal outgoing:data.message.isOutgoingMsg]];
     [self.bubbleImageView setHighlightedImage:[self chatBubbleImageForState:UIControlStateHighlighted outgoing:data.message.isOutgoingMsg]];
 }
@@ -144,10 +147,10 @@
 - (UIImage *)chatBubbleImageForState:(UIControlState)state outgoing:(BOOL)outgoing
 {
     NSString *stateString = state == UIControlStateNormal? @"normal" : @"pressed";
-    if (_attachment && _attachment.status != CJYeeRedPacketStatusNormal &&  state == UIControlStateNormal) {
+    if (_attachment && _attachment.status != MFRedPacketStatusNormal &&  state == UIControlStateNormal) {
         stateString = @"get";
     }
-    NSString *imageName = @"icon_yee_redpacket_";
+    NSString *imageName = @"icon_redpacket_";
     if (outgoing)
     {
         imageName = [imageName stringByAppendingString:@"from_"];
@@ -159,6 +162,5 @@
     imageName = [imageName stringByAppendingString:stateString];
     return [UIImage imageNamed:imageName];
 }
-
 
 @end

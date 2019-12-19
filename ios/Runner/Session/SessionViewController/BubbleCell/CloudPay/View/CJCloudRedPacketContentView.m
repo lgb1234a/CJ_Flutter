@@ -1,15 +1,15 @@
 //
-//  CJYeeRedPacketContentView.m
+//  CJCloudRedPacketContentView.m
 //  Runner
 //
-//  Created by chenyn on 2019/9/23.
+//  Created by chenyn on 2019/12/19.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJYeeRedPacketContentView.h"
-#import "CJYeePayRedPacketAtachment.h"
+#import "CJCloudRedPacketContentView.h"
+#import "CJCloudRedPacketAttachment.h"
 
-@interface CJYeeRedPacketContentView ()
+@interface CJCloudRedPacketContentView ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -17,10 +17,12 @@
 
 @property (nonatomic, strong) UILabel *descLabel;
 
-@property (nonatomic, strong) CJYeePayRedPacketAtachment *attachment;
+@property (nonatomic, strong) CJCloudRedPacketAttachment *attachment;
 
 @end
-@implementation CJYeeRedPacketContentView
+
+@implementation CJCloudRedPacketContentView
+
 // 初始化UI
 - (instancetype)initSessionMessageContentView{
     self = [super initSessionMessageContentView];
@@ -57,7 +59,7 @@
     [super refresh:data];
     
     NIMCustomObject *object = (NIMCustomObject *)data.message.messageObject;
-    _attachment = (CJYeePayRedPacketAtachment *)object.attachment;
+    _attachment = (CJCloudRedPacketAttachment *)object.attachment;
     
     self.titleLabel.text = _attachment.title;
     self.descLabel.text  = _attachment.content;
@@ -73,14 +75,14 @@
         rect.size.width = self.bounds.size.width - rect.origin.x - 20;
         self.titleLabel.frame = rect;
     }
-    if (_attachment.status == CJYeeRedPacketStatusGot) {
+    if (_attachment.status == CloudRedPacketStatusGot) {
         self.subTitleLabel.text = @"已被领取";
     }
-    else if (_attachment.status == CJYeeRedPacketStatusNull)
+    else if (_attachment.status == CloudRedPacketStatusNull)
     {
         self.subTitleLabel.text = @"已被领取";
     }
-    else if(_attachment.status == CJYeeRedPacketStatusDue)
+    else if(_attachment.status == CloudRedPacketStatusDue)
     {
         self.subTitleLabel.text = @"红包已过期";
     }
@@ -144,10 +146,10 @@
 - (UIImage *)chatBubbleImageForState:(UIControlState)state outgoing:(BOOL)outgoing
 {
     NSString *stateString = state == UIControlStateNormal? @"normal" : @"pressed";
-    if (_attachment && _attachment.status != CJYeeRedPacketStatusNormal &&  state == UIControlStateNormal) {
+    if (_attachment && _attachment.status != CloudRedPacketStatusNormal &&  state == UIControlStateNormal) {
         stateString = @"get";
     }
-    NSString *imageName = @"icon_yee_redpacket_";
+    NSString *imageName = @"icon_mfRedpacket_";
     if (outgoing)
     {
         imageName = [imageName stringByAppendingString:@"from_"];
@@ -159,6 +161,5 @@
     imageName = [imageName stringByAppendingString:stateString];
     return [UIImage imageNamed:imageName];
 }
-
 
 @end

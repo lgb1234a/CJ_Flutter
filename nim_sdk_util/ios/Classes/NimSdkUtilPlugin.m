@@ -483,6 +483,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
             [UIViewController showError:@"修改昵称失败"];
             result(@(NO));
         }else {
+            [UIViewController showError:@"修改昵称成功"];
             result(@(YES));
         }
     }];
@@ -669,6 +670,42 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
 + (void)deleteAllNotifications
 {
     [[[NIMSDK sharedSDK] systemNotificationManager] deleteAllNotifications];
+}
+
+/// 申请进群
++ (void)applyToTeam:(NSDictionary *)params
+{
+    NSString *teamId = params[@"teamId"];
+    NSString *verifyMsg = params[@"verifyMsg"];
+    FlutterResult result = params[nimSDKResultKey];
+    [[NIMSDK sharedSDK].teamManager applyToTeam:teamId
+                                        message:verifyMsg ?:@"通过扫码方式申请进群"
+                                     completion:^(NSError * _Nullable error, NIMTeamApplyStatus applyStatus) {
+        
+        if(!error) {
+            if(applyStatus == NIMTeamApplyStatusInvalid) {
+                [UIViewController showError:@"无效状态"];
+                result(@(NO));
+            }else if(applyStatus == NIMTeamApplyStatusAlreadyInTeam) {
+                [UIViewController showSuccess:@"进群成功"];
+                result(@(YES));
+            }else if(applyStatus == NIMTeamApplyStatusWaitForPass) {
+                [UIViewController showSuccess:@"申请成功，等待验证"];
+                result(@(NO));
+            }
+        }else {
+            switch (error.code) {
+                case NIMRemoteErrorCodeTeamAlreadyIn:
+                    [UIViewController showError:@"你已经在群里，请勿重复申请"];
+                    result(@(NO));
+                    break;
+                default:
+                    [UIViewController showError:@"群申请失败"];
+                    result(@(NO));
+                    break;
+            }
+        }
+    }];
 }
 
 /// 同意入群申请

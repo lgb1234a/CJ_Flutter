@@ -53,7 +53,6 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
         /// 当前用户的信息
         TeamMemberInfo memberInfo =
             await NimSdkUtil.teamMemberInfoById(session.id, userId);
-
         ///
         List<UserInfo> infos = await memberInfos();
         _previousState = TeamSessionInfoLoaded(

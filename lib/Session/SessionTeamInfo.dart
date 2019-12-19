@@ -148,6 +148,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
           ),
           handlers: [
             () {
+              print(_nickNameController.text.trim());
               if (_nickNameController.text.trim().isNotEmpty) {
                 _bloc.add(UpdateTeamNickName(
                     nickName: _nickNameController.text.trim()));
@@ -176,6 +177,8 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       print(_memberInfo.type);
       if (_memberInfo.type == 1) {
         _bloc.add(TappedTeamManage());
+      }else {
+        cjDialog(context, '只有群主才能使用群管理功能哦～');
       }
     });
   }
@@ -332,22 +335,25 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     }
     List<UserInfo> _ms =
         _members.length > 8 ? _members.sublist(0, 8) : _members;
-    // 插入两个，用来���理加号和减号显��
-    _ms.addAll([UserInfo(), UserInfo()]);
+    // 群主快捷添加新成员和踢出成员功能
+    if(_memberInfo.type == 1) {
+      UserInfo add = UserInfo();
+      add.userId = '+';
+      UserInfo delete = UserInfo();
+      delete.userId = '-';
+      _ms.addAll([add, delete]);
+    }
 
     return Container(
         constraints: BoxConstraints(maxHeight: 140),
         child: Wrap(
-          // alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           runSpacing: 10,
           children: _ms.map((f) {
-            if (_ms.indexOf(f) == _ms.length - 2) {
-              // 添加按钮
+            if (f.userId == '+') {
               return _buildMemberOperateBtn(1);
             }
-            if (f == _ms.last) {
-              // 倒数第一个 减号
+            if (f.userId == '-') {
               return _buildMemberOperateBtn(0);
             }
 

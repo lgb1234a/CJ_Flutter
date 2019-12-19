@@ -5,7 +5,11 @@ NSDictionary *attachmentMapping()
 {
     NSDictionary *d = @{
                         @(CustomMessageTypeYeeRedPacket): @"CJYeePayRedPacketAtachment",
-                        @(CustomMessageTypeYeeRedPacketTip): @"CJYeePayRedPacketTipAttachment"
+                        @(CustomMessageTypeYeeRedPacketTip): @"CJYeePayRedPacketTipAttachment",
+                        @(CustomMessageTypeRedPacket): @"CJMFRedPacketAttachment",
+                        @(CustomMessageTypeRedPacketTip): @"CJMFRedPacketTipAttachment",
+                        @(CustomMessageTypeCloudRedPacket): @"CJCloudRedPacketAttachment",
+                        @(CustomMessageTypeCloudRedPacketTip): @"CJCloudRedPacketTipAttachment"
                         };
     
     return d;

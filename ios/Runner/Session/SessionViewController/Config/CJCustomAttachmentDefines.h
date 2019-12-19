@@ -13,8 +13,8 @@ typedef NS_ENUM(NSInteger, CJCustomMessageType){
     CustomMessageTypeSnapchat   = 2, //阅后即焚
     CustomMessageTypeChartlet   = 3, //贴图表情
     CustomMessageTypeWhiteboard = 4, //白板会话
-    CustomMessageTypeRedPacket  = 5, //红包消息
-    CustomMessageTypeRedPacketTip = 6, //红包提示消息
+    CustomMessageTypeRedPacket  = 5, //魔方红包消息
+    CustomMessageTypeRedPacketTip = 6, //魔方红包提示消息
     
     //自定义的消息类型
     CustomMessageTypePersonalCard = 7, // 个人名片
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, CJCustomMessageType){
     CustomMessageTypeRecord   = 16, // 战绩消息
     
     CustomMessageTypeCloudRedPacket = 19, //  云红包
-    CustomMessageTypeCloudRedPacketTip = 20, //
+    CustomMessageTypeCloudRedPacketTip = 20, // 云红包提示
     
     CustomMessageTypeSystemNotification = 21, // 擦肩小助手系统通知
     CustomMessageTypeUpdateInfo = 22,  // 擦肩小助手版本更新消息

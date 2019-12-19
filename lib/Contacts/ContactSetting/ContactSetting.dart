@@ -44,16 +44,14 @@ class ContactSettingState extends State<ContactSetting> {
     });
   }
 
-  ///
+  ///TODO
   _recommendContact() {
     return Cell(
         Text('把TA推荐给朋友'),
         Icon(
           Icons.arrow_forward_ios,
           size: 14,
-        ), () {
-      /// TODO:
-    });
+        ), () => cjDialog(context, '易宝版暂不支持分享好友名片，敬请期待～'));
   }
 
   ///

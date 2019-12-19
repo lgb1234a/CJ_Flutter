@@ -1,22 +1,23 @@
 //
-//  CJYeeRedPacketTipContentView.m
+//  CJCloudRedPacketTipContentView.m
 //  Runner
 //
-//  Created by chenyn on 2019/9/26.
+//  Created by chenyn on 2019/12/19.
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
-#import "CJYeeRedPacketTipContentView.h"
+#import "CJCloudRedPacketTipContentView.h"
+#import "CJCloudRedPacketTipAttachment.h"
 #import <M80AttributedLabel.h>
 #import "CJCustomAttachmentDefines.h"
 
-@interface CJYeeRedPacketTipContentView()<M80AttributedLabelDelegate>
+@interface CJCloudRedPacketTipContentView () <M80AttributedLabelDelegate>
 
 @property (nonatomic,strong) M80AttributedLabel *label;
 
 @end
 
-@implementation CJYeeRedPacketTipContentView
+@implementation CJCloudRedPacketTipContentView
 
 // 初始化UI
 - (instancetype)initSessionMessageContentView
