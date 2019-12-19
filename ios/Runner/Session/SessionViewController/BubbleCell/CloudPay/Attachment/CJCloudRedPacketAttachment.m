@@ -7,8 +7,10 @@
 //
 
 #import "CJCloudRedPacketAttachment.h"
+#import "JRMFHeader.h"
+#import "NTESSessionUtil.h"
 
-@interface CJCloudRedPacketAttachment ()
+@interface CJCloudRedPacketAttachment () <MFManagerDelegate>
 
 @property (nonatomic, weak) NIMSession *session;
 
@@ -125,7 +127,24 @@
 - (void)handleTapCellEvent:(NIMKitEvent *)event
                  onSession:(NIMSessionViewController *)sessionVC
 {
+    self.session = sessionVC.session;
+    NIMCustomObject *object = (NIMCustomObject *)event.messageModel.message.messageObject;
+    CJCloudRedPacketAttachment *attachment = (CJCloudRedPacketAttachment *)object.attachment;
     
+    MFPacket *jrmf = [[MFPacket alloc] init];
+    jrmf.delegate = self;
+    NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
+    NSString *nickName = [NTESSessionUtil showNick:me inSession:self.session];
+    NSString *headUrl = [[NIMKit sharedKit] infoByUser:me option:nil].avatarUrlString;
+    BOOL isGroup = self.session.sessionType == NIMSessionTypeTeam;
+    
+    [jrmf doActionPresentOpenViewController:cj_rootNavigationController()
+                                 thirdToken:[JRMFSington GetPacketSington].MFThirdToken
+                               withUserName:nickName
+                                   userHead:headUrl
+                                     userID:me
+                                 envelopeID:attachment.redPacketId
+                                    isGroup:isGroup];
 }
 
 @end

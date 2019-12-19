@@ -73,6 +73,7 @@
 		EF9C908C23AB707400081F82 /* JYangToolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C907F23AB707300081F82 /* JYangToolKit.framework */; };
 		EF9C908D23AB707400081F82 /* JrmfWalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C908123AB707300081F82 /* JrmfWalletKit.framework */; };
 		EF9C908E23AB707400081F82 /* JResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EF9C908323AB707300081F82 /* JResource.bundle */; };
+		EF9C909123AB789600081F82 /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C909023AB789500081F82 /* UserInfoModel.m */; };
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
 		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
@@ -204,6 +205,8 @@
 		EF9C908123AB707300081F82 /* JrmfWalletKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JrmfWalletKit.framework; sourceTree = "<group>"; };
 		EF9C908223AB707300081F82 /* JRMFSington.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRMFSington.h; sourceTree = "<group>"; };
 		EF9C908323AB707300081F82 /* JResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JResource.bundle; sourceTree = "<group>"; };
+		EF9C908F23AB789500081F82 /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoModel.h; sourceTree = "<group>"; };
+		EF9C909023AB789500081F82 /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoModel.m; sourceTree = "<group>"; };
 		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 		EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeePayRedPacketTipAttachment.h; sourceTree = "<group>"; };
 		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 		EF8A40FC2334A44000AF697E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C908F23AB789500081F82 /* UserInfoModel.h */,
+				EF9C909023AB789500081F82 /* UserInfoModel.m */,
 				EF8A41132334D60E00AF697E /* CJPayManager.h */,
 				EF8A41142334D60E00AF697E /* CJPayManager.m */,
 			);
@@ -780,6 +785,7 @@
 			files = (
 				EF9C907523AB6A4400081F82 /* CJCloudRedPacketTipContentView.m in Sources */,
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
+				EF9C909123AB789600081F82 /* UserInfoModel.m in Sources */,
 				EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,

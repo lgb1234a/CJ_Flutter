@@ -334,7 +334,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       return _sectionLoading();
     }
     List<UserInfo> _ms =
-        _members.length > 8 ? _members.sublist(0, 8) : _members;
+        (_members.length > 8 && _memberInfo.type == 1) ? _members.sublist(0, 8) : _members;
     // 群主快捷添加新成员和踢出成员功能
     if(_memberInfo.type == 1) {
       UserInfo add = UserInfo();
