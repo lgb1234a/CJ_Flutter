@@ -8,7 +8,6 @@
 
 #import "CJPayManager.h"
 #import <YouXiPayUISDK/ZZPayUI.h>
-#import "JRMFHeader.h"
 
 @interface CJPayManager ()
 

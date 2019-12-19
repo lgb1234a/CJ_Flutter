@@ -10,6 +10,9 @@
 #import "CJContactSelectConfig.h"
 #import <YouXiPayUISDK/YouXiPayUISDK.h>
 #import "CJContactSelectViewController.h"
+#import "JRMFHeader.h"
+#import "CJPayManager.h"
+#import "NTESSessionUtil.h"
 
 ZZAvatarModel *cj_convertModel(NIMUser *obj)
 {
@@ -38,12 +41,12 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 //                                      normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
 //                                    selectedImage:[UIImage imageNamed:@"icon_redpacket_pressed"]
 //                                            title:@"红包"];
-//
-//
-//    NIMMediaItem *cloudRP  = [NIMMediaItem item:@"onTapMediaItemCloudRedPacket:onSessionVC:"
-//                                     normalImage:[UIImage imageNamed:@"icon_MFRedpacket"]
-//                                   selectedImage:[UIImage imageNamed:@"icon_MFRedpacket_pressed"]
-//                                           title:@"云红包"];
+
+
+    NIMMediaItem *cloudRP  = [NIMMediaItem item:@"onTapMediaItemCloudRedPacket:onSessionVC:"
+                                     normalImage:[UIImage imageNamed:@"icon_MFRedpacket"]
+                                   selectedImage:[UIImage imageNamed:@"icon_MFRedpacket_pressed"]
+                                           title:@"云红包"];
     
     NIMMediaItem *yeeRP  = [NIMMediaItem item:@"onTapMediaItemYeePacket:onSessionVC:"
                                      normalImage:[UIImage imageNamed:@"icon_yee_normal"]
@@ -85,7 +88,7 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
                                         selectedImage:[UIImage imageNamed:@"bk_media_position_pressed"]
                                                 title:@"位置"];
     
-    [mediaItems addObjectsFromArray:@[yeeRP, yeeTransfer, profileCard, aliPayCode, personStamp, teamNotice, collection, location]];
+    [mediaItems addObjectsFromArray:@[yeeRP, yeeTransfer, cloudRP, profileCard, aliPayCode, personStamp, teamNotice, collection, location]];
     
     return mediaItems;
 }
@@ -100,7 +103,35 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 + (void)onTapMediaItemCloudRedPacket:(NIMMediaItem *)item
                          onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO:云红包
+    // 云红包
+    MFPacket *jrmf = [MFPacket new];
+    jrmf.delegate = [CJPayManager sharedManager];
+    NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
+    NIMSession *session = vc.session;
+    NSString *nickName = [NTESSessionUtil showNick:me inSession:session];
+    NSString *headUrl = [[NIMKit sharedKit] infoByUser:me option:nil].avatarUrlString;
+    
+    NIMTeam *team = nil;
+    if (session.sessionType == NIMSessionTypeTeam)
+    {
+        if ([[NIMSDK sharedSDK].teamManager isMyTeam:session.sessionId])
+        {
+            team = [[NIMSDK sharedSDK].teamManager teamById:session.sessionId];
+        }
+        else
+        {
+            [UIViewController showError:@"不在群中，无法发送红包"];
+        }
+    }
+    
+    [jrmf doActionPresentSendRedEnvelopeViewController:cj_rootNavigationController()
+                                            thirdToken:[JRMFSington GetPacketSington].MFThirdToken
+                                             withGroup:(team != nil)
+                                             receiveID:session.sessionId
+                                          sendUserName:nickName
+                                          sendUserHead:headUrl
+                                            sendUserID:me
+                                           groupNumber:@(team.memberNumber).description];
 }
 
 + (void)onTapMediaItemYeePacket:(NIMMediaItem *)item
