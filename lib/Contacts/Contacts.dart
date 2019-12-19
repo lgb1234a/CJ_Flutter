@@ -28,13 +28,14 @@ class ContactsWidgetState extends State<ContactsWidget> {
   int _searchBarHeight = 60;
   String _suspensionTag = "";
   StreamSubscription _eventListen;
+  StreamSubscription _deleteSubscription;
   ContactsBloc _bloc;
 
   @override
   void initState() {
     super.initState();
 
-    eventBus.on<DeletedContact>().listen((e) {
+    _deleteSubscription = eventBus.on<DeletedContact>().listen((e) {
       _bloc.add(ContactsFetchEvent());
     });
   }
@@ -42,6 +43,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
   @override
   void dispose() {
     _eventListen.cancel();
+    _deleteSubscription.cancel();
     super.dispose();
   }
 
@@ -160,7 +162,7 @@ class ContactsWidgetState extends State<ContactsWidget> {
 
   // 非搜索状态下的通讯录
   Widget _buildContacts() {
-    double bp = widget.params['bottom_padding'];
+    double bp = widget.params['bottom_padding']??0;
 
     return MaterialApp(
         home: BlocProvider<ContactsBloc>(

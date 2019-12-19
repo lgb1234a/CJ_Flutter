@@ -847,6 +847,41 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
     }];
 }
 
+/// 修改个人资料
++ (void)updateMyInfo:(NSDictionary *)params
+{
+    FlutterResult result = params[nimSDKResultKey];
+    NIMUserInfoUpdateTag tag = [params[@"tag"] integerValue];
+    NSString *avatarUrl = params[@"avatarUrl"];
+    NSString *nickName = params[@"nickName"];
+    NSNumber *gender = params[@"gender"];
+    NSString *birth = params[@"birth"];
+    NSString *email = params[@"email"];
+    NSString *sign = params[@"sign"];
+    NSString *phone = params[@"phone"];
+    NSString *ext = params[@"ext"];
+    
+    id p = [NSNull null];
+    if(tag == NIMUserInfoUpdateTagNick) p = nickName;
+    if(tag == NIMUserInfoUpdateTagAvatar) p = avatarUrl;
+    if(tag == NIMUserInfoUpdateTagGender) p = gender;
+    if(tag == NIMUserInfoUpdateTagBirth) p = birth;
+    if(tag == NIMUserInfoUpdateTagEmail) p = email;
+    if(tag == NIMUserInfoUpdateTagSign) p = sign;
+    if(tag == NIMUserInfoUpdateTagMobile) p = phone;
+    if(tag == NIMUserInfoUpdateTagExt) p = ext;
+    [[NIMSDK sharedSDK].userManager updateMyUserInfo:@{@(tag) : p}
+                                          completion:^(NSError * _Nullable error) {
+        if(error) {
+            [UIViewController showError:[NSString stringWithFormat:@"修改失败:%@", error.description]];
+            result(@(NO));
+        }else {
+            [UIViewController showError:@"修改成功"];
+            result(@(YES));
+        }
+    }];
+}
+
 #pragma mark ----- private --------
 + (BOOL)recentSessionIsMark:(NIMRecentSession *)recent
                        type:(NSInteger)type
