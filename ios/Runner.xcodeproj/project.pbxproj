@@ -53,6 +53,7 @@
 		EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */; };
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
+		EF9C904923AB29C500081F82 /* CJScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C904823AB29C500081F82 /* CJScanViewController.m */; };
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
 		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
@@ -153,6 +154,8 @@
 		EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_onTimer.aac; sourceTree = "<group>"; };
 		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
 		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
+		EF9C904723AB29C500081F82 /* CJScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJScanViewController.h; sourceTree = "<group>"; };
+		EF9C904823AB29C500081F82 /* CJScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJScanViewController.m; sourceTree = "<group>"; };
 		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 		EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeePayRedPacketTipAttachment.h; sourceTree = "<group>"; };
 		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 		EF11BE7622FAC61D00CAD319 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C904723AB29C500081F82 /* CJScanViewController.h */,
+				EF9C904823AB29C500081F82 /* CJScanViewController.m */,
 				EF1422ED23055BF500AEAA55 /* CJMineViewController.h */,
 				EF1422EE23055BF500AEAA55 /* CJMineViewController.m */,
 			);
@@ -714,6 +719,7 @@
 				EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
 				EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */,
+				EF9C904923AB29C500081F82 /* CJScanViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

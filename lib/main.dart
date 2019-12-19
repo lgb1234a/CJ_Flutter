@@ -32,6 +32,7 @@ import 'Login/PhoneBind.dart';
 import 'Mine/QrScan.dart';
 import 'Contacts/NewFriends.dart';
 import 'Contacts/GroupChat.dart';
+import 'Components/CJTeamJoinVerify.dart';
 
 
 /* 检测擦肩bloc数据流向 */
@@ -126,6 +127,8 @@ class _MyAppState extends State<MyApp> {
       'new_friend': (pageName, params, _) => NewFriendsPage(),
       /// 群聊
       'group_chat': (pageName, params, _) => GroupChatPage(),
+      /// 进群验证页面
+      'team_join_verify': (pageName, params, _) => CJTeamJoinVerifyPage(params:params)
     });
   }
 

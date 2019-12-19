@@ -197,6 +197,12 @@ class NimSdkUtil {
     await _channel.invokeMethod('deleteAllNotifications');
   }
 
+  /// 申请进群
+  static Future<bool> applyToTeam(String teamId, {String verifyMsg}) async {
+    bool success = await _channel.invokeMethod('applyToTeam:', {'teamId': teamId, 'verifyMsg': verifyMsg});
+    return success;
+  }
+
   /// 同意入群申请
   static Future<NotificationHandleType> passApplyToTeam(
       String targetID, String sourceID) async {
