@@ -64,10 +64,6 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-//    CGFloat padding = 0.f;
-//    self.label.size = [self.label sizeThatFits:CGSizeMake(self.width - 2 * padding, CGFLOAT_MAX)];
-//    self.label.centerX = self.width * .5f;
-//    self.label.centerY = self.height * .5f;
     
     self.label.frame = self.bounds;
 }
@@ -79,7 +75,6 @@
 {
     if ([self.delegate respondsToSelector:@selector(onCatchEvent:)]) {
         NIMKitEvent *event = [[NIMKitEvent alloc] init];
-//        event.eventName = NTESShowRedPacketDetailEvent;
         event.messageModel = self.model;
         event.data = self;
         [self.delegate onCatchEvent:event];

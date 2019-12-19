@@ -54,6 +54,10 @@
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
 		EF9C904923AB29C500081F82 /* CJScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C904823AB29C500081F82 /* CJScanViewController.m */; };
+		EF9C905423AB617800081F82 /* CJMFRedPacketAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905323AB617800081F82 /* CJMFRedPacketAttachment.m */; };
+		EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */; };
+		EF9C905A23AB61A500081F82 /* CJMFRedPacketContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905923AB61A500081F82 /* CJMFRedPacketContentView.m */; };
+		EF9C905D23AB61C700081F82 /* CJMFRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */; };
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
 		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
@@ -156,6 +160,14 @@
 		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
 		EF9C904723AB29C500081F82 /* CJScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJScanViewController.h; sourceTree = "<group>"; };
 		EF9C904823AB29C500081F82 /* CJScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJScanViewController.m; sourceTree = "<group>"; };
+		EF9C905223AB617800081F82 /* CJMFRedPacketAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketAttachment.h; sourceTree = "<group>"; };
+		EF9C905323AB617800081F82 /* CJMFRedPacketAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMFRedPacketAttachment.m; sourceTree = "<group>"; };
+		EF9C905523AB618500081F82 /* CJMFRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketTipAttachment.h; sourceTree = "<group>"; };
+		EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMFRedPacketTipAttachment.m; sourceTree = "<group>"; };
+		EF9C905823AB61A500081F82 /* CJMFRedPacketContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketContentView.h; sourceTree = "<group>"; };
+		EF9C905923AB61A500081F82 /* CJMFRedPacketContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMFRedPacketContentView.m; sourceTree = "<group>"; };
+		EF9C905B23AB61C700081F82 /* CJMFRedPacketTipContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketTipContentView.h; sourceTree = "<group>"; };
+		EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMFRedPacketTipContentView.m; sourceTree = "<group>"; };
 		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 		EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeePayRedPacketTipAttachment.h; sourceTree = "<group>"; };
 		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
@@ -356,9 +368,10 @@
 		EF8A40FD2334A44000AF697E /* BubbleCell */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C905123AB616300081F82 /* AttachmentModel */,
+				EF9C905023AB616300081F82 /* ContentView */,
 				EF8A40FE2334A44000AF697E /* CloudPay */,
 				EF8A40FF2334A44000AF697E /* YeePay */,
-				EF8A41002334A44000AF697E /* CajianPay */,
 			);
 			path = BubbleCell;
 			sourceTree = "<group>";
@@ -379,15 +392,6 @@
 				EF8A41012334A47300AF697E /* View */,
 			);
 			path = YeePay;
-			sourceTree = "<group>";
-		};
-		EF8A41002334A44000AF697E /* CajianPay */ = {
-			isa = PBXGroup;
-			children = (
-				EF8A41062334A4B600AF697E /* Model */,
-				EF8A41052334A4B600AF697E /* View */,
-			);
-			path = CajianPay;
 			sourceTree = "<group>";
 		};
 		EF8A41012334A47300AF697E /* View */ = {
@@ -420,20 +424,6 @@
 			sourceTree = "<group>";
 		};
 		EF8A41042334A4AB00AF697E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		EF8A41052334A4B600AF697E /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		EF8A41062334A4B600AF697E /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -517,6 +507,28 @@
 				EF8A414E2338C03000AF697E /* video_chat_push.mp3 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		EF9C905023AB616300081F82 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C905823AB61A500081F82 /* CJMFRedPacketContentView.h */,
+				EF9C905923AB61A500081F82 /* CJMFRedPacketContentView.m */,
+				EF9C905B23AB61C700081F82 /* CJMFRedPacketTipContentView.h */,
+				EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
+		EF9C905123AB616300081F82 /* AttachmentModel */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C905223AB617800081F82 /* CJMFRedPacketAttachment.h */,
+				EF9C905323AB617800081F82 /* CJMFRedPacketAttachment.m */,
+				EF9C905523AB618500081F82 /* CJMFRedPacketTipAttachment.h */,
+				EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */,
+			);
+			path = AttachmentModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -699,12 +711,14 @@
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
 				EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */,
 				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
+				EF9C905D23AB61C700081F82 /* CJMFRedPacketTipContentView.m in Sources */,
 				EF53F6E823A8762A004EB4B4 /* CJNewFriendViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				EF8A412A2338733700AF697E /* CJSessionCustomContentConfig.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				EF42BB4D2385316200DAA191 /* CJTabbarController.m in Sources */,
+				EF9C905423AB617800081F82 /* CJMFRedPacketAttachment.m in Sources */,
 				EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */,
 				EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */,
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
@@ -716,9 +730,11 @@
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
 				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
+				EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */,
 				EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,
 				EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */,
+				EF9C905A23AB61A500081F82 /* CJMFRedPacketContentView.m in Sources */,
 				EF9C904923AB29C500081F82 /* CJScanViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
