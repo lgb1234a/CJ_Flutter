@@ -55,7 +55,10 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[
             Text(_teamInfo.teamName == null ? '' : _teamInfo.teamName),
-            Icon(Icons.arrow_forward_ios)
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
           ],
         ), () {
       if (_memberInfo.type == 1) {
@@ -88,7 +91,10 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[
             Image.asset('images/icon_settings_gray_qr@2x.png'),
-            Icon(Icons.arrow_forward_ios)
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
           ],
         ), () {
       String qrCodeUrl =
@@ -107,7 +113,13 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     return Cell(
         Text('群公告'),
         Row(
-          children: <Widget>[Text('点击查看群公告'), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Text('点击查看群公告'),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
+          ],
         ), () {
       _bloc.add(TappedTeamAnnouncement(announcement: _teamInfo.announcement));
     });
@@ -123,7 +135,10 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         Row(
           children: <Widget>[
             Text(_memberInfo.nickName == null ? '点击设置' : _memberInfo.nickName),
-            Icon(Icons.arrow_forward_ios)
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
           ],
         ), () {
       cjDialog(context, '设置群昵称',
@@ -134,8 +149,8 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
           handlers: [
             () {
               if (_nickNameController.text.trim().isNotEmpty) {
-                _bloc.add(
-                    UpdateTeamNickName(nickName: _nickNameController.text.trim()));
+                _bloc.add(UpdateTeamNickName(
+                    nickName: _nickNameController.text.trim()));
               }
             }
           ],
@@ -150,9 +165,15 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     return Cell(
         Text('群管理'),
         Row(
-          children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Text('点击查看'),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
+          ],
         ), () {
-          print(_memberInfo.type);
+      print(_memberInfo.type);
       if (_memberInfo.type == 1) {
         _bloc.add(TappedTeamManage());
       }
@@ -165,7 +186,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     // return cell(
     //     Text('查找聊天记录'),
     //     Row(
-    //       children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios)],
+    //       children: <Widget>[Text('点击查看'), Icon(Icons.arrow_forward_ios, size: 14,)],
     //     ),
     //     () {});
   }
@@ -197,7 +218,10 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
   Widget _clearHistory() {
     return Cell(
         Text('清空聊天记录'),
-        Icon(Icons.arrow_forward_ios),
+        Icon(
+          Icons.arrow_forward_ios,
+          size: 14,
+        ),
         () => cjSheet(context, '警告',
             content: Text('确定要清空聊天记录吗？'),
             handlerTexts: ['确定'],
@@ -238,7 +262,13 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
         height: 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Text('查看全部群成员'), Icon(Icons.arrow_forward_ios)],
+          children: <Widget>[
+            Text('查看全部群成员'),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            )
+          ],
         ),
       ),
     );

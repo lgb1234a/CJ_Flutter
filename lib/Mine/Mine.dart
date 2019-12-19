@@ -11,7 +11,6 @@ import 'package:cajian/Base/CJUtils.dart';
 import '../Base/CJEventBus.dart';
 import 'package:nim_sdk_util/Model/nim_model.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
-import '../Components/CJWebView.dart';
 
 class MineWidget extends StatefulWidget {
   final Map params;
@@ -220,7 +219,7 @@ class MineState extends State<MineWidget> {
           height: 0.5,
         ),
         _cell('images/icon_setting_service@2x.png', '联系客服',
-            () => cjDialog(context, '易宝版暂不支持收藏功能，敬请期待～')),
+            () => cjDialog(context, '易宝版暂不支持客服功能，敬请期待～')),
         Container(
           height: 8,
         ),

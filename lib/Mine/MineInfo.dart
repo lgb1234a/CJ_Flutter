@@ -42,6 +42,7 @@ class _MineInfoState extends State<MineInfoWiget> {
           avatar,
           Icon(
             Icons.arrow_forward_ios,
+            size: 14,
           )
         ],
       ),
@@ -65,6 +66,7 @@ class _MineInfoState extends State<MineInfoWiget> {
             _userInfo == null ? Container() : Text(_userInfo.mobile ?? ''),
             Icon(
               Icons.arrow_forward_ios,
+              size: 14,
             )
           ],
         ),
@@ -80,6 +82,7 @@ class _MineInfoState extends State<MineInfoWiget> {
             _userInfo == null ? Container() : Text(_userInfo.showName ?? ''),
             Icon(
               Icons.arrow_forward_ios,
+              size: 14,
             )
           ],
         ),
@@ -110,6 +113,7 @@ class _MineInfoState extends State<MineInfoWiget> {
             _userInfo == null ? Container() : Text(_userInfo.cajianNo ?? ''),
             Icon(
               Icons.arrow_forward_ios,
+              size: 14,
             )
           ],
         ),
@@ -128,6 +132,7 @@ class _MineInfoState extends State<MineInfoWiget> {
             ),
             Icon(
               Icons.arrow_forward_ios,
+              size: 14,
             )
           ],
         ),
@@ -165,6 +170,7 @@ class _MineInfoState extends State<MineInfoWiget> {
               : Text(genderTransString(_userInfo.gender)),
           Icon(
             Icons.arrow_forward_ios,
+            size: 14,
           )
         ]),
         () => cjDialog(context, '易宝版暂不支持修改性别，敬请期待～'));
@@ -178,6 +184,7 @@ class _MineInfoState extends State<MineInfoWiget> {
           _userInfo == null ? Container() : Text(_userInfo.birth ?? ''),
           Icon(
             Icons.arrow_forward_ios,
+            size: 14,
           )
         ]),
         () => cjDialog(context, '易宝版暂不支持修改生日，敬请期待～'));
@@ -191,6 +198,7 @@ class _MineInfoState extends State<MineInfoWiget> {
           _userInfo == null ? Container() : Text(_userInfo.email ?? ''),
           Icon(
             Icons.arrow_forward_ios,
+            size: 14,
           )
         ]),
         () => cjDialog(context, '设置新的邮箱地址',
@@ -219,6 +227,7 @@ class _MineInfoState extends State<MineInfoWiget> {
           _userInfo == null ? Container() : Text(_userInfo.sign ?? ''),
           Icon(
             Icons.arrow_forward_ios,
+            size: 14,
           )
         ]),
         () => cjDialog(context, '设置新的签名',

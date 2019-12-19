@@ -89,7 +89,7 @@ class UserInfoPageState extends State<UserInfoPage> {
             info.alias != null ? Text(info.alias) : SizedBox(),
             Icon(
               Icons.arrow_forward_ios,
-              size: 16,
+              size: 14,
             )
           ],
         ),

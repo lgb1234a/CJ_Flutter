@@ -50,6 +50,7 @@ class ContactSettingState extends State<ContactSetting> {
         Text('把TA推荐给朋友'),
         Icon(
           Icons.arrow_forward_ios,
+          size: 14,
         ), () {
       /// TODO:
     });
@@ -140,10 +141,9 @@ class ContactSettingState extends State<ContactSetting> {
               height: 0.5,
             ),
             _msgNotify(),
-            Divider(
-              height: 20,
-            ),
+            
             Container(
+              margin: EdgeInsets.only(top: 20),
               padding: EdgeInsets.symmetric(horizontal: 20),
               height: 40,
               child: CupertinoButton.filled(
