@@ -7,7 +7,9 @@ NSDictionary *attachmentMapping()
                         @(CustomMessageTypeYeeRedPacket): @"CJYeePayRedPacketAtachment",
                         @(CustomMessageTypeYeeRedPacketTip): @"CJYeePayRedPacketTipAttachment",
                         @(CustomMessageTypeRedPacket): @"CJMFRedPacketAttachment",
-                        @(CustomMessageTypeRedPacketTip): @"CJMFRedPacketTipAttachment"
+                        @(CustomMessageTypeRedPacketTip): @"CJMFRedPacketTipAttachment",
+                        @(CustomMessageTypeCloudRedPacket): @"CJCloudRedPacketAttachment",
+                        @(CustomMessageTypeCloudRedPacketTip): @"CJCloudRedPacketTipAttachment"
                         };
     
     return d;

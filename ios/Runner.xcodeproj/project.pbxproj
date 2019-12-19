@@ -58,6 +58,10 @@
 		EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */; };
 		EF9C905A23AB61A500081F82 /* CJMFRedPacketContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905923AB61A500081F82 /* CJMFRedPacketContentView.m */; };
 		EF9C905D23AB61C700081F82 /* CJMFRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */; };
+		EF9C906E23AB6A3B00081F82 /* CJCloudRedPacketAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C906B23AB6A3B00081F82 /* CJCloudRedPacketAttachment.m */; };
+		EF9C906F23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C906D23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m */; };
+		EF9C907423AB6A4400081F82 /* CJCloudRedPacketContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C907023AB6A4400081F82 /* CJCloudRedPacketContentView.m */; };
+		EF9C907523AB6A4400081F82 /* CJCloudRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C907223AB6A4400081F82 /* CJCloudRedPacketTipContentView.m */; };
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
 		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
@@ -168,6 +172,14 @@
 		EF9C905923AB61A500081F82 /* CJMFRedPacketContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMFRedPacketContentView.m; sourceTree = "<group>"; };
 		EF9C905B23AB61C700081F82 /* CJMFRedPacketTipContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketTipContentView.h; sourceTree = "<group>"; };
 		EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJMFRedPacketTipContentView.m; sourceTree = "<group>"; };
+		EF9C906A23AB6A3B00081F82 /* CJCloudRedPacketAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCloudRedPacketAttachment.h; sourceTree = "<group>"; };
+		EF9C906B23AB6A3B00081F82 /* CJCloudRedPacketAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCloudRedPacketAttachment.m; sourceTree = "<group>"; };
+		EF9C906C23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCloudRedPacketTipAttachment.h; sourceTree = "<group>"; };
+		EF9C906D23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCloudRedPacketTipAttachment.m; sourceTree = "<group>"; };
+		EF9C907023AB6A4400081F82 /* CJCloudRedPacketContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCloudRedPacketContentView.m; sourceTree = "<group>"; };
+		EF9C907123AB6A4400081F82 /* CJCloudRedPacketContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCloudRedPacketContentView.h; sourceTree = "<group>"; };
+		EF9C907223AB6A4400081F82 /* CJCloudRedPacketTipContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCloudRedPacketTipContentView.m; sourceTree = "<group>"; };
+		EF9C907323AB6A4400081F82 /* CJCloudRedPacketTipContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCloudRedPacketTipContentView.h; sourceTree = "<group>"; };
 		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 		EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeePayRedPacketTipAttachment.h; sourceTree = "<group>"; };
 		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
@@ -379,7 +391,7 @@
 		EF8A40FE2334A44000AF697E /* CloudPay */ = {
 			isa = PBXGroup;
 			children = (
-				EF8A41042334A4AB00AF697E /* Model */,
+				EF8A41042334A4AB00AF697E /* Attachment */,
 				EF8A41032334A4AB00AF697E /* View */,
 			);
 			path = CloudPay;
@@ -419,15 +431,23 @@
 		EF8A41032334A4AB00AF697E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C907123AB6A4400081F82 /* CJCloudRedPacketContentView.h */,
+				EF9C907023AB6A4400081F82 /* CJCloudRedPacketContentView.m */,
+				EF9C907323AB6A4400081F82 /* CJCloudRedPacketTipContentView.h */,
+				EF9C907223AB6A4400081F82 /* CJCloudRedPacketTipContentView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		EF8A41042334A4AB00AF697E /* Model */ = {
+		EF8A41042334A4AB00AF697E /* Attachment */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C906A23AB6A3B00081F82 /* CJCloudRedPacketAttachment.h */,
+				EF9C906B23AB6A3B00081F82 /* CJCloudRedPacketAttachment.m */,
+				EF9C906C23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.h */,
+				EF9C906D23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m */,
 			);
-			path = Model;
+			path = Attachment;
 			sourceTree = "<group>";
 		};
 		EF8A410A2334BAF100AF697E /* Config */ = {
@@ -703,11 +723,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF9C907523AB6A4400081F82 /* CJCloudRedPacketTipContentView.m in Sources */,
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
 				EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,
 				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
+				EF9C907423AB6A4400081F82 /* CJCloudRedPacketContentView.m in Sources */,
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
 				EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */,
 				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
@@ -724,12 +746,14 @@
 				EF11BE7C22FAC74300CAD319 /* CJContactsViewController.m in Sources */,
 				EF11BE6B22FABBD600CAD319 /* CJFlutterViewController.m in Sources */,
 				EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */,
+				EF9C906E23AB6A3B00081F82 /* CJCloudRedPacketAttachment.m in Sources */,
 				EF11BE7222FABBFC00CAD319 /* CJUtilBridge.m in Sources */,
 				EF8A413123389A9100AF697E /* CJYeePayRedPacketAtachment.m in Sources */,
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
 				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
+				EF9C906F23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m in Sources */,
 				EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */,
 				EF6C5530237BDAB200EE1E35 /* CJLoginViewController.m in Sources */,
 				EF8A41152334D60E00AF697E /* CJPayManager.m in Sources */,

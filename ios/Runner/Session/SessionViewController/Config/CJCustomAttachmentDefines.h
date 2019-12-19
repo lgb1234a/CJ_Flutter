@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, CJCustomMessageType){
     CustomMessageTypeRecord   = 16, // 战绩消息
     
     CustomMessageTypeCloudRedPacket = 19, //  云红包
-    CustomMessageTypeCloudRedPacketTip = 20, //
+    CustomMessageTypeCloudRedPacketTip = 20, // 云红包提示
     
     CustomMessageTypeSystemNotification = 21, // 擦肩小助手系统通知
     CustomMessageTypeUpdateInfo = 22,  // 擦肩小助手版本更新消息
