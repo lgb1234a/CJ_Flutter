@@ -14,6 +14,7 @@
 #import "CJShareAlertViewController.h"
 #import "CJContactSelectConfig.h"
 #import <YouXiPayUISDK/YouXiPayUISDK.h>
+#import "JRMFHeader.h"
 
 static inline UIWindow *cj_getkeyWindow()
 {
@@ -74,6 +75,10 @@ static inline UIWindow *cj_getkeyWindow()
     [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
         [self showYeePayWallet:arguments];
     } forName:@"showYeePayWallet"];
+    
+    [FlutterBoostPlugin.sharedInstance addEventListener:^(NSString *name, NSDictionary *arguments) {
+        [self onTouchMFWallet];
+    } forName:@"onTouchMFWallet"];
 }
 
 // 跳转聊天
@@ -380,6 +385,21 @@ didFinishSavingWithError:(NSError *)error
 - (void)showYeePayWallet:(NSDictionary *)params
 {
     [ZZPayUI showMyWallet:cj_rootNavigationController()];
+}
+
+// 点击云钱包
+- (void)onTouchMFWallet
+{
+    NSString *userId = [[NIMSDK sharedSDK].loginManager currentAccount];
+    NIMKitInfo *userInfo = [[NIMKit sharedKit] infoByUser:userId option:nil];
+    MFWallet *wallet = [[MFWallet alloc] init];
+    
+    NSString* token = [JRMFSington GetPacketSington].MFThirdToken;
+    [wallet doPresentJrmfWalletPageWithBaseViewController:cj_rootNavigationController()
+                                                   userId:userId
+                                                 userName:userInfo.showName
+                                             userHeadLink:userInfo.avatarUrlString
+                                               thirdToken:token];
 }
 
 #pragma mark --- delegate ---

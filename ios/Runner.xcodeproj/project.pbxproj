@@ -62,6 +62,17 @@
 		EF9C906F23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C906D23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m */; };
 		EF9C907423AB6A4400081F82 /* CJCloudRedPacketContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C907023AB6A4400081F82 /* CJCloudRedPacketContentView.m */; };
 		EF9C907523AB6A4400081F82 /* CJCloudRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C907223AB6A4400081F82 /* CJCloudRedPacketTipContentView.m */; };
+		EF9C908423AB707400081F82 /* MFWalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C907723AB707300081F82 /* MFWalletKit.framework */; };
+		EF9C908523AB707400081F82 /* jrmf_p.cer in Resources */ = {isa = PBXBuildFile; fileRef = EF9C907823AB707300081F82 /* jrmf_p.cer */; };
+		EF9C908623AB707400081F82 /* WalletResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EF9C907923AB707300081F82 /* WalletResource.bundle */; };
+		EF9C908723AB707400081F82 /* JRMFSington.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C907A23AB707300081F82 /* JRMFSington.m */; };
+		EF9C908823AB707400081F82 /* JrmfPacketKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C907B23AB707300081F82 /* JrmfPacketKit.framework */; };
+		EF9C908923AB707400081F82 /* jrmf_o.cer in Resources */ = {isa = PBXBuildFile; fileRef = EF9C907C23AB707300081F82 /* jrmf_o.cer */; };
+		EF9C908A23AB707400081F82 /* jrmf_n.cer in Resources */ = {isa = PBXBuildFile; fileRef = EF9C907D23AB707300081F82 /* jrmf_n.cer */; };
+		EF9C908B23AB707400081F82 /* MFRedPacketKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C907E23AB707300081F82 /* MFRedPacketKit.framework */; };
+		EF9C908C23AB707400081F82 /* JYangToolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C907F23AB707300081F82 /* JYangToolKit.framework */; };
+		EF9C908D23AB707400081F82 /* JrmfWalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9C908123AB707300081F82 /* JrmfWalletKit.framework */; };
+		EF9C908E23AB707400081F82 /* JResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EF9C908323AB707300081F82 /* JResource.bundle */; };
 		EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */; };
 		EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */; };
 		EFD2593C233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD2593B233C9A7B00E78DB6 /* CJYeeRedPacketTipContentView.m */; };
@@ -180,6 +191,19 @@
 		EF9C907123AB6A4400081F82 /* CJCloudRedPacketContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCloudRedPacketContentView.h; sourceTree = "<group>"; };
 		EF9C907223AB6A4400081F82 /* CJCloudRedPacketTipContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCloudRedPacketTipContentView.m; sourceTree = "<group>"; };
 		EF9C907323AB6A4400081F82 /* CJCloudRedPacketTipContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCloudRedPacketTipContentView.h; sourceTree = "<group>"; };
+		EF9C907723AB707300081F82 /* MFWalletKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MFWalletKit.framework; sourceTree = "<group>"; };
+		EF9C907823AB707300081F82 /* jrmf_p.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = jrmf_p.cer; sourceTree = "<group>"; };
+		EF9C907923AB707300081F82 /* WalletResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WalletResource.bundle; sourceTree = "<group>"; };
+		EF9C907A23AB707300081F82 /* JRMFSington.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRMFSington.m; sourceTree = "<group>"; };
+		EF9C907B23AB707300081F82 /* JrmfPacketKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JrmfPacketKit.framework; sourceTree = "<group>"; };
+		EF9C907C23AB707300081F82 /* jrmf_o.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = jrmf_o.cer; sourceTree = "<group>"; };
+		EF9C907D23AB707300081F82 /* jrmf_n.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = jrmf_n.cer; sourceTree = "<group>"; };
+		EF9C907E23AB707300081F82 /* MFRedPacketKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MFRedPacketKit.framework; sourceTree = "<group>"; };
+		EF9C907F23AB707300081F82 /* JYangToolKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JYangToolKit.framework; sourceTree = "<group>"; };
+		EF9C908023AB707300081F82 /* JRMFHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRMFHeader.h; sourceTree = "<group>"; };
+		EF9C908123AB707300081F82 /* JrmfWalletKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JrmfWalletKit.framework; sourceTree = "<group>"; };
+		EF9C908223AB707300081F82 /* JRMFSington.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRMFSington.h; sourceTree = "<group>"; };
+		EF9C908323AB707300081F82 /* JResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JResource.bundle; sourceTree = "<group>"; };
 		EFD25933233B6E4E00E78DB6 /* YouXiPayUISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YouXiPayUISDK.framework; sourceTree = "<group>"; };
 		EFD25937233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJYeePayRedPacketTipAttachment.h; sourceTree = "<group>"; };
 		EFD25938233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJYeePayRedPacketTipAttachment.m; sourceTree = "<group>"; };
@@ -193,10 +217,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF5FD2D22399E9D6006A664D /* libz.tbd in Frameworks */,
+				EF9C908D23AB707400081F82 /* JrmfWalletKit.framework in Frameworks */,
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
+				EF9C908B23AB707400081F82 /* MFRedPacketKit.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				61F3DCBE914A0DC334E3167B /* libPods-Runner.a in Frameworks */,
+				EF9C908C23AB707400081F82 /* JYangToolKit.framework in Frameworks */,
 				EFD25934233B6E4E00E78DB6 /* YouXiPayUISDK.framework in Frameworks */,
+				EF9C908423AB707400081F82 /* MFWalletKit.framework in Frameworks */,
+				EF9C908823AB707400081F82 /* JrmfPacketKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +495,7 @@
 		EF8A411B23386E7000AF697E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C907623AB707300081F82 /* Jrmf */,
 				EF8A411C23386E7000AF697E /* YeePay */,
 			);
 			path = Vendor;
@@ -551,6 +581,26 @@
 			path = AttachmentModel;
 			sourceTree = "<group>";
 		};
+		EF9C907623AB707300081F82 /* Jrmf */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C907723AB707300081F82 /* MFWalletKit.framework */,
+				EF9C907823AB707300081F82 /* jrmf_p.cer */,
+				EF9C907923AB707300081F82 /* WalletResource.bundle */,
+				EF9C907A23AB707300081F82 /* JRMFSington.m */,
+				EF9C907B23AB707300081F82 /* JrmfPacketKit.framework */,
+				EF9C907C23AB707300081F82 /* jrmf_o.cer */,
+				EF9C907D23AB707300081F82 /* jrmf_n.cer */,
+				EF9C907E23AB707300081F82 /* MFRedPacketKit.framework */,
+				EF9C907F23AB707300081F82 /* JYangToolKit.framework */,
+				EF9C908023AB707300081F82 /* JRMFHeader.h */,
+				EF9C908123AB707300081F82 /* JrmfWalletKit.framework */,
+				EF9C908223AB707300081F82 /* JRMFSington.h */,
+				EF9C908323AB707300081F82 /* JResource.bundle */,
+			);
+			path = Jrmf;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -624,11 +674,16 @@
 				EF8A41512338C03000AF697E /* video_chat_tip_sender.aac in Resources */,
 				EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */,
 				EF8A412123386E7100AF697E /* Res.bundle in Resources */,
+				EF9C908E23AB707400081F82 /* JResource.bundle in Resources */,
 				EF8A41522338C03000AF697E /* video_chat_tip_HangUp.aac in Resources */,
 				EF8A41532338C03000AF697E /* message.wav in Resources */,
 				EF8A41542338C03000AF697E /* video_chat_tip_receiver.aac in Resources */,
+				EF9C908923AB707400081F82 /* jrmf_o.cer in Resources */,
+				EF9C908A23AB707400081F82 /* jrmf_n.cer in Resources */,
 				EF8A414F2338C03000AF697E /* video_connect_chat_tip_sender.aac in Resources */,
 				EF8A41502338C03000AF697E /* video_chat_tip_OnCall.aac in Resources */,
+				EF9C908523AB707400081F82 /* jrmf_p.cer in Resources */,
+				EF9C908623AB707400081F82 /* WalletResource.bundle in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,6 +795,7 @@
 				EF8A412A2338733700AF697E /* CJSessionCustomContentConfig.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				EF42BB4D2385316200DAA191 /* CJTabbarController.m in Sources */,
+				EF9C908723AB707400081F82 /* JRMFSington.m in Sources */,
 				EF9C905423AB617800081F82 /* CJMFRedPacketAttachment.m in Sources */,
 				EF1422EF23055BF500AEAA55 /* CJMineViewController.m in Sources */,
 				EF8A41092334AF7D00AF697E /* CJSessionViewController.m in Sources */,
@@ -850,6 +906,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/Runner/Vendor/YeePay",
+					"$(PROJECT_DIR)/Runner/Vendor/Jrmf",
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Runner/Base/PrefixHeader.pch";
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -987,6 +1044,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/Runner/Vendor/YeePay",
+					"$(PROJECT_DIR)/Runner/Vendor/Jrmf",
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Runner/Base/PrefixHeader.pch";
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -1018,6 +1076,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/Runner/Vendor/YeePay",
+					"$(PROJECT_DIR)/Runner/Vendor/Jrmf",
 				);
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Runner/Base/PrefixHeader.pch";
 				INFOPLIST_FILE = Runner/Info.plist;
