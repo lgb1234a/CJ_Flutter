@@ -267,7 +267,7 @@ class TeamMemberInfo extends NimSearchContactViewModel {
         invitor = json['invitor'],
         inviterAccid = json['inviterAccid'],
         type = json['type'],
-        nickName = json['nickName'],
+        nickName = json['nickname'],
         isMuted = json['isMuted'],
         createTime = json['createTime'],
         customInfo = json['customInfo'];

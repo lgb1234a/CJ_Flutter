@@ -483,6 +483,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
             [UIViewController showError:@"修改昵称失败"];
             result(@(NO));
         }else {
+            [UIViewController showError:@"修改昵称成功"];
             result(@(YES));
         }
     }];

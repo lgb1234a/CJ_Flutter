@@ -49,15 +49,6 @@ class UserInfoPageState extends State<UserInfoPage> {
     setState(() {
       _isMyFriend = isMyFriend;
     });
-
-    print('===========> me:');
-    print(me);
-    print('===========> _userId:');
-    print(_userId);
-    print('===========> _isMe:');
-    print(_isMe);
-    print('===========> isMyFriend:');
-    print(isMyFriend);
   }
 
   _requestFriend() async {
@@ -163,7 +154,9 @@ class UserInfoPageState extends State<UserInfoPage> {
       padding: EdgeInsets.all(12),
       child: Row(
         children: <Widget>[
-          info.avatarUrlString != null
+          GestureDetector(
+            onTap: ()=> cjDialog(context, '易宝版暂不支持查看用户头像，敬请期待～'),
+            child: info.avatarUrlString != null
               ? FadeInImage.assetNetwork(
                   image: info.avatarUrlString,
                   width: 44,
@@ -173,9 +166,10 @@ class UserInfoPageState extends State<UserInfoPage> {
                   'images/icon_avatar_placeholder@2x.png',
                   width: 44,
                 ),
+          ),
           Expanded(
             child: Container(
-                padding: EdgeInsets.only(left: 6),
+                padding: EdgeInsets.only(left: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
