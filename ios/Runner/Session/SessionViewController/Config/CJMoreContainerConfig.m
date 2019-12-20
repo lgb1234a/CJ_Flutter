@@ -101,11 +101,11 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 }
 
 + (void)onTapMediaItemCloudRedPacket:(NIMMediaItem *)item
-                         onSessionVC:(NIMSessionViewController *)vc
+                         onSessionVC:(NIMSessionViewController <MFManagerDelegate>*)vc
 {
     // 云红包
     MFPacket *jrmf = [MFPacket new];
-    jrmf.delegate = [CJPayManager sharedManager];
+    jrmf.delegate = vc;
     NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
     NIMSession *session = vc.session;
     NSString *nickName = [NTESSessionUtil showNick:me inSession:session];

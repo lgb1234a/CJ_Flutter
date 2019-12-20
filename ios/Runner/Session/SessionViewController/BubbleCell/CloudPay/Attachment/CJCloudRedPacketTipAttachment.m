@@ -8,6 +8,7 @@
 
 #import "CJCloudRedPacketTipAttachment.h"
 #import <NIMKitInfoFetchOption.h>
+#import "JRMFHeader.h"
 
 @interface CJCloudRedPacketTipAttachment ()
 
@@ -23,11 +24,12 @@
                                   @"sendPacketId" :  self.sendPacketId ? : @"",
                                   @"openPacketId" :  self.openPacketId ? : @"",
                                   @"redPacketId"  :  self.packetId ? : @"",
-                                  @"isGetDone" :  self.isGetDone ? : @"",
+                                  @"isGetDone" :  @(self.isGetDone) ? : @(NO),
                                   };
     
     
-    NSDictionary *dict = @{@"type": @(CustomMessageTypeCloudRedPacketTip), @"data": dictContent};
+    NSDictionary *dict = @{@"type": @(CustomMessageTypeCloudRedPacketTip),
+                           @"data": dictContent};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
                                                        options:0
                                                          error:nil];
@@ -55,7 +57,7 @@
     
     if ([currentUserId isEqualToString:self.sendPacketId] && [currentUserId isEqualToString:self.openPacketId])
     {
-        if ([self.isGetDone boolValue])
+        if (self.isGetDone)
         {
             showContent = @"你领取了自己的红包，你的红包已被领完";
         }
@@ -77,7 +79,7 @@
         NIMKitInfo * openUserInfo = [[NIMKit sharedKit] infoByUser:self.openPacketId option:option];
         NSString * name = openUserInfo.showName;
         
-        if ([self.isGetDone boolValue])
+        if (self.isGetDone)
         {
             showContent = [NSString stringWithFormat:@"%@领取了你的红包，你的红包已被领完", name];
         }
@@ -158,6 +160,17 @@
     message.setting            = setting;
     
     return message;
+}
+
+- (void)handleTapCellEvent:(NIMKitEvent *)event
+                 onSession:(NIMSessionViewController *)sessionVC
+{
+    /// 点击了红包提示消息,跳转红包详情
+    MFPacket *jrmf = [[MFPacket alloc] init];
+    NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
+    [jrmf doActionPresentPacketDetailInViewWithUserID:me
+                                             packetID:_packetId
+                                           thirdToken:[JRMFSington GetPacketSington].MFThirdToken];
 }
 
 @end

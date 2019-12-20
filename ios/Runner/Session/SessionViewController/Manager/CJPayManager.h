@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CJPayManager : NSObject <MFManagerDelegate>
+@interface CJPayManager : NSObject
 
 @property (nonatomic, copy, readonly) NSString *mfPartnerId;
 @property (nonatomic, copy, readonly) NSString *mfPpartnerKey;

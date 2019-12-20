@@ -44,11 +44,17 @@
     [self.label setText:nil];
     if ([attachment respondsToSelector:@selector(formatedMessage)]) {
         NSString *formatedMessage = attachment.formatedMessage;
+        UIImage *icon = [UIImage imageNamed:@"icon_redpacket_tip"];
+        [self.label appendImage:icon
+                        maxSize:icon.size
+                         margin:UIEdgeInsetsZero
+                      alignment:M80ImageAlignmentCenter];
+        
         [self.label appendText:formatedMessage];
         NSRange range = [formatedMessage rangeOfString:@"红包"];
         if (range.location != NSNotFound){
-            //由于还有个 icon , 需要将 range 往后挪一个位置
-            range = NSMakeRange(range.location, range.length);
+            //由于还有个icon, 需要将 range 往后挪一个位置
+            range = NSMakeRange(range.location+1, range.length);
             [self.label addCustomLink:model forRange:range linkColor:Main_redColor];
         }
     }
