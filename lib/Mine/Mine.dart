@@ -229,8 +229,14 @@ class MineState extends State<MineWidget> {
           indent: 16.0,
           height: 0.5,
         ),
-        _cell('images/icon_setting_service@2x.png', '联系客服',
-            () => cjDialog(context, '易宝版暂不支持客服功能，敬请期待～')),
+        _cell(
+            'images/icon_setting_service@2x.png',
+            '联系客服',
+            () => FlutterBoost.singleton.open('web_view', urlParams: {
+                  'url':
+                      'https://chat.mqimg.com/dist/standalone.html?eid=146106',
+                  'title': '擦肩客服'
+                })),
         Container(
           height: 8,
         ),
