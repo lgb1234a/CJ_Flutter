@@ -203,7 +203,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   }
 
   /* 发送消息按钮 */
-  Widget _sendMsgSection(UserInfo info) {
+  Widget _sendMsgSection() {
     if (_isMe) return Container();
 
     if (!_isMyFriend) {
@@ -287,7 +287,7 @@ class UserInfoPageState extends State<UserInfoPage> {
                   Container(
                     height: 9,
                   ),
-                  _sendMsgSection(state.info)
+                  _sendMsgSection()
                 ],
               );
             }
