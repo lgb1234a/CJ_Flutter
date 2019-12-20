@@ -7,14 +7,23 @@
 //
 
 #import "CJCloudRedPacketAttachment.h"
+#import "JRMFHeader.h"
+#import "NTESSessionUtil.h"
+#import "CJCloudRedPacketTipAttachment.h"
 
-@interface CJCloudRedPacketAttachment ()
+@interface CJCloudRedPacketAttachment () <MFManagerDelegate>
 
 @property (nonatomic, weak) NIMSession *session;
 
 @end
 
 @implementation CJCloudRedPacketAttachment
+{
+    /// 红包发送人
+    NSString *_redpacketFrom;
+    /// 红包消息
+    NIMMessage *_redpacketMsg;
+}
 
 - (NSString *)encodeAttachment
 {
@@ -125,7 +134,90 @@
 - (void)handleTapCellEvent:(NIMKitEvent *)event
                  onSession:(NIMSessionViewController *)sessionVC
 {
+    self.session = sessionVC.session;
+    _redpacketFrom = event.messageModel.message.from;
+    _redpacketMsg = event.messageModel.message;
     
+    NIMCustomObject *object = (NIMCustomObject *)event.messageModel.message.messageObject;
+    CJCloudRedPacketAttachment *attachment = (CJCloudRedPacketAttachment *)object.attachment;
+    
+    MFPacket *jrmf = [[MFPacket alloc] init];
+    jrmf.delegate = self;
+    NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
+    NSString *nickName = [NTESSessionUtil showNick:me inSession:self.session];
+    NSString *headUrl = [[NIMKit sharedKit] infoByUser:me option:nil].avatarUrlString;
+    BOOL isGroup = self.session.sessionType == NIMSessionTypeTeam;
+    
+    [jrmf doActionPresentOpenViewController:cj_rootNavigationController()
+                                 thirdToken:[JRMFSington GetPacketSington].MFThirdToken
+                               withUserName:nickName
+                                   userHead:headUrl
+                                     userID:me
+                                 envelopeID:attachment.redPacketId
+                                    isGroup:isGroup];
+}
+
+- (void)doMFActionGetPacketStatus:(MFPacketStatusType)type
+{
+    NIMMessage *msg = _redpacketMsg;
+    // 状态已经改变过 不用处理
+    if (self.status != CloudRedPacketStatusNormal) {
+        return;
+    }
+    else
+    {
+        // 红包已领取 红包领完了 红包失效 改变下状态
+        if (type == MFPacketIsGet || type == MFPacketIsNull || type == MFPacketIsDue) {
+            self.status = type;
+            
+            // 回写下缓存数据里
+            id<NIMConversationManager> manager = [[NIMSDK sharedSDK] conversationManager];
+            [manager updateMessage:msg forSession:self.session completion: ^(NSError * __nullable error)
+             {
+                 // 数据回写失败
+                 if (error != nil) {
+                     self.status = CloudRedPacketStatusNormal;
+                 }
+                // 这里最好还要刷新下红包视图 否则返回去以后 不能同步
+                [[NSNotificationCenter defaultCenter] postNotificationName:CJUpdateMessageNotification
+                                                                    object:msg];
+             }];
+        }
+    }
+    
+}
+
+- (void)doMFActionOpenPacketSuccessWith:(NSInteger)hasLeft total:(NSInteger)total totalMoney:(NSString *)totalMoney grabMoney:(NSString *)grabMoney
+{
+    CJCloudRedPacketTipAttachment *tip = [CJCloudRedPacketTipAttachment new];
+    tip.isGetDone = !hasLeft;
+    tip.openPacketId = [[NIMSDK sharedSDK].loginManager currentAccount];
+    tip.packetId = self.redPacketId;
+    tip.sendPacketId = _redpacketFrom;
+    
+    [[NIMSDK sharedSDK].chatManager sendMessage:[tip msgFromAttachment]
+                                      toSession:self.session
+                                          error:nil];
+    
+    
+    if (self.money == nil) {
+        self.money = @"";
+    }
+    self.status = MFPacketIsGet;
+    // 回写下缓存数据里
+    id<NIMConversationManager> manager = [[NIMSDK sharedSDK] conversationManager];
+    [manager updateMessage:_redpacketMsg
+                forSession:self.session
+                completion: ^(NSError * __nullable error)
+     {
+         // 数据回写失败
+         if (error != nil) {
+             self.status = CloudRedPacketStatusNormal;
+         }
+         // 这里最好还要刷新下红包视图 否则返回去以后 不能同步
+         [[NSNotificationCenter defaultCenter] postNotificationName:CJUpdateMessageNotification
+                                                             object:self->_redpacketMsg];
+     }];
 }
 
 @end

@@ -147,7 +147,7 @@
 {
     NSString *stateString = state == UIControlStateNormal? @"normal" : @"pressed";
     if (_attachment && _attachment.status != CloudRedPacketStatusNormal &&  state == UIControlStateNormal) {
-        stateString = @"get";
+        stateString = @"open";
     }
     NSString *imageName = @"icon_mfRedpacket_";
     if (outgoing)

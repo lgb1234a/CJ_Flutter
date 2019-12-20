@@ -8,6 +8,7 @@
 
 #import "CJYeePayRedPacketTipAttachment.h"
 #import <NIMKitInfoFetchOption.h>
+#import "JRMFHeader.h"
 
 @interface CJYeePayRedPacketTipAttachment()
 
@@ -158,6 +159,17 @@
     message.setting            = setting;
     
     return message;
+}
+
+- (void)handleTapCellEvent:(NIMKitEvent *)event
+                 onSession:(NIMSessionViewController *)sessionVC
+{
+    /// 点击了红包提示消息,跳转红包详情
+    MFPacket *jrmf = [[MFPacket alloc] init];
+    NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
+    [jrmf doActionPresentPacketDetailInViewWithUserID:me
+                                             packetID:_packetId
+                                           thirdToken:[JRMFSington GetPacketSington].MFThirdToken];
 }
 
 @end

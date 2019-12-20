@@ -1,0 +1,6 @@
+framework module MFWalletKit {
+  umbrella header "MFWalletKit.h"
+
+  export *
+  module * { export * }
+}

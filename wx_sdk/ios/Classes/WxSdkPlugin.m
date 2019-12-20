@@ -211,7 +211,7 @@ static NSString *wxSDKResultKey = @"flutter_result";
             result(@(NO));
             [UIViewController showError:CJ_net_err_msg];
         }else {
-            if (model.success && !cj_nil_object(model.data)) {
+            if (model.success && !cj_is_nil_object(model.data)) {
                 result(@(YES));
             }else{
                 result(@(NO));

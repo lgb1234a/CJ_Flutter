@@ -7,6 +7,7 @@ import '../Base/CJUtils.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:nim_sdk_util/nim_sdk_util.dart';
 import 'package:flutter/cupertino.dart';
+import '../Login/LoginManager.dart';
 
 class SessionMemberInfoWidget extends StatefulWidget {
   final Map params;
@@ -23,6 +24,9 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
   UserInfo _userInfo;
   bool _isBlocked = false;
   double indent = 12;
+  bool _isMe = false;
+  bool _isMyFriend = false;
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +41,25 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
         await NimSdkUtil.userInfoById(userId: widget.params['member_id']);
     _isBlocked = await NimSdkUtil.isUserBlocked(widget.params['member_id']);
 
+    String me = await LoginManager().getAccid();
+    _isMe = _memberInfo.userId == me;
+
+    /// 由于bloc无法管理appBar的状态，所以在这里刷新状态
+    _isMyFriend = await NimSdkUtil.isMyFriend(_memberInfo.userId);
+
     setState(() {});
+  }
+
+  _requestFriend() async {
+    /// 添加好友
+    NotificationHandleType type =
+        await NimSdkUtil.requestFriend(_memberInfo.userId);
+    if (type == NotificationHandleType.NotificationHandleTypeOk) {
+      // 添加成功 刷新页面
+      setState(() {
+        _isMyFriend = true;
+      });
+    }
   }
 
   /// 操作拉黑/取消拉黑用户
@@ -112,6 +134,37 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
         () {});
   }
 
+  /* 发送消息按钮 */
+  Widget _sendMsgSection() {
+    if (_isMe) return Container();
+
+    if (!_isMyFriend) {
+      /// 不是朋友，显示添加添加好友
+      return Container(
+        padding: EdgeInsets.all(22),
+        child: CupertinoButton.filled(
+          padding: EdgeInsets.all(10),
+          child: Text('添加到通讯录'),
+          onPressed: _requestFriend,
+        ),
+      );
+    }
+    return GestureDetector(
+      child: Container(
+        height: 44,
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[Icon(Icons.send), Text('发消息')],
+        ),
+      ),
+      onTap: () => FlutterBoost.singleton.open(
+          'nativePage://android&iosPageName=CJSessionViewController',
+          urlParams: {'id': widget.params['member_id'], 'type': 0},
+          exts: {'animated': true}),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -160,25 +213,7 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
                   Container(
                     height: 20,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    child: CupertinoButton(
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '发送消息',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () => FlutterBoost.singleton.open(
-                          'nativePage://android&iosPageName=CJSessionViewController',
-                          urlParams: {
-                            'id': widget.params['member_id'],
-                            'type': 0
-                          },
-                          exts: {
-                            'animated': true
-                          }),
-                    ),
-                  )
+                  _sendMsgSection()
                 ],
               ),
       ),

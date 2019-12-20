@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  是否为最后一个红包
  */
-@property (nonatomic, strong) NSString * isGetDone;
+@property (nonatomic, assign) BOOL isGetDone;
 
 @end
 

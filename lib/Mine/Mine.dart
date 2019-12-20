@@ -189,6 +189,15 @@ class MineState extends State<MineWidget> {
             () => FlutterBoost.singleton.channel
                 .sendEvent('showYeePayWallet', {}),
             tipIcon: 'images/icon_setting_MFWallet_recommend@2x.png'),
+        Divider(
+          indent: 16.0,
+          height: 0.5,
+        ),
+        _cell(
+            'images/icon_mf_wallet@2x.png',
+            '云钱包',
+            () => FlutterBoost.singleton.channel
+                .sendEvent('onTouchMFWallet', {})),
         Container(
           height: 8,
         ),

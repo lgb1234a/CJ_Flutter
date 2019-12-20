@@ -1,0 +1,6 @@
+framework module MFRedPacketKit {
+  umbrella header "MFRedPacketKit.h"
+
+  export *
+  module * { export * }
+}
