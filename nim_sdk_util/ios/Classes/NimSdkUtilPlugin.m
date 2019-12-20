@@ -251,7 +251,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
                 @"nickname": member.nickname?:[NSNull null],
                 @"isMuted": @(member.isMuted),
                 @"createTime": @(member.createTime),
-                @"customInfo": member.customInfo?:[NSNull null]
+                @"customInfo": [member.customInfo jsonStringToDictionaryOrArray]?:[NSNull null]
             }];
             
             if(member == members.lastObject) {
@@ -280,7 +280,7 @@ NSDictionary *JsonStringDecode(NSString *jsonString)
         @"nickname": member.nickname?:[NSNull null],
         @"isMuted": @(member.isMuted),
         @"createTime": @(member.createTime),
-        @"customInfo": member.customInfo?:[NSNull null]
+        @"customInfo": [member.customInfo jsonStringToDictionaryOrArray]?:[NSNull null]
     });
 }
 

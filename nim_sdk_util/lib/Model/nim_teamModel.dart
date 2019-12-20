@@ -239,7 +239,7 @@ class TeamMemberInfo extends NimSearchContactViewModel {
   double createTime;
 
   /// 新成员群自定义信息
-  String customInfo;
+  Map customInfo;
 
   /// 群成员类型描述
   String get typeDesc {
