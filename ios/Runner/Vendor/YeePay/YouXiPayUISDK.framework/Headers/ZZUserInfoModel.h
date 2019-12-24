@@ -30,4 +30,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+// 指定人红包头像渲染model
+@interface ZZAvatarModel : NSObject
+
+@property (nonatomic, copy) NSString *u_id;
+@property (nonatomic, copy) NSString *avatarUrl;
+
+/**
+ 0：未知
+ 1：男
+ 2：女
+ */
+@property (nonatomic, assign) NSInteger gender;
+
+@end
+
 NS_ASSUME_NONNULL_END

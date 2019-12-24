@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "ZZUserInfoModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,20 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
             openPacketId:(NSString *)openerId
                 packetId:(NSString *)packetId
                isGetDone:(BOOL)isGetDone;
-
-@end
-
-@interface ZZAvatarModel : NSObject
-
-@property (nonatomic, copy) NSString *u_id;
-@property (nonatomic, copy) NSString *avatarUrl;
-
-/**
- 0：未知
- 1：男
- 2：女
- */
-@property (nonatomic, assign) NSInteger gender;
 
 @end
 
