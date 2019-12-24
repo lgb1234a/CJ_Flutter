@@ -79,6 +79,7 @@
 }
 
 - (instancetype)initWithPrepareData:(NSDictionary *)data
+                               type:(CJCustomMessageType)type
 {
     self = [super init];
     if (self) {
@@ -181,7 +182,7 @@
                                     @"redPacketId": packetId,
                                     @"openPacketId":openerId,
                                     @"isGetDone": [NSString stringWithFormat:@"%d", isGetDone]
-                                  }];
+                                  } type:CustomMessageTypeYeeRedPacketTip];
     
     [[NIMSDK sharedSDK].chatManager sendMessage:[tip msgFromAttachment]
                                       toSession:message.session ? : self.session

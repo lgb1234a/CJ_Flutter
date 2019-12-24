@@ -121,6 +121,7 @@
 }
 
 - (instancetype)initWithPrepareData:(NSDictionary *)data
+                               type:(CJCustomMessageType)type
 {
     self = [super init];
     if (self) {

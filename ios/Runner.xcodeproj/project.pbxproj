@@ -53,6 +53,8 @@
 		EF8A41552338C03000AF697E /* video_chat_tip_onTimer.aac in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */; };
 		EF8A41562338C03000AF697E /* video_chat_push.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EF8A414E2338C03000AF697E /* video_chat_push.mp3 */; };
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
+		EF97C1E623B20E2F00FFF3FC /* CJLinkAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1E523B20E2F00FFF3FC /* CJLinkAttachment.m */; };
+		EF97C1E923B214AC00FFF3FC /* CJLinkContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1E823B214AC00FFF3FC /* CJLinkContentView.m */; };
 		EF9C904923AB29C500081F82 /* CJScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C904823AB29C500081F82 /* CJScanViewController.m */; };
 		EF9C905423AB617800081F82 /* CJMFRedPacketAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905323AB617800081F82 /* CJMFRedPacketAttachment.m */; };
 		EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */; };
@@ -174,6 +176,10 @@
 		EF8A414D2338C03000AF697E /* video_chat_tip_onTimer.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_chat_tip_onTimer.aac; sourceTree = "<group>"; };
 		EF8A414E2338C03000AF697E /* video_chat_push.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = video_chat_push.mp3; sourceTree = "<group>"; };
 		EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJCustomAttachmentDefines.m; sourceTree = "<group>"; };
+		EF97C1E423B20E2F00FFF3FC /* CJLinkAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJLinkAttachment.h; sourceTree = "<group>"; };
+		EF97C1E523B20E2F00FFF3FC /* CJLinkAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJLinkAttachment.m; sourceTree = "<group>"; };
+		EF97C1E723B214AC00FFF3FC /* CJLinkContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJLinkContentView.h; sourceTree = "<group>"; };
+		EF97C1E823B214AC00FFF3FC /* CJLinkContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJLinkContentView.m; sourceTree = "<group>"; };
 		EF9C904723AB29C500081F82 /* CJScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJScanViewController.h; sourceTree = "<group>"; };
 		EF9C904823AB29C500081F82 /* CJScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJScanViewController.m; sourceTree = "<group>"; };
 		EF9C905223AB617800081F82 /* CJMFRedPacketAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketAttachment.h; sourceTree = "<group>"; };
@@ -571,6 +577,8 @@
 				EF9C905923AB61A500081F82 /* CJMFRedPacketContentView.m */,
 				EF9C905B23AB61C700081F82 /* CJMFRedPacketTipContentView.h */,
 				EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */,
+				EF97C1E723B214AC00FFF3FC /* CJLinkContentView.h */,
+				EF97C1E823B214AC00FFF3FC /* CJLinkContentView.m */,
 			);
 			path = ContentView;
 			sourceTree = "<group>";
@@ -582,6 +590,8 @@
 				EF9C905323AB617800081F82 /* CJMFRedPacketAttachment.m */,
 				EF9C905523AB618500081F82 /* CJMFRedPacketTipAttachment.h */,
 				EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */,
+				EF97C1E423B20E2F00FFF3FC /* CJLinkAttachment.h */,
+				EF97C1E523B20E2F00FFF3FC /* CJLinkAttachment.m */,
 			);
 			path = AttachmentModel;
 			sourceTree = "<group>";
@@ -792,8 +802,10 @@
 				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
 				EF9C907423AB6A4400081F82 /* CJCloudRedPacketContentView.m in Sources */,
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
+				EF97C1E623B20E2F00FFF3FC /* CJLinkAttachment.m in Sources */,
 				EF8A41412338B4F200AF697E /* NTESSessionUtil.m in Sources */,
 				EF071C00232634F8007E5D9B /* CJNavigationViewController.m in Sources */,
+				EF97C1E923B214AC00FFF3FC /* CJLinkContentView.m in Sources */,
 				EF9C905D23AB61C700081F82 /* CJMFRedPacketTipContentView.m in Sources */,
 				EF53F6E823A8762A004EB4B4 /* CJNewFriendViewController.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
