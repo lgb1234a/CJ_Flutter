@@ -67,8 +67,8 @@
     }
     else if ([currentUserId isEqualToString:self.openPacketId])
     {
-        NIMKitInfo * sendUserInfo = [[NIMKit sharedKit] infoByUser:self.sendPacketId option:option];
-        NSString * name = sendUserInfo.showName;
+        NIMKitInfo *sendUserInfo = [[NIMKit sharedKit] infoByUser:self.sendPacketId option:option];
+        NSString *name = sendUserInfo.showName;
         showContent = [NSString stringWithFormat:@"你领取了%@的红包", name];
     }
     
