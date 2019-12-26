@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 class WxSdk {
@@ -10,7 +10,6 @@ class WxSdk {
     return version;
   }
 
-
   /// 微信登录
   static Future<void> wxLogin() async {
     await _channel.invokeMethod('wxlogin');
@@ -18,15 +17,23 @@ class WxSdk {
 
   /// 微信分享
   /// 目前实现了分享网页，可自行扩充
-  /// type: 12:web
+  /// type: 1:image 12:web
   static Future<void> wxShare(int type,
-      {String title, String content, String url}) async {
-    await _channel.invokeMethod('share:',
-        {'type': type, 'title': title, 'content': content, 'url': url});
+      {String title = '',
+      String content = '',
+      String url = '',
+      Uint8List imgData}) async {
+    await _channel.invokeMethod('share:', {
+      'type': type,
+      'title': title,
+      'content': content,
+      'url': url,
+      'imgData': imgData
+    });
   }
 
   /// 查询微信绑定状态
-  static Future<bool> wxBindStatus() async{
+  static Future<bool> wxBindStatus() async {
     return await _channel.invokeMethod('wxBindStatus:');
   }
 

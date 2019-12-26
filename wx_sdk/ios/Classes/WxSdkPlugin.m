@@ -44,14 +44,16 @@ static NSString *wxSDKResultKey = @"flutter_result";
 }
 
 /// 分享到微信
-/// web:12
+/// image:1   web:12
 + (void)share:(NSDictionary *)params
 {
     WXMediaMessage *message = [WXMediaMessage message];
     NSString *title = params[@"title"];
     NSString *content = params[@"content"];
     NSString *url = params[@"url"];
-    NSNumber *type = params[@"type"];
+    NSInteger type = [params[@"type"] integerValue];
+    FlutterStandardTypedData *imgData = params[@"imgData"];
+    
     if (title == nil) {
         message.title = @"";
     }
@@ -63,10 +65,23 @@ static NSString *wxSDKResultKey = @"flutter_result";
     message.messageExt      = content;
     message.messageAction   = content;
     
-    WXWebpageObject *ext = [WXWebpageObject object];
-    ext.webpageUrl = url;
+    if(type == CajianShareTypeImage) {
+        if(cj_is_nil_object(imgData) || !imgData.data) {
+            [UIViewController showError:@"无法获取到分享的图片信息～"];
+        }
+        WXImageObject *ext = [WXImageObject object];
+        ext.imageData = imgData.data;
+        
+        message.mediaObject = ext;
+    }
     
-    message.mediaObject = ext;
+    if(type == CajianShareTypeApp) {
+        WXWebpageObject *ext = [WXWebpageObject object];
+        ext.webpageUrl = url;
+        
+        message.mediaObject = ext;
+    }
+    
     
     SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
     req.bText = NO;

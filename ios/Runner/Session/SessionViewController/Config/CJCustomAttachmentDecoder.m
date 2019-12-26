@@ -27,9 +27,9 @@
         
         NSString *className = attachmentNameForType(type);
         Class cls = NSClassFromString(className);
-        if([cls instancesRespondToSelector:@selector(initWithPrepareData:)])
+        if([cls instancesRespondToSelector:@selector(initWithPrepareData:type:)])
         {
-            attachment = [[cls alloc] initWithPrepareData:data];
+            attachment = [[cls alloc] initWithPrepareData:data type:type];
         }
     }
     

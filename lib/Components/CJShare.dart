@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cajian/Base/CJUtils.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:wx_sdk/wx_sdk.dart';
 
 /// 接口
 cjShowSharePopView(BuildContext context, CJShareModel model) {
@@ -64,17 +65,11 @@ class CJShare extends StatefulWidget {
 }
 
 class _CJShareState extends State<CJShare> {
-
-  /// 分享到擦肩
-  void _shareToCaJian() {
-    FlutterBoost.singleton.channel.sendEvent('share', widget.model.toJson());
-  }
-
-
   /// 分享给好友
   Widget _shareToFirends() {
     return GestureDetector(
-      onTap: () => _shareToCaJian(),
+      onTap: () => FlutterBoost.singleton.channel
+          .sendEvent('share', widget.model.toJson()),
       child: Container(
         height: 70,
         width: 100,
@@ -102,9 +97,7 @@ class _CJShareState extends State<CJShare> {
   /// 分享到微信
   Widget _shareToWeChat() {
     return GestureDetector(
-      onTap: () {
-        print('share to wechat!');
-      },
+      onTap: () => WxSdk.wxShare(1, imgData: widget.model.imgData),
       child: Container(
         height: 70,
         width: 100,
@@ -132,9 +125,8 @@ class _CJShareState extends State<CJShare> {
   /// 收藏
   Widget _shareToCollect() {
     return GestureDetector(
-      onTap: () {
-        print('share to collect!');
-      },
+      onTap: () => FlutterBoost.singleton.channel
+          .sendEvent('showTip', {'text': '易宝版暂不支持收藏，敬请期待～'}),
       child: Container(
         height: 70,
         width: 100,

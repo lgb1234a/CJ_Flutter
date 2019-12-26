@@ -26,7 +26,7 @@
         _label.textColor = Main_TextGrayColor;
         _label.backgroundColor = [UIColor clearColor];
         _label.numberOfLines = 0;
-        _label.textAlignment = kCTTextAlignmentCenter;
+        _label.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_label];
     }
     return self;
@@ -36,7 +36,7 @@
 - (void)refresh:(NIMMessageModel *)model{
     [super refresh:model];
     
-    self.label.text = @"易宝版不支持擦肩红包，请前往➡️https://download.youxi2018.com下载授信版";
+    self.label.text = @"易宝版暂不支持擦肩红包，敬请期待～";
 }
 
 // 气泡背景图

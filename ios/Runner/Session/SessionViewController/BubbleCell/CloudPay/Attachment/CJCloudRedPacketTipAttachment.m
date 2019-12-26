@@ -9,6 +9,7 @@
 #import "CJCloudRedPacketTipAttachment.h"
 #import <NIMKitInfoFetchOption.h>
 #import "JRMFHeader.h"
+#import "CJCloudRedPacketTipContentView.h"
 
 @interface CJCloudRedPacketTipAttachment ()
 
@@ -101,7 +102,7 @@
 // model类绑定
 - (NSString *)cellContent:(NIMMessage *)message
 {
-    return @"CJCloudRedPacketTipContentView";
+    return NSStringFromClass(CJCloudRedPacketTipContentView.class);
 }
 
 - (BOOL)canBeForwarded
@@ -114,13 +115,15 @@
     return NO;
 }
 
-#pragma mark - CJCustomAttachment
 - (BOOL)isValid
 {
     return YES;
 }
 
+#pragma mark - CJCustomAttachment
+
 - (instancetype)initWithPrepareData:(NSDictionary *)data
+                               type:(CJCustomMessageType)type
 {
     self = [super init];
     if (self) {

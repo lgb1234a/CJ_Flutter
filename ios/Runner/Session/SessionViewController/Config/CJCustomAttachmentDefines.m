@@ -9,7 +9,11 @@ NSDictionary *attachmentMapping()
                         @(CustomMessageTypeRedPacket): @"CJMFRedPacketAttachment",
                         @(CustomMessageTypeRedPacketTip): @"CJMFRedPacketTipAttachment",
                         @(CustomMessageTypeCloudRedPacket): @"CJCloudRedPacketAttachment",
-                        @(CustomMessageTypeCloudRedPacketTip): @"CJCloudRedPacketTipAttachment"
+                        @(CustomMessageTypeCloudRedPacketTip): @"CJCloudRedPacketTipAttachment",
+                        @(CustomMessageTypeWebPage): @"CJLinkAttachment",
+                        @(CustomMessageTypeShareLink): @"CJLinkAttachment",
+                        @(CustomMessageTypePersonalCard): @"CJBusinessCardAttachment",
+                        @(CustomMessageTypeShareApp): @"CJLinkAttachment"
                         };
     
     return d;

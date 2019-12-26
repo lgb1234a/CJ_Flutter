@@ -18,23 +18,23 @@ typedef NS_ENUM(NSInteger, CJCustomMessageType){
     
     //自定义的消息类型
     CustomMessageTypePersonalCard = 7, // 个人名片
-    CustomMessageTypeWebPage      = 8, // 网页链接
+    CustomMessageTypeWebPage      = 8, // 网页链接，点击唤起第三方浏览器
     
-    CustomMessageTypeAliPayRedPacket    = 9, //红包消息
-    CustomMessageTypeAliPayRedPacketTip = 10, //红包提示消息
+//    CustomMessageTypeAliPayRedPacket    = 9, //红包消息
+//    CustomMessageTypeAliPayRedPacketTip = 10, //红包提示消息
     
     //    CustomMessageTypeShareImage   = 11, // 分享图片
     CustomMessageTypeShareApp     = 12, // 分享游戏
     CustomMessageTypeShareLink    = 13, // 分享链接
-    CustomMessageTypeShake   = 14, // 分享链接
-    CustomMessageTypeRecord   = 16, // 战绩消息
+    CustomMessageTypeShake   = 14, // 抖一抖
+//    CustomMessageTypeRecord   = 16, // 战绩消息
     
     CustomMessageTypeCloudRedPacket = 19, //  云红包
     CustomMessageTypeCloudRedPacketTip = 20, // 云红包提示
     
-    CustomMessageTypeSystemNotification = 21, // 擦肩小助手系统通知
-    CustomMessageTypeUpdateInfo = 22,  // 擦肩小助手版本更新消息
-    CustomMessageTypeRefund = 23,      // 擦肩小助手退款消息
+//    CustomMessageTypeSystemNotification = 21, // 擦肩小助手系统通知
+//    CustomMessageTypeUpdateInfo = 22,  // 擦肩小助手版本更新消息
+//    CustomMessageTypeRefund = 23,      // 擦肩小助手退款消息
     CustomMessageTypeScreenShotsNotice     = 24, //截屏通知
     //    CustomMessageTypeHelperNotice     = 25, //小助手通知
     CustomMessageTypeArticleNotification  = 26, // 文章推送
@@ -55,19 +55,37 @@ NSString *attachmentNameForType(CJCustomMessageType type);
 @required
 
 /**
- 内容是否有效
- 
- @return bool
- */
-- (BOOL)isValid;
-
-/**
  拼装attachment model
  
  @param data
  @param type
  */
-- (instancetype)initWithPrepareData:(NSDictionary *)data;
+- (instancetype)initWithPrepareData:(NSDictionary *)data
+                               type:(CJCustomMessageType)type;
+
+/**
+ 新消息缩略语
+ 
+ @return string
+ */
+- (NSString *)newMsgAcronym;
+
+@optional
+
+/**
+*  左对齐的气泡，cell气泡距离整个cell的内间距
+*/
+- (UIEdgeInsets)cellInsets;
+
+/**
+*  左对齐的气泡，昵称控件的 origin 点
+*/
+- (CGPoint)nickNameMargin;
+
+/**
+*  消息显示在左边
+*/
+- (BOOL)shouldShowLeft;
 
 /**
  是否显示头像
@@ -83,15 +101,17 @@ NSString *attachmentNameForType(CJCustomMessageType type);
  */
 - (BOOL)shouldShowAvatar;
 
+/**
+*  需要添加到Cell上的自定义视图
+*/
+- (NSArray *)customViews;
 
 /**
- 新消息缩略语
+ 内容是否有效
  
- @return string
+ @return bool
  */
-- (NSString *)newMsgAcronym;
-
-@optional
+- (BOOL)isValid;
 
 /**
  从attachment model自定义消息
@@ -126,8 +146,6 @@ NSString *attachmentNameForType(CJCustomMessageType type);
 - (NSString *)formatedMessage;
 
 - (UIImage *)showCoverImage;
-
-- (BOOL)shouldShowAvatar;
 
 - (void)setShowCoverImage:(UIImage *)image;
 
