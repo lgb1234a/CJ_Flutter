@@ -13,7 +13,8 @@ NSDictionary *attachmentMapping()
                         @(CustomMessageTypeWebPage): @"CJLinkAttachment",
                         @(CustomMessageTypeShareLink): @"CJLinkAttachment",
                         @(CustomMessageTypePersonalCard): @"CJBusinessCardAttachment",
-                        @(CustomMessageTypeShareApp): @"CJLinkAttachment"
+                        @(CustomMessageTypeShareApp): @"CJLinkAttachment",
+                        
                         };
     
     return d;

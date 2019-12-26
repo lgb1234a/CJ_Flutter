@@ -36,6 +36,11 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Widget _sectionLoading() {
     return Container(
       height: 30,
@@ -52,14 +57,25 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     }
     return Cell(
         Text('群聊名称'),
-        Row(
-          children: <Widget>[
-            Text(_teamInfo.teamName == null ? '' : _teamInfo.teamName),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 14,
-            )
-          ],
+        Container(
+          padding: EdgeInsets.only(left: 5),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: getSize(context).width - 120,
+                child: Text(
+                  _teamInfo.teamName == null ? '' : _teamInfo.teamName,
+                  textAlign: TextAlign.end,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 14,
+              )
+            ],
+          ),
         ), () {
       if (_memberInfo.type == 1) {
         cjDialog(context, '设置名称',
@@ -177,7 +193,7 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
       print(_memberInfo.type);
       if (_memberInfo.type == 1) {
         _bloc.add(TappedTeamManage());
-      }else {
+      } else {
         cjDialog(context, '只有群主才能使用群管理功能哦～');
       }
     });
@@ -333,14 +349,15 @@ class _SessionTeamInfoState extends State<SessionTeamInfoWidget> {
     if (_members == null) {
       return _sectionLoading();
     }
-    List<UserInfo> ms =
-        (_members.length > 8 && _memberInfo.type == 1) ? _members.sublist(0, 8) : _members;
+    List<UserInfo> ms = (_members.length > 8 && _memberInfo.type == 1)
+        ? _members.sublist(0, 8)
+        : _members;
 
     // 改成可变数组
     List<UserInfo> _ms = [];
     _ms.addAll(ms);
     // 群主快捷添加新成员和踢出成员功能
-    if(_memberInfo.type == 1) {
+    if (_memberInfo.type == 1) {
       UserInfo add = UserInfo();
       add.userId = '+';
       UserInfo delete = UserInfo();

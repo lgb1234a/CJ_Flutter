@@ -71,15 +71,15 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 //                                       selectedImage:[UIImage imageNamed:@"icon_team_paycode_pressed"]
 //                                               title:@"收款码"];
     
-    NIMMediaItem *personStamp  = [NIMMediaItem item:@"onTapMediaItemPersonalstamp:onSessionVC:"
-                                        normalImage:[UIImage imageNamed:@"icon_team_stamp_normal"]
-                                      selectedImage:[UIImage imageNamed:@"icon_team_stamp_pressed"]
-                                              title:@"抖一抖"];
+//    NIMMediaItem *personStamp  = [NIMMediaItem item:@"onTapMediaItemPersonalstamp:onSessionVC:"
+//                                        normalImage:[UIImage imageNamed:@"icon_team_stamp_normal"]
+//                                      selectedImage:[UIImage imageNamed:@"icon_team_stamp_pressed"]
+//                                              title:@"抖一抖"];
     
-    NIMMediaItem *teamNotice  = [NIMMediaItem item:@"onTapMediaItemTeamNotice:onSessionVC:"
-                                       normalImage:[UIImage imageNamed:@"icon_team_notice_normal"]
-                                     selectedImage:[UIImage imageNamed:@"icon_team_notice_pressed"]
-                                             title:@"群通知"];
+//    NIMMediaItem *teamNotice  = [NIMMediaItem item:@"onTapMediaItemTeamNotice:onSessionVC:"
+//                                       normalImage:[UIImage imageNamed:@"icon_team_notice_normal"]
+//                                     selectedImage:[UIImage imageNamed:@"icon_team_notice_pressed"]
+//                                             title:@"群通知"];
     
 //    NIMMediaItem *collection = [NIMMediaItem item:@"onTapMediaItemCollection:onSessionVC:"
 //                                            normalImage:[UIImage imageNamed:@"icon_team_collection_normal"]
@@ -91,7 +91,7 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 //                                        selectedImage:[UIImage imageNamed:@"bk_media_position_pressed"]
 //                                                title:@"位置"];
     
-    [mediaItems addObjectsFromArray:@[yeeRP, cloudRP, profileCard, personStamp, teamNotice]];
+    [mediaItems addObjectsFromArray:@[yeeRP, cloudRP, profileCard]];
     
     return mediaItems;
 }
@@ -224,7 +224,8 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 + (void)onTapMediaItemPersonalstamp:(NIMMediaItem *)item
                         onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO:抖一抖
+    // 抖一抖
+    
 }
 
 + (void)onTapMediaItemTeamNotice:(NIMMediaItem *)item
