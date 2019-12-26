@@ -44,14 +44,25 @@ class ContactSettingState extends State<ContactSetting> {
     });
   }
 
-  ///TODO
+  _shareToFriend() async {
+    UserInfo info = await NimSdkUtil.userInfoById(userId: _userId);
+    FlutterBoost.singleton.channel.sendEvent('share', {
+      'type': 7,
+      'accid': _userId,
+      'nickName': info.showName,
+      'imageUrl': info.avatarUrlString
+    });
+  }
+
+  ///
   _recommendContact() {
     return Cell(
         Text('把TA推荐给朋友'),
         Icon(
           Icons.arrow_forward_ios,
           size: 14,
-        ), () => cjDialog(context, '易宝版暂不支持分享好友名片，敬请期待～'));
+        ),
+        _shareToFriend);
   }
 
   ///
@@ -139,7 +150,6 @@ class ContactSettingState extends State<ContactSetting> {
               height: 0.5,
             ),
             _msgNotify(),
-            
             Container(
               margin: EdgeInsets.only(top: 20),
               padding: EdgeInsets.symmetric(horizontal: 20),
