@@ -119,6 +119,7 @@ cjSheet(BuildContext context, String title,
           ));
 }
 
+/// 通用样式的cell
 class Cell extends StatelessWidget {
   Cell(this.title, this.accessoryView, this.onTap,
       {this.subTitle,
