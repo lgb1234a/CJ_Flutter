@@ -36,7 +36,7 @@
 - (void)refresh:(NIMMessageModel *)model{
     [super refresh:model];
     
-    self.label.text = @"易宝版不支持擦肩红包，敬请期待～";
+    self.label.text = @"易宝版暂不支持擦肩红包，敬请期待～";
 }
 
 // 气泡背景图

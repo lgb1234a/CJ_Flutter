@@ -117,7 +117,7 @@
 - (void)handleTapCellEvent:(NIMKitEvent *)event
                  onSession:(NIMSessionViewController *)sessionVC
 {
-    [UIViewController showMessage:@"易宝版不支持擦肩红包，敬请期待～"
+    [UIViewController showMessage:@"易宝版暂不支持擦肩红包，敬请期待～"
                        afterDelay:3.0f];
 }
 

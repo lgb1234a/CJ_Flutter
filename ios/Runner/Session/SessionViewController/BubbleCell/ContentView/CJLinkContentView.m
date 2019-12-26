@@ -39,13 +39,13 @@
     if (self) {
         // 内容布局
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _titleLabel.font = [UIFont systemFontOfSize:16.f];
-        _titleLabel.numberOfLines = 0;
+        _titleLabel.font = [UIFont systemFontOfSize:15.f];
+        _titleLabel.numberOfLines = 2;
         _titleLabel.textColor =  Main_TextBlackColor;
         
         _contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _contentLabel.font = [UIFont systemFontOfSize:12.f];
-        _contentLabel.numberOfLines = 0;
+        _contentLabel.font = [UIFont systemFontOfSize:11.f];
+        _contentLabel.numberOfLines = 3;
         _contentLabel.textColor = Main_TextGrayColor;
         
         _appNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -124,25 +124,26 @@
     CGFloat cellH = CGRectGetHeight(self.frame);
     CGFloat cellW = CGRectGetWidth(self.frame);
     
+    CGSize contentSize = [self.contentLabel sizeThatFits:CGSizeMake(150.f, 50.f)];
+    contentSize = CGSizeMake(MIN(contentSize.width, 150.f), MIN(contentSize.height, 50.f));
     if (outgoing)
     {
         self.titleLabel.frame = CGRectMake(10.0f, 5.f, 210.f, 40.f);
-        self.contentLabel.frame = CGRectMake(10.0f, 50.f, 150.f, 50.f);
-        self.appNameLabel.frame = CGRectMake(20.0f, cellH - 20, 180.f, 21.f);
-        self.lineView.frame =   CGRectMake(0, cellH - 20, cellW-5, 0.5);
+        self.contentLabel.frame = CGRectMake(10.0f, 48.f, contentSize.width, contentSize.height);
         self.iconView.frame =   CGRectMake(cellW - iconWidth - 15, (cellH-iconWidth)/2+15 , iconWidth,iconWidth);
-        self.appIconView.frame =   CGRectMake(5, cellH - 15, appiconW,appiconW);
+        self.lineView.frame =   CGRectMake(0, cellH - 20, cellW-5, 0.5);
+        self.appIconView.frame =   CGRectMake(10, cellH - 15, appiconW,appiconW);
+        self.appNameLabel.frame = CGRectMake(25.0f, cellH - 20, 180.f, 21.f);
     }
     else
     {
         self.titleLabel.frame = CGRectMake(15.0f, 5.f, 210.f, 40.f);
-        self.contentLabel.frame = CGRectMake(15.0f, 50.f, 150.f, 50.f);
-        self.appNameLabel.frame = CGRectMake(25.0f, cellH - 20, 180.f, 21.f);
-        self.lineView.frame =   CGRectMake(5, cellH - 20, cellW-5, 0.5);
+        self.contentLabel.frame = CGRectMake(15.0f, 48.f, contentSize.width, contentSize.height);
         self.iconView.frame =   CGRectMake(cellW - iconWidth - 15+5, (cellH-iconWidth)/2+15, iconWidth,iconWidth);
-        self.appIconView.frame =   CGRectMake(10, cellH- 15, appiconW,appiconW);
+        self.lineView.frame =   CGRectMake(5, cellH - 20, cellW-5, 0.5);
+        self.appIconView.frame =   CGRectMake(15, cellH- 15, appiconW,appiconW);
+        self.appNameLabel.frame = CGRectMake(30.0f, cellH - 20, 180.f, 21.f);
     }
-    [self.contentLabel sizeToFit];
 }
 
 - (UIImage *)chatBubbleImageForState:(UIControlState)state outgoing:(BOOL)outgoing

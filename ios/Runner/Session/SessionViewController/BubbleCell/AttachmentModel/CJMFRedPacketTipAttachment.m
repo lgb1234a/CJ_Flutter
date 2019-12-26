@@ -47,7 +47,7 @@
 // 消息格式化
 - (NSString *)formatedMessage{
     
-    return @"易宝版不支持擦肩红包，敬请期待～";
+    return @"易宝版暂不支持擦肩红包，敬请期待～";
 }
 
 // 气泡内边距

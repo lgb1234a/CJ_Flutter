@@ -84,6 +84,7 @@
         self.appName = data[@"webpageAppName"];
         self.appIcon = data[@"webpageAppIcon"];
         self.extention = data[@"webpageExtention"];
+        self.type = type;
     }
     return self;
 }
@@ -100,7 +101,7 @@
     if(self.type == CustomMessageTypeWebPage) {
         NSURL *openURL = [NSURL URLWithString:@"cj80278eefe3e24db2://type=BJHL,id=123456"];
         [[UIApplication sharedApplication] openURL:openURL];
-    }else {
+    }else if(self.type == CustomMessageTypeShareLink){
         [FlutterBoostPlugin open:@"web_view"
                        urlParams:@{@"url": self.webUrl}
                             exts:@{@"animated": @(YES)}
@@ -108,6 +109,20 @@
             
         } completion:^(BOOL c) {
             
+        }];
+    }else if(self.type == CustomMessageTypeShareApp) {
+        /// 应用
+        [FlutterBoostPlugin open:@"share_app_detail"
+                       urlParams:@{@"imgUrl": cj_not_nil_object(self.imageData),
+                                   @"title": cj_not_nil_object(self.title),
+                                   @"desc": cj_not_nil_object(self.content),
+                                   @"webUrl": cj_not_nil_object(self.webUrl),
+                                   @"extention": cj_not_nil_object(self.extention)
+                       }
+                            exts:@{@"animated": @(YES)}
+                  onPageFinished:^(NSDictionary * d)
+        {
+        } completion:^(BOOL c) {
         }];
     }
 }

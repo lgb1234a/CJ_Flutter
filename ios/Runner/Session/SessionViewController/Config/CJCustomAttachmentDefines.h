@@ -20,8 +20,8 @@ typedef NS_ENUM(NSInteger, CJCustomMessageType){
     CustomMessageTypePersonalCard = 7, // 个人名片
     CustomMessageTypeWebPage      = 8, // 网页链接，点击唤起第三方浏览器
     
-    CustomMessageTypeAliPayRedPacket    = 9, //红包消息
-    CustomMessageTypeAliPayRedPacketTip = 10, //红包提示消息
+//    CustomMessageTypeAliPayRedPacket    = 9, //红包消息
+//    CustomMessageTypeAliPayRedPacketTip = 10, //红包提示消息
     
     //    CustomMessageTypeShareImage   = 11, // 分享图片
     CustomMessageTypeShareApp     = 12, // 分享游戏
