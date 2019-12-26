@@ -55,13 +55,6 @@ NSString *attachmentNameForType(CJCustomMessageType type);
 @required
 
 /**
- 内容是否有效
- 
- @return bool
- */
-- (BOOL)isValid;
-
-/**
  拼装attachment model
  
  @param data
@@ -69,6 +62,30 @@ NSString *attachmentNameForType(CJCustomMessageType type);
  */
 - (instancetype)initWithPrepareData:(NSDictionary *)data
                                type:(CJCustomMessageType)type;
+
+/**
+ 新消息缩略语
+ 
+ @return string
+ */
+- (NSString *)newMsgAcronym;
+
+@optional
+
+/**
+*  左对齐的气泡，cell气泡距离整个cell的内间距
+*/
+- (UIEdgeInsets)cellInsets;
+
+/**
+*  左对齐的气泡，昵称控件的 origin 点
+*/
+- (CGPoint)nickNameMargin;
+
+/**
+*  消息显示在左边
+*/
+- (BOOL)shouldShowLeft;
 
 /**
  是否显示头像
@@ -84,15 +101,17 @@ NSString *attachmentNameForType(CJCustomMessageType type);
  */
 - (BOOL)shouldShowAvatar;
 
+/**
+*  需要添加到Cell上的自定义视图
+*/
+- (NSArray *)customViews;
 
 /**
- 新消息缩略语
+ 内容是否有效
  
- @return string
+ @return bool
  */
-- (NSString *)newMsgAcronym;
-
-@optional
+- (BOOL)isValid;
 
 /**
  从attachment model自定义消息
@@ -127,8 +146,6 @@ NSString *attachmentNameForType(CJCustomMessageType type);
 - (NSString *)formatedMessage;
 
 - (UIImage *)showCoverImage;
-
-- (BOOL)shouldShowAvatar;
 
 - (void)setShowCoverImage:(UIImage *)image;
 

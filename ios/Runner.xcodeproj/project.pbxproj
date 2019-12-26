@@ -55,6 +55,9 @@
 		EF8A41612339AAFB00AF697E /* CJCustomAttachmentDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8A41602339AAFA00AF697E /* CJCustomAttachmentDefines.m */; };
 		EF97C1E623B20E2F00FFF3FC /* CJLinkAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1E523B20E2F00FFF3FC /* CJLinkAttachment.m */; };
 		EF97C1E923B214AC00FFF3FC /* CJLinkContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1E823B214AC00FFF3FC /* CJLinkContentView.m */; };
+		EF97C1EC23B3349900FFF3FC /* CJBusinessCardAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1EB23B3349900FFF3FC /* CJBusinessCardAttachment.m */; };
+		EF97C1EF23B336ED00FFF3FC /* CJBusinessCardContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1EE23B336ED00FFF3FC /* CJBusinessCardContentView.m */; };
+		EF97C1F223B349A900FFF3FC /* CJShareMsgInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = EF97C1F123B349A900FFF3FC /* CJShareMsgInteractor.m */; };
 		EF9C904923AB29C500081F82 /* CJScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C904823AB29C500081F82 /* CJScanViewController.m */; };
 		EF9C905423AB617800081F82 /* CJMFRedPacketAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905323AB617800081F82 /* CJMFRedPacketAttachment.m */; };
 		EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */; };
@@ -180,6 +183,12 @@
 		EF97C1E523B20E2F00FFF3FC /* CJLinkAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJLinkAttachment.m; sourceTree = "<group>"; };
 		EF97C1E723B214AC00FFF3FC /* CJLinkContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJLinkContentView.h; sourceTree = "<group>"; };
 		EF97C1E823B214AC00FFF3FC /* CJLinkContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJLinkContentView.m; sourceTree = "<group>"; };
+		EF97C1EA23B3349900FFF3FC /* CJBusinessCardAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJBusinessCardAttachment.h; sourceTree = "<group>"; };
+		EF97C1EB23B3349900FFF3FC /* CJBusinessCardAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJBusinessCardAttachment.m; sourceTree = "<group>"; };
+		EF97C1ED23B336ED00FFF3FC /* CJBusinessCardContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJBusinessCardContentView.h; sourceTree = "<group>"; };
+		EF97C1EE23B336ED00FFF3FC /* CJBusinessCardContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJBusinessCardContentView.m; sourceTree = "<group>"; };
+		EF97C1F023B349A900FFF3FC /* CJShareMsgInteractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJShareMsgInteractor.h; sourceTree = "<group>"; };
+		EF97C1F123B349A900FFF3FC /* CJShareMsgInteractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJShareMsgInteractor.m; sourceTree = "<group>"; };
 		EF9C904723AB29C500081F82 /* CJScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJScanViewController.h; sourceTree = "<group>"; };
 		EF9C904823AB29C500081F82 /* CJScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJScanViewController.m; sourceTree = "<group>"; };
 		EF9C905223AB617800081F82 /* CJMFRedPacketAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJMFRedPacketAttachment.h; sourceTree = "<group>"; };
@@ -539,6 +548,8 @@
 			children = (
 				EF8A41362338B01500AF697E /* CJNotificationCenter.h */,
 				EF8A41372338B01500AF697E /* CJNotificationCenter.m */,
+				EF97C1F023B349A900FFF3FC /* CJShareMsgInteractor.h */,
+				EF97C1F123B349A900FFF3FC /* CJShareMsgInteractor.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -579,6 +590,8 @@
 				EF9C905C23AB61C700081F82 /* CJMFRedPacketTipContentView.m */,
 				EF97C1E723B214AC00FFF3FC /* CJLinkContentView.h */,
 				EF97C1E823B214AC00FFF3FC /* CJLinkContentView.m */,
+				EF97C1ED23B336ED00FFF3FC /* CJBusinessCardContentView.h */,
+				EF97C1EE23B336ED00FFF3FC /* CJBusinessCardContentView.m */,
 			);
 			path = ContentView;
 			sourceTree = "<group>";
@@ -592,6 +605,8 @@
 				EF9C905623AB618500081F82 /* CJMFRedPacketTipAttachment.m */,
 				EF97C1E423B20E2F00FFF3FC /* CJLinkAttachment.h */,
 				EF97C1E523B20E2F00FFF3FC /* CJLinkAttachment.m */,
+				EF97C1EA23B3349900FFF3FC /* CJBusinessCardAttachment.h */,
+				EF97C1EB23B3349900FFF3FC /* CJBusinessCardAttachment.m */,
 			);
 			path = AttachmentModel;
 			sourceTree = "<group>";
@@ -793,12 +808,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF97C1EF23B336ED00FFF3FC /* CJBusinessCardContentView.m in Sources */,
 				EF9C907523AB6A4400081F82 /* CJCloudRedPacketTipContentView.m in Sources */,
 				EF8A411A23386D0300AF697E /* CJCustomAttachmentDecoder.m in Sources */,
 				EF9C909123AB789600081F82 /* UserInfoModel.m in Sources */,
 				EF6C552D237AAC8600EE1E35 /* PlatformRouterImp.m in Sources */,
 				EF11BE7922FAC65300CAD319 /* CJSessionListViewController.m in Sources */,
 				EF8A413423389DAC00AF697E /* CJYeeRedPacketContentView.m in Sources */,
+				EF97C1F223B349A900FFF3FC /* CJShareMsgInteractor.m in Sources */,
 				EF8A41102334BEC100AF697E /* CJMoreContainerConfig.m in Sources */,
 				EF9C907423AB6A4400081F82 /* CJCloudRedPacketContentView.m in Sources */,
 				EF8A412E2338754900AF697E /* CJCellLayoutConfig.m in Sources */,
@@ -826,6 +843,7 @@
 				EF8A413E2338B23400AF697E /* NTESAVNotifier.m in Sources */,
 				EFD25939233C977400E78DB6 /* CJYeePayRedPacketTipAttachment.m in Sources */,
 				EF8A412323386E7100AF697E /* YXInterface.m in Sources */,
+				EF97C1EC23B3349900FFF3FC /* CJBusinessCardAttachment.m in Sources */,
 				EF8A41382338B01500AF697E /* CJNotificationCenter.m in Sources */,
 				EF9C906F23AB6A3B00081F82 /* CJCloudRedPacketTipAttachment.m in Sources */,
 				EF9C905723AB618500081F82 /* CJMFRedPacketTipAttachment.m in Sources */,

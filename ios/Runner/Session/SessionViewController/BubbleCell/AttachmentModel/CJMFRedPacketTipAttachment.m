@@ -7,6 +7,7 @@
 //
 
 #import "CJMFRedPacketTipAttachment.h"
+#import "CJMFRedPacketTipContentView.h"
 
 @interface CJMFRedPacketTipAttachment ()
 
@@ -46,7 +47,7 @@
 // 消息格式化
 - (NSString *)formatedMessage{
     
-    return @"易宝版不支持擦肩红包，请前往➡️https://download.youxi2018.com下载授信版";
+    return @"易宝版不支持擦肩红包，敬请期待～";
 }
 
 // 气泡内边距
@@ -58,7 +59,7 @@
 // model类绑定
 - (NSString *)cellContent:(NIMMessage *)message
 {
-    return @"CJMFRedPacketTipContentView";
+    return NSStringFromClass(CJMFRedPacketTipContentView.class);
 }
 
 - (BOOL)canBeForwarded
@@ -72,6 +73,7 @@
 }
 
 #pragma mark - CJCustomAttachment
+
 - (BOOL)isValid
 {
     return YES;

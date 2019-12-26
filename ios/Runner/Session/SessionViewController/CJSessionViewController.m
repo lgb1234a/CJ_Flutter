@@ -10,7 +10,7 @@
 #import "NIMInputMoreContainerView.h"
 #import "CJMoreContainerConfig.h"
 #import "CJCustomAttachmentDefines.h"
-#import <NIMMessageMaker.h>
+#import "CJShareMsgInteractor.h"
 
 @interface CJSessionViewController ()
 
@@ -67,21 +67,7 @@
 - (void)handleShareData
 {
     if(self.shareModel) {
-        if(self.shareModel.type == CajianShareTypeImage) {
-            CJShareImageModel *imgModel = (CJShareImageModel *)self.shareModel;
-            co_launch(^{
-                UIImage *img = await([UIImage async_imageWithData:imgModel.imageData]);
-                NIMMessage *msg = [NIMMessageMaker msgWithImage:img];
-                [self sendMessage:msg];
-            });
-        }
-        
-        // 留言
-        if(!cj_empty_string(self.shareModel.leaveMessage)) {
-            [self.tableView layoutIfNeeded];
-            
-            [self sendMessage:[NIMMessageMaker msgWithText:self.shareModel.leaveMessage]];
-        }
+        [CJShareMsgInteractor shareModel:self.shareModel to:self.session];
         self.shareModel = nil;
     }
 }

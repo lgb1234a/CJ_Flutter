@@ -41,18 +41,22 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLabel.font = [UIFont systemFontOfSize:16.f];
         _titleLabel.numberOfLines = 0;
+        _titleLabel.textColor =  Main_TextBlackColor;
         
         _contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _contentLabel.font = [UIFont systemFontOfSize:12.f];
         _contentLabel.numberOfLines = 0;
+        _contentLabel.textColor = Main_TextGrayColor;
         
         _appNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _appNameLabel.font = [UIFont systemFontOfSize:10.f];
+        _appNameLabel.textColor = Main_TextGrayColor;
         
         _iconView = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         _appIconView = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
         _defaulticon =   [UIImage imageNamed:@"icon_default_link"];
         _lineView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1) ];
+        _lineView.backgroundColor = Main_lineColor;
         
         [self addSubview:_titleLabel];
         [self addSubview:_contentLabel];
@@ -85,9 +89,7 @@
     self.titleLabel.text = attachment.title;
     if(attachment.extention.length>0 &&[attachment.extention isEqualToString:@"yes"])
     {
-        self.contentLabel.text = attachment.weburl;
-        self.titleLabel.textColor    =  [UIColor blackColor];
-        self.contentLabel.textColor =  [UIColor blueColor];
+        self.contentLabel.text = attachment.webUrl;
         self.iconView.image = _defaulticon;
         self.lineView.hidden = YES;
         self.appNameLabel.hidden = YES;
@@ -99,21 +101,18 @@
         self.appNameLabel.hidden = NO;
         self.appIconView.hidden = NO;
         self.contentLabel.text = attachment.content;
-        self.titleLabel.textColor    =  [UIColor blackColor];
-        self.contentLabel.textColor =  [UIColor lightGrayColor];
-        self.appNameLabel.textColor =  [UIColor lightGrayColor];
-        self.lineView.backgroundColor = [UIColor lightGrayColor];
+        
         if (attachment.imageData != nil && ![attachment.imageData isEqualToString:@""]) {
             [self.iconView nim_setImageWithURL:[NSURL URLWithString:attachment.imageData] placeholderImage:self.defaulticon options:SDWebImageRetryFailed];
         }
         
-        if (attachment.appicon != nil && ![attachment.appicon isEqualToString:@""]) {
-            [self.appIconView nim_setImageWithURL:[NSURL URLWithString:attachment.appicon] placeholderImage:self.defaulticon options:SDWebImageRetryFailed];
+        if (attachment.appIcon != nil && ![attachment.appIcon isEqualToString:@""]) {
+            [self.appIconView nim_setImageWithURL:[NSURL URLWithString:attachment.appIcon] placeholderImage:self.defaulticon options:SDWebImageRetryFailed];
             
         }
     }
     self.iconView.userInteractionEnabled = NO;
-    self.appNameLabel.text =  attachment.appname;
+    self.appNameLabel.text =  attachment.appName;
 }
 
 - (void)layoutSubviews
@@ -143,7 +142,7 @@
         self.iconView.frame =   CGRectMake(cellW - iconWidth - 15+5, (cellH-iconWidth)/2+15, iconWidth,iconWidth);
         self.appIconView.frame =   CGRectMake(10, cellH- 15, appiconW,appiconW);
     }
-    
+    [self.contentLabel sizeToFit];
 }
 
 - (UIImage *)chatBubbleImageForState:(UIControlState)state outgoing:(BOOL)outgoing
@@ -152,14 +151,14 @@
     NSString *imageName = nil;
     if (outgoing)
     {
-        imageName = @"icon_sender_ext_node_";
+        imageName = @"icon_sender_text_node_";
     }
     else
     {
         imageName = @"icon_receiver_node_";
     }
     imageName = [imageName stringByAppendingString:stateString];
-    UIImage*image =  [[UIImage nim_imageInKit:imageName] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"{25,25,10,20}") resizingMode:UIImageResizingModeStretch];
+    UIImage*image =  [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"{20,25,10,20}") resizingMode:UIImageResizingModeStretch];
     return  image;
 }
 

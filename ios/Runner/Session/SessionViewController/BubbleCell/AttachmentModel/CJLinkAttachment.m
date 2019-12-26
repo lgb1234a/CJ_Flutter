@@ -7,6 +7,7 @@
 //
 
 #import "CJLinkAttachment.h"
+#import "CJLinkContentView.h"
 
 @interface CJLinkAttachment ()
 
@@ -20,10 +21,10 @@
     NSDictionary *dictContent = @{
                                   @"webpageTitle"    :  self.title ? : @"",
                                   @"webpageContent"  :  self.content ? : @"",
-                                  @"webpageUrl"      :  self.weburl ? : @"",
+                                  @"webpageUrl"      :  self.webUrl ? : @"",
                                   @"webpageImageData":  self.imageData ? : @"",
-                                  @"webpageAppName"  :  self.appname ? : @"",
-                                  @"webpageAppIcon"  :  self.appicon ? : @"",
+                                  @"webpageAppName"  :  self.appName ? : @"",
+                                  @"webpageAppIcon"  :  self.appIcon ? : @"",
                                   @"webpageExtention":  self.extention ? : @"",
                                  };
     
@@ -53,7 +54,7 @@
 }
 
 - (NSString *)cellContent:(NIMMessage *)message{
-   return @"CJLinkContentView";
+   return NSStringFromClass(CJLinkContentView.class);
 }
 
 - (BOOL)canBeForwarded
@@ -66,6 +67,11 @@
     return YES;
 }
 
+- (BOOL)isValid
+{
+    return YES;
+}
+
 - (instancetype)initWithPrepareData:(NSDictionary *)data
                                type:(CJCustomMessageType)type
 {
@@ -73,29 +79,17 @@
     if (self) {
         self.title = data[@"webpageTitle"];
         self.content  = data[@"webpageContent"];
-        self.weburl = data[@"webpageUrl"];
+        self.webUrl = data[@"webpageUrl"];
         self.imageData = data[@"webpageImageData"];
-        self.appname = data[@"webpageAppName"];
-        self.appicon = data[@"webpageAppIcon"];
+        self.appName = data[@"webpageAppName"];
+        self.appIcon = data[@"webpageAppIcon"];
         self.extention = data[@"webpageExtention"];
     }
     return self;
 }
 
-- (BOOL)isValid { 
-    return YES;
-}
-
 - (NSString *)newMsgAcronym { 
-    return @"[分享链接]";
-}
-
-- (BOOL)shouldShowNickName { 
-    return YES;
-}
-
-- (BOOL)shouldShowAvatar {
-    return YES;
+    return [NSString stringWithFormat:@"[链接]%@", self.title];
 }
 
 - (void)handleTapCellEvent:(NIMKitEvent *)event
@@ -108,7 +102,7 @@
         [[UIApplication sharedApplication] openURL:openURL];
     }else {
         [FlutterBoostPlugin open:@"web_view"
-                       urlParams:@{@"url": self.weburl}
+                       urlParams:@{@"url": self.webUrl}
                             exts:@{@"animated": @(YES)}
                   onPageFinished:^(NSDictionary *d) {
             

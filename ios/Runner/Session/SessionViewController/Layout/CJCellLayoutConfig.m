@@ -77,6 +77,15 @@
         return UIEdgeInsetsZero;
     }
     
+    if(model.message.messageType == NIMMessageTypeCustom) {
+        NIMCustomObject *object = model.message.messageObject;
+        id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
+        
+        if([customAttachment respondsToSelector:@selector(cellInsets)]) {
+            return [customAttachment cellInsets];
+        }
+    }
+    
     //如果没有特殊需求，就走默认处理流程
     return [super cellInsets:model];
 }
@@ -86,13 +95,24 @@
     if(model.message.messageType == NIMMessageTypeCustom) {
         NIMCustomObject *object = model.message.messageObject;
         id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
-        return [customAttachment shouldShowAvatar];
+        
+        if([customAttachment respondsToSelector:@selector(shouldShowAvatar)]) {
+            return [customAttachment shouldShowAvatar];
+        }
     }
     return [super shouldShowAvatar:model];
 }
 
 - (BOOL)shouldShowLeft:(NIMMessageModel *)model
 {
+    if(model.message.messageType == NIMMessageTypeCustom) {
+        NIMCustomObject *object = model.message.messageObject;
+        id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
+        
+        if([customAttachment respondsToSelector:@selector(shouldShowLeft)]) {
+            return [customAttachment shouldShowLeft];
+        }
+    }
     return [super shouldShowLeft:model];
 }
 
@@ -101,7 +121,10 @@
     if(model.message.messageType == NIMMessageTypeCustom) {
         NIMCustomObject *object = model.message.messageObject;
         id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
-        return [customAttachment shouldShowNickName];
+        
+        if([customAttachment respondsToSelector:@selector(shouldShowNickName)]) {
+            return [customAttachment shouldShowNickName];
+        }
     }
     
     return [super shouldShowNickName:model];
@@ -109,6 +132,15 @@
 
 - (CGPoint)nickNameMargin:(NIMMessageModel *)model
 {
+    if(model.message.messageType == NIMMessageTypeCustom) {
+        NIMCustomObject *object = model.message.messageObject;
+        id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
+        
+        if([customAttachment respondsToSelector:@selector(nickNameMargin)]) {
+            return [customAttachment nickNameMargin];
+        }
+    }
+    
     return [super nickNameMargin:model];
 }
 
@@ -123,6 +155,15 @@
 
 - (NSArray *)customViews:(NIMMessageModel *)model
 {
+    if(model.message.messageType == NIMMessageTypeCustom) {
+        NIMCustomObject *object = model.message.messageObject;
+        id<CJCustomAttachment> customAttachment = (id<CJCustomAttachment>)object.attachment;
+        
+        if([customAttachment respondsToSelector:@selector(customViews)]) {
+            return [customAttachment customViews];
+        }
+    }
+    
     return [super customViews:model];
 }
 

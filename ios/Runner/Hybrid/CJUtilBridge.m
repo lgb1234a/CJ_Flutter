@@ -243,25 +243,19 @@ static inline UIWindow *cj_getkeyWindow()
 /// 分享
 - (void)share:(NSDictionary *)shareData
 {
-    /// type:  0-text  1-image 2-link
-    NSInteger type = [shareData[@"type"] integerValue];
-    if(type == 0 || type == 1) {
-        // 分享文本 、 图片
-        CJChatSelectViewController *chatSelectVC = [CJChatSelectViewController viewControllerWithDelegate:self];
+    CJChatSelectViewController *chatSelectVC = [CJChatSelectViewController viewControllerWithDelegate:self];
+    
+    CJNavigationViewController *navController = [[CJNavigationViewController alloc] initWithRootViewController:chatSelectVC];
+    [cj_rootNavigationController() presentViewController:navController
+                                                animated:YES
+                                              completion:nil];
+    
+    chatSelectVC.completion = ^(NIMSession * _Nonnull session) {
+        CJShareModel *model = [[CJShareModel alloc] initWithData:shareData];
         
-        CJNavigationViewController *navController = [[CJNavigationViewController alloc] initWithRootViewController:chatSelectVC];
-        [cj_rootNavigationController() presentViewController:navController
-                                                    animated:YES
-                                                  completion:nil];
-        
-        chatSelectVC.completion = ^(NIMSession * _Nonnull session) {
-            
-            // share alert
-            [self shareAlert:shareData session:session];
-        };
-    }else if(type == 2) {
-        
-    }
+        // share alert
+        [self shareAlert:model session:session];
+    };
 }
 
 /// 群转让
@@ -358,20 +352,9 @@ didFinishSavingWithError:(NSError *)error
     }
 }
 
-- (void)shareAlert:(NSDictionary *)shareData
+- (void)shareAlert:(CJShareModel *)model
            session:(NIMSession *)session
 {
-    NSInteger type = [shareData[@"type"] integerValue];
-    CJShareModel *model;
-    if(type == 0) {
-        model = [CJShareTextModel new];
-        
-    }else if(type == 1) {
-        model = [CJShareImageModel new];
-        FlutterStandardTypedData *imgData = shareData[@"imgData"];
-        ((CJShareImageModel*)model).imageData = imgData.data;
-    }
-    
     CJShareAlertViewController *alertVC =
             [CJShareAlertViewController viewControllerWithSession:session
                                                       shareObject:model

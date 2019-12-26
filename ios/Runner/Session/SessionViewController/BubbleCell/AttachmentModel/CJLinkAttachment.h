@@ -20,16 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *content;
 
 // 点击链接
-@property (nonatomic, copy) NSString *weburl;
+@property (nonatomic, copy) NSString *webUrl;
 
 // 分享大图片数据
 @property (nonatomic, copy) NSString *imageData;
 
 // 应用名
-@property (nonatomic, copy) NSString *appname;
+@property (nonatomic, copy) NSString *appName;
 
 // 应用icon链接
-@property (nonatomic, copy) NSString *appicon;
+@property (nonatomic, copy) NSString *appIcon;
 
 // 扩展数据
 @property (nonatomic, copy) NSString *extention;

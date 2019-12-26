@@ -12,6 +12,7 @@ NSDictionary *attachmentMapping()
                         @(CustomMessageTypeCloudRedPacketTip): @"CJCloudRedPacketTipAttachment",
                         @(CustomMessageTypeWebPage): @"CJLinkAttachment",
                         @(CustomMessageTypeShareLink): @"CJLinkAttachment",
+                        @(CustomMessageTypePersonalCard): @"CJBusinessCardAttachment"
                         };
     
     return d;

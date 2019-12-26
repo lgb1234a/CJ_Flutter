@@ -9,6 +9,7 @@
 #import "CJYeePayRedPacketAtachment.h"
 #import <YouXiPayUISDK/YouXiPayUISDK.h>
 #import "CJYeePayRedPacketTipAttachment.h"
+#import "CJYeeRedPacketContentView.h"
 
 @interface CJYeePayRedPacketAtachment()
 
@@ -59,7 +60,7 @@
 // model类绑定
 - (NSString *)cellContent:(NIMMessage *)message
 {
-    return @"CJYeeRedPacketContentView";
+    return NSStringFromClass(CJYeeRedPacketContentView.class);
 }
 
 - (BOOL)canBeForwarded
@@ -72,11 +73,12 @@
     return NO;
 }
 
-#pragma mark - CJCustomAttachment
 - (BOOL)isValid
 {
     return YES;
 }
+
+#pragma mark - CJCustomAttachment
 
 - (instancetype)initWithPrepareData:(NSDictionary *)data
                                type:(CJCustomMessageType)type
@@ -91,17 +93,6 @@
         self.status = [[data objectForKey:@"redPacketStatus"] integerValue];
     }
     return self;
-}
-
-- (BOOL)shouldShowNickName
-{
-    return YES;
-}
-
-
-- (BOOL)shouldShowAvatar
-{
-    return YES;
 }
 
 - (NSString *)newMsgAcronym

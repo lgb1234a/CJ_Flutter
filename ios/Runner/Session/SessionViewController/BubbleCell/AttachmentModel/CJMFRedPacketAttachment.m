@@ -7,6 +7,7 @@
 //
 
 #import "CJMFRedPacketAttachment.h"
+#import "CJMFRedPacketContentView.h"
 
 @interface CJMFRedPacketAttachment()
 
@@ -57,7 +58,7 @@
 // 绑定视图
 - (NSString *)cellContent:(NIMMessage *)message
 {
-    return @"CJMFRedPacketContentView";
+    return NSStringFromClass(CJMFRedPacketContentView.class);
 }
 
 - (BOOL)canBeForwarded
@@ -71,6 +72,7 @@
 }
 
 #pragma mark - CJCustomAttachment
+
 - (BOOL)isValid
 {
     return YES;
@@ -89,17 +91,6 @@
         self.status = [[data objectForKey:@"redPacketStatus"] integerValue];
     }
     return self;
-}
-
-- (BOOL)shouldShowNickName
-{
-    return YES;
-}
-
-
-- (BOOL)shouldShowAvatar
-{
-    return YES;
 }
 
 - (NSString *)newMsgAcronym
@@ -126,7 +117,7 @@
 - (void)handleTapCellEvent:(NIMKitEvent *)event
                  onSession:(NIMSessionViewController *)sessionVC
 {
-    [UIViewController showMessage:@"易宝版不支持擦肩红包，请前往➡️https://download.youxi2018.com下载授信版"
+    [UIViewController showMessage:@"易宝版不支持擦肩红包，敬请期待～"
                        afterDelay:3.0f];
 }
 
