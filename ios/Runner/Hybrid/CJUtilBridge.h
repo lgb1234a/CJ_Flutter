@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)initBridge;
 
+/// 分享
+- (void)share:(NSDictionary *)shareData;
+
 @end
 
 NS_ASSUME_NONNULL_END

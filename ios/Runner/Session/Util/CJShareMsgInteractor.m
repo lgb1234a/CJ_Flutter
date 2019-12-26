@@ -30,8 +30,8 @@
         if(shareModel.type == CajianShareTypeBusinessCard)
         {
             // 分享个人名片
-            CJShareBusinessCardModel *imgModel = (CJShareBusinessCardModel *)shareModel;
-            CJBusinessCardAttachment *attachment = [[CJBusinessCardAttachment alloc] initWithShareModel:imgModel];
+            CJShareBusinessCardModel *cardModel = (CJShareBusinessCardModel *)shareModel;
+            CJBusinessCardAttachment *attachment = [[CJBusinessCardAttachment alloc] initWithShareModel:cardModel];
             
             NIMMessage *msg = [attachment msgFromAttachment];
             [[[NIMSDK sharedSDK] chatManager] sendMessage:msg toSession:session error:nil];

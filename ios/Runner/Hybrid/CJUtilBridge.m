@@ -16,18 +16,6 @@
 #import <YouXiPayUISDK/YouXiPayUISDK.h>
 #import "JRMFHeader.h"
 
-static inline UIWindow *cj_getkeyWindow()
-{
-    if([UIApplication sharedApplication].keyWindow)
-    {
-        return [UIApplication sharedApplication].keyWindow;
-    }
-    
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    CGFloat height = [UIScreen mainScreen].bounds.size.height;
-    return [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-}
-
 @interface CJUtilBridge () <CJChatSelectResult, CJShareAlertResult>
 
 @end

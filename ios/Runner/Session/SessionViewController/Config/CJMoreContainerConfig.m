@@ -13,6 +13,9 @@
 #import "JRMFHeader.h"
 #import "CJPayManager.h"
 #import "NTESSessionUtil.h"
+#import "CJContactSelectViewController.h"
+#import "CJUtilBridge.h"
+#import "CJShareMsgInteractor.h"
 
 ZZAvatarModel *cj_convertModel(NIMUser *obj)
 {
@@ -53,20 +56,20 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
                                    selectedImage:[UIImage imageNamed:@"icon_yee_pressed"]
                                            title:@"易红包"];
     
-    NIMMediaItem *yeeTransfer  = [NIMMediaItem item:@"onTapMediaItemYXTransfer:onSessionVC:"
-                                       normalImage:[UIImage imageNamed:@"icon_yee_transfer_normal"]
-                                     selectedImage:[UIImage imageNamed:@"icon_yee_transfer_pressed"]
-                                             title:@"易转账"];
+//    NIMMediaItem *yeeTransfer  = [NIMMediaItem item:@"onTapMediaItemYXTransfer:onSessionVC:"
+//                                       normalImage:[UIImage imageNamed:@"icon_yee_transfer_normal"]
+//                                     selectedImage:[UIImage imageNamed:@"icon_yee_transfer_pressed"]
+//                                             title:@"易转账"];
     
     NIMMediaItem *profileCard  = [NIMMediaItem item:@"onTapMediaItemProfileCard:onSessionVC:"
                                        normalImage:[UIImage imageNamed:@"bk_media_card_normal"]
                                      selectedImage:[UIImage imageNamed:@"bk_media_card_pressed"]
                                              title:@"名片"];
     
-    NIMMediaItem *aliPayCode  = [NIMMediaItem item:@"onTapMediaItemAliPayCode:onSessionVC:"
-                                         normalImage:[UIImage imageNamed:@"icon_team_paycode_normal"]
-                                       selectedImage:[UIImage imageNamed:@"icon_team_paycode_pressed"]
-                                               title:@"收款码"];
+//    NIMMediaItem *aliPayCode  = [NIMMediaItem item:@"onTapMediaItemAliPayCode:onSessionVC:"
+//                                         normalImage:[UIImage imageNamed:@"icon_team_paycode_normal"]
+//                                       selectedImage:[UIImage imageNamed:@"icon_team_paycode_pressed"]
+//                                               title:@"收款码"];
     
     NIMMediaItem *personStamp  = [NIMMediaItem item:@"onTapMediaItemPersonalstamp:onSessionVC:"
                                         normalImage:[UIImage imageNamed:@"icon_team_stamp_normal"]
@@ -78,17 +81,17 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
                                      selectedImage:[UIImage imageNamed:@"icon_team_notice_pressed"]
                                              title:@"群通知"];
     
-    NIMMediaItem *collection = [NIMMediaItem item:@"onTapMediaItemCollection:onSessionVC:"
-                                            normalImage:[UIImage imageNamed:@"icon_team_collection_normal"]
-                                          selectedImage:[UIImage imageNamed:@"icon_team_collection_pressed"]
-                                                  title:@"收藏"];
+//    NIMMediaItem *collection = [NIMMediaItem item:@"onTapMediaItemCollection:onSessionVC:"
+//                                            normalImage:[UIImage imageNamed:@"icon_team_collection_normal"]
+//                                          selectedImage:[UIImage imageNamed:@"icon_team_collection_pressed"]
+//                                                  title:@"收藏"];
     
-    NIMMediaItem *location = [NIMMediaItem item:@"onTapMediaItemLocation:onSessionVC:"
-                                          normalImage:[UIImage imageNamed:@"bk_media_position_normal"]
-                                        selectedImage:[UIImage imageNamed:@"bk_media_position_pressed"]
-                                                title:@"位置"];
+//    NIMMediaItem *location = [NIMMediaItem item:@"onTapMediaItemLocation:onSessionVC:"
+//                                          normalImage:[UIImage imageNamed:@"bk_media_position_normal"]
+//                                        selectedImage:[UIImage imageNamed:@"bk_media_position_pressed"]
+//                                                title:@"位置"];
     
-    [mediaItems addObjectsFromArray:@[yeeRP, yeeTransfer, cloudRP, profileCard, aliPayCode, personStamp, teamNotice, collection, location]];
+    [mediaItems addObjectsFromArray:@[yeeRP, cloudRP, profileCard, personStamp, teamNotice]];
     
     return mediaItems;
 }
@@ -96,7 +99,7 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 + (void)onTapMediaItemCajianRP:(NIMMediaItem *)item
                    onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO: 擦肩红包
+    // 擦肩红包
     
 }
 
@@ -137,7 +140,7 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 + (void)onTapMediaItemYeePacket:(NIMMediaItem *)item
                     onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO:易红包
+    // 易红包
     NSInteger num = 0;
     if(vc.session.sessionType != NIMSessionTypeP2P)
     {
@@ -187,7 +190,29 @@ ZZAvatarModel *cj_convertModel(NIMUser *obj)
 + (void)onTapMediaItemProfileCard:(NIMMediaItem *)item
                       onSessionVC:(NIMSessionViewController *)vc
 {
-    // TODO:名片
+    /// 发送好友名片
+    CJContactFriendSelectConfig *config = [CJContactFriendSelectConfig new];
+    config.needMutiSelected = NO;
+    
+    CJContactSelectViewController *selectVC = [[CJContactSelectViewController alloc] initWithConfig:config];
+    selectVC.finished = ^(NSArray * _Nonnull ids) {
+        if(cj_empty_array(ids)) {
+            return;
+        }
+        /// 发送
+        NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:ids.firstObject option:nil];
+        CJShareBusinessCardModel *model = [CJShareBusinessCardModel new];
+        model.accid = info.infoId;
+        model.nickName = info.showName ?: @"";
+        model.imageUrl = info.avatarUrlString ?: @"";
+        
+        [CJShareMsgInteractor shareModel:model to:vc.session];
+    };
+    
+    CJNavigationViewController *nav = [[CJNavigationViewController alloc] initWithRootViewController:selectVC];
+    [cj_rootNavigationController() presentViewController:nav
+                                                animated:YES
+                                              completion:nil];
 }
 
 + (void)onTapMediaItemAliPayCode:(NIMMediaItem *)item
