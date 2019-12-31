@@ -11,6 +11,8 @@
 #import "CJContactsViewController.h"
 #import "CJSessionListViewController.h"
 #import <CJPopOverMenuView.h>
+#import "CJUtilBridge.h"
+#import <YouXiPayUISDK/YouXiPayUISDK.h>
 
 @interface CJTabbarController ()
 
@@ -78,17 +80,75 @@
     menuView.didDismissHandler = ^{
         self.navigationItem.rightBarButtonItem.enabled = YES;
     };
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"扫一扫" forState:UIControlStateNormal];
-    [btn setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 80, 30);
-    [btn addTarget:self
-            action:@selector(showScanView:)
-  forControlEvents:UIControlEventTouchUpInside];
     
+    CGFloat btnHeight = 30.f;
+    CGFloat contentWidth = 100.f;
+    UIView *contentView = [UIView new];
+    
+    /// 发起群聊
+    UIButton *createGroup = [UIButton buttonWithType:UIButtonTypeCustom];
+    [createGroup setTitle:@"发起聊天" forState:UIControlStateNormal];
+    [createGroup setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
+    createGroup.frame = CGRectMake(10, 0, 80, btnHeight);
+    [createGroup addTarget:self
+                    action:@selector(createGroup:)
+          forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:createGroup];
+    
+    /// 分割线
+    CALayer *line_1 = [CALayer layer];
+    [line_1 setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.3].CGColor];
+    [line_1 setFrame:CGRectMake(10, btnHeight, contentWidth - 10, 0.5)];
+    [contentView.layer addSublayer:line_1];
+    
+    
+    /// 添加好友
+    UIButton *addFriend = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addFriend setTitle:@"添加好友" forState:UIControlStateNormal];
+    [addFriend setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
+    addFriend.frame = CGRectMake(10, btnHeight*2, 80, btnHeight);
+    [addFriend addTarget:self
+          action:@selector(addFriend:)
+    forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:addFriend];
+    
+    
+    /// 分割线
+    CALayer *line_2 = [CALayer layer];
+    [line_2 setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.3].CGColor];
+    [line_2 setFrame:CGRectMake(10, btnHeight*2, contentWidth - 10, 0.5)];
+    [contentView.layer addSublayer:line_2];
+    
+      /// 扫一扫
+    UIButton *scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scanBtn setTitle:@"扫一扫" forState:UIControlStateNormal];
+    [scanBtn setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
+    scanBtn.frame = CGRectMake(10, btnHeight, 80, btnHeight);
+    [scanBtn addTarget:self
+          action:@selector(showScanView:)
+    forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:scanBtn];
+    
+    /// 分割线
+    CALayer *line_3 = [CALayer layer];
+    [line_3 setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.3].CGColor];
+    [line_3 setFrame:CGRectMake(10, btnHeight*3, contentWidth - 10, 0.5)];
+    [contentView.layer addSublayer:line_3];
+    
+    /// 我的钱包
+    UIButton *walletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [walletBtn setTitle:@"我的钱包" forState:UIControlStateNormal];
+    [walletBtn setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
+    walletBtn.frame = CGRectMake(10, btnHeight*3, 80, btnHeight);
+    [walletBtn addTarget:self
+          action:@selector(showMyWallet:)
+    forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:walletBtn];
+    
+    contentView.frame = CGRectMake(0, 0, contentWidth, btnHeight * 4);
     [menuView showAtPoint:startPoint
            popoverPostion:CJPopoverPositionDown
-          withContentView:btn
+          withContentView:contentView
                    inView:self.view];
 }
 
@@ -106,5 +166,23 @@
     }];
 }
 
+
+- (void)createGroup:(id)sender
+{
+    /// 发起聊天
+    CJUtilBridge *bridge = [CJUtilBridge new];
+    [bridge createGroupChat:@{@"user_ids": @[]}];
+}
+
+- (void)addFriend:(id)sender
+{
+    /// 跳转添加好友页
+}
+
+- (void)showMyWallet:(id)sender
+{
+    /// 拉起我的钱包页面
+    [ZZPayUI showMyWallet:cj_rootNavigationController()];
+}
 
 @end
