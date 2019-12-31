@@ -81,19 +81,24 @@
         self.navigationItem.rightBarButtonItem.enabled = YES;
     };
     
-    CGFloat btnHeight = 30.f;
-    CGFloat contentWidth = 100.f;
+    CGFloat btnHeight = 40.f;
+    CGFloat contentWidth = 130.f;
     UIView *contentView = [UIView new];
     
     /// 发起群聊
     UIButton *createGroup = [UIButton buttonWithType:UIButtonTypeCustom];
+    [createGroup.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [createGroup setTitle:@"发起聊天" forState:UIControlStateNormal];
     [createGroup setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
-    createGroup.frame = CGRectMake(10, 0, 80, btnHeight);
+    createGroup.frame = CGRectMake(10, 0, contentWidth, btnHeight);
     [createGroup addTarget:self
                     action:@selector(createGroup:)
           forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:createGroup];
+    [createGroup setImage:[UIImage imageNamed:@"icon_new_chat"]
+                 forState:UIControlStateNormal];
+    
+    [createGroup setImageEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0)];
     
     /// 分割线
     CALayer *line_1 = [CALayer layer];
@@ -104,14 +109,18 @@
     
     /// 添加好友
     UIButton *addFriend = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addFriend.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [addFriend setTitle:@"添加好友" forState:UIControlStateNormal];
     [addFriend setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
-    addFriend.frame = CGRectMake(10, btnHeight*2, 80, btnHeight);
+    addFriend.frame = CGRectMake(10, btnHeight*2, contentWidth, btnHeight);
     [addFriend addTarget:self
           action:@selector(addFriend:)
     forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:addFriend];
+    [addFriend setImage:[UIImage imageNamed:@"icon_contact_add"]
+               forState:UIControlStateNormal];
     
+    [addFriend setImageEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0)];
     
     /// 分割线
     CALayer *line_2 = [CALayer layer];
@@ -121,13 +130,19 @@
     
       /// 扫一扫
     UIButton *scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scanBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [scanBtn setTitle:@"扫一扫" forState:UIControlStateNormal];
     [scanBtn setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
-    scanBtn.frame = CGRectMake(10, btnHeight, 80, btnHeight);
+    scanBtn.frame = CGRectMake(10, btnHeight, contentWidth, btnHeight);
     [scanBtn addTarget:self
           action:@selector(showScanView:)
     forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:scanBtn];
+    [scanBtn setImage:[UIImage imageNamed:@"icon_scan"]
+             forState:UIControlStateNormal];
+    
+    [scanBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -35, 0, 0)];
+    [scanBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -14, 0, 0)];
     
     /// 分割线
     CALayer *line_3 = [CALayer layer];
@@ -137,13 +152,18 @@
     
     /// 我的钱包
     UIButton *walletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [walletBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [walletBtn setTitle:@"我的钱包" forState:UIControlStateNormal];
     [walletBtn setTitleColor:Main_TextBlackColor forState:UIControlStateNormal];
-    walletBtn.frame = CGRectMake(10, btnHeight*3, 80, btnHeight);
+    walletBtn.frame = CGRectMake(10, btnHeight*3, contentWidth, btnHeight);
     [walletBtn addTarget:self
           action:@selector(showMyWallet:)
     forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:walletBtn];
+    [walletBtn setImage:[UIImage imageNamed:@"icon_my_wallet"]
+               forState:UIControlStateNormal];
+    
+    [walletBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0)];
     
     contentView.frame = CGRectMake(0, 0, contentWidth, btnHeight * 4);
     [menuView showAtPoint:startPoint
