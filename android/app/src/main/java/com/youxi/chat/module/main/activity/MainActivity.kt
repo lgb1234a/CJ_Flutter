@@ -39,9 +39,10 @@ import com.netease.nimlib.sdk.msg.model.CustomNotification
 import com.netease.nimlib.sdk.msg.model.IMMessage
 import com.netease.nimlib.sdk.msg.model.RecentContact
 import com.youxi.chat.R
+import com.youxi.chat.Router
 import com.youxi.chat.config.preference.Preferences
+import com.youxi.chat.hybird.FlutterRouter
 import com.youxi.chat.module.login.LoginHelper
-import com.youxi.chat.module.main.activity.MainActivity
 import com.youxi.chat.module.main.adapter.MainTabPagerAdapter
 import com.youxi.chat.module.main.model.MainTab
 import com.youxi.chat.module.main.model.MainTab.Companion.fromReminderId
@@ -306,6 +307,26 @@ class MainActivity : UI(), OnPageChangeListener, UnreadNumChangedCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.search_btn -> {
+                // 全局搜索
+                Router.open(this, "")
+            }
+            R.id.create_team_talk -> {
+                // 创建群聊
+                Router.open(this, "")
+            }
+            R.id.add_friends -> {
+                // 添加好友
+                Router.open(this, "")
+            }
+            R.id.scan_code -> {
+                // 扫一扫
+                Router.open(this, "")
+            }
+            R.id.mine_wallet -> {
+                // 我的钱包
+                Router.open(this, "")
+            }
             else -> {
             }
         }
@@ -364,6 +385,7 @@ class MainActivity : UI(), OnPageChangeListener, UnreadNumChangedCallback {
                     ContactSelectActivity.RESULT_DATA)
             if (selected != null && !selected.isEmpty()) {
                 // TODO 创建群
+                Router.open(this, FlutterRouter.default)
 //                TeamCreateHelper.createNormalTeam(MainActivity.this, selected, false, null);
             } else {
                 ToastHelper.showToast(this@MainActivity, "请选择至少一个联系人！")
@@ -372,6 +394,7 @@ class MainActivity : UI(), OnPageChangeListener, UnreadNumChangedCallback {
             val selected = data!!.getStringArrayListExtra(
                     ContactSelectActivity.RESULT_DATA)
             // TODO 创建群
+                Router.open(this, FlutterRouter.default)
 //            TeamCreateHelper.createAdvancedTeam(MainActivity.this, selected);
         }
     }

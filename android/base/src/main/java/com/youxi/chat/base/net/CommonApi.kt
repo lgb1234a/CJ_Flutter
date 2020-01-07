@@ -22,28 +22,28 @@ interface CommonApi {
     }
 
     @GET
-    fun get(@Url url: String, @QueryMap(encoded = true) queryMap: Map<String, String> = mapOf(),
-            @HeaderMap headerMap: Map<String, String> = mapOf()): Observable<String>
+    fun get(@Url url: String, @QueryMap(encoded = true) query: Map<String, String> = mapOf(),
+            @HeaderMap header: Map<String, String> = mapOf()): Observable<String>
 
     @FormUrlEncoded
     @POST
-    fun postForm(@Url url: String, @FieldMap(encoded = true) fieldMap: Map<String, String> = mapOf(),
-                 @HeaderMap headerMap: Map<String, String> = mapOf()): Observable<String>
+    fun postForm(@Url url: String, @FieldMap(encoded = true) form: Map<String, String> = mapOf(),
+                 @HeaderMap header: Map<String, String> = mapOf()): Observable<String>
 
     @POST
-    fun postJson(@Url url: String, @Body fieldMap: Map<String, String> = mapOf(),
-                 @HeaderMap headerMap: Map<String, String> = mapOf()): Observable<String>
+    fun postJson(@Url url: String, @Body json: Any = Any(),
+                 @HeaderMap header: Map<String, String> = mapOf()): Observable<String>
 
     @GET
-    fun getAsync(@Url url: String, @QueryMap(encoded = true) queryMap: Map<String, String> = mapOf(),
-                 @HeaderMap headerMap: Map<String, String> = mapOf()): Deferred<String>
+    fun getAsync(@Url url: String, @QueryMap(encoded = true) query: Map<String, String> = mapOf(),
+                 @HeaderMap header: Map<String, String> = mapOf()): Deferred<String>
 
     @FormUrlEncoded
     @POST
-    fun postAsync(@Url url: String, @FieldMap(encoded = true) fieldMap: Map<String, String> = mapOf(),
-                  @HeaderMap headerMap: Map<String, String> = mapOf()): Deferred<String>
+    fun postFormAsync(@Url url: String, @FieldMap(encoded = true) form: Map<String, String> = mapOf(),
+                      @HeaderMap header: Map<String, String> = mapOf()): Deferred<String>
 
     @POST
-    fun postJsonAsync(@Url url: String, @Body fieldMap: Map<String, String> = mapOf(),
-                  @HeaderMap headerMap: Map<String, String> = mapOf()): Deferred<String>
+    fun postJsonAsync(@Url url: String, @Body json: Any = Any(),
+                      @HeaderMap header: Map<String, String> = mapOf()): Deferred<String>
 }

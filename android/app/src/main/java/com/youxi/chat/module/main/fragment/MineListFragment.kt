@@ -13,15 +13,27 @@ import com.youxi.chat.module.main.model.MainTab
 class MineListFragment : MainTabFragment() {
     private var fragment: FlutterFragment? = null
     protected override fun onInit() { // 采用静态集成，这里不需要做什么了
-        fragment = FlutterFragment.NewEngineFragmentBuilder()
-                .url("mine")
-                .params(mapOf(
-                        "bottom_padding" to 0.0
-                )).build()
+
     }
 
     override fun onCurrent() {
         super.onCurrent()
+        createFragment()
+        addFragment()
+    }
+
+    private fun createFragment() {
+        fragment = null
+        if (fragment == null) {
+            fragment = FlutterFragment.NewEngineFragmentBuilder()
+                    .url("mine")
+                    .params(mapOf(
+                            "bottom_padding" to 0.0
+                    )).build()
+        }
+    }
+
+    private fun addFragment() {
         if (fragment != null) {
             childFragmentManager
                     .beginTransaction()

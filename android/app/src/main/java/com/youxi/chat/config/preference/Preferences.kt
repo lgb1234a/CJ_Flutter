@@ -28,13 +28,14 @@ object Preferences {
     private fun saveString(key: String, value: String) {
         val editor = sharedPreferences.edit()
         editor.putString(key, value)
-        editor.commit()
+        editor.apply()
     }
 
     private fun getString(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
 
-    val sharedPreferences: SharedPreferences
-        get() = NimCache.getContext().getSharedPreferences("Demo", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences
+        // 适配Flutter插件中的sp文件名,保证和Flutter通用
+        get() = NimCache.getContext().getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
 }

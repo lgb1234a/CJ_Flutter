@@ -159,7 +159,7 @@ class SessionMemberInfoState extends State<SessionMemberInfoWidget> {
         ),
       ),
       onTap: () => FlutterBoost.singleton.open(
-          'nativePage://android&iosPageName=CJSessionViewController',
+          'nativePage://androidPageName=com.youxi.chat.module.session.SessionHelper&iosPageName=CJSessionViewController',
           urlParams: {'id': widget.params['member_id'], 'type': 0},
           exts: {'animated': true}),
     );

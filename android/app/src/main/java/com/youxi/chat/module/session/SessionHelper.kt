@@ -45,6 +45,8 @@ import com.netease.nimlib.sdk.msg.model.RecentContact
 import com.netease.nimlib.sdk.robot.model.RobotAttachment
 import com.netease.nimlib.sdk.team.constant.TeamTypeEnum
 import com.youxi.chat.R
+import com.youxi.chat.Router
+import com.youxi.chat.hybird.FlutterRouter
 import com.youxi.chat.module.session.action.*
 import com.youxi.chat.module.session.activity.AckMsgInfoActivity
 import com.youxi.chat.module.session.extension.*
@@ -157,7 +159,7 @@ object SessionHelper {
         if (p2pCustomization == null) {
             p2pCustomization = object : SessionCustomization() {
                 // 由于需要Activity Result， 所以重载该函数。
-                override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent) {
+                override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
                     super.onActivityResult(activity, requestCode, resultCode, data)
                 }
 
@@ -201,12 +203,15 @@ object SessionHelper {
             cloudMsgButton.iconId = R.drawable.nim_ic_messge_history
             val infoButton: OptionsButton = object : OptionsButton() {
                 override fun onClick(context: Context, view: View, sessionId: String) {
-                    // TODO 聊天信息页面
+                    Router.open(context, FlutterRouter.sessionInfo, params = mapOf(
+                            "type" to 0,
+                            "id" to sessionId
+                    ))
 //                    MessageInfoActivity.startActivity(context, sessionId) //打开聊天信息
                 }
             }
-            infoButton.iconId = R.drawable.nim_ic_message_actionbar_p2p_add
-            buttons.add(cloudMsgButton)
+            infoButton.iconId = R.drawable.ic_message_actionbar_more
+//            buttons.add(cloudMsgButton)
             buttons.add(infoButton)
             p2pCustomization?.buttons = buttons
         }

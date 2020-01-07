@@ -3,19 +3,28 @@ package com.cajian.nim_sdk_util
 import android.content.Context
 import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import com.blankj.utilcode.util.*
 import com.netease.nim.uikit.api.NimUIKit
+import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.NIMSDK
 import com.netease.nimlib.sdk.RequestCallback
 import com.netease.nimlib.sdk.auth.LoginInfo
+import com.netease.nimlib.sdk.friend.constant.FriendFieldEnum
+import com.netease.nimlib.sdk.msg.MessageBuilder
+import com.netease.nimlib.sdk.msg.SystemMessageService
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import com.netease.nimlib.sdk.msg.model.RecentContact
+import com.netease.nimlib.sdk.team.constant.TeamFieldEnum
 import com.netease.nimlib.sdk.team.constant.TeamMessageNotifyTypeEnum
+import com.netease.nimlib.sdk.team.model.Team
 import com.netease.nimlib.sdk.team.model.TeamMember
+import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import java.io.File
 import java.lang.reflect.InvocationTargetException
 
 /** NimSdkUtilPlugin  */
@@ -155,9 +164,16 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
      */
     private fun logout(params: Map<*, *>, result: MethodChannel.Result) {
         NIMSDK.getAuthService().logout()
+        clearLoginInfo()
+        // TODO 发送didLogout通知
+    }
+
+    /**
+     * 清除登录信息
+     */
+    private fun clearLoginInfo() {
         SPUtils.getInstance().remove("flutter.accid")
         SPUtils.getInstance().remove("flutter.token")
-        // TODO 发送didLogout通知
     }
 
     /**
@@ -200,16 +216,16 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 "teamId" to team.id,
                 "teamName" to team.name,
                 "thumbAvatarUrl" to team.icon,
-                "type" to team.type,
+                "type" to team.type.value,
                 "owner" to team.creator,
                 "intro" to team.introduce,
                 "announcement" to team.announcement,
                 "memberNumber" to team.memberCount,
                 "level" to team.memberLimit,
-                "createTime" to team.createTime,
-                "joinMode" to team.verifyType,
-                "inviteMode" to team.teamInviteMode,
-                "beInviteMode" to team.teamBeInviteMode,
+                "createTime" to team.createTime.toTimestamp(),
+                "joinMode" to team.verifyType.value,
+                "inviteMode" to team.teamInviteMode.value,
+                "beInviteMode" to team.teamBeInviteMode.value,
                 "updateInfoMode" to team.teamUpdateMode.value,
                 "updateClientCustomMode" to team.teamExtensionUpdateMode.value,
                 "serverCustomInfo" to team.extServer,
@@ -264,10 +280,10 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                                     "userId" to member.account,
                                     "invitor" to member.invitorAccid, // TODO ???
                                     "inviterAccid" to member.invitorAccid,
-                                    "type" to member.type,
+                                    "type" to member.type.value,
                                     "nickname" to member.teamNick,
                                     "isMuted" to member.isMute,
-                                    "createTime" to member.joinTime,
+                                    "createTime" to member.joinTime.toTimestamp(),
                                     "customInfo" to member.extension
                             ))
                         }
@@ -302,10 +318,10 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 "userId" to member.account,
                 "invitor" to member.invitorAccid, // TODO ???
                 "inviterAccid" to member.invitorAccid,
-                "type" to member.type,
+                "type" to member.type.value,
                 "nickname" to member.teamNick,
                 "isMuted" to member.isMute,
-                "createTime" to member.joinTime,
+                "createTime" to member.joinTime.toTimestamp(),
                 "customInfo" to member.extension
         ))
     }
@@ -321,7 +337,11 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
         val type = params["type"] as Int
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(type))
         val isTop = recentSessionIsMark(recent, 1)
-        result.success(isTop)
+        if (isTop == null) {
+            result.success(false)
+        } else {
+            result.success(isTop)
+        }
     }
 
     /**
@@ -462,10 +482,659 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 })
     }
 
+    /**
+     * 判断用户是否被拉黑
+     */
+    private fun isUserBlocked(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isBlocked = NIMSDK.getFriendService().isInBlackList(userId)
+        result.success(isBlocked)
+    }
+
+    /**
+     * 把用户加入黑名单
+     */
+    private fun blockUser(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        NIMSDK.getFriendService().addToBlackList(userId)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("加入黑名单成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("加入黑名单失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("加入黑名单失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 移出黑名单
+     */
+    private fun cancelBlockUser(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        NIMSDK.getFriendService().removeFromBlackList(userId)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("移出黑名单成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("移出黑名单失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("移出黑名单失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 返回黑名单列表
+     */
+    private fun blockUserList(params: Map<*, *>, result: MethodChannel.Result) {
+        val blackList = NIMSDK.getFriendService().blackList
+        result.success(blackList)
+    }
+
+    /**
+     * 修改成员群昵称
+     */
+    private fun updateUserNickName(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val nickName = params["nickName"] as String
+        val teamId = params["teamId"] as String
+
+        NIMSDK.getTeamService().updateMemberNick(teamId, userId, nickName)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改昵称成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改昵称失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改昵称失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 修改群名称
+     */
+    private fun updateTeamName(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamName = params["teamName"] as String
+        val teamId = params["teamId"] as String
+
+        NIMSDK.getTeamService().updateMyTeamNick(teamId, teamName)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改群名称成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改群名称失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改群名称失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 修改群公告
+     */
+    private fun updateAnnouncement(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamId = params["teamId"] as String
+        val announcement = params["announcement"] as String
+        NIMSDK.getTeamService().updateTeam(teamId, TeamFieldEnum.Announcement, announcement)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改群公告成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改群公告失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改群公告失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 添加管理员
+     */
+    private fun addTeamManagers(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamId = params["teamId"] as String
+        val userIds = params["userIds"] as List<String>
+        NIMSDK.getTeamService().addManagers(teamId, userIds)
+                .setCallback(object : RequestCallback<List<TeamMember>> {
+                    override fun onSuccess(param: List<TeamMember>?) {
+                        ToastUtils.showShort("添加成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("添加失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("添加失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 移除管理员
+     */
+    private fun removeTeamManagers(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamId = params["teamId"] as String
+        val userIds = params["userIds"] as List<String>
+        NIMSDK.getTeamService().removeManagers(teamId, userIds)
+                .setCallback(object : RequestCallback<List<TeamMember>> {
+                    override fun onSuccess(param: List<TeamMember>?) {
+                        ToastUtils.showShort("移除成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("移除失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("移除失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 移交群
+     */
+    private fun transformTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamId = params["teamId"] as String
+        val owner = params["owner"] as String
+        NIMSDK.getTeamService().transferTeam(teamId, owner, false)
+                .setCallback(object : RequestCallback<List<TeamMember>> {
+                    override fun onSuccess(param: List<TeamMember>?) {
+                        ToastUtils.showShort("移交成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("移交失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("移交失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 更新群头像
+     */
+    private fun updateTeamAvatar(params: Map<*, *>, result: MethodChannel.Result) {
+        val avatarUrl = params["avatarUrl"] as String
+        val teamId = params["teamId"] as String
+        NIMSDK.getTeamService().updateTeam(teamId, TeamFieldEnum.ICON, avatarUrl)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("更新头像成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("更新头像失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("更新头像失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 上传文件到云信
+     */
+    private fun uploadFileToNim(params: Map<*, *>, result: MethodChannel.Result) {
+        // TODO 云信文件上传
+        val filePath = params["filePath"] as String
+        NIMSDK.getNosService().upload(File(filePath), "")
+                .setCallback(object : RequestCallback<String> {
+                    override fun onSuccess(param: String?) {
+                        ToastUtils.showShort("上传成功")
+                        result.success(param)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("上传失败")
+                        result.success("")
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("上传失败")
+                        result.success("")
+                    }
+
+                })
+    }
+
+    /**
+     * 删除好友
+     */
+    private fun deleteContact(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        NIMSDK.getFriendService().deleteFriend(userId, true)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("删除成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("删除失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("删除失败")
+                        result.success(false)
+                    }
+
+                })
+    }
+
+    /**
+     * 允许用户新消息通知
+     */
+    private fun allowUserMsgNotify(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val notify = params["allowNotify"] as Boolean
+        NIMSDK.getFriendService().setMessageNotify(userId, notify)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+
+                })
+    }
+
+    /**
+     * 获取系统通知
+     */
+    private fun fetchSystemNotifications(params: Map<*, *>, result: MethodChannel.Result) {
+        val messageList = NIMClient.getService(SystemMessageService::class.java)
+                .querySystemMessagesBlock(0, Int.MAX_VALUE)
+
+        val notis = mutableListOf<Map<String, Any?>>()
+        messageList.forEach{ message ->
+            // TODO NIMUserAddAttachment
+
+            notis.add(mapOf(
+                    "notificationId" to message.messageId,
+                    "type" to message.type.value,
+                    "timestamp" to message.time.toTimestamp(),
+                    "sourceID" to message.fromAccount,
+                    "targetID" to message.targetId,
+                    "postscript" to null, // TODO ???
+                    "read" to message.isUnread,
+                    "handleStatus" to message.status,
+                    "notifyExt" to null, // TODO ???
+                    "attachment" to message.attach
+            ))
+        }
+        result.success(notis)
+    }
+
+    /**
+     * 删除所有通知
+     */
+    private fun deleteAllNotifications(params: Map<*, *>, result: MethodChannel.Result) {
+        NIMClient.getService(SystemMessageService::class.java).clearSystemMessages()
+    }
+
+    /**
+     * 申请进群
+     */
+    private fun applyToTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamId = params["teamId"] as String
+        var verifyMsg = params["verifyMsg"] as String?
+        verifyMsg = if (verifyMsg.isNullOrEmpty()) "通过扫码方式申请进群" else verifyMsg
+        NIMSDK.getTeamService().applyJoinTeam(teamId, verifyMsg)
+                .setCallback(object : RequestCallback<Team> {
+                    override fun onSuccess(param: Team?) {
+                        ToastUtils.showShort("进群成功")
+                        result.success(true)
+
+                        // TODO ???
+                        // "申请成功，等待验证"
+                        // "无效状态"
+                    }
+
+                    override fun onFailed(code: Int) {
+                        if (code == 809) {
+                            ToastUtils.showShort("你已经在群里，请勿重复申请")
+                            result.success(false)
+                        } else {
+                            ToastUtils.showShort("群申请失败")
+                            result.success(false)
+                        }
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("群申请失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 同意入群申请
+     */
+    private fun passApplyToTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val targetId = params["targetID"] as String
+        val sourceId = params["sourceID"] as String
+        NIMSDK.getTeamService().passApply(targetId, sourceId)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("同意成功")
+                        result.success(1)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        if (code == 408) {
+                            ToastUtils.showShort("网络问题，请重试")
+                            result.success(0)
+                        } else {
+                            ToastUtils.showShort("请求已失效")
+                            result.success(3)
+                        }
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("请求已失效")
+                        result.success(3)
+                    }
+                })
+    }
+
+    /**
+     * 拒绝入群申请
+     */
+    private fun rejectApplyToTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val targetId = params["targetID"] as String
+        val sourceId = params["sourceID"] as String
+        NIMSDK.getTeamService().rejectApply(targetId, sourceId, "")
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("拒绝成功")
+                        result.success(2)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        if (code == 408) {
+                            ToastUtils.showShort("网络问题，请重试")
+                            result.success(0)
+                        } else {
+                            ToastUtils.showShort("请求已失效")
+                            result.success(3)
+                        }
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("请求已失效")
+                        result.success(3)
+                    }
+                })
+    }
+
+    /**
+     * 接受入群邀请
+     */
+    private fun acceptInviteWithTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val targetId = params["targetID"] as String
+        val sourceId = params["sourceID"] as String
+        NIMSDK.getTeamService().acceptInvite(targetId, sourceId)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("接受成功")
+                        result.success(1)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        if (code == 408) {
+                            ToastUtils.showShort("网络问题，请重试")
+                            result.success(0)
+                        } else if (code == 803) {
+                            ToastUtils.showShort("群不存在")
+                            result.success(3)
+                        } else {
+                            ToastUtils.showShort("请求已失效")
+                            result.success(3)
+                        }
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("请求已失效")
+                        result.success(3)
+                    }
+                })
+    }
+
+    /**
+     * 拒绝入群邀请
+     */
+    private fun rejectInviteWithTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val targetId = params["targetID"] as String
+        val sourceId = params["sourceID"] as String
+        NIMSDK.getTeamService().declineInvite(targetId, sourceId, "")
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("拒绝成功")
+                        result.success(2)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        if (code == 408) {
+                            ToastUtils.showShort("网络问题，请重试")
+                            result.success(0)
+                        } else if (code == 803) {
+                            ToastUtils.showShort("群不存在")
+                            result.success(3)
+                        } else {
+                            ToastUtils.showShort("请求已失效")
+                            result.success(3)
+                        }
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("请求已失效")
+                        result.success(3)
+                    }
+                })
+    }
+
+    /**
+     * 通过添加好友请求
+     */
+    private fun requestFriend(params: Map<*, *>, result: MethodChannel.Result) {
+        val sourceId = params["sourceID"] as String
+        NIMSDK.getFriendService().ackAddFriendRequest(sourceId, true)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        val message = MessageBuilder.createTextMessage(sourceId, SessionTypeEnum.P2P, "你好，我们已加为好友!")
+                        NIMSDK.getMsgService().sendMessage(message, false)
+                        ToastUtils.showShort("验证成功")
+                        result.success(1)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("验证失败,请重试")
+                        result.success(0)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("验证失败,请重试")
+                        result.success(0)
+                    }
+                })
+    }
+
+    /**
+     * 拒绝好友添加申请
+     */
+    private fun rejectFriendRequest(params: Map<*, *>, result: MethodChannel.Result) {
+        val sourceId = params["sourceID"] as String
+        NIMSDK.getFriendService().ackAddFriendRequest(sourceId, false)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("拒绝成功")
+                        result.success(2)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("验证失败,请重试")
+                        result.success(0)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("验证失败,请重试")
+                        result.success(0)
+                    }
+                })
+    }
+
+    /**
+     * 是否是我的好友
+     */
+    private fun isMyFriend(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isMyFriend = NIMSDK.getFriendService().isMyFriend(userId)
+        result.success(isMyFriend)
+    }
+
+    /**
+     * 修改好友信息 目前支持修改备注
+     */
+    private fun updateUser(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val alias = params["alias"] as String
+
+        val fields = mapOf(
+                FriendFieldEnum.ALIAS to alias
+        )
+        NIMSDK.getFriendService().updateFriendFields(userId, fields)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 修改个人资料
+     */
+    private fun updateMyInfo(params: Map<*, *>, result: MethodChannel.Result) {
+        val tag = params["tag"] as Int
+        // TODO ???
+        val fieldKey = UserInfoFieldEnum.typeOfValue(tag)
+        val avatarUrl = params["avatarUrl"] as String
+        val nickName = params["nickName"] as String
+        val gender = params["gender"] as Int
+        val birth = params["birth"] as String
+        val email = params["email"] as String
+        val sign = params["sign"] as String
+        val phone = params["phone"] as String
+        val ext = params["ext"] as String
+
+        val fields = mapOf(
+                UserInfoFieldEnum.AVATAR to avatarUrl,
+                UserInfoFieldEnum.Name to nickName,
+                UserInfoFieldEnum.GENDER to gender,
+                UserInfoFieldEnum.BIRTHDAY to birth,
+                UserInfoFieldEnum.EMAIL to email,
+                UserInfoFieldEnum.SIGNATURE to sign,
+                UserInfoFieldEnum.MOBILE to phone,
+                UserInfoFieldEnum.EXTEND to ext
+        )
+
+        NIMSDK.getUserService().updateUserInfo(fields)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+                })
+    }
+
     private fun addRecentSessionMark(sessionId: String, sessionType: Int, type: Int) {
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(sessionType))
         recent?.let {
-            recent.extension.put(keyForMarkType(type), true)
+            recent.extension?.put(keyForMarkType(type), true)
             NIMSDK.getMsgService().updateRecent(recent)
         }
     }
@@ -473,13 +1142,13 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
     private fun removeRecentSessionMark(sessionId: String, sessionType: Int, type: Int) {
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(sessionType))
         recent?.let {
-            recent.extension.remove(keyForMarkType(type))
+            recent.extension?.remove(keyForMarkType(type))
             NIMSDK.getMsgService().updateRecent(recent)
         }
     }
 
-    private fun recentSessionIsMark(recent: RecentContact, type: Int) : Boolean{
-        return recent.extension.get(keyForMarkType(type)) as Boolean
+    private fun recentSessionIsMark(recent: RecentContact, type: Int): Boolean? {
+        return recent.extension?.get(keyForMarkType(type)) as Boolean?
     }
 
     private fun keyForMarkType(type: Int): String? {
@@ -490,12 +1159,18 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
         return map.get(type)
     }
 
+    private fun Long.toTimestamp() : Double {
+        return (this / 1000).toDouble()
+    }
+
     companion object {
+        private val TAG = NimSdkUtilPlugin::class.java.simpleName
         /** Plugin registration.  */
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "nim_sdk_util")
             channel.setMethodCallHandler(NimSdkUtilPlugin(registrar))
+            Log.d(TAG, "registerWith")
         }
     }
 

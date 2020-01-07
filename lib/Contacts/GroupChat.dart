@@ -212,7 +212,7 @@ class _GroupChatState extends State<GroupChatPage> {
             ),
       title: Text(t.teamName ?? ''),
       onTap: () => FlutterBoost.singleton.open(
-          'nativePage://android&iosPageName=CJSessionViewController',
+          'nativePage://androidPageName=com.youxi.chat.module.session.SessionHelper&iosPageName=CJSessionViewController',
           urlParams: {'id': t.teamId, 'type': 1},
           exts: {'animated': true}),
     );

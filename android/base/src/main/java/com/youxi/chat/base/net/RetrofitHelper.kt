@@ -11,6 +11,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import okio.Buffer
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -35,11 +36,11 @@ class RetrofitHelper private constructor() {
                 .build()
 
         retrofit = Retrofit.Builder()
-//                .baseUrl(ApiService.BASE_URL)
+                .baseUrl(Config.baseUrl)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
                 .build()
     }
 
@@ -83,7 +84,9 @@ class RetrofitHelper private constructor() {
 
                 } else if (chain.request().body?.contentType().toString().contains("json", ignoreCase = true)) {
                     // 处理POST请求参数为JSON类型的加签
-                    val content = chain.request().body?.toString() ?: ""
+                    val buffer = Buffer()
+                    chain.request().body?.writeTo(buffer)
+                    val content = buffer.readString(Charsets.UTF_8)
                     builder.addHeader("sign", getSign(content))
 
                     // TODO 特例情况,上传文件时只对accid加签
@@ -99,6 +102,7 @@ class RetrofitHelper private constructor() {
     }
 
     fun getSign(param: String): String {
+        LogUtils.d("SignContent=$param")
         try {
             if (!TextUtils.isEmpty(param)) {
                 val jsonObject = JSONObject(param)
@@ -122,8 +126,9 @@ class RetrofitHelper private constructor() {
                             .append(replaceValue)
                             .append("&")
                 }
-                stringBuilder.append("solt=").append("74d6de00551d4db6a2a3e4484ba101ae")
+                stringBuilder.append("solt=").append(Config.apiSignSalt)
                 val sign: String = EncryptUtils.encryptMD5ToString(stringBuilder.toString())
+                        .toLowerCase(Locale.getDefault())
                 LogUtils.i(sign)
                 return sign
             }

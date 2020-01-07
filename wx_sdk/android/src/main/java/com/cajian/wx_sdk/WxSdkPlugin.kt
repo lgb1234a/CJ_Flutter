@@ -2,6 +2,7 @@ package com.cajian.wx_sdk
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
@@ -15,6 +16,8 @@ import com.netease.nimlib.sdk.auth.LoginInfo
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.youxi.chat.base.Config
@@ -37,7 +40,8 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
     private val mContext: Context
     private val mWxApi: IWXAPI
 
-    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) { // 适配iOS方法名,iOS中有参数的方法名带有冒号,Android中需要去掉
+    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        // 适配iOS方法名,iOS中有参数的方法名带有冒号,Android中需要去掉
         val methodName = call.method.replace(":", "")
         if ("getPlatformVersion" == methodName) {
             result.success("Android " + Build.VERSION.RELEASE)
@@ -78,11 +82,42 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
         result.success(null)
     }
 
+    /**
+     * 微信分享
+     */
+    private fun share(params: Map<*, *>, result: MethodChannel.Result) {
+        val title = params["title"] as String?
+        val content = params["content"] as String
+        val url = params["url"] as String
+        val type = params["type"] as Int
+
+        val message = WXMediaMessage()
+        message.title = title ?: ""
+        message.description = content
+        message.messageExt = content
+        message.messageAction = content
+
+        val ext = WXWebpageObject()
+        ext.webpageUrl = url
+
+        message.mediaObject = ext
+
+        val req = SendMessageToWX.Req()
+        req.transaction = buildTransaction("text")
+        req.message = message
+        req.scene = SendMessageToWX.Req.WXSceneSession
+
+        mWxApi.sendReq(req)
+    }
+
     private fun onResp(_resp: BaseResp) {
         if (_resp is SendMessageToWX.Resp) {
-            if (_resp.errCode == 0) { // 什么也不做
+            // 分享成功是否的监听
+            if (_resp.errCode == 0) {
+                // 什么也不做
             }
         } else if (_resp is SendAuth.Resp) {
+            // 授权结果监听
             if (_resp.errCode == 0) {
                 val resp = _resp
                 val accessToken = resp.code
@@ -133,14 +168,14 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
 
     private fun wxBindCode(code: String) {
         val accid = NimUIKit.getAccount()
-        val params = mapOf(
+        val json = mapOf(
                 "accid" to accid,
                 "code" to code,
                 "union_id" to "",
-                "app_key" to "wx0f56e7c5e6daa01a"
+                "app_key" to APP_ID
         )
 
-        CommonApi.getApi().postJson(Config.wechatBindUrl, fieldMap = params)
+        CommonApi.getApi().postJson(Config.wechatBindUrl, json = json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
@@ -171,12 +206,12 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
     private fun sendLoginAuth(accessToken: String) {
         LogUtils.d("sendLoginAuth accessToken = $accessToken")
 
-        val params = mapOf(
+        val json = mapOf(
                 "code" to accessToken,
-                "app_key" to "wx0f56e7c5e6daa01a"
+                "app_key" to APP_ID
         )
 
-        CommonApi.getApi().postJson(Config.wechatLoginUrl, fieldMap = params)
+        CommonApi.getApi().postJson(Config.wechatLoginUrl, json = json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
@@ -201,13 +236,97 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
                 })
     }
 
+    /**
+     * 查询微信绑定状态
+     */
+    private fun wxBindStatus(params: Map<*, *>, result: MethodChannel.Result) {
+        val accid = NimUIKit.getAccount()
+
+        val json = mapOf(
+                "accid" to accid,
+                "app_key" to APP_ID
+        )
+
+        CommonApi.getApi().postJson(Config.wechatStatusUrl, json = json)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<String> {
+                    override fun onComplete() {
+                        PopupManager.hideLoading(mContext)
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        PopupManager.showLoading(mContext)
+                    }
+
+                    override fun onNext(t: String) {
+                        val model = GsonBuilder().setLenient().create().fromJson(t, BaseModel::class.java)
+                        if (model.success()) {
+                            result.success(true)
+                        } else {
+                            result.success(false)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        PopupManager.hideLoading(mContext)
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 解绑微信
+     */
+    private fun unBindWeChat(params: Map<*, *>, result: MethodChannel.Result) {
+        val accid = NimUIKit.getAccount()
+
+        val json = mapOf(
+                "accid" to accid,
+                "app_key" to APP_ID
+        )
+
+        CommonApi.getApi().postJson(Config.wechatUnbindUrl, json = json)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<String> {
+                    override fun onComplete() {
+                        PopupManager.hideLoading(mContext)
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        PopupManager.showLoading(mContext, loadingTips = "登录中...")
+                    }
+
+                    override fun onNext(t: String) {
+                        val model = GsonBuilder().setLenient().create().fromJson(t, BaseModel::class.java)
+                        if (model.success()) {
+                            ToastUtils.showShort("解绑成功")
+                        } else {
+                            ToastUtils.showShort(model.errmsg)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        PopupManager.hideLoading(mContext)
+                        ToastUtils.showShort(e.message)
+                    }
+                })
+    }
+
+    private fun buildTransaction(type: String?): String {
+        return if (type == null) System.currentTimeMillis().toString() else type + System.currentTimeMillis();
+    }
+
     companion object {
         private const val APP_ID = "wxa590aacb6f7b637b"
+        private val TAG = WxSdkPlugin::class.java.simpleName
         /** Plugin registration.  */
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "wx_sdk")
             channel.setMethodCallHandler(WxSdkPlugin(registrar))
+            Log.d(TAG, "registerWith")
         }
     }
 
