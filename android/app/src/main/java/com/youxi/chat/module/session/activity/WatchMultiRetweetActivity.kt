@@ -32,7 +32,6 @@ import com.netease.nimlib.sdk.msg.model.IMMessage
 import com.netease.nimlib.sdk.nos.NosService
 import com.youxi.chat.R
 import com.youxi.chat.module.session.MessageHelper.decryptByRC4
-import com.youxi.chat.module.session.activity.WatchMultiRetweetActivity
 import com.youxi.chat.module.session.adapter.MultiRetweetAdapter
 import com.youxi.chat.module.session.extension.MultiRetweetAttachment
 import org.json.JSONException

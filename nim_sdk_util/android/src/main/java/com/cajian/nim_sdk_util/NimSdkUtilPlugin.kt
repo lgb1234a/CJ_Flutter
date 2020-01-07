@@ -3,19 +3,23 @@ package com.cajian.nim_sdk_util
 import android.content.Context
 import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import com.blankj.utilcode.util.*
 import com.netease.nim.uikit.api.NimUIKit
 import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.NIMSDK
 import com.netease.nimlib.sdk.RequestCallback
 import com.netease.nimlib.sdk.auth.LoginInfo
+import com.netease.nimlib.sdk.friend.constant.FriendFieldEnum
 import com.netease.nimlib.sdk.msg.MessageBuilder
 import com.netease.nimlib.sdk.msg.SystemMessageService
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import com.netease.nimlib.sdk.msg.model.RecentContact
 import com.netease.nimlib.sdk.team.constant.TeamFieldEnum
 import com.netease.nimlib.sdk.team.constant.TeamMessageNotifyTypeEnum
+import com.netease.nimlib.sdk.team.model.Team
 import com.netease.nimlib.sdk.team.model.TeamMember
+import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -212,16 +216,16 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 "teamId" to team.id,
                 "teamName" to team.name,
                 "thumbAvatarUrl" to team.icon,
-                "type" to team.type,
+                "type" to team.type.value,
                 "owner" to team.creator,
                 "intro" to team.introduce,
                 "announcement" to team.announcement,
                 "memberNumber" to team.memberCount,
                 "level" to team.memberLimit,
-                "createTime" to team.createTime,
-                "joinMode" to team.verifyType,
-                "inviteMode" to team.teamInviteMode,
-                "beInviteMode" to team.teamBeInviteMode,
+                "createTime" to team.createTime.toTimestamp(),
+                "joinMode" to team.verifyType.value,
+                "inviteMode" to team.teamInviteMode.value,
+                "beInviteMode" to team.teamBeInviteMode.value,
                 "updateInfoMode" to team.teamUpdateMode.value,
                 "updateClientCustomMode" to team.teamExtensionUpdateMode.value,
                 "serverCustomInfo" to team.extServer,
@@ -276,10 +280,10 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                                     "userId" to member.account,
                                     "invitor" to member.invitorAccid, // TODO ???
                                     "inviterAccid" to member.invitorAccid,
-                                    "type" to member.type,
+                                    "type" to member.type.value,
                                     "nickname" to member.teamNick,
                                     "isMuted" to member.isMute,
-                                    "createTime" to member.joinTime,
+                                    "createTime" to member.joinTime.toTimestamp(),
                                     "customInfo" to member.extension
                             ))
                         }
@@ -314,10 +318,10 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 "userId" to member.account,
                 "invitor" to member.invitorAccid, // TODO ???
                 "inviterAccid" to member.invitorAccid,
-                "type" to member.type,
+                "type" to member.type.value,
                 "nickname" to member.teamNick,
                 "isMuted" to member.isMute,
-                "createTime" to member.joinTime,
+                "createTime" to member.joinTime.toTimestamp(),
                 "customInfo" to member.extension
         ))
     }
@@ -333,7 +337,11 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
         val type = params["type"] as Int
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(type))
         val isTop = recentSessionIsMark(recent, 1)
-        result.success(isTop)
+        if (isTop == null) {
+            result.success(false)
+        } else {
+            result.success(isTop)
+        }
     }
 
     /**
@@ -807,8 +815,8 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
 
             notis.add(mapOf(
                     "notificationId" to message.messageId,
-                    "type" to message.type,
-                    "timestamp" to message.time,
+                    "type" to message.type.value,
+                    "timestamp" to message.time.toTimestamp(),
                     "sourceID" to message.fromAccount,
                     "targetID" to message.targetId,
                     "postscript" to null, // TODO ???
@@ -826,6 +834,41 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
      */
     private fun deleteAllNotifications(params: Map<*, *>, result: MethodChannel.Result) {
         NIMClient.getService(SystemMessageService::class.java).clearSystemMessages()
+    }
+
+    /**
+     * 申请进群
+     */
+    private fun applyToTeam(params: Map<*, *>, result: MethodChannel.Result) {
+        val teamId = params["teamId"] as String
+        var verifyMsg = params["verifyMsg"] as String?
+        verifyMsg = if (verifyMsg.isNullOrEmpty()) "通过扫码方式申请进群" else verifyMsg
+        NIMSDK.getTeamService().applyJoinTeam(teamId, verifyMsg)
+                .setCallback(object : RequestCallback<Team> {
+                    override fun onSuccess(param: Team?) {
+                        ToastUtils.showShort("进群成功")
+                        result.success(true)
+
+                        // TODO ???
+                        // "申请成功，等待验证"
+                        // "无效状态"
+                    }
+
+                    override fun onFailed(code: Int) {
+                        if (code == 809) {
+                            ToastUtils.showShort("你已经在群里，请勿重复申请")
+                            result.success(false)
+                        } else {
+                            ToastUtils.showShort("群申请失败")
+                            result.success(false)
+                        }
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("群申请失败")
+                        result.success(false)
+                    }
+                })
     }
 
     /**
@@ -1004,10 +1047,94 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
                 })
     }
 
+    /**
+     * 是否是我的好友
+     */
+    private fun isMyFriend(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val isMyFriend = NIMSDK.getFriendService().isMyFriend(userId)
+        result.success(isMyFriend)
+    }
+
+    /**
+     * 修改好友信息 目前支持修改备注
+     */
+    private fun updateUser(params: Map<*, *>, result: MethodChannel.Result) {
+        val userId = params["userId"] as String
+        val alias = params["alias"] as String
+
+        val fields = mapOf(
+                FriendFieldEnum.ALIAS to alias
+        )
+        NIMSDK.getFriendService().updateFriendFields(userId, fields)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+                })
+    }
+
+    /**
+     * 修改个人资料
+     */
+    private fun updateMyInfo(params: Map<*, *>, result: MethodChannel.Result) {
+        val tag = params["tag"] as Int
+        // TODO ???
+        val fieldKey = UserInfoFieldEnum.typeOfValue(tag)
+        val avatarUrl = params["avatarUrl"] as String
+        val nickName = params["nickName"] as String
+        val gender = params["gender"] as Int
+        val birth = params["birth"] as String
+        val email = params["email"] as String
+        val sign = params["sign"] as String
+        val phone = params["phone"] as String
+        val ext = params["ext"] as String
+
+        val fields = mapOf(
+                UserInfoFieldEnum.AVATAR to avatarUrl,
+                UserInfoFieldEnum.Name to nickName,
+                UserInfoFieldEnum.GENDER to gender,
+                UserInfoFieldEnum.BIRTHDAY to birth,
+                UserInfoFieldEnum.EMAIL to email,
+                UserInfoFieldEnum.SIGNATURE to sign,
+                UserInfoFieldEnum.MOBILE to phone,
+                UserInfoFieldEnum.EXTEND to ext
+        )
+
+        NIMSDK.getUserService().updateUserInfo(fields)
+                .setCallback(object : RequestCallback<Void> {
+                    override fun onSuccess(param: Void?) {
+                        ToastUtils.showShort("修改成功")
+                        result.success(true)
+                    }
+
+                    override fun onFailed(code: Int) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+
+                    override fun onException(exception: Throwable?) {
+                        ToastUtils.showShort("修改失败")
+                        result.success(false)
+                    }
+                })
+    }
+
     private fun addRecentSessionMark(sessionId: String, sessionType: Int, type: Int) {
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(sessionType))
         recent?.let {
-            recent.extension.put(keyForMarkType(type), true)
+            recent.extension?.put(keyForMarkType(type), true)
             NIMSDK.getMsgService().updateRecent(recent)
         }
     }
@@ -1015,13 +1142,13 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
     private fun removeRecentSessionMark(sessionId: String, sessionType: Int, type: Int) {
         val recent = NIMSDK.getMsgService().queryRecentContact(sessionId, SessionTypeEnum.typeOfValue(sessionType))
         recent?.let {
-            recent.extension.remove(keyForMarkType(type))
+            recent.extension?.remove(keyForMarkType(type))
             NIMSDK.getMsgService().updateRecent(recent)
         }
     }
 
-    private fun recentSessionIsMark(recent: RecentContact, type: Int): Boolean {
-        return recent.extension.get(keyForMarkType(type)) as Boolean
+    private fun recentSessionIsMark(recent: RecentContact, type: Int): Boolean? {
+        return recent.extension?.get(keyForMarkType(type)) as Boolean?
     }
 
     private fun keyForMarkType(type: Int): String? {
@@ -1032,12 +1159,18 @@ class NimSdkUtilPlugin private constructor(private val mRegistrar: Registrar) : 
         return map.get(type)
     }
 
+    private fun Long.toTimestamp() : Double {
+        return (this / 1000).toDouble()
+    }
+
     companion object {
+        private val TAG = NimSdkUtilPlugin::class.java.simpleName
         /** Plugin registration.  */
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "nim_sdk_util")
             channel.setMethodCallHandler(NimSdkUtilPlugin(registrar))
+            Log.d(TAG, "registerWith")
         }
     }
 

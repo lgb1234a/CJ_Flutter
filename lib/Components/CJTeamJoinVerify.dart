@@ -42,7 +42,7 @@ class _CJTeamJoinVerifyPageState extends State<CJTeamJoinVerifyPage> {
     bool success = await NimSdkUtil.applyToTeam(_teamId, verifyMsg: verifyMsg);
     if (success) {
       FlutterBoost.singleton.open(
-          'nativePage://android&iosPageName=CJSessionViewController',
+          'nativePage://androidPageName=com.youxi.chat.module.session.SessionHelper&iosPageName=CJSessionViewController',
           urlParams: {'id': _teamId, 'type': 1},
           exts: {'animated': true});
     }

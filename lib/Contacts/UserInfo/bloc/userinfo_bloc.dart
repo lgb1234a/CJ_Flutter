@@ -37,7 +37,7 @@ class UserinfoBloc extends Bloc<UserinfoEvent, UserinfoState> {
     if (event is TouchedSendMsg) {
       /* 调用native，拉起选择联系人组件,创建群聊 */
       FlutterBoost.singleton.open(
-          'nativePage://android&iosPageName=CJSessionViewController',
+          'nativePage://androidPageName=com.youxi.chat.module.session.SessionHelper&iosPageName=CJSessionViewController',
           urlParams: {'id': userId, 'type': 0},
           exts: {'animated': true});
     }

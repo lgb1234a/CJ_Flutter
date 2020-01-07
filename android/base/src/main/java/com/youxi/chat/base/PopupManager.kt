@@ -1,6 +1,7 @@
 package com.youxi.chat.base
 
 import android.content.Context
+import com.blankj.utilcode.util.ActivityUtils
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 
@@ -16,7 +17,7 @@ object PopupManager {
             return
         }
         if (loadingPopup == null) {
-            loadingPopup = XPopup.Builder(context).asLoading(loadingTips)
+            loadingPopup = XPopup.Builder(ActivityUtils.getTopActivity()).asLoading(loadingTips)
         }
         if (loadingPopup!!.isDismiss) {
             loadingPopup!!.show()

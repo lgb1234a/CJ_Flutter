@@ -58,8 +58,7 @@ class SessionInfoState extends State<SessionInfoWidget> {
     return BlocProvider<SessioninfoBloc>(
       create: (context) {
         _bloc = SessioninfoBloc(session: _session)
-          ..add(Fetch())
-          ..add(FetchMemberInfos());
+          ..add(Fetch());
         return _bloc;
       },
       child: SessionTeamInfoWidget(),

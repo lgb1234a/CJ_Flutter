@@ -3,6 +3,9 @@ package com.youxi.chat.module.contact
 import android.content.Context
 import com.netease.nim.uikit.api.NimUIKit
 import com.netease.nim.uikit.api.model.contact.ContactEventListener
+import com.netease.nim.uikit.business.contact.selector.activity.ContactSelectActivity
+import com.youxi.chat.module.contact.activity.CjContactSelectActivity
+
 
 /**
  * UIKit联系人列表定制展示类
@@ -31,5 +34,16 @@ object ContactHelper {
 //                UserProfileActivity.start(context, account)
             }
         })
+    }
+
+    /**
+     * 打开联系人选择器
+     *
+     * @param context     上下文（Activity）
+     * @param option      联系人选择器可选配置项
+     * @param callback    选择器回调
+     */
+    fun startContactSelector(context: Context, option: ContactSelectActivity.Option, callback: CjContactSelectActivity.Callback) {
+        CjContactSelectActivity.startActivityForResult(context, option, callback)
     }
 }

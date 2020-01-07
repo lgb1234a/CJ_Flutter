@@ -1,6 +1,6 @@
 package com.netease.nim.uikit.business.session.activity;
 
-import android.content.Context;
+import  android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.netease.nim.uikit.common.ToastHelper;

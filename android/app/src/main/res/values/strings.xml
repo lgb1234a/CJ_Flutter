@@ -238,4 +238,10 @@
     <string name="independent_mode_error">独立AppKey模式，appKey不能为空</string>
     <string name="appkey_cannot_empty">appKey不能为空</string>
 
+
+    <string name="create_team_talk">发起群聊</string>
+    <string name="add_friends">添加好友</string>
+    <string name="scan_code">扫一扫</string>
+    <string name="mine_wallet">我的钱包</string>
+
 </resources>

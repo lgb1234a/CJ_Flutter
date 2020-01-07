@@ -30,7 +30,7 @@ class ContactsearchresultBloc
     /* 点击cell */
     if (event is TappedCellEvent) {
       FlutterBoost.singleton.open(
-          'nativePage://android&iosPageName=CJSessionViewController',
+          'nativePage://androidPageName=com.youxi.chat.module.session.SessionHelper&iosPageName=CJSessionViewController',
           urlParams: {'id': event.session.id, 'type': event.session.type},
           exts: {'animated': true});
     }

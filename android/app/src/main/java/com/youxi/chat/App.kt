@@ -8,7 +8,10 @@ import android.webkit.WebView
 import androidx.multidex.MultiDex
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
+import com.cajian.nim_sdk_util.NimSdkUtilPlugin
+import com.cajian.wx_sdk.WxSdkPlugin
 import com.idlefish.flutterboost.FlutterBoost
+import com.idlefish.flutterboost.FlutterBoostPlugin
 import com.idlefish.flutterboost.interfaces.INativeRouter
 import com.netease.nim.uikit.api.NimUIKit
 import com.netease.nim.uikit.api.UIKitOptions
@@ -36,6 +39,9 @@ import com.youxi.chat.push.MixPushMessageHandler
 import com.youxi.chat.push.PushContentProvider
 import com.youxi.chat.util.crash.AppCrashHandler
 import io.flutter.embedding.android.FlutterView
+import io.flutter.plugins.imagepicker.ImagePickerPlugin
+import io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin
+import io.flutter.plugins.webviewflutter.WebViewFlutterPlugin
 import java.util.*
 
 
@@ -140,6 +146,22 @@ class App : BaseApplication() {
             Router.open(context!!, url, urlParams)
         }
 
+        // Flutter插件注册
+        val pluginsRegister = FlutterBoost.BoostPluginsRegister { registry ->
+            // 暂时手动注册,因为WebView插件有问题,会导致后续插件无法完成注册
+            FlutterBoostPlugin.registerWith(registry.registrarFor("com.idlefish.flutterboost.FlutterBoostPlugin"))
+            ImagePickerPlugin.registerWith(registry.registrarFor("io.flutter.plugins.imagepicker.ImagePickerPlugin"))
+            NimSdkUtilPlugin.registerWith(registry.registrarFor("com.cajian.nim_sdk_util.NimSdkUtilPlugin"))
+            SharedPreferencesPlugin.registerWith(registry.registrarFor("io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin"))
+            WxSdkPlugin.registerWith(registry.registrarFor("com.cajian.wx_sdk.WxSdkPlugin"))
+            try {
+                WebViewFlutterPlugin.registerWith(registry.registrarFor("io.flutter.plugins.webviewflutter.WebViewFlutterPlugin"))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+//            GeneratedPluginRegistrant.registerWith(registry)
+        }
+
         // Flutter生命周期回调
         val lifecycleListener = object : FlutterBoost.BoostLifecycleListener {
             override fun onEngineCreated() {
@@ -147,7 +169,6 @@ class App : BaseApplication() {
             }
 
             override fun onPluginsRegistered() {
-                // 内部已经通过反射的方式调用了GeneratedPluginRegistrant.registerWith(mRegistry)
                 LogUtils.d("FlutterBoost onPluginsRegistered")
                 FlutterHelper.addEventListener()
             }
@@ -155,7 +176,6 @@ class App : BaseApplication() {
             override fun onEngineDestroy() {
                 LogUtils.d("FlutterBoost onEngineDestroy")
             }
-
         }
 
         // FlutterBoost引擎
@@ -164,6 +184,7 @@ class App : BaseApplication() {
                 // Activity创建时启动Flutter引擎
                 .whenEngineStart(FlutterBoost.ConfigBuilder.ANY_ACTIVITY_CREATED)
                 .renderMode(FlutterView.RenderMode.texture)
+                .pluginsRegister(pluginsRegister)
                 .lifecycleListener(lifecycleListener)
                 .build()
 

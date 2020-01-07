@@ -2,6 +2,7 @@ package com.cajian.wx_sdk
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
@@ -39,7 +40,8 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
     private val mContext: Context
     private val mWxApi: IWXAPI
 
-    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) { // 适配iOS方法名,iOS中有参数的方法名带有冒号,Android中需要去掉
+    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        // 适配iOS方法名,iOS中有参数的方法名带有冒号,Android中需要去掉
         val methodName = call.method.replace(":", "")
         if ("getPlatformVersion" == methodName) {
             result.success("Android " + Build.VERSION.RELEASE)
@@ -166,14 +168,14 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
 
     private fun wxBindCode(code: String) {
         val accid = NimUIKit.getAccount()
-        val params = mapOf(
+        val json = mapOf(
                 "accid" to accid,
                 "code" to code,
                 "union_id" to "",
                 "app_key" to APP_ID
         )
 
-        CommonApi.getApi().postJson(Config.wechatBindUrl, fieldMap = params)
+        CommonApi.getApi().postJson(Config.wechatBindUrl, json = json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
@@ -204,12 +206,12 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
     private fun sendLoginAuth(accessToken: String) {
         LogUtils.d("sendLoginAuth accessToken = $accessToken")
 
-        val params = mapOf(
+        val json = mapOf(
                 "code" to accessToken,
                 "app_key" to APP_ID
         )
 
-        CommonApi.getApi().postJson(Config.wechatLoginUrl, fieldMap = params)
+        CommonApi.getApi().postJson(Config.wechatLoginUrl, json = json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
@@ -240,12 +242,12 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
     private fun wxBindStatus(params: Map<*, *>, result: MethodChannel.Result) {
         val accid = NimUIKit.getAccount()
 
-        val params = mapOf(
+        val json = mapOf(
                 "accid" to accid,
                 "app_key" to APP_ID
         )
 
-        CommonApi.getApi().postJson(Config.wechatStatusUrl, fieldMap = params)
+        CommonApi.getApi().postJson(Config.wechatStatusUrl, json = json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
@@ -279,12 +281,12 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
     private fun unBindWeChat(params: Map<*, *>, result: MethodChannel.Result) {
         val accid = NimUIKit.getAccount()
 
-        val params = mapOf(
+        val json = mapOf(
                 "accid" to accid,
                 "app_key" to APP_ID
         )
 
-        CommonApi.getApi().postJson(Config.wechatUnbindUrl, fieldMap = params)
+        CommonApi.getApi().postJson(Config.wechatUnbindUrl, json = json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String> {
@@ -318,11 +320,13 @@ class WxSdkPlugin private constructor(private val mRegistrar: Registrar) : Metho
 
     companion object {
         private const val APP_ID = "wxa590aacb6f7b637b"
+        private val TAG = WxSdkPlugin::class.java.simpleName
         /** Plugin registration.  */
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "wx_sdk")
             channel.setMethodCallHandler(WxSdkPlugin(registrar))
+            Log.d(TAG, "registerWith")
         }
     }
 
