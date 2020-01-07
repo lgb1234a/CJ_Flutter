@@ -264,6 +264,13 @@ class SessioninfoBloc extends Bloc<SessioninfoEvent, SessioninfoState> {
   Future<List<UserInfo>> memberInfos() async {
     /// 获取群成员
     List<TeamMemberInfo> members = await NimSdkUtil.teamMemberInfos(session.id);
+    /// 群主默认放第一
+    TeamMemberInfo owner = members.where((f) => f.type == 1).toList().first;
+    if(owner != null) {
+      members.remove(owner);
+      members.insert(0, owner);
+    }
+
     List<UserInfo> infos = [];
 
     List<Future<UserInfo>> mapFutures = members

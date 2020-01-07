@@ -1,7 +1,7 @@
-/**
- *  Created by chenyn on 2019-06-28
- *  入口
- */
+///
+///  Created by chenyn on 2019-06-28
+///  入口
+///
 import 'package:flutter/material.dart';
 import 'Contacts/ContactSearching/ContactsSearching.dart';
 import 'Login/Login.dart';
@@ -74,61 +74,99 @@ class _MyAppState extends State<MyApp> {
     FlutterBoost.singleton.registerPageBuilders({
       /// 注册页
       'register': (pageName, params, _) => RegisterWidget(),
+
       /// 登录入口
       'login': (pageName, params, _) => LoginWidget(),
+
       /// 验证码登录页
       'phone_login': (pageName, params, _) => PhoneLoginWidget(),
+
       /// 密码登录页
       'pwd_login': (pageName, params, _) => PwdLoginWidget(),
+
       /// 我
       'mine': (pageName, params, _) => MineWidget(params),
+
       /// 联系人
       'contacts': (pageName, params, _) => ContactsWidget(params),
+
       /// 设置
       'setting': (pageName, params, _) => SettingWidget(),
+
       /// 我的个人信息
       'mine_info': (pageName, params, _) => MineInfoWiget(),
+
       /// 通讯录搜索页
       'contact_searching': (pageName, params, _) => ContactsSearchingWidget(),
+
       /// 通讯录搜索结果页
       'contact_search_result': (pageName, params, _) =>
           ContactsSearchResultListWidget(params),
+
       /// 聊天信息
       'session_info': (pageName, params, _) => SessionInfoWidget(params),
+
       /// 用户信息
       'user_info': (pageName, params, _) => UserInfoPage(params),
+
       /// 联系人设置
       'contact_setting': (pageName, params, _) => ContactSetting(params),
+
       /// 群成员信息
       'member_info': (pageName, params, _) => SessionMemberInfoWidget(params),
+
       /// 二维码
       'qrcode': (pageName, params, _) => QrCodePage(params: params),
+
       /// 全部群成员
-      'member_list': (pageName, params, _) => SessionMemberListPage(params: params),
+      'member_list': (pageName, params, _) =>
+          SessionMemberListPage(params: params),
+
       /// 群公告
-      'team_announcement': (pageName, params, _) => TeamAnnouncementPage(params: params),
+      'team_announcement': (pageName, params, _) =>
+          TeamAnnouncementPage(params: params),
+
       /// 群管理
       'team_manage': (pageName, params, _) => TeamManagePage(params: params),
+
       /// webView
       'web_view': (pageName, params, _) => CJWebView(params: params),
+
       /// 安全
       'security': (pageName, params, _) => SecurityPage(),
+
       /// 设置登录密码
-      'pwd_setting': (pageName, params, _) => PwdSettingPage(params: params,),
+      'pwd_setting': (pageName, params, _) => PwdSettingPage(
+            params: params,
+          ),
+
       /// 忘记密码
-      'pwd_forgot': (pageName, params, _) => PwdForgotPage(params: params,),
+      'pwd_forgot': (pageName, params, _) => PwdForgotPage(
+            params: params,
+          ),
+
       /// 黑名单
       'block_list': (pageName, params, _) => BlockListPage(),
+
       /// 手机绑定
-      'phone_bind': (pageName, params, _) => PhoneBindPage(params: params,),
+      'phone_bind': (pageName, params, _) => PhoneBindPage(
+            params: params,
+          ),
+
       /// 新朋友
       'new_friend': (pageName, params, _) => NewFriendsPage(),
+
       /// 群聊
       'group_chat': (pageName, params, _) => GroupChatPage(),
+
       /// 进群验证页面
-      'team_join_verify': (pageName, params, _) => CJTeamJoinVerifyPage(params:params),
+      'team_join_verify': (pageName, params, _) =>
+          CJTeamJoinVerifyPage(params: params),
+
       /// 分享App详情页
-      'share_app_detail': (pageName, params, _) => CJAppShareDetailPage(params: params,)
+      'share_app_detail': (pageName, params, _) => CJAppShareDetailPage(
+            params: params,
+          )
     });
   }
 

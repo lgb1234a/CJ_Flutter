@@ -15,6 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)initBridge;
 
+/// 分享
+- (void)share:(NSDictionary *)shareData;
+
+
+/// 创建群聊
+/// @param params 群成员ids
+- (void)createGroupChat:(NSDictionary *)params;
+
 @end
 
 NS_ASSUME_NONNULL_END
